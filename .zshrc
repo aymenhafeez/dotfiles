@@ -1,15 +1,21 @@
 # oh-my-zsh path
 export ZSH='/Users/AymenHafeez/.oh-my-zsh'
 
-ZSH_THEME='philips'
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
-# enable vim mode on commmand line
-bindkey -v
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
+#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+# POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+POWERLEVEL9K_STATUS_DEFAULT_BACKGROUND='blue'
+POWERLEVEL9K_VI_INSERT_MODE_STRING='INSERT'
+POWERLEVEL9K_VI_COMMAND_MODE_STRING='NORMAL'
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode time)
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
 
-ENABLE_CORRECTION='true'
+ENABLE_CORRECTION='false'
 
 COMPLETION_WAITING_DOTS='true'
 
@@ -39,7 +45,12 @@ alias dt='cd ~/Desktop'
 alias dd='cd ~/Documents/DESKTOP'
 alias ddp='cd ~/Documents/DESKTOP/PythonStuff'
 alias ddw='cd ~/Documents/DESKTOP/website-files'
+alias cl='clear'
 alias conf='cd ~/.config'
+alias z='vim ~/.zshrc'
+alias sz='source ~/.zshrc'
+alias v='vim ~/.vimrc'
+alias sv='source ~/.vimrc'
 
 # Navigation
 alias ..='cd ..'
