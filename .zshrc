@@ -51,6 +51,10 @@ alias z='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
 alias v='vim ~/.vimrc'
 alias sv='source ~/.vimrc'
+alias chk='vim ~/.chunkwmrc'
+alias schk='source ~/.chunkwmrc'
+alias kd='vim ~/.khdrc'
+alias skd='source ~/.khdrc'
 
 # Navigation
 alias ..='cd ..'
@@ -68,9 +72,6 @@ alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && 
 
 # Reload shell
 alias reload="exec ${SHELL} -l"
-
-# Opera
-alias opera='/Applications/Opera.app/Contents/MacOS/Opera'
 
 # Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
