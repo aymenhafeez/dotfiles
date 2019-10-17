@@ -1,4 +1,4 @@
 
 # work-env
 
-my dotfiles for macOS environment.
+dotfiles for my macOS environment.
