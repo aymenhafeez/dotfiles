@@ -41,7 +41,7 @@ chunkc core::hotload 0
 # NOTE: the following are config variables for the chunkwm-tiling plugin.
 #
 
-chunkc set custom_bar_enabled            0
+chunkc set custom_bar_enabled            0 
 chunkc set custom_bar_all_monitors       0
 chunkc set custom_bar_offset_top         22
 chunkc set custom_bar_offset_bottom      0
@@ -49,11 +49,11 @@ chunkc set custom_bar_offset_left        0
 chunkc set custom_bar_offset_right       0
 
 chunkc set global_desktop_mode           bsp
-chunkc set global_desktop_offset_top     8
-chunkc set global_desktop_offset_bottom  8
-chunkc set global_desktop_offset_left    8
-chunkc set global_desktop_offset_right   8
-chunkc set global_desktop_offset_gap     8
+chunkc set global_desktop_offset_top    10 
+chunkc set global_desktop_offset_bottom 10 
+chunkc set global_desktop_offset_left   10 
+chunkc set global_desktop_offset_right  10 
+chunkc set global_desktop_offset_gap    10 
 
 #
 # NOTE: syntax for desktop-specific settings
@@ -66,6 +66,9 @@ chunkc set global_desktop_offset_gap     8
 # chunkc set 3_desktop_offset_right        190
 # chunkc set 3_desktop_offset_gap          30
 #
+
+
+chunkc set 2_desktop_mode 		float
 
 chunkc set desktop_padding_step_size     5.0
 chunkc set desktop_gap_step_size         5.0
@@ -87,7 +90,7 @@ chunkc set mouse_resize_window           \"fn 2\"
 chunkc set mouse_motion_interval         35
 
 chunkc set preselect_border_color        0xffd75f5f
-chunkc set preselect_border_width        2.5
+chunkc set preselect_border_width        1.5
 chunkc set preselect_border_outline      0
 
 #
@@ -109,8 +112,8 @@ chunkc set window_use_cgs_move           0
 #       1 = true, outline border
 #
 
-chunkc set focused_border_color          0xff008080
-chunkc set focused_border_width          2.5
+chunkc set focused_border_color          0x00ffffff
+chunkc set focused_border_width          0
 chunkc set focused_border_radius         0
 chunkc set focused_border_outline        0
 chunkc set focused_border_skip_floating  0
@@ -136,6 +139,6 @@ chunkc core::load ffm.so
 # NOTE: sample rules for the tiling plugin
 #
 
-chunkc tiling::rule --owner Finder --name Copy --state float &
+chunkc tiling::rule --owner Finder --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
 chunkc tiling::rule --owner Emacs --except "^$" --state tile &
