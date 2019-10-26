@@ -11,6 +11,7 @@ POWERLEVEL9K_STATUS_DEFAULT_BACKGROUND='blue'
 POWERLEVEL9K_VI_INSERT_MODE_STRING='INSERT'
 POWERLEVEL9K_VI_COMMAND_MODE_STRING='NORMAL'
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode time)
+POWERLEVEL9K_HOST_NAME_FOREGROUND='white'
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
@@ -29,8 +30,9 @@ plugins=(
     extract
     history
     sudo 
-    chucknorris
 )
+
+cd() { builtin cd "$@" && ls -F -a; }
 
 alias python=python3.7
 
@@ -40,29 +42,30 @@ alias c='code'
 alias zshconfig='mate ~/.zshrc'
 alias ohmyzsh='mate ~/.oh-my-zsh'
 alias rng='ranger'
-alias d='cd ~/Documents'
-alias dt='cd ~/Desktop'
-alias dd='cd ~/Documents/DESKTOP'
-alias ddp='cd ~/Documents/DESKTOP/PythonStuff'
-alias ddw='cd ~/Documents/DESKTOP/website-files'
 alias cl='clear'
-alias conf='cd ~/.config'
+# alias ls='ls -F -a'
 alias z='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
 alias v='vim ~/.vimrc'
 alias sv='source ~/.vimrc'
 alias chk='vim ~/.chunkwmrc'
-alias schk='source ~/.chunkwmrc'
-alias kd='vim ~/.khdrc'
-alias skd='source ~/.khdrc'
+alias rschk='brew services restart chunkwm'
+alias skd='vim ~/.skhdrc'
+alias rsskd='brew services restart skhd'
 
 # Navigation
 alias ..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias d='cd ~/Documents'
+alias dt='cd ~/Desktop'
+alias dd='cd ~/Documents/DESKTOP'
+alias ddp='cd ~/Documents/DESKTOP/PythonStuff'
+alias ddw='cd ~/Documents/DESKTOP/website-files'
+alias conf='cd ~/.config'
 
-# Show/hide hiddne files in Finder
+# Show/hidden files in Finder
 alias show='defaults write com.apple.finder AppleShowAllFiles -bool true; killall Finder /System/Library/CoreServices/Finder.app'
 alias hide='defaults write com.apple.finder AppleShowAllFiles -bool false; killall Finder /System/Library/CoreServices/Finder.app'
 
@@ -76,11 +79,12 @@ alias reload="exec ${SHELL} -l"
 # Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
-# Recursively remover '.DS_Store' files
+# Recursively remove '.DS_Store' files
 alias clnup="find . -type f -name '*.DS_Store' -ls -delete"
 
 # Update Ruby gems, npm and Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
+
 
 neofetch
 
