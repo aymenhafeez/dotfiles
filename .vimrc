@@ -189,6 +189,7 @@ nmap <Leader>swh :topleft vnew<CR>
 nmap <Leader>swl :botright vnew<CR>
 nmap <Leader>swk :topleft new<CR>
 nmap <Leader>swj :botright new<CR>
+
 " enable folding
 set foldmethod=indent
 set foldlevel=99
