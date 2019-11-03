@@ -1,6 +1,7 @@
 # reload config
 cmd + alt + ctrl - r : khd -e "reload"
 
+# shortcuts to open apps 
 cmd - return : open -na /Applications/iTerm.app
 ctrl + cmd - o : /Applications/Opera.app/Contents/MacOS/Opera
 ctrl + cmd - m : /Applications/Min.app/Contents/MacOS/Min
