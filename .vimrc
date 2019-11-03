@@ -2,8 +2,10 @@ set nocompatible	" required
 filetype off 		" required
 set number		" required
 
+set relativenumber
+
 " -----------------------------------------------------------------------------
-" Vundle plugin manager
+" plugins
 " -----------------------------------------------------------------------------
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -159,18 +161,23 @@ nnoremap <S-Tab> <<
 " untab in insert mode
 inoremap <S-Tab> <C-d>
 
-" easier navigation between split planes
+" easier navigation between split panes
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" navigating tabs:
+" easier navigation between tabs
 nnoremap tn :tabnew<Space>
 nnoremap tk :tabnext<CR>
 nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
+
+" easier navigation between buffers
+map bk :bn<cr>
+map bj :bp<cr>
+map bd :bd<cr>  
 
 " window  positions
 nmap <Leader>wh :leftabove vnew<CR>
@@ -182,12 +189,6 @@ nmap <Leader>swh :topleft vnew<CR>
 nmap <Leader>swl :botright vnew<CR>
 nmap <Leader>swk :topleft new<CR>
 nmap <Leader>swj :botright new<CR>
-
-" easier switching between buffers
-map gk :bn<cr>
-map gj :bp<cr>
-map gd :bd<cr>  
-
 " enable folding
 set foldmethod=indent
 set foldlevel=99
@@ -216,5 +217,4 @@ let g:airline_solarized_bg='dark'
 highlight VertSplit ctermbg=NONE guibg=NONE
 highlight CursorLineNR guifg=#2d5761
 
-set relativenumber
 
