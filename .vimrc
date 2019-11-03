@@ -49,7 +49,7 @@ filetype plugin indent on    " required
 map <Space> <Leader>
 
 " -----------------------------------------------------------------------------
-"plugin settings and shortcuts 
+" plugin settings and shortcuts 
 " -----------------------------------------------------------------------------
 
 " scrooloose/nerdtree
@@ -135,6 +135,13 @@ map <Leader>vc :tabnew $MYVIMRC<CR>
 " source .vimrc
 map <Leader>sv :source $MYVIMRC<CR>
 
+" install plugins
+cnoremap pi PluginInstall
+
+" file search
+set path+=**
+set wildmenu
+
 " disable arrow keys in normal mode
 map <up> <nop>
 map <down> <nop>
@@ -165,13 +172,21 @@ nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 
+" window  positions
+nmap <Leader>wh :leftabove vnew<CR>
+nmap <Leader>wl :rightbelow vnew<CR>
+nmap <Leader>wk :leftabove new<CR>
+nmap <Leader>wj :rightbelow new<CR>
+
+nmap <Leader>swh :topleft vnew<CR>
+nmap <Leader>swl :botright vnew<CR>
+nmap <Leader>swk :topleft new<CR>
+nmap <Leader>swj :botright new<CR>
+
 " easier switching between buffers
 map gk :bn<cr>
 map gj :bp<cr>
 map gd :bd<cr>  
-
-" easier to install plugins
-cnoremap pi PluginInstall
 
 " enable folding
 set foldmethod=indent
