@@ -3,7 +3,7 @@ filetype off 		" required
 set number		" required
 
 " -----------------------------------------------------------------------------
-" Vundle plugin manager
+" plugins
 " -----------------------------------------------------------------------------
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
