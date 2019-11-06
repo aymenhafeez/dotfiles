@@ -1,10 +1,12 @@
 # reload config
-cmd + alt + ctrl - r : khd -e "reload"
+cmd + alt + ctrl - r : skhd -e "reload"
 
 # shortcuts to open apps 
 cmd - return : open -na /Applications/iTerm.app
+ctrl + cmd - x : /Applications/Firefox.app/Contents/MacOS/Firefox
 ctrl + cmd - o : /Applications/Opera.app/Contents/MacOS/Opera
 ctrl + cmd - m : /Applications/Min.app/Contents/MacOS/Min
+ctrl + cmd - c : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Visual\Studio\ Code
 
 # disable/enable ffm
 cmd + ctrl + alt + shift - m : chunkc core::load ffm.so
@@ -43,34 +45,20 @@ shift + alt - left   : chunkc tiling::window --grid-layout 1:2:0:0:1:1
 # make floating window fill right-half of screen
 shift + alt - right  : chunkc tiling::window --grid-layout 1:2:1:0:1:1
 
-# move floating windows / windows on a grid space
-# 10 rows 10 cols grid, windows left and top on 0 grid, and have 5 grid width 5 grid height
-alt - q : chunkc tiling::window --grid-layout 10:10:0:0:5:5
-
-# send window to desktop
-shift + alt - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
-shift + alt - z : chunkc tiling::window --send-to-desktop prev
-shift + alt - c : chunkc tiling::window --send-to-desktop next
-shift + alt - 1 : chunkc tiling::window --send-to-desktop 1
-shift + alt - 2 : chunkc tiling::window --send-to-desktop 2
-shift + alt - 3 : chunkc tiling::window --send-to-desktop 3
-shift + alt - 4 : chunkc tiling::window --send-to-desktop 4
-shift + alt - 5 : chunkc tiling::window --send-to-desktop 5
-shift + alt - 6 : chunkc tiling::window --send-to-desktop 6
-
-# send window to desktop and switch desktop
-shift + cmd - x : `id=$(chunkc get _last_active_desktop); chunkc tiling::window -d $id; khd -p "cmd + alt - $id" &> /dev/null`
-# shift + cmd - z : chunkc tiling::window -d prev; khd -p "cmd + alt - z"
-# shift + cmd - c : chunkc tiling::window -d next; khd -p "cmd + alt - c"
-# shift + cmd - 1 : chunkc tiling::window -d 1; khd -p "cmd + alt - 1"
-# shift + cmd - 2 : chunkc tiling::window -d 2; khd -p "cmd + alt - 2"
-# shift + cmd - 3 : chunkc tiling::window -d 3; khd -p "cmd + alt - 3"
-# shift + cmd - 4 : chunkc tiling::window -d 4; khd -p "cmd + alt - 4"
-# shift + cmd - 5 : chunkc tiling::window -d 5; khd -p "cmd + alt - 5"
-# shift + cmd - 6 : chunkc tiling::window -d 6; khd -p "cmd + alt - 6"
-
-# switch to last active desktop
-cmd + alt - x   : `id=$(chunkc get _last_active_desktop); khd -p "cmd + alt - $id" &> /dev/null`
+# send window to desktop and follow focus
+shift + alt - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop); chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
+shift + alt - z : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
+shift + alt - c : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
+shift + alt - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1
+shift + alt - 2 : chunkc tiling::window --send-to-desktop 2; chunkc tiling::desktop --focus 2
+shift + alt - 3 : chunkc tiling::window --send-to-desktop 3; chunkc tiling::desktop --focus 3
+shift + alt - 4 : chunkc tiling::window --send-to-desktop 4; chunkc tiling::desktop --focus 4
+shift + alt - 5 : chunkc tiling::window --send-to-desktop 5; chunkc tiling::desktop --focus 5
+shift + alt - 6 : chunkc tiling::window --send-to-desktop 6; chunkc tiling::desktop --focus 6
+shift + alt - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7
+shift + alt - 8 : chunkc tiling::window --send-to-desktop 8; chunkc tiling::desktop --focus 8
+shift + alt - 9 : chunkc tiling::window --send-to-desktop 9; chunkc tiling::desktop --focus 9
+shift + alt - 0 : chunkc tiling::window --send-to-desktop 10; chunkc tiling::desktop --focus 10
 
 # focus monitor
 ctrl + alt - z  : chunkc tiling::monitor -f prev
@@ -128,12 +116,18 @@ alt - d : chunkc tiling::window --toggle parent
 # toggle window split type
 alt - e : chunkc tiling::window --toggle split
 
+# toggle window fade
+alt - q : chunkc tiling::window --toggle fade
+
 # float / unfloat window and center on screen
 alt - t : chunkc tiling::window --toggle float;\
           chunkc tiling::window --grid-layout 4:4:1:1:2:2
 
+# toggle sticky
+alt - s : chunkc tiling::window --toggle sticky
+
 # toggle sticky, float and resize to picture-in-picture size
-alt - s : chunkc tiling::window --toggle sticky;\
+alt - p : chunkc tiling::window --toggle sticky;\
           chunkc tiling::window --grid-layout 5:5:4:0:1:1
 
 # float next window to be tiled
@@ -145,12 +139,3 @@ ctrl + alt - s : chunkc tiling::desktop --layout monocle
 ctrl + alt - d : chunkc tiling::desktop --layout float
 
 ctrl + alt - w : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
-
-# remap caps-lock to escape for this config only !!!
-# macos sierra can also perform this remap for a given keyboard
-- capslock : khd -p "- escape"
-
-# key remap for norwegian layout \ { }
-cmd - 7 : khd -p "shift + alt - 7"
-cmd - 8 : khd -p "shift + alt - 8"
-cmd - 9 : khd -p "shift + alt - 9"

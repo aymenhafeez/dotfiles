@@ -1,17 +1,60 @@
 # oh-my-zsh path
-export ZSH='/Users/AymenHafeez/.oh-my-zsh'
+export ZSH='/Users/aymen/.oh-my-zsh'
 
-ZSH_THEME="powerlevel9k/powerlevel9k"
+# -----------------------------------------------------------------------------
+# appearance 
+# -----------------------------------------------------------------------------
+export CLICOLOR=1
 
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
-#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-# POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_STATUS_DEFAULT_BACKGROUND='blue'
-POWERLEVEL9K_VI_INSERT_MODE_STRING='INSERT'
-POWERLEVEL9K_VI_COMMAND_MODE_STRING='NORMAL'
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode time)
-POWERLEVEL9K_HOST_NAME_FOREGROUND='white'
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# POWERLEVEL9K_MODE='nerdfont-complete'
+
+# left prompt
+# .............................................................................
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_joined vcs)
+
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="%F{030}\uf101%f"
+POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR="%F{030}\uf101%f"
+
+POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
+POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='clear'
+
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='clear'
+POWERLEVEL9K_DIR_HOME_BACKGROUND='clear'
+POWERLEVEL9K_DIR_HOME_FOREGROUND='006'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='clear'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='006'
+POWERLEVEL9K_DIR_ETC_BACKGROUND='clear'
+POWERLEVEL9K_DIR_ETC_FOREGROUND='006'
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='#377a8f'
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='none'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='003'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='none'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='005'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='none'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='166'
+
+# right prompt
+# .............................................................................
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode_joined status_joined)
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=' '
+POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%F{006}\uf105%f'
+POWERLEVEL9K_VI_INSERT_MODE_STRING='%F{030}\uf100 INSERT%f'
+POWERLEVEL9K_VI_COMMAND_MODE_STRING='%F{015}\uf100 NORMAL%f'
+POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='clear'
+POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='clear'
+
+POWERLEVEL9K_STATUS_OK_BACKGROUND='clear'
+POWERLEVEL9K_STATUS_OK_ICON='%F{006}\uf111%f'
+POWERLEVEL9K_STATUS_ERROR_BACKGROUND='clear'
+POWERLEVEL9K_STATUS_ERROR_ICON='%F{203}\uf111%f'
+POWERLEVEL9K_STATUS_ERROR_FOREGROUND='green'
+POWERLEVEL9K_STATUS_CROSS=true
+POWERLEVEL9K_STATUS_VERBOSE=true
+# -----------------------------------------------------------------------------
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
@@ -34,7 +77,7 @@ plugins=(
 
 cd() { builtin cd "$@" && ls -F -a; }
 
-alias python=python3.7
+alias python=python3
 
 # Shortcuts
 alias ci='code-insiders'
@@ -43,7 +86,7 @@ alias zshconfig='mate ~/.zshrc'
 alias ohmyzsh='mate ~/.oh-my-zsh'
 alias rng='ranger'
 alias cl='clear'
-# alias ls='ls -F -a'
+alias lfa='ls -F -a'
 alias z='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
 alias v='vim ~/.vimrc'
@@ -60,9 +103,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias d='cd ~/Documents'
 alias dt='cd ~/Desktop'
-alias dd='cd ~/Documents/DESKTOP'
-alias ddp='cd ~/Documents/DESKTOP/PythonStuff'
-alias ddw='cd ~/Documents/DESKTOP/website-files'
+alias de='cd ~/Documents/work-env'
+alias dp='cd ~/Documents/python_files'
+alias dw='cd ~/Documents/website'
 alias conf='cd ~/.config'
 
 # Show/hidden files in Finder
@@ -85,8 +128,11 @@ alias clnup="find . -type f -name '*.DS_Store' -ls -delete"
 # Update Ruby gems, npm and Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
-
+cl
 neofetch
+~/.vocab
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"

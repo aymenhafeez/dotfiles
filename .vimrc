@@ -1,8 +1,11 @@
-set nocompatible	" required 
-filetype off 		" required
-set number		" required
+" =============================================================================
+" aymen hafeez .vimrc
+" =============================================================================
 
-set relativenumber
+set nocompatible 
+filetype off
+syntax on
+set encoding=utf8
 
 " -----------------------------------------------------------------------------
 " plugins
@@ -13,42 +16,42 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
-" file explorer
+" nerdtree related
 Plugin 'scrooloose/nerdtree'
-" git status for NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-" icons for NERDTree
 Plugin 'ryanoasis/vim-devicons'
 
-" autopairing parentheses, apostrophes, etc.
+" general
+Bundle 'Valloric/YouCompleteMe'
+Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
-" autocomplete 
-Plugin 'davidhalter/jedi-vim'
-" surround text with parentheses, apostrophes, etc.
 Plugin 'tpope/vim-surround'
-" shortcut for commenting
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'mhinz/vim-startify'
 
 " language/file type specific
-Plugin 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plugin 'python-mode/python-mode'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'vim-scripts/indentpython.vim'
 Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
+Plugin 'jaxbot/browserlink.vim'
 Plugin 'lervag/vimtex'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tpope/vim-git'
+Plugin 'szymonmaszke/vimpyter'
+Plugin 'hanschen/vim-ipython-cell'
+Plugin 'jpalardy/vim-slime'
 
-" themes and apperance
+" themes, apperance and status bar
 Plugin 'lifepillar/vim-solarized8'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Rigellute/rigel'
-" status bar
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" set <spacebar> as leader
-map <Space> <Leader>
+call vundle#end()            
+filetype plugin indent on
 
 " -----------------------------------------------------------------------------
 " plugin settings and shortcuts 
@@ -56,8 +59,8 @@ map <Space> <Leader>
 
 " scrooloose/nerdtree
 " .............................................................................
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " Quit out of vim if NERDTree is the only buffer
@@ -72,19 +75,19 @@ let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen = 1
-map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
-" minimise lag with icons plugin
 let g:NERDTreeLimitedSyntax = 1
 let g:NERDTreeHighlightCursorline = 0
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 " add space after comment
 let g:NERDSpaceDelims = 1
 
 " toggle NERDTree
 map <C-n> :NERDTreeToggle<CR>
+
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
 " Xuyuanp/nerdtree-git-plugin
 " .............................................................................
@@ -101,18 +104,15 @@ let g:NERDTreeIndicatorMapCustom = {
      \ "Unknown"   : "?"
      \ }
 
-" python-mode/python-mode
+" 'Valloric/YouCompleteMe
 " .............................................................................
-let python_highlight_all=3
-syntax on
+let g:ycm_autoclose_preview_window_after_completion=1
+map <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-let g:pymode_python = 'python3.7'
-let g:jedi#force_py_version = 3
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope = 0
-" let g:pymode_rope_completion = 1
-let g:pymode_rope_completion_bind = '<C-Space>'
-let g:pymode_options_colorcolumn = 0
+" simeji/winresizer
+" .............................................................................
+let g:winresizer_vert_resize=3 
+let g:winresizer_finish_with_escape=1
 
 " shortcut to save and run Python files
 map <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
@@ -127,34 +127,52 @@ let g:instant_markdown_slow = 1
 let g:instant_markdown_allow_unsafe_content = 1
 let g:instant_markdown_mathjax = 1
 
+" python-mode/python-mode
+" .............................................................................
+let g:pymode_python = 'python3'
+let g:pymode_rope = 0
+
+" xuhdev/vim-latex-live-preview
+" .............................................................................
+let g:livepreview_previewer = 'Preview'
+let g:livepreview_previewer = 'open -a Preview'
+
+" szymonmaszke/vimpyter
+" .............................................................................
+autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
+autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
+autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
+
 " -----------------------------------------------------------------------------
-" general bindings and shortcuts
+" general config 
 " -----------------------------------------------------------------------------
+
+" show relative line numbers
+set number
+set relativenumber
+
+" file search
+set path+=**
+set wildmenu
+
+" tabbing
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+
+" -----------------------------------------------------------------------------
+" bindings and shortcuts
+" -----------------------------------------------------------------------------
+
+" set <spacebar> as leader
+map <Space> <Leader>
 
 " open .vimrc in new tab
 map <Leader>vc :tabnew $MYVIMRC<CR>
 
 " source .vimrc
 map <Leader>sv :source $MYVIMRC<CR>
-
-" install plugins
-cnoremap pi PluginInstall
-
-" file search
-set path+=**
-set wildmenu
-
-" disable arrow keys in normal mode
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-
-" disable arrow keys in insert mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
 
 " untab in command mode
 nnoremap <S-Tab> <<
@@ -169,14 +187,14 @@ nnoremap <C-H> <C-W><C-H>
 
 " easier navigation between tabs
 nnoremap tn :tabnew<Space>
-nnoremap tk :tabnext<CR>
-nnoremap tj :tabprev<CR>
-nnoremap th :tabfirst<CR>
-nnoremap tl :tablast<CR>
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
+nnoremap tj :tabfirst<CR>
+nnoremap tk :tablast<CR>
 
 " easier navigation between buffers
-map bk :bn<cr>
-map bj :bp<cr>
+map bl :bn<cr>
+map bh :bp<cr>
 map bd :bd<cr>  
 
 " window  positions
@@ -190,26 +208,36 @@ nmap <Leader>swl :botright vnew<CR>
 nmap <Leader>swk :topleft new<CR>
 nmap <Leader>swj :botright new<CR>
 
-" enable folding
-set foldmethod=indent
-set foldlevel=99
+" disable arrow keys in normal mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
 
-" ------------------------------------------------------------------------------
+" disable arrow keys in insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+map <Leader>o :open 
+
+map <Leader>pi :PluginInstall
+
+map <Leader>f :find 
+
+" -----------------------------------------------------------------------------
 " theme and appearance
-" ------------------------------------------------------------------------------
+" -----------------------------------------------------------------------------
+
 set termguicolors
-" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-syntax enable
 set background=dark
-colorscheme solarized8_flat
-" colorscheme rigel
-
-set encoding=utf8
+colorscheme spacedust
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
 " let g:rigel_airline = 1
 " let g:airline_theme = 'rigel'
@@ -217,5 +245,4 @@ let g:airline_solarized_bg='dark'
 " background colour of pane split
 highlight VertSplit ctermbg=NONE guibg=NONE
 highlight CursorLineNR guifg=#2d5761
-
 
