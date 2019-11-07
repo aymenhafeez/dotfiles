@@ -57,6 +57,7 @@ Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-surround'
 Plugin 'mhinz/vim-startify'
+Plugin 'joeytwiddle/sexy_scroller.vim'
 
 " language/file type specific
 Plugin 'python-mode/python-mode'
@@ -82,6 +83,10 @@ Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()            
 filetype plugin indent on
 
+" fzf
+set rtp+=/usr/local/opt/fzf
+
+
 " -----------------------------------------------------------------------------
 " plugin settings and shortcuts 
 " -----------------------------------------------------------------------------
@@ -91,7 +96,7 @@ filetype plugin indent on
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 " Quit out of vim if NERDTree is the only buffer
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
@@ -135,6 +140,11 @@ let g:NERDTreeIndicatorMapCustom = {
 let g:ycm_autoclose_preview_window_after_completion=1
 map <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+" joeytwiddle/sexy_scroller.vim
+" .............................................................................
+let g:SexyScroller_EasingStyle = 3
+let g:SexyScroller_ScrollTime = 5
+
 " simeji/winresizer
 " .............................................................................
 let g:winresizer_vert_resize=3 
@@ -163,6 +173,11 @@ autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
 autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
 autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 
+" vim-airline/vim-airline
+" .............................................................................
+map <Leader>a :AirlineToggle<CR>
+let g:airline#extensions#tabline#buffer_min_count =2
+
 " -----------------------------------------------------------------------------
 " bindings and shortcuts
 " -----------------------------------------------------------------------------
@@ -189,7 +204,7 @@ map $ ysiw$
 " shortcut to save and run Python files
 map <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
-set guioptions=
+" set guioptions=
 set modifiable
 
 " easier navigation between split panes
@@ -235,9 +250,28 @@ imap <right> <nop>
 
 map <Leader>o :open 
 
-map <Leader>pi :PluginInstall
+map <Leader>pi :PluginInstall<CR>
 
 map <Leader>f :find 
+
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+    if s:hidden_all  == 0
+        let s:hidden_all = 1
+        " set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+    else
+        let s:hidden_all = 0
+        " set showmode
+        set ruler
+        set laststatus=2
+        set showcmd
+    endif
+endfunction
+
+nnoremap <Leader>h :call ToggleHiddenAll()<CR>
 
 " -----------------------------------------------------------------------------
 " theme and appearance
@@ -248,6 +282,7 @@ set termguicolors
 set background=dark
 colorscheme spacedust
 
+" airline statusbar
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
