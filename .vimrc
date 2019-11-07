@@ -2,10 +2,39 @@
 " aymen hafeez .vimrc
 " =============================================================================
 
+" -----------------------------------------------------------------------------
+" general config 
+" -----------------------------------------------------------------------------
+
 set nocompatible 
 filetype off
+set autoread
+set hidden
 syntax on
 set encoding=utf8
+
+" set <spacebar> as leader
+map <Space> <Leader>
+
+" show relative line numbers
+set number
+set relativenumber
+
+" turn swap files off
+set noswapfile
+set nobackup
+set nowb
+
+" file search
+set path+=**
+set wildmenu
+" set wildmode=list:longest
+
+" tabbing
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
 
 " -----------------------------------------------------------------------------
 " plugins
@@ -18,6 +47,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " nerdtree related
 Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
 
@@ -26,7 +56,6 @@ Bundle 'Valloric/YouCompleteMe'
 Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'mhinz/vim-startify'
 
 " language/file type specific
@@ -59,35 +88,32 @@ filetype plugin indent on
 
 " scrooloose/nerdtree
 " .............................................................................
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 " Quit out of vim if NERDTree is the only buffer
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-let g:NERDTreeDisableFileExtensionHighlight = 1
 let g:NERDTreeDisableExactMatchHighlight = 1
 let g:NERDTreeDisablePatternMatchHighlight = 1
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
-let NERDTreeQuitOnOpen = 1
 let NERDTreeShowHidden=1
 let g:NERDTreeLimitedSyntax = 1
-let g:NERDTreeHighlightCursorline = 0
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-
-" add space after comment
-let g:NERDSpaceDelims = 1
+let g:NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp$'] "ignore files in NERDTree
 
 " toggle NERDTree
 map <C-n> :NERDTreeToggle<CR>
 
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+
+" scrooloose/nerdcommenter
+" .............................................................................
+" add space after comment
+let g:NERDSpaceDelims = 1
 
 " Xuyuanp/nerdtree-git-plugin
 " .............................................................................
@@ -114,12 +140,6 @@ map <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:winresizer_vert_resize=3 
 let g:winresizer_finish_with_escape=1
 
-" shortcut to save and run Python files
-map <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
-
-set guioptions=
-set modifiable
-
 " suan/vim-instant-markdown" 
 " .............................................................................
 filetype plugin on
@@ -144,40 +164,33 @@ autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
 autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 
 " -----------------------------------------------------------------------------
-" general config 
-" -----------------------------------------------------------------------------
-
-" show relative line numbers
-set number
-set relativenumber
-
-" file search
-set path+=**
-set wildmenu
-
-" tabbing
-set tabstop=4
-set shiftwidth=4
-set smarttab
-set expandtab
-
-" -----------------------------------------------------------------------------
 " bindings and shortcuts
 " -----------------------------------------------------------------------------
 
-" set <spacebar> as leader
-map <Space> <Leader>
+" open .vimrc in new buffer
+map <Leader>vc :e $MYVIMRC<CR>
 
-" open .vimrc in new tab
-map <Leader>vc :tabnew $MYVIMRC<CR>
+" open .vimrc in vertically split buffer 
+map <leader>vt :vsp $MYVIMRC<CR>
 
 " source .vimrc
 map <Leader>sv :source $MYVIMRC<CR>
+
+" save file
+nnoremap <leader>ww :w!<CR>
 
 " untab in command mode
 nnoremap <S-Tab> <<
 " untab in insert mode
 inoremap <S-Tab> <C-d>
+
+map $ ysiw$
+
+" shortcut to save and run Python files
+map <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
+
+set guioptions=
+set modifiable
 
 " easier navigation between split panes
 nnoremap <C-J> <C-W><C-J>
@@ -236,6 +249,7 @@ set background=dark
 colorscheme spacedust
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
