@@ -11,7 +11,7 @@
                     "basic.simultaneous_threshold_milliseconds": 50,
                     "basic.to_delayed_action_delay_milliseconds": 500,
                     "basic.to_if_alone_timeout_milliseconds": 125,
-                    "basic.to_if_held_down_threshold_milliseconds": 150,
+                    "basic.to_if_held_down_threshold_milliseconds": 500,
                     "mouse_motion_to_scroll.speed": 100
                 },
                 "rules": [
@@ -97,28 +97,11 @@
                         ]
                     },
                     {
-                        "description": "escape (mapped to caps lock) acts as left control when held",
+                        "description": "Change escape (mapped to caps-lock) to left option key when pressed with another key",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "escape"
-                                },
-                                "to": {
-                                    "key_code": "escape"
-                                },
-                                "to_if_held_down": {
-                                    "key_code": "left_control"
-                                },
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "tab acts as left option if pressed with another key",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "tab",
+                                    "key_code": "escape",
                                     "modifiers": {
                                         "optional": [
                                             "any"
@@ -132,7 +115,7 @@
                                 ],
                                 "to_if_alone": [
                                     {
-                                        "key_code": "tab"
+                                        "key_code": "escape"
                                     }
                                 ],
                                 "type": "basic"

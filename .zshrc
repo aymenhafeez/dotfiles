@@ -4,6 +4,7 @@ export ZSH='/Users/aymen/.oh-my-zsh'
 # -----------------------------------------------------------------------------
 # appearance 
 # -----------------------------------------------------------------------------
+
 export CLICOLOR=1
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -42,8 +43,8 @@ POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='166'
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode_joined status_joined)
 POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=' '
 POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%F{006}\uf105%f'
-POWERLEVEL9K_VI_INSERT_MODE_STRING='%F{030}\uf100 INSERT%f'
-POWERLEVEL9K_VI_COMMAND_MODE_STRING='%F{015}\uf100 NORMAL%f'
+POWERLEVEL9K_VI_INSERT_MODE_STRING='%F{015}\uf100 INSERT%f'
+POWERLEVEL9K_VI_COMMAND_MODE_STRING='%F{030}\uf100 NORMAL%f'
 POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='clear'
 POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='clear'
 
@@ -54,6 +55,9 @@ POWERLEVEL9K_STATUS_ERROR_ICON='%F{203}\uf111%f'
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND='green'
 POWERLEVEL9K_STATUS_CROSS=true
 POWERLEVEL9K_STATUS_VERBOSE=true
+
+# -----------------------------------------------------------------------------
+# general config
 # -----------------------------------------------------------------------------
 
 # Uncomment the following line if pasting URLs and other text is messed up.
@@ -77,26 +81,36 @@ plugins=(
 
 cd() { builtin cd "$@" && ls -F -a; }
 
+# -----------------------------------------------------------------------------
+# aliases
+# -----------------------------------------------------------------------------
+
 alias python=python3
+alias ipython='~/Library/Python/3.7/bin/ipython'
+alias jupyter-qtconsole='~/Library/Python/3.7/bin/jupyter-qtconsole'
+alias jqt=jupyter-qtconsole
+alias jnb='~/Library/Python/3.7/bin/jupyter-notebook'
 
 # Shortcuts
+# .............................................................................
+alias tmks='tmux kill-server'
+alias tma='tmux attach -t tmux || tmux new -s tmux'
 alias ci='code-insiders'
-alias c='code'
 alias zshconfig='mate ~/.zshrc'
 alias ohmyzsh='mate ~/.oh-my-zsh'
 alias rng='ranger'
 alias cl='clear'
 alias lfa='ls -F -a'
-alias z='vim ~/.zshrc'
-alias sz='source ~/.zshrc'
-alias v='vim ~/.vimrc'
-alias sv='source ~/.vimrc'
+alias zc='vim ~/.zshrc'
+alias szc='source ~/.zshrc'
+alias vc='vim ~/.vimrc'
 alias chk='vim ~/.chunkwmrc'
 alias rschk='brew services restart chunkwm'
 alias skd='vim ~/.skhdrc'
 alias rsskd='brew services restart skhd'
 
 # Navigation
+# .............................................................................
 alias ..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -128,6 +142,10 @@ alias clnup="find . -type f -name '*.DS_Store' -ls -delete"
 # Update Ruby gems, npm and Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
+# -----------------------------------------------------------------------------
+# startup
+# -----------------------------------------------------------------------------
+
 cl
 neofetch
 ~/.vocab
@@ -136,3 +154,5 @@ source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
