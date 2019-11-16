@@ -6,7 +6,6 @@
 " general config 
 " -----------------------------------------------------------------------------
 
-set nocompatible 
 filetype off
 set autoread
 set hidden
@@ -16,7 +15,7 @@ set ttimeoutlen=0
 set modifiable
 
 " set <spacebar> as leader
-map <Space> <Leader>
+nmap <Space> <Leader>
 
 " show relative line numbers
 set number
@@ -38,11 +37,36 @@ set smarttab
 set expandtab
 
 " netrw config
-let g:netrw_banner=0
+" .............................................................................
 let g:netrw_banner=0
 let g:netrw_browse_split=4
 let g:netrw_altv=1
-let g:netrw_liststyle=3
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 13
+
+function! ToggleVExplorer() abort
+  if exists("t:expl_buf_num")
+      let expl_win_num = bufwinnr(t:expl_buf_num)
+      if expl_win_num != -1
+          let cur_win_nr = winnr()
+          exec expl_win_num . 'wincmd w'
+          close
+          exec cur_win_nr . 'wincmd w'
+          unlet t:expl_buf_num
+      else
+          unlet t:expl_buf_num
+      endif
+  else
+      exec '1wincmd w'
+      Vexplore
+      let t:expl_buf_num = bufnr("%")
+  endif
+endfunction
+
+nmap <silent> <C-N> :call ToggleVExplorer()<CR>
+
+" change directory to the current buffer when opening files.
+set autochdir
 
 " -----------------------------------------------------------------------------
 " plugins
@@ -54,22 +78,21 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
-" nerdtree related
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'tpope/vim-fugitive'
-
 " general
+Plugin 'ryanoasis/vim-devicons'
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'tpope/vim-surround'
 Plugin 'mhinz/vim-startify'
 Plugin 'joeytwiddle/sexy_scroller.vim'
 Plugin 'vim-scripts/Conque-Shell'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'junegunn/goyo.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
 
 " language/file type specific
 Plugin 'python-mode/python-mode'
@@ -82,8 +105,8 @@ Plugin 'godlygeek/tabular'
 Plugin 'jaxbot/browserlink.vim'
 Plugin 'lervag/vimtex'
 Plugin 'vim-latex/vim-latex'
+Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'tmux-plugins/vim-tmux'
-Plugin 'tpope/vim-git'
 Plugin 'jpalardy/vim-slime'
 Plugin 'jupyter-vim/jupyter-vim'
 Plugin 'ivanov/vim-ipython'
@@ -102,25 +125,6 @@ filetype plugin indent on
 " plugin settings and shortcuts 
 " -----------------------------------------------------------------------------
 
-" scrooloose/nerdtree
-" .............................................................................
-" autocmd VimEnter * NERDTree
-" autocmd VimEnter * wincmd p
-" Quit out of vim if NERDTree is the only buffer
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeAutoDeleteBuffer=1
-let NERDTreeMinimalUI=1
-let NERDTreeDirArrows=1
-let NERDTreeShowHidden=1
-let g:NERDTreeLimitedSyntax=1
-let g:NERDTreeHighlightCursorline=1
-let g:NERDTreeWinSize=23
-let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp$'] "ignore files in NERDTree
-
-map <silent> <C-n> :NERDTreeToggle<CR>
-
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-
 " scrooloose/nerdcommenter
 " .............................................................................
 " add space after comment
@@ -129,7 +133,7 @@ let g:NERDSpaceDelims=1
 " 'Valloric/YouCompleteMe
 " .............................................................................
 let g:ycm_autoclose_preview_window_after_completion=1
-map <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " joeytwiddle/sexy_scroller.vim
 " .............................................................................
@@ -153,16 +157,25 @@ nnoremap <silent> <C-L> :TmuxNavigateRight<CR>
 " suan/vim-instant-markdown" 
 " .............................................................................
 filetype plugin on
-" let g:instant_markdown_slow=1
+let g:instant_markdown_slow=1
 let g:instant_markdown_allow_unsafe_content=1
 let g:instant_markdown_mathjax=1
 
-map <Leader>m :InstantMarkdownPreview<CR> 
+nnoremap <Leader>m :InstantMarkdownPreview<CR> 
 
 " python-mode/python-mode
 " .............................................................................
 let g:pymode_python='python3'
 let g:pymode_rope=0
+
+" vim-latex/vim-latex
+" .............................................................................
+let g:tex_flavor='latex'
+
+" xuhdev/vim-latex-live-preview
+" .............................................................................
+let g:livepreview_previewer='open -a Preview'
+nnoremap <silent> <Leader>tx :LLPStartPreview<CR>
 
 " jupyter-vim/jupyter-vim
 " .............................................................................
@@ -178,7 +191,7 @@ endif
 " run current file
 nnoremap <buffer> <silent> <localleader>R :w<CR>:JupyterRunFile<CR>
 nnoremap <buffer> <silent> <localleader>I :JupyterImportThisFile<CR>
-map <Leader>co :JupyterConnect<CR>
+nmap <Leader>co :JupyterConnect<CR>
 
 " change to directory of current file
 nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
@@ -194,14 +207,9 @@ nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 " debugging maps
 nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
 
-" xuhdev/vim-latex-live-preview
-" .............................................................................
-let g:livepreview_previewer='Preview'
-let g:livepreview_previewer='open -a Preview'
-
 " vim-airline/vim-airline
 " .............................................................................
-map <silent> <Leader>a :AirlineToggle<CR>
+nnoremap <silent> <Leader>a :AirlineToggle<CR>
 let g:airline#extensions#tabline#buffer_min_count=2
 
 " -----------------------------------------------------------------------------
@@ -209,13 +217,13 @@ let g:airline#extensions#tabline#buffer_min_count=2
 " -----------------------------------------------------------------------------
 
 " open .vimrc in new buffer
-map <Leader>vc :e $MYVIMRC<CR>
+nnoremap <Leader>vc :e $MYVIMRC<CR>
 
 " open .vimrc in vertically split buffer 
-map <Leader>vt :vsp $MYVIMRC<CR>
+nnoremap <Leader>vt :vsp $MYVIMRC<CR>
 
 " source .vimrc
-map <Leader>sv :source $MYVIMRC<CR>
+nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " untab in command mode
 nnoremap <S-Tab> <<
@@ -223,16 +231,31 @@ nnoremap <S-Tab> <<
 inoremap <S-Tab> <C-d>
 
 " netrw
-map <Leader>N :edit .<CR>
+nnoremap <Leader>N :edit .<CR>
 
 " shortcut to save and run Python files
-map <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
+nnoremap <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
-" auto pair for LaTeX equations
-autocmd FileType tex inoremap <buffer> $ $$<Esc>i
-autocmd FileType tex inoremap <buffer> $$ $$$$<Esc>hi
-autocmd FileType markdown inoremap <buffer> $ $$<Esc>i
-autocmd FileType markdown inoremap <buffer> $$ $$$$<Esc>hi
+" TeX mappings
+augroup TexMappings
+    autocmd!
+    autocmd FileType tex,latex,markdown inoremap <buffer> $ $$<Esc>i
+    autocmd FileType tex,latex,markdown inoremap <buffer> $$ $$$$<Esc>hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \itl \textit{}<Esc>i
+    autocmd FileType tex,latex,markdown inoremap <buffer> \bf \textbf{}<Esc>i
+    autocmd FileType tex,latex,markdown inoremap <buffer> \eqn \begin{equation}<Esc><CR>i\end{equation}<Esc>ko
+    autocmd FileType tex,latex,markdown inoremap <buffer> \frac \frac{}{}<Esc>2hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \int \int_{}^{}<Esc>3hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \sum \sum_{}^{}<Esc>3hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \sm \sum_{}<Esc>i
+    autocmd FileType tex,latex,markdown inoremap <buffer> \prod \prod_{}^{}<Esc>3hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \prd \prod_{}<Esc>i
+    autocmd FileType tex,latex,markdown inoremap <buffer> \l( \left(\right)<Esc>6hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \l[ \left[\right]<Esc>6hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \l{ \left{\right}<Esc>6hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \l{ \left{\right}<Esc>6hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \eq[ \[\]<Esc>hi
+augroup END
 
 " easier navigation between tabs
 nnoremap <silent> tn :tabnew<Space>
@@ -242,9 +265,9 @@ nnoremap <silent> tj :tabfirst<CR>
 nnoremap <silent> tk :tablast<CR>
 
 " easier navigation between buffers
-map <silent> bl :bn<CR>
-map <silent> bh :bp<CR>
-map <silent> bd :bd<CR>  
+nnoremap <silent> <Leader>bl :bn<CR>
+nnoremap <silent> <Leader>bh :bp<CR>
+nnoremap <silent> <Leader>bd :bd<CR>  
 
 " open split panes
 nmap <silent> <Leader>wh :leftabove vnew<CR>
@@ -258,10 +281,10 @@ nmap <silent> <Leader>swk :topleft new<CR>
 nmap <silent> <Leader>swj :botright new<CR>
 
 " disable arrow keys in normal mode
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+nmap <up> <nop>
+nmap <down> <nop>
+nmap <left> <nop>
+nmap <right> <nop>
 
 " disable arrow keys in insert mode
 imap <up> <nop>
@@ -269,25 +292,25 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 
-map <Leader>o :open 
+nmap <Leader>o :open 
 
-map <Leader>pi :PluginInstall<CR>
+nmap <Leader>pi :PluginInstall<CR>
 
-map <Leader>f :find 
+" removes last command showing in cl
+nnoremap <Esc><Esc> i<Esc>l
 
-nnoremap <Esc><Esc> :<CR>
-
-let s:hidden_all=0
-function! ToggleHideAll()
+" hide ui elements
+let s:hidden_all=1
+function! ToggleHideAll() abort
     if s:hidden_all==0
         let s:hidden_all=1
-        set noshowmode
+        " set noshowmode
         set noruler
         set laststatus=0
         set noshowcmd
     else
         let s:hidden_all=0
-        set showmode
+        " set showmode
         set ruler
         set laststatus=2
         set showcmd
@@ -295,6 +318,22 @@ function! ToggleHideAll()
 endfunction
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
+
+" zoom a single window in splits 
+function! s:ToggleZoom() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+
+command! ToggleZoom call s:ToggleZoom()
+map <silent> <Leader>zt :ToggleZoom<CR>
 
 " -----------------------------------------------------------------------------
 " theme and appearance
@@ -304,6 +343,7 @@ set termguicolors
 
 set background=dark
 colorscheme spacedust
+" colorscheme solarized8_flat
 
 " airline statusbar
 let g:airline#extensions#tabline#enabled=1
@@ -314,6 +354,5 @@ let g:airline_solarized_bg='dark'
 " let g:rigel_airline=1
 " let g:airline_theme='rigel'
 
-" background colour of pane split
 highlight VertSplit ctermbg=NONE guibg=NONE
 highlight CursorLineNR guifg=#38616b
