@@ -1,14 +1,11 @@
 #!/bin/bash
 
 chunkc core::log_file stdout
-
 chunkc core::log_level warn
-
 chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
-
 chunkc core::hotload 0
 
-chunkc set custom_bar_enabled            0 
+chunkc set custom_bar_enabled            0
 chunkc set custom_bar_all_monitors       0
 chunkc set custom_bar_offset_top         0
 chunkc set custom_bar_offset_bottom      0
@@ -16,13 +13,12 @@ chunkc set custom_bar_offset_left        0
 chunkc set custom_bar_offset_right       0
 
 chunkc set global_desktop_mode           bsp
-chunkc set global_desktop_offset_top     9
-chunkc set global_desktop_offset_bottom  9 
-chunkc set global_desktop_offset_left    9 
-chunkc set global_desktop_offset_right   9 
-chunkc set global_desktop_offset_gap     9 
+chunkc set global_desktop_offset_top     8
+chunkc set global_desktop_offset_bottom  8
+chunkc set global_desktop_offset_left    8 
+chunkc set global_desktop_offset_right   8 
+chunkc set global_desktop_offset_gap     8 
 
-# NOTE: syntax for desktop-specific settings
 chunkc set 1_desktop_mode 		bsp
 chunkc set 2_desktop_mode 		bsp
 chunkc set 3_desktop_mode 		bsp
@@ -39,11 +35,13 @@ chunkc set bsp_split_ratio               0.5
 chunkc set monitor_focus_cycle           1
 chunkc set window_focus_cycle            monitor
 
-chunkc set mouse_follows_focus           0 
+chunkc set mouse_follows_focus           intrinsic
 chunkc set window_float_next             0
 chunkc set window_region_locked          1
 chunkc set window_float_center		 1
 
+# chunkc set mouse_move_window             \"fn 1\"
+# chunkc set mouse_resize_window           \"fn 2\"
 chunkc set mouse_motion_interval         35
 
 chunkc set preselect_border_color        0xffd75f5f
@@ -72,5 +70,12 @@ chunkc core::load tiling.so
 chunkc core::load ffm.so
 
 chunkc tiling::rule --owner Finder --state float &
+chunkc tiling::rule --owner Spotify --state float &
+chunkc tiling::rule --owner Python --state float &
+chunkc tiling::rule --owner Reminders --state float &
+chunkc tiling::rule --owner Mail --state float &
+chunkc tiling::rule --owner Photos --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
-chunkc tiling::rule --owner Emacs --except "^$" --state tile &
+chunkc tiling::rule --owner Notes --state float &
+chunkc tiling::rule --owner Grapher --state float &
+chunkc tiling::rule --owner Books --state float s

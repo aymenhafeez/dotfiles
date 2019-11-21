@@ -81,6 +81,12 @@ plugins=(
 
 cd() { builtin cd "$@" && ls -F -a; }
 
+# fzf via Homebrew
+if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+  source /usr/local/opt/fzf/shell/key-bindings.zsh
+  source /usr/local/opt/fzf/shell/completion.zsh
+fi
+
 # -----------------------------------------------------------------------------
 # aliases
 # -----------------------------------------------------------------------------
@@ -91,7 +97,7 @@ alias jupyter-qtconsole='~/Library/Python/3.7/bin/jupyter-qtconsole'
 alias jqt=jupyter-qtconsole
 alias jnb='~/Library/Python/3.7/bin/jupyter-notebook'
 
-# Shortcuts
+# shortcuts
 # .............................................................................
 alias tmks='tmux kill-server'
 alias tma='tmux attach -t tmux || tmux new -s tmux'
@@ -108,8 +114,10 @@ alias chk='vim ~/.chunkwmrc'
 alias rschk='brew services restart chunkwm'
 alias skd='vim ~/.skhdrc'
 alias rsskd='brew services restart skhd'
+alias pfzf='python $(fzf)'
+alias vfzf='vim $(fzf)'
 
-# Navigation
+# navigation
 # .............................................................................
 alias ..='cd ..'
 alias ..='cd ..'
@@ -122,37 +130,37 @@ alias dp='cd ~/Documents/python_files'
 alias dw='cd ~/Documents/website'
 alias conf='cd ~/.config'
 
-# Show/hidden files in Finder
+# show/hidden files in Finder
 alias show='defaults write com.apple.finder AppleShowAllFiles -bool true; killall Finder /System/Library/CoreServices/Finder.app'
 alias hide='defaults write com.apple.finder AppleShowAllFiles -bool false; killall Finder /System/Library/CoreServices/Finder.app'
 
-# Show/hide icons on desktop
+# show/hide icons on desktop
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 
-# Reload shell
+# reload shell
 alias reload="exec ${SHELL} -l"
 
-# Show active network interfaces
+# show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
-# Recursively remove '.DS_Store' files
+# recursively remove '.DS_Store' files
 alias clnup="find . -type f -name '*.DS_Store' -ls -delete"
 
-# Update Ruby gems, npm and Homebrew packages
+# update Ruby gems, npm and Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
 # -----------------------------------------------------------------------------
 # startup
 # -----------------------------------------------------------------------------
 
-cl
+clear
 neofetch
 ~/.vocab
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+export FZF_DEFAULT_OPTS='--height 30% --layout=reverse --border'
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

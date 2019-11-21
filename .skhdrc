@@ -2,11 +2,11 @@
 cmd + alt + ctrl - r : skhd -e "reload"
 
 # shortcuts to open apps 
-cmd - return : open -na /Applications/iTerm.app
-ctrl + cmd - x : /Applications/Firefox.app/Contents/MacOS/Firefox
+alt - return : open -na /Applications/iTerm.app
+ctrl - return : /Applications/Firefox.app/Contents/MacOS/Firefox
 ctrl + cmd - o : /Applications/Opera.app/Contents/MacOS/Opera
 ctrl + cmd - m : /Applications/Min.app/Contents/MacOS/Min
-ctrl + cmd - c : /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Visual\Studio\ Code
+ctrl + cmd - c : open -a /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron
 
 # disable/enable ffm
 cmd + ctrl + alt + shift - m : chunkc core::load ffm.so
@@ -18,17 +18,14 @@ alt - j : chunkc tiling::window --focus south
 alt - k : chunkc tiling::window --focus north
 alt - l : chunkc tiling::window --focus east
 
-# cmd - j : chunkc tiling::window --focus prev
-# cmd - k : chunkc tiling::window --focus next
-
 # equalize size of windows
 shift + alt - 0 : chunkc tiling::desktop --equalize
 
 # swap window
-shift + alt - h : chunkc tiling::window --swap west
-shift + alt - j : chunkc tiling::window --swap south
-shift + alt - k : chunkc tiling::window --swap north
-shift + alt - l : chunkc tiling::window --swap east
+ctrl + alt - h : chunkc tiling::window --swap west
+ctrl + alt - j : chunkc tiling::window --swap south
+ctrl + alt - k : chunkc tiling::window --swap north
+ctrl + alt - l : chunkc tiling::window --swap east
 
 # move window
 shift + cmd - h : chunkc tiling::window --warp west
@@ -86,11 +83,11 @@ alt - i : chunkc tiling::desktop --gap dec
 shift + alt - i : chunkc tiling::desktop --gap inc
 
 # set insertion point for focused container
-ctrl + alt - f : chunkc tiling::window --use-insertion-point cancel
-ctrl + alt - h : chunkc tiling::window --use-insertion-point west
-ctrl + alt - j : chunkc tiling::window --use-insertion-point south
-ctrl + alt - k : chunkc tiling::window --use-insertion-point north
-ctrl + alt - l : chunkc tiling::window --use-insertion-point east
+shift + alt - f : chunkc tiling::window --use-insertion-point cancel
+shift + alt - h : chunkc tiling::window --use-insertion-point west
+shift + alt - j : chunkc tiling::window --use-insertion-point south
+shift + alt - k : chunkc tiling::window --use-insertion-point north
+shift + alt - l : chunkc tiling::window --use-insertion-point east
 
 # rotate tree
 alt - r : chunkc tiling::desktop --rotate 90
@@ -108,7 +105,7 @@ alt - a : chunkc tiling::desktop --toggle offset
 alt - f : chunkc tiling::window --toggle fullscreen
 
 # toggle window native fullscreen
-shift + alt - f : chunkc tiling::window --toggle native-fullscreen
+ctrl + alt - f : chunkc tiling::window --toggle native-fullscreen
 
 # toggle window parent zoom
 alt - d : chunkc tiling::window --toggle parent
@@ -127,7 +124,7 @@ alt - t : chunkc tiling::window --toggle float;\
 alt - s : chunkc tiling::window --toggle sticky
 
 # toggle sticky, float and resize to picture-in-picture size
-alt - p : chunkc tiling::window --toggle sticky;\
+ctrl + alt - p : chunkc tiling::window --toggle sticky;\
           chunkc tiling::window --grid-layout 5:5:4:0:1:1
 
 # float next window to be tiled
