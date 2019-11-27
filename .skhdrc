@@ -4,9 +4,7 @@ cmd + alt + ctrl - r : skhd -e "reload"
 # shortcuts to open apps 
 alt - return : open -na /Applications/iTerm.app
 ctrl - return : /Applications/Firefox.app/Contents/MacOS/Firefox
-ctrl + cmd - o : /Applications/Opera.app/Contents/MacOS/Opera
-ctrl + cmd - m : /Applications/Min.app/Contents/MacOS/Min
-ctrl + cmd - c : open -a /Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron
+alt - v : open -na /usr/local/bin/vim
 
 # disable/enable ffm
 cmd + ctrl + alt + shift - m : chunkc core::load ffm.so

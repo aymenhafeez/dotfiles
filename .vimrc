@@ -1,16 +1,17 @@
-" =============================================================================
-" aymen hafeez .vimrc
-" =============================================================================
+" -----------------------------------------------------------------------------
+  
+"                              aymen hafeez vimrc 
 
 " -----------------------------------------------------------------------------
-" general config 
-" -----------------------------------------------------------------------------
+
+" --------------------------- general configuration ---------------------------
 
 set autoread
 set modifiable
 set encoding=utf8
 set ttimeoutlen=0
 set lazyredraw
+set laststatus=0
 
 " set <spacebar> as leader
 nmap <Space> <Leader>
@@ -32,7 +33,7 @@ set nowb
 " autocompletion in commandline
 set path+=**
 set wildmenu
-set wildmode=longest,list,full
+set wildmode=full
 
 " change sp to below and vsp to the right
 set splitbelow splitright
@@ -43,9 +44,19 @@ set shiftwidth=4
 set smarttab
 set expandtab
 
-" -----------------------------------------------------------------------------
-" plugins
-" -----------------------------------------------------------------------------
+" cursor stays 7 lines from top and bottom of page when moving with j/k
+set scrolloff=7
+
+" change cursor shape depending on mode
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
+" return to last edit position when opening files
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" --------------------------------- plugins ----------------------------------
+
  filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -65,7 +76,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-vinegar'
 
 " language/file type specific
 Plugin 'Chiel92/vim-autoformat'
@@ -82,27 +92,25 @@ Plugin 'lervag/vimtex'
 call vundle#end()            
 filetype plugin indent on
 
-" -----------------------------------------------------------------------------
-" plugin settings and shortcuts 
-" -----------------------------------------------------------------------------
+" ------------------- plugin specific settings and mappings -------------------
 
-" scrooloose/nerdcommenter
-" .............................................................................
+" ........................... Chiel92/vim-autoformat ..........................
+let g:formatter_yapf_style = 'pep8'
+
+" .......................... scrooloose/nerdcommenter .........................
 " add space after comment
 let g:NERDSpaceDelims=1
 
-" 'Valloric/YouCompleteMe
-" .............................................................................
+" ........................... Valloric/YouCompleteMe ..........................
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" simeji/winresizer
-" .............................................................................
+" ............................. simeji/winresizer .............................
 let g:winresizer_vert_resize=3 
 let g:winresizer_finish_with_escape=1
+let g:winresizer_start_key = '<C-t>'
 
-" christoomey/vim-tmux-navigator
-" .............................................................................
+" ....................... christoomey/vim-tmux-navigator ......................
 let g:tmux_navigator_no_mappings = 1
 
 nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
@@ -110,13 +118,11 @@ nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
 nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
 
-" junegunn/fzf
-" .............................................................................
+" ................................ junegunn/fzf ...............................
 set rtp+=/usr/local/opt/fzf
-nmap <Leader>fz :FZF<CR>
+nnoremap <Leader>fz :FZF<CR>
 
-" suan/vim-instant-markdown" 
-" .............................................................................
+" ......................... suan/vim-instant-markdown .........................
 filetype plugin on
 let g:instant_markdown_slow=1
 let g:instant_markdown_allow_unsafe_content=1
@@ -124,17 +130,17 @@ let g:instant_markdown_mathjax=1
 
 nnoremap <Leader>mk :InstantMarkdownPreview<CR> 
 
-" python-mode/python-mode
-" .............................................................................
+" .......................... python-mode/python-mode ..........................
 let g:pymode_python='python3'
 let g:pymode_rope=0
 
-" vim-latex/vim-latex
-" .............................................................................
+" ........................... vim-latex/vim-latex .............................
 let g:tex_flavor='latex'
 
-" jupyter-vim/jupyter-vim
-" .............................................................................
+" ............................... lervag/vimtex ...............................
+let g:vimtex_compiler_enabled=0
+
+" .......................... jupyter-vim/jupyter-vim ..........................
 " mostly from jupyter-vim/jupyter-vim README
 if has('nvim')
     let g:python3_host_prog='/usr/local/bin/python3.7'
@@ -160,22 +166,37 @@ vmap     <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
 
 nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 
-" debugging maps
-nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
+" ............................... vim/netrw.vim ...............................
+let g:netrw_banner=0
+let g:netrw_altv=1
+let g:netrw_winsize=17
+let g:netrw_preview=1
+let g:netrw_alto=0
+set autochdir
 
-" -----------------------------------------------------------------------------
-" bindings
-" -----------------------------------------------------------------------------
+" open file while keeping focus on netrw
+autocmd filetype netrw nnoremap <C-a> <CR>:wincmd W<CR>
+autocmd filetype netrw nnoremap <C-w>l <C-l>
+
+" open netrw in directory of current file
+nnoremap - :e %:p:h<CR>
+nnoremap s- :Sexplore %:p:h<CR>
+nnoremap v- :Vexplore %:p:h<CR>
+
+" ---------------------------------- mappings ---------------------------------
 
 " move through wrapped lines
 nmap j gj
 nmap k gk
 
+" laziness
+nnoremap <Leader>ww :w!<CR>
+
+" easier to move to start of non-whitespace
+nmap 0 ^
+
 " go to previously used buffer
 nnoremap <silent> <Space><Space> :b#<CR>
-
-" open netrw in directory of current file
-" nnoremap - :e %:p:h<CR>
 
 " open .vimrc in new buffer
 nnoremap <Leader>vc :e $MYVIMRC<CR>
@@ -200,17 +221,21 @@ inoremap <S-Tab> <C-d>
 " shortcut to save and run Python files
 nnoremap <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
-" TeX mappings
+" ................................ TeX mappings ...............................
 augroup TexMappings
     autocmd!
     autocmd FileType tex,latex,markdown inoremap <buffer> ( ()<++><Esc>bli
+    autocmd FileType tex,latex,markdown inoremap <buffer> ) ()<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> [ []<++><Esc>bli
+    autocmd FileType tex,latex,markdown inoremap <buffer> ] []<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> { {}<++><Esc>bli
+    autocmd FileType tex,latex,markdown inoremap <buffer> } {}<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> $ $$<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> $$ $$$$<++><Esc>hi
     autocmd FileType tex,latex,markdown inoremap <buffer> \itl \textit{}<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> \bf \textbf{}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \eqn \begin{equation}<Esc><CR>i\end{equation}<Esc>ko
+    autocmd FileType tex,latex,markdown inoremap <buffer> \eqn \begin{align}<Esc><CR>i\end{align}<Esc>ko
+    autocmd FileType tex,latex,markdown inoremap <buffer> \eqa \begin{eqnarray}<Esc><CR>i\end{eqnarray}<Esc>ko
     autocmd FileType tex,latex,markdown inoremap <buffer> \frac \frac{}{<++>}<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> \int \int_{}^{<++>}<++><Esc>bli
     autocmd FileType tex,latex,markdown inoremap <buffer> \sum \sum_{}^{<++>}<++><Esc>bli
@@ -222,10 +247,14 @@ augroup TexMappings
     autocmd FileType tex,latex,markdown inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
     autocmd FileType tex,latex,markdown inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
     autocmd FileType tex,latex,markdown inoremap <buffer> \eq[ \[\]<++><Esc>5hi
+    autocmd FileType tex,latex,markdown inoremap <buffer> \ra $\rightarrow$
     autocmd FileType tex,latex,markdown inoremap <buffer> \bg \begin{}
+    autocmd FileType tex,latex,markdown inoremap <buffer> \bal \begin{align}<CR><CR>\end{align}<Esc>ki<tab>
+    autocmd FileType tex,latex,markdown inoremap <buffer> \nbal \begin{align*}<CR><CR>\end{align*}<Esc>ki<tab>
+    autocmd FileType tex,latex,markdown inoremap <buffer> \fig \begin{figure}[H]<CR><CR>\end{figure}<Esc>ki\centering<CR>\includegraphics[width=\textwidth]{<++>}<CR>\caption{<++>}<Esc><CR><CR>i<++><Esc>3k3wli
 
-    autocmd FileType tex,latex,markdown inoremap <buffer> <Space><Space> <Esc>/<++><CR><Esc>cf>
-    autocmd FileType tex,latex nnoremap <buffer> :w<CR> :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
+    autocmd FileType tex,latex,markdown inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
+    autocmd FileType tex,latex nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
 augroup END
 
 " easier navigation between tabs
@@ -276,8 +305,52 @@ nmap Q  <silent>
 nmap q: <silent>
 nmap K  <silent>
 
+" open a buffer for quick use
+nnoremap <Leader>q :e ~/buffer<cr>
+
+" open a python buffer for quick use
+nnoremap <Leader>q :e ~/buffer<cr>
+
+" .................. spell checking (taken from amix/vimrc) ...................
+" toggle and untoggle spell checking
+map <Leader>spl :setlocal spell!<cr>
+
+" shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
+
+" ......................... misc functional mappings ..........................
+nnoremap <silent> tz :call ToggleZoom()<CR>
+
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+nnoremap <silent> <Leader>a :call ToggleHideAll()<CR>
+
+" --------------------------------- functions ---------------------------------
+
+" press * or # to search for current visual selection
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
 " zoom a single window in splits 
-function! s:ToggleZoom() abort
+function! ToggleZoom() abort
     if exists('t:zoomed') && t:zoomed
         execute t:zoom_winrestcmd
         let t:zoomed = 0
@@ -289,17 +362,14 @@ function! s:ToggleZoom() abort
     endif
 endfunction
 
-command! ToggleZoom call s:ToggleZoom()
-nmap <silent> tz :ToggleZoom<CR>
-
 " hide ui elements
-let s:hidden_all=0
+let s:hidden_all=1
 function! ToggleHideAll() abort
     if s:hidden_all==0
         let s:hidden_all=1
         set showmode
         set noruler
-       set laststatus=0
+        set laststatus=0
         set noshowcmd
     else
         let s:hidden_all=0
@@ -310,11 +380,7 @@ function! ToggleHideAll() abort
     endif
 endfunction
 
-nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
-
-" -----------------------------------------------------------------------------
-" theme and appearance
-" -----------------------------------------------------------------------------
+" ----------------------------- theme and colours -----------------------------
 
 set termguicolors
 syntax enable
@@ -323,6 +389,8 @@ function! Highlights() abort
     highlight VertSplit guifg=#002b36 guibg=#002b36      
     highlight StatusLineNC guibg=#0f3f4c guifg=#002b36
     highlight CursorLineNR guifg=#38616b guibg=#002b36
+    highlight CursorLine guibg=#01313d
+    highlight WildMenu guifg=#eff1cc guibg=#002b36
 endfunction
     
 augroup Colors
@@ -334,6 +402,9 @@ set background=dark
 colorscheme solardust
 
 " statusbar
-set statusline=%#StatusLineNC#%<%h%m%r%=%-14.(%l,%c%V%)\ %P
-set rulerformat=%30(%#StatusLineNC#%<%h%m%r%=%-14.(%l,%c%V%)\ %P%*%)
+set statusline=
+set statusline+=%#StatusLineNC#%f
+set statusline+=%=
+set statusline+=%#StatusLineNC#%=%(%l:%c%V%)\ %p
+set rulerformat=%30(%#StatusLineNC#%=%(%l:%c%V%)\ %p%*%)
 set fillchars=fold:_,stl:_,stlnc:_,vert:│

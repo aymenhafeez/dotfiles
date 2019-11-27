@@ -1,13 +1,13 @@
-# =============================================================================
-# aymen hafeez .zshrc
-# =============================================================================
+# -----------------------------------------------------------------------------
+
+#                              aymen hafeez zshrc
+
+# -----------------------------------------------------------------------------
 
 # oh-my-zsh path
 export ZSH='/Users/aymen/.oh-my-zsh'
 
-# -----------------------------------------------------------------------------
-# appearance 
-# -----------------------------------------------------------------------------
+# -------------------------------- appearance ---------------------------------
 
 export CLICOLOR=1
 
@@ -15,8 +15,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # POWERLEVEL9K_MODE='nerdfont-complete'
 
-# left prompt
-# .............................................................................
+# ................................ left prompt ................................
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir_joined vcs)
 
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR="%F{030}\uf101%f"
@@ -42,8 +41,7 @@ POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='005'
 POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='none'
 POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='166'
 
-# right prompt
-# .............................................................................
+# ................................ right prompt ...............................
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode_joined status_joined)
 POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=' '
 POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%F{006}\uf105%f'
@@ -60,9 +58,7 @@ POWERLEVEL9K_STATUS_ERROR_FOREGROUND='green'
 POWERLEVEL9K_STATUS_CROSS=true
 POWERLEVEL9K_STATUS_VERBOSE=true
 
-# -----------------------------------------------------------------------------
-# general config
-# -----------------------------------------------------------------------------
+# ------------------------------ general config -------------------------------
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
@@ -91,9 +87,7 @@ if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
   source /usr/local/opt/fzf/shell/completion.zsh
 fi
 
-# -----------------------------------------------------------------------------
-# aliases
-# -----------------------------------------------------------------------------
+# ---------------------------------- aliases ----------------------------------
 
 alias python=python3
 alias ipython='~/Library/Python/3.7/bin/ipython'
@@ -101,8 +95,7 @@ alias jupyter-qtconsole='~/Library/Python/3.7/bin/jupyter-qtconsole'
 alias jqt=jupyter-qtconsole
 alias jnb='~/Library/Python/3.7/bin/jupyter-notebook'
 
-# shortcuts
-# .............................................................................
+# ................................. shortcuts .................................
 alias tmks='tmux kill-server'
 alias tma='tmux attach -t tmux || tmux new -s tmux'
 alias ci='code-insiders'
@@ -111,9 +104,10 @@ alias ohmyzsh='mate ~/.oh-my-zsh'
 alias rng='ranger'
 alias cl='clear'
 alias lfa='ls -F -a'
-alias zc='vim ~/.zshrc'
+alias zc='vim ~/Documents/work-env/.zshrc'
 alias szc='source ~/.zshrc'
 alias vc='vim ~/.vimrc'
+alias tmc='vim ~/.tmux.conf'
 alias chk='vim ~/.chunkwmrc'
 alias rschk='brew services restart chunkwm'
 alias skd='vim ~/.skhdrc'
@@ -121,8 +115,7 @@ alias rsskd='brew services restart skhd'
 alias pfzf='python $(fzf)'
 alias vfzf='vim $(fzf)'
 
-# navigation
-# .............................................................................
+# ................................ navigation .................................
 alias ..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -154,9 +147,10 @@ alias clnup="find . -type f -name '*.DS_Store' -ls -delete"
 # update Ruby gems, npm and Homebrew packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 
-# -----------------------------------------------------------------------------
-# startup
-# -----------------------------------------------------------------------------
+bindkey '^e' autosuggest-accept
+bindkey '^x' autosuggest-execute
+
+# ---------------------------------- startup ----------------------------------
 
 clear
 neofetch
@@ -166,5 +160,7 @@ source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export FZF_DEFAULT_OPTS='--height 30% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND='find .'
+
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

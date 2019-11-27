@@ -5,13 +5,6 @@ chunkc core::log_level warn
 chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
 chunkc core::hotload 0
 
-chunkc set custom_bar_enabled            0
-chunkc set custom_bar_all_monitors       0
-chunkc set custom_bar_offset_top         0
-chunkc set custom_bar_offset_bottom      0
-chunkc set custom_bar_offset_left        0
-chunkc set custom_bar_offset_right       0
-
 chunkc set global_desktop_mode           bsp
 chunkc set global_desktop_offset_top     8
 chunkc set global_desktop_offset_bottom  8
@@ -19,10 +12,24 @@ chunkc set global_desktop_offset_left    8
 chunkc set global_desktop_offset_right   8 
 chunkc set global_desktop_offset_gap     8 
 
-chunkc set 1_desktop_mode 		bsp
-chunkc set 2_desktop_mode 		bsp
-chunkc set 3_desktop_mode 		bsp
-chunkc set 4_desktop_mode 		bsp
+# second monitor
+chunkc set 6_desktop_offset_top     12
+chunkc set 6_desktop_offset_bottom  12
+chunkc set 6_desktop_offset_left    12 
+chunkc set 6_desktop_offset_right   12 
+chunkc set 6_desktop_offset_gap     12 
+
+chunkc set 7_desktop_offset_top     12
+chunkc set 7_desktop_offset_bottom  12
+chunkc set 7_desktop_offset_left    12 
+chunkc set 7_desktop_offset_right   12 
+chunkc set 7_desktop_offset_gap     12 
+
+chunkc set 8_desktop_offset_top     12
+chunkc set 8_desktop_offset_bottom  12
+chunkc set 8_desktop_offset_left    12 
+chunkc set 8_desktop_offset_right   12 
+chunkc set 8_desktop_offset_gap     12 
 
 chunkc set desktop_padding_step_size     1.0
 chunkc set desktop_gap_step_size         1.0
@@ -38,7 +45,7 @@ chunkc set window_focus_cycle            monitor
 chunkc set mouse_follows_focus           intrinsic
 chunkc set window_float_next             0
 chunkc set window_region_locked          1
-chunkc set window_float_center		 1
+chunkc set window_float_center		     1
 
 # chunkc set mouse_move_window             \"fn 1\"
 # chunkc set mouse_resize_window           \"fn 2\"
@@ -47,12 +54,6 @@ chunkc set mouse_motion_interval         35
 chunkc set preselect_border_color        0xffd75f5f
 chunkc set preselect_border_width        1.5
 chunkc set preselect_border_outline      0
-
-chunkc set window_float_topmost          0
-chunkc set window_fade_inactive          0
-chunkc set window_fade_alpha             0.85
-chunkc set window_fade_duration          0.25
-chunkc set window_use_cgs_move           0
 
 chunkc set focused_border_color          0x00ffffff
 chunkc set focused_border_width          0
@@ -78,4 +79,5 @@ chunkc tiling::rule --owner Photos --state float &
 chunkc tiling::rule --owner \"App Store\" --state float &
 chunkc tiling::rule --owner Notes --state float &
 chunkc tiling::rule --owner Grapher --state float &
-chunkc tiling::rule --owner Books --state float s
+chunkc tiling::rule --owner Books --state float &
+chunkc tiling::rule --owner \"GIPHY CAPTURE\" --state float &
