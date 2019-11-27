@@ -13,23 +13,23 @@ chunkc set global_desktop_offset_right   8
 chunkc set global_desktop_offset_gap     8 
 
 # second monitor
-chunkc set 6_desktop_offset_top     12
-chunkc set 6_desktop_offset_bottom  12
-chunkc set 6_desktop_offset_left    12 
-chunkc set 6_desktop_offset_right   12 
-chunkc set 6_desktop_offset_gap     12 
+chunkc set 6_desktop_offset_top          12
+chunkc set 6_desktop_offset_bottom       12
+chunkc set 6_desktop_offset_left         12 
+chunkc set 6_desktop_offset_right        12 
+chunkc set 6_desktop_offset_gap          12 
 
-chunkc set 7_desktop_offset_top     12
-chunkc set 7_desktop_offset_bottom  12
-chunkc set 7_desktop_offset_left    12 
-chunkc set 7_desktop_offset_right   12 
-chunkc set 7_desktop_offset_gap     12 
+chunkc set 7_desktop_offset_top          12
+chunkc set 7_desktop_offset_bottom       12
+chunkc set 7_desktop_offset_left         12 
+chunkc set 7_desktop_offset_right        12 
+chunkc set 7_desktop_offset_gap          12 
 
-chunkc set 8_desktop_offset_top     12
-chunkc set 8_desktop_offset_bottom  12
-chunkc set 8_desktop_offset_left    12 
-chunkc set 8_desktop_offset_right   12 
-chunkc set 8_desktop_offset_gap     12 
+chunkc set 8_desktop_offset_top          12
+chunkc set 8_desktop_offset_bottom       12
+chunkc set 8_desktop_offset_left         12 
+chunkc set 8_desktop_offset_right        12 
+chunkc set 8_desktop_offset_gap          12 
 
 chunkc set desktop_padding_step_size     1.0
 chunkc set desktop_gap_step_size         1.0
@@ -47,8 +47,6 @@ chunkc set window_float_next             0
 chunkc set window_region_locked          1
 chunkc set window_float_center		     1
 
-# chunkc set mouse_move_window             \"fn 1\"
-# chunkc set mouse_resize_window           \"fn 2\"
 chunkc set mouse_motion_interval         35
 
 chunkc set preselect_border_color        0xffd75f5f

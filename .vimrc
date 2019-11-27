@@ -1,8 +1,5 @@
-" -----------------------------------------------------------------------------
-  
-"                              aymen hafeez vimrc 
+" ---------------------------- aymen hafeez vimrc -----------------------------
 
-" -----------------------------------------------------------------------------
 
 " --------------------------- general configuration ---------------------------
 
@@ -172,9 +169,9 @@ let g:netrw_altv=1
 let g:netrw_winsize=17
 let g:netrw_preview=1
 let g:netrw_alto=0
+
 set autochdir
 
-" open file while keeping focus on netrw
 autocmd filetype netrw nnoremap <C-a> <CR>:wincmd W<CR>
 autocmd filetype netrw nnoremap <C-w>l <C-l>
 
@@ -193,7 +190,8 @@ nmap k gk
 nnoremap <Leader>ww :w!<CR>
 
 " easier to move to start of non-whitespace
-nmap 0 ^
+nnoremap 0 ^
+nnoremap ^ 0
 
 " go to previously used buffer
 nnoremap <silent> <Space><Space> :b#<CR>
@@ -252,8 +250,9 @@ augroup TexMappings
     autocmd FileType tex,latex,markdown inoremap <buffer> \bal \begin{align}<CR><CR>\end{align}<Esc>ki<tab>
     autocmd FileType tex,latex,markdown inoremap <buffer> \nbal \begin{align*}<CR><CR>\end{align*}<Esc>ki<tab>
     autocmd FileType tex,latex,markdown inoremap <buffer> \fig \begin{figure}[H]<CR><CR>\end{figure}<Esc>ki\centering<CR>\includegraphics[width=\textwidth]{<++>}<CR>\caption{<++>}<Esc><CR><CR>i<++><Esc>3k3wli
-
+    " move to next placeholder
     autocmd FileType tex,latex,markdown inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
+    " compile and open/update pdf
     autocmd FileType tex,latex nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
 augroup END
 
@@ -269,6 +268,7 @@ nnoremap <silent> <Leader>bl :bn<CR>
 nnoremap <silent> <Leader>bh :bp<CR>
 nnoremap <silent> <Leader>bd :bd<CR>  
 nnoremap <Leader>ls :buffers<CR>:buffer<Space>
+nnoremap <silent> gF :vertical wincmd f<CR>
 
 " open split panes
 nmap <silent> <Leader>wh :leftabove vnew<CR>
@@ -301,9 +301,11 @@ nnoremap S :%s//g<Left><Left>
 nnoremap <Leader><Esc> i<Esc>l
 
 " ignoring things I accidentally type sometimes
-nmap Q  <silent>
 nmap q: <silent>
 nmap K  <silent>
+
+" no idea what Ex mode is
+nmap Q  <silent>
 
 " open a buffer for quick use
 nnoremap <Leader>q :e ~/buffer<cr>
@@ -311,15 +313,21 @@ nnoremap <Leader>q :e ~/buffer<cr>
 " open a python buffer for quick use
 nnoremap <Leader>q :e ~/buffer<cr>
 
+" copy file path
+nnoremap <silent> yZ :let @" = expand("%:p")<CR>
+
+" copy filename
+nmap <silent> yY :let @" = expand("%")<CR>
+
 " .................. spell checking (taken from amix/vimrc) ...................
 " toggle and untoggle spell checking
 map <Leader>spl :setlocal spell!<cr>
 
-" shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" shortcuts
+map <Leader>sn ]s
+map <Leader>sp [s
+map <Leader>sa zg
+map <Leader>s? z=
 
 " ......................... misc functional mappings ..........................
 nnoremap <silent> tz :call ToggleZoom()<CR>
@@ -327,11 +335,11 @@ nnoremap <silent> tz :call ToggleZoom()<CR>
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-nnoremap <silent> <Leader>a :call ToggleHideAll()<CR>
+nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
 
 " --------------------------------- functions ---------------------------------
 
-" press * or # to search for current visual selection
+" press * or # to search for current visual selection (taken from amix/vimrc)
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
     execute "normal! vgvy"
@@ -363,7 +371,7 @@ function! ToggleZoom() abort
 endfunction
 
 " hide ui elements
-let s:hidden_all=1
+let s:hidden_all=0
 function! ToggleHideAll() abort
     if s:hidden_all==0
         let s:hidden_all=1
@@ -381,7 +389,7 @@ function! ToggleHideAll() abort
 endfunction
 
 " ----------------------------- theme and colours -----------------------------
-
+"
 set termguicolors
 syntax enable
 
