@@ -4,7 +4,7 @@ cmd + alt + ctrl - r : skhd -e "reload"
 # shortcuts to open apps 
 alt - return : open -na /Applications/iTerm.app
 ctrl - return : /Applications/Firefox.app/Contents/MacOS/Firefox
-alt - v : open -na /usr/local/bin/vim
+alt - v : open -a /usr/local/bin/vim
 
 # disable/enable ffm
 cmd + ctrl + alt + shift - m : chunkc core::load ffm.so
@@ -56,15 +56,15 @@ shift + alt - 9 : chunkc tiling::window --send-to-desktop 9; chunkc tiling::desk
 shift + alt - 0 : chunkc tiling::window --send-to-desktop 10; chunkc tiling::desktop --focus 10
 
 # focus monitor
-ctrl + alt - z  : chunkc tiling::monitor -f prev
-ctrl + alt - c  : chunkc tiling::monitor -f next
-ctrl + alt - 1  : chunkc tiling::monitor -f 1
-ctrl + alt - 2  : chunkc tiling::monitor -f 2
-ctrl + alt - 3  : chunkc tiling::monitor -f 3
+shift + ctrl - h  : chunkc tiling::monitor -f prev
+shift + ctrl - l  : chunkc tiling::monitor -f next
+shift + ctrl - 1  : chunkc tiling::monitor -f 1
+shift + ctrl - 2  : chunkc tiling::monitor -f 2
+shift + ctrl - 3  : chunkc tiling::monitor -f 3
 
 # send window to monitor and follow focus
-ctrl + cmd - z  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
-ctrl + cmd - c  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
+ctrl + cmd - h  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
+ctrl + cmd - l  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
 ctrl + cmd - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
 ctrl + cmd - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
 ctrl + cmd - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
@@ -75,8 +75,11 @@ shift + alt - s : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-win
 shift + alt - w : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.025 --adjust-window-edge south
 shift + alt - d : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.025 --adjust-window-edge west
 
+# increase/decrease padding
 alt - p : chunkc tiling::desktop --padding dec
 shift + alt - p : chunkc tiling::desktop --padding inc
+
+# increase/decrease gaps
 alt - i : chunkc tiling::desktop --gap dec
 shift + alt - i : chunkc tiling::desktop --gap inc
 

@@ -3,6 +3,7 @@
 
 " --------------------------- general configuration ---------------------------
 
+" {{{
 set autoread
 set modifiable
 set encoding=utf8
@@ -41,7 +42,7 @@ set shiftwidth=4
 set smarttab
 set expandtab
 
-" cursor stays 7 lines from top and bottom of page when moving with j/k
+" cursor stays 7 lines from top and bottom of page when scrolling
 set scrolloff=7
 
 " change cursor shape depending on mode
@@ -50,12 +51,21 @@ let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 " return to last edit position when opening files
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup last_edit
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup END
+
+" marker folding in .vim files
+augroup filetype_vim
+    autocmd!
+    autocmd filetype vim setlocal foldmethod=marker
+augroup END
+" }}}
 
 " --------------------------------- plugins ----------------------------------
 
- filetype off
-
+" {{{
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -69,6 +79,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/fzf'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'pbrisbin/vim-mkdir'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
@@ -88,9 +99,19 @@ Plugin 'lervag/vimtex'
 
 call vundle#end()            
 filetype plugin indent on
+" -----------------------------------------------------------------------------
+
+" turn off autocommenting new line for all filetypes
+" needs to go after Vundle as Vundle turns filetype off
+augroup auto_comment
+    autocmd!
+    autocmd filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+augroup END
+" }}}
 
 " ------------------- plugin specific settings and mappings -------------------
 
+" {{{
 " ........................... Chiel92/vim-autoformat ..........................
 let g:formatter_yapf_style = 'pep8'
 
@@ -120,7 +141,6 @@ set rtp+=/usr/local/opt/fzf
 nnoremap <Leader>fz :FZF<CR>
 
 " ......................... suan/vim-instant-markdown .........................
-filetype plugin on
 let g:instant_markdown_slow=1
 let g:instant_markdown_allow_unsafe_content=1
 let g:instant_markdown_mathjax=1
@@ -166,22 +186,27 @@ nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 " ............................... vim/netrw.vim ...............................
 let g:netrw_banner=0
 let g:netrw_altv=1
-let g:netrw_winsize=17
+let g:netrw_winsize=45
 let g:netrw_preview=1
 let g:netrw_alto=0
 
 set autochdir
 
-autocmd filetype netrw nnoremap <C-a> <CR>:wincmd W<CR>
-autocmd filetype netrw nnoremap <C-w>l <C-l>
+augroup netrw_mappings
+    autocmd!
+    autocmd filetype netrw nnoremap <buffer> <C-l> <C-w>l
+    autocmd filetype netrw nnoremap <buffer> <Esc> :bd<CR>
+augroup END
 
 " open netrw in directory of current file
 nnoremap - :e %:p:h<CR>
 nnoremap s- :Sexplore %:p:h<CR>
 nnoremap v- :Vexplore %:p:h<CR>
+" }}}
 
 " ---------------------------------- mappings ---------------------------------
 
+" {{{
 " move through wrapped lines
 nmap j gj
 nmap k gk
@@ -219,42 +244,43 @@ inoremap <S-Tab> <C-d>
 " shortcut to save and run Python files
 nnoremap <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
-" ................................ TeX mappings ...............................
-augroup TexMappings
+" TeX mappings {{{
+augroup TeX_mappings
     autocmd!
-    autocmd FileType tex,latex,markdown inoremap <buffer> ( ()<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> ) ()<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> [ []<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> ] []<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> { {}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> } {}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> $ $$<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> $$ $$$$<++><Esc>hi
-    autocmd FileType tex,latex,markdown inoremap <buffer> \itl \textit{}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \bf \textbf{}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \eqn \begin{align}<Esc><CR>i\end{align}<Esc>ko
-    autocmd FileType tex,latex,markdown inoremap <buffer> \eqa \begin{eqnarray}<Esc><CR>i\end{eqnarray}<Esc>ko
-    autocmd FileType tex,latex,markdown inoremap <buffer> \frac \frac{}{<++>}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \int \int_{}^{<++>}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \sum \sum_{}^{<++>}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \sm \sum_{}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \prod \prod_{}^{<++>}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \prd \prod_{}<++><Esc>bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \l( \left(\right)<++><Esc>3bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \l[ \left[\right]<++><Esc>3bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
-    autocmd FileType tex,latex,markdown inoremap <buffer> \eq[ \[\]<++><Esc>5hi
-    autocmd FileType tex,latex,markdown inoremap <buffer> \ra $\rightarrow$
-    autocmd FileType tex,latex,markdown inoremap <buffer> \bg \begin{}
-    autocmd FileType tex,latex,markdown inoremap <buffer> \bal \begin{align}<CR><CR>\end{align}<Esc>ki<tab>
-    autocmd FileType tex,latex,markdown inoremap <buffer> \nbal \begin{align*}<CR><CR>\end{align*}<Esc>ki<tab>
-    autocmd FileType tex,latex,markdown inoremap <buffer> \fig \begin{figure}[H]<CR><CR>\end{figure}<Esc>ki\centering<CR>\includegraphics[width=\textwidth]{<++>}<CR>\caption{<++>}<Esc><CR><CR>i<++><Esc>3k3wli
+    autocmd filetype tex,latex,markdown inoremap <buffer> ( ()<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> ) ()<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> [ []<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> ] []<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> { {}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> } {}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> $ $$<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> $$ $$$$<++><Esc>hi
+    autocmd filetype tex,latex,markdown inoremap <buffer> \itl \textit{}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \bf \textbf{}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \eqn \begin{align}<Esc><CR>i\end{align}<Esc>ko
+    autocmd filetype tex,latex,markdown inoremap <buffer> \eqa \begin{eqnarray}<Esc><CR>i\end{eqnarray}<Esc>ko
+    autocmd filetype tex,latex,markdown inoremap <buffer> \frac \frac{}{<++>}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \int \int_{}^{<++>}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \sum \sum_{}^{<++>}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \sm \sum_{}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \prod \prod_{}^{<++>}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \prd \prod_{}<++><Esc>bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \l( \left(\right)<++><Esc>3bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \l[ \left[\right]<++><Esc>3bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \eq[ \[\]<++><Esc>5hi
+    autocmd filetype tex,latex,markdown inoremap <buffer> \ra $\rightarrow$
+    autocmd filetype tex,latex,markdown inoremap <buffer> \bg \begin{}
+    autocmd filetype tex,latex,markdown inoremap <buffer> \bal \begin{align}<CR><CR>\end{align}<Esc>ki<tab>
+    autocmd filetype tex,latex,markdown inoremap <buffer> \nbal \begin{align*}<CR><CR>\end{align*}<Esc>ki<tab>
+    autocmd filetype tex,latex,markdown inoremap <buffer> \fig \begin{figure}[H]<CR><CR>\end{figure}<Esc>ki\centering<CR>\includegraphics[width=\textwidth]{<++>}<CR>\caption{<++>}<Esc><CR><CR>i<++><Esc>3k3wli
     " move to next placeholder
-    autocmd FileType tex,latex,markdown inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
+    autocmd filetype tex,latex,markdown inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
     " compile and open/update pdf
-    autocmd FileType tex,latex nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
+    autocmd filetype tex,latex nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
 augroup END
+" }}}
 
 " easier navigation between tabs
 nnoremap tn :tabnew<Space>
@@ -289,6 +315,22 @@ cnoremap <C-d>  <Delete>
 cnoremap <M-b>  <S-Left>
 cnoremap <M-f>  <S-Right>
 cnoremap <M-d>  <S-right><Delete>
+
+" slightly faster scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" disable arrow keys in normal mode
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+
+" disable arrow keys in insert mode
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
 
 nmap <Leader>o :open 
 
@@ -336,9 +378,44 @@ vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
+" }}}
+    
+" ----------------------------- theme and appearance -----------------------------
+
+" {{{
+set termguicolors
+syntax enable
+
+" needs to go before the highlight_colours augroup
+function! Highlights() abort
+    highlight VertSplit guifg=#002b36 guibg=#002b36      
+    highlight StatusLineNC guibg=#0f3f4c guifg=#002b36
+    highlight CursorLineNR guifg=#38616b guibg=#002b36
+    highlight CursorLine guibg=#01313d
+    highlight WildMenu guifg=#eff1cc guibg=#002b36
+    highlight ErrorMsg guibg=#002b36 guifg=#EC5050
+endfunction
+
+augroup highlight_colours
+    autocmd!
+    autocmd ColorScheme * call Highlights()
+augroup END
+
+set background=dark
+colorscheme solardust
+
+" statusbar
+set statusline=
+set statusline+=%#StatusLineNC#%f
+set statusline+=%=
+set statusline+=%#StatusLineNC#%=%(%l:%c%V%)\ %p
+set rulerformat=%30(%#StatusLineNC#%=%(%l:%c%V%)\ %p%*%)
+set fillchars=fold:_,stl:_,stlnc:_,vert:│
+" }}}
 
 " --------------------------------- functions ---------------------------------
 
+" {{{
 " press * or # to search for current visual selection (taken from amix/vimrc)
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -387,32 +464,4 @@ function! ToggleHideAll() abort
         set showcmd
     endif
 endfunction
-
-" ----------------------------- theme and colours -----------------------------
-"
-set termguicolors
-syntax enable
-
-function! Highlights() abort
-    highlight VertSplit guifg=#002b36 guibg=#002b36      
-    highlight StatusLineNC guibg=#0f3f4c guifg=#002b36
-    highlight CursorLineNR guifg=#38616b guibg=#002b36
-    highlight CursorLine guibg=#01313d
-    highlight WildMenu guifg=#eff1cc guibg=#002b36
-endfunction
-    
-augroup Colors
-    autocmd!
-    autocmd ColorScheme * call Highlights()
-augroup END
-
-set background=dark
-colorscheme solardust
-
-" statusbar
-set statusline=
-set statusline+=%#StatusLineNC#%f
-set statusline+=%=
-set statusline+=%#StatusLineNC#%=%(%l:%c%V%)\ %p
-set rulerformat=%30(%#StatusLineNC#%=%(%l:%c%V%)\ %p%*%)
-set fillchars=fold:_,stl:_,stlnc:_,vert:│
+" }}}
