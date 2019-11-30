@@ -1,24 +1,34 @@
 " ---------------------------- aymen hafeez vimrc -----------------------------
 
+" zc/zo to open/close a fold
+" zR/zM to open/close all folds
+" zn to disable folds
+" -----------------------------------------------------------------------------
 
-" --------------------------- general configuration ---------------------------
+" general configuration {{{
+" -----------------------------------------------------------------------------
 
-" {{{
+set nocompatible
 set autoread
 set modifiable
 set encoding=utf8
 set ttimeoutlen=0
 set lazyredraw
 set laststatus=0
+set history=10000
+" cursor stays 7 lines from top and bottom of page when scrolling
+set scrolloff=7
+set foldmethod=marker
 
-" set <spacebar> as leader
-nmap <Space> <Leader>
+" set <Space> as leader
+let mapleader="\<Space>"
+let maplocalleader="\<Space>"
 
 " show relative line numbers
 set number
 set relativenumber
 
-" search
+" only make search case-sensitive if it contains an upper-case character
 set incsearch
 set ignorecase
 set smartcase
@@ -42,9 +52,6 @@ set shiftwidth=4
 set smarttab
 set expandtab
 
-" cursor stays 7 lines from top and bottom of page when scrolling
-set scrolloff=7
-
 " change cursor shape depending on mode
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
@@ -56,16 +63,11 @@ augroup last_edit
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
 
-" marker folding in .vim files
-augroup filetype_vim
-    autocmd!
-    autocmd filetype vim setlocal foldmethod=marker
-augroup END
 " }}}
 
-" --------------------------------- plugins ----------------------------------
+" plugins {{{
+" -----------------------------------------------------------------------------
 
-" {{{
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -107,11 +109,12 @@ augroup auto_comment
     autocmd!
     autocmd filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 augroup END
+
 " }}}
 
-" ------------------- plugin specific settings and mappings -------------------
+" plugin specific settings and mappings {{{
+" -----------------------------------------------------------------------------
 
-" {{{
 " ........................... Chiel92/vim-autoformat ..........................
 let g:formatter_yapf_style = 'pep8'
 
@@ -136,7 +139,7 @@ nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
 nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
 
-" ................................ junegunn/fzf ...............................
+" ............................... junegunn/fzf ................................
 set rtp+=/usr/local/opt/fzf
 nnoremap <Leader>fz :FZF<CR>
 
@@ -151,7 +154,7 @@ nnoremap <Leader>mk :InstantMarkdownPreview<CR>
 let g:pymode_python='python3'
 let g:pymode_rope=0
 
-" ........................... vim-latex/vim-latex .............................
+" ............................ vim-latex/vim-latex ............................
 let g:tex_flavor='latex'
 
 " ............................... lervag/vimtex ...............................
@@ -202,14 +205,19 @@ augroup END
 nnoremap - :e %:p:h<CR>
 nnoremap s- :Sexplore %:p:h<CR>
 nnoremap v- :Vexplore %:p:h<CR>
+
 " }}}
 
-" ---------------------------------- mappings ---------------------------------
+" mappings {{{
+" -----------------------------------------------------------------------------
 
-" {{{
 " move through wrapped lines
 nmap j gj
 nmap k gk
+
+" slightly faster scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 
 " laziness
 nnoremap <Leader>ww :w!<CR>
@@ -219,15 +227,15 @@ nnoremap 0 ^
 nnoremap ^ 0
 
 " go to previously used buffer
-nnoremap <silent> <Space><Space> :b#<CR>
+nnoremap <silent> <Leader><Leader> :b#<CR>
 
-" open .vimrc in new buffer
+" open vimrc in new buffer
 nnoremap <Leader>vc :e $MYVIMRC<CR>
 
-" open .vimrc in vertically split buffer 
+" open vimrc in vertically split buffer 
 nnoremap <Leader>vt :vsp $MYVIMRC<CR>
 
-" source .vimrc
+" source vimrc
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " source chunkwmrc
@@ -235,11 +243,6 @@ nnoremap <Leader>schk :!clear && brew services restart chunkwm<CR>
 
 " source chunkwmrc
 nnoremap <Leader>sskd :!clear && brew services restart skhd<CR>
-
-" untab in command mode
-nnoremap <S-Tab> <<
-" untab in insert mode
-inoremap <S-Tab> <C-d>
 
 " shortcut to save and run Python files
 nnoremap <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
@@ -297,15 +300,18 @@ nnoremap <Leader>ls :buffers<CR>:buffer<Space>
 nnoremap <silent> gF :vertical wincmd f<CR>
 
 " open split panes
-nmap <silent> <Leader>wh :leftabove vnew<CR>
-nmap <silent> <Leader>wl :rightbelow vnew<CR>
-nmap <silent> <Leader>wk :leftabove new<CR>
-nmap <silent> <Leader>wj :rightbelow new<CR>
+nnoremap <silent> <Leader>wh :leftabove vnew<CR>
+nnoremap <silent> <Leader>wl :rightbelow vnew<CR>
+nnoremap <silent> <Leader>wk :leftabove new<CR>
+nnoremap <silent> <Leader>wj :rightbelow new<CR>
 
-nmap <silent> <Leader>swh :topleft vnew<CR>
-nmap <silent> <Leader>swl :botright vnew<CR>
-nmap <silent> <Leader>swk :topleft new<CR>
-nmap <silent> <Leader>swj :botright new<CR>
+nnoremap <silent> <Leader>swh :topleft vnew<CR>
+nnoremap <silent> <Leader>swl :botright vnew<CR>
+nnoremap <silent> <Leader>swk :topleft new<CR>
+nnoremap <silent> <Leader>swj :botright new<CR>
+
+" zoom into splits
+nnoremap <Leader>- :wincmd _<CR>:wincmd \|<CR>
 
 " Emacs-like movement in the command line
 cnoremap <C-a>  <Home>
@@ -315,10 +321,6 @@ cnoremap <C-d>  <Delete>
 cnoremap <M-b>  <S-Left>
 cnoremap <M-f>  <S-Right>
 cnoremap <M-d>  <S-right><Delete>
-
-" slightly faster scrolling
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
 
 " disable arrow keys in normal mode
 nnoremap <up> <nop>
@@ -332,9 +334,9 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-nmap <Leader>o :open 
-
-nmap <Leader>pi :PluginInstall<CR>
+" more laziness
+nnoremap <Leader>o :open 
+nnoremap <Leader>pi :PluginInstall<CR>
 
 " replace all
 nnoremap S :%s//g<Left><Left>
@@ -350,20 +352,17 @@ nmap K  <silent>
 nmap Q  <silent>
 
 " open a buffer for quick use
-nnoremap <Leader>q :e ~/buffer<cr>
-
-" open a python buffer for quick use
-nnoremap <Leader>q :e ~/buffer<cr>
+nnoremap <Leader>q :e ~/buffer<CR>
 
 " copy file path
 nnoremap <silent> yZ :let @" = expand("%:p")<CR>
 
 " copy filename
-nmap <silent> yY :let @" = expand("%")<CR>
+nnoremap <silent> yY :let @" = expand("%")<CR>
 
 " .................. spell checking (taken from amix/vimrc) ...................
 " toggle and untoggle spell checking
-map <Leader>spl :setlocal spell!<cr>
+map <Leader>spl :setlocal spell!<CR>
 
 " shortcuts
 map <Leader>sn ]s
@@ -378,11 +377,12 @@ vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
+
 " }}}
     
-" ----------------------------- theme and appearance -----------------------------
+" theme and appearance {{{
+" -----------------------------------------------------------------------------
 
-" {{{
 set termguicolors
 syntax enable
 
@@ -411,11 +411,12 @@ set statusline+=%=
 set statusline+=%#StatusLineNC#%=%(%l:%c%V%)\ %p
 set rulerformat=%30(%#StatusLineNC#%=%(%l:%c%V%)\ %p%*%)
 set fillchars=fold:_,stl:_,stlnc:_,vert:│
+
 " }}}
 
-" --------------------------------- functions ---------------------------------
+" functions {{{
+" -----------------------------------------------------------------------------
 
-" {{{
 " press * or # to search for current visual selection (taken from amix/vimrc)
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -434,18 +435,11 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
-" zoom a single window in splits 
-function! ToggleZoom() abort
-    if exists('t:zoomed') && t:zoomed
-        execute t:zoom_winrestcmd
-        let t:zoomed = 0
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
-    endif
+" from christoomey's vim talk
+function! FixLastSpellingError()
+    normal! mm[s1z=`m
 endfunction
+nnoremap <Leader>spf :call FixLastSpellingError()<CR>
 
 " hide ui elements
 let s:hidden_all=0
@@ -464,4 +458,5 @@ function! ToggleHideAll() abort
         set showcmd
     endif
 endfunction
+
 " }}}
