@@ -1,4 +1,5 @@
-" ---------------------------- aymen hafeez vimrc -----------------------------
+" -----------------------------------------------------------------------------
+" aymen hafeez vimrc
 
 " zc/zo to open/close a fold
 " zR/zM to open/close all folds
