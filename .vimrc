@@ -17,7 +17,6 @@ set ttimeoutlen=0
 set lazyredraw
 set laststatus=0
 set history=10000
-" cursor stays 7 lines from top and bottom of page when scrolling
 set scrolloff=7
 set foldmethod=marker
 
@@ -220,15 +219,12 @@ nmap k gk
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" laziness
-nnoremap <Leader>ww :w!<CR>
-
-" easier to move to start of non-whitespace
+" easier to jump to first non-whitespace character
 nnoremap 0 ^
 nnoremap ^ 0
 
 " go to previously used buffer
-nnoremap <silent> <Leader><Leader> :b#<CR>
+nnoremap <silent> <Leader><Leader> <C-^>
 
 " open vimrc in new buffer
 nnoremap <Leader>vc :e $MYVIMRC<CR>
@@ -311,8 +307,9 @@ nnoremap <silent> <Leader>swl :botright vnew<CR>
 nnoremap <silent> <Leader>swk :topleft new<CR>
 nnoremap <silent> <Leader>swj :botright new<CR>
 
-" zoom into splits
-nnoremap <Leader>- :wincmd _<CR>:wincmd \|<CR>
+" zoom in and out of splits
+nnoremap <silent> <Leader>- :wincmd _<CR>:wincmd \|<CR>
+nnoremap <silent> <Leader>= <C-w>=
 
 " Emacs-like movement in the command line
 cnoremap <C-a>  <Home>
@@ -335,28 +332,37 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" more laziness
+" laziness
 nnoremap <Leader>o :open 
 nnoremap <Leader>pi :PluginInstall<CR>
 
+" open/close fold
+nnoremap fo zo
+nnoremap fc zc
+
+" fold/unfold all
+nnoremap <Leader>fa zM
+nnoremap <Leader>uf zR
+
 " replace all
-nnoremap S :%s//g<Left><Left>
+nnoremap <Leader>sub :%s///g<left><left><left>
+vnoremap <Leader>sub :s///g<left><left><left>
 
 " removes last command showing in cl
 nnoremap <Leader><Esc> i<Esc>l
 
-" ignoring things I accidentally type sometimes
-nmap q: <silent>
-nmap K  <silent>
-
 " no idea what Ex mode is
 nmap Q  <silent>
+nmap K  <silent>
 
 " open a buffer for quick use
 nnoremap <Leader>q :e ~/buffer<CR>
 
 " copy file path
 nnoremap <silent> yZ :let @" = expand("%:p")<CR>
+
+" open help contents for added plugins
+nnoremap <Leader>rh :help local-additions<CR>
 
 " copy filename
 nnoremap <silent> yY :let @" = expand("%")<CR>
@@ -372,10 +378,15 @@ map <Leader>sa zg
 map <Leader>s? z=
 
 " ......................... misc functional mappings ..........................
-nnoremap <silent> tz :call ToggleZoom()<CR>
+nnoremap <Leader>n :call RenameFile()<CR>
+
+inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
+inoremap <S-Tab> <C-n>
 
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+nnoremap <Leader>spf :call FixLastSpellingError()<CR>
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
 
@@ -418,6 +429,43 @@ set fillchars=fold:_,stl:_,stlnc:_,vert:│
 " functions {{{
 " -----------------------------------------------------------------------------
 
+" rename current file
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+
+" easier to use help
+function! HelpFileHelp()
+  wincmd _ " maximze help on open
+  nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<CR>:noh<CR>2l
+  nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<CR>:noh<CR>2l
+  nnoremap <buffer> <CR> <C-]>
+  nnoremap <buffer> <BS> <C-t>
+  nnoremap <buffer> q :q<CR>
+  setlocal nonumber
+endfunction
+
+augroup help_help
+    autocmd!
+    autocmd filetype help call HelpFileHelp()
+augroup END
+
+" insert tab at beginning of line or use completion if not at beginning
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<C-p>"
+    endif
+endfunction
+
 " press * or # to search for current visual selection (taken from amix/vimrc)
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -436,11 +484,10 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
-" from christoomey's vim talk
+" from christoomey's 'vim plugin' talk
 function! FixLastSpellingError()
     normal! mm[s1z=`m
 endfunction
-nnoremap <Leader>spf :call FixLastSpellingError()<CR>
 
 " hide ui elements
 let s:hidden_all=0
