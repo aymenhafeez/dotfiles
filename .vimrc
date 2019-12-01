@@ -15,7 +15,6 @@ set modifiable
 set encoding=utf8
 set ttimeoutlen=0
 set lazyredraw
-set laststatus=0
 set history=10000
 set scrolloff=7
 set foldmethod=marker
@@ -52,11 +51,6 @@ set shiftwidth=4
 set smarttab
 set expandtab
 
-" change cursor shape depending on mode
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-
 " return to last edit position when opening files
 augroup last_edit
     autocmd!
@@ -80,6 +74,8 @@ Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/fzf'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'tpope/vim-surround'
@@ -99,7 +95,10 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'godlygeek/tabular'
 Plugin 'lervag/vimtex'
 
-call vundle#end()            
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+call vundle#end()
 filetype plugin indent on
 " -----------------------------------------------------------------------------
 
@@ -122,16 +121,34 @@ let g:formatter_yapf_style = 'pep8'
 " add space after comment
 let g:NERDSpaceDelims=1
 
+" scrooloose/nerdtree
+" .............................................................................
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * wincmd p
+" Quit out of vim if NERDTree is the only buffer
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let NERDTreeAutoDeleteBuffer=1
+let NERDTreeMinimalUI=1
+let NERDTreeShowHidden=1
+let g:NERDTreeLimitedSyntax=1
+let g:NERDTreeHighlightCursorline=1
+let g:NERDTreeWinSize=25
+let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp$'] "ignore files in NERDTree
+
+nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+
 " ........................... Valloric/YouCompleteMe ..........................
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " ............................. simeji/winresizer .............................
-let g:winresizer_vert_resize=3 
+let g:winresizer_vert_resize=5
 let g:winresizer_finish_with_escape=1
 let g:winresizer_start_key = '<C-t>'
 
-" ....................... christoomey/vim-tmux-navigator ......................
+" ...................... christoomey/vim-tmux-navigator .......................
 let g:tmux_navigator_no_mappings = 1
 
 nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
@@ -157,7 +174,7 @@ let g:pymode_rope=0
 " ............................ vim-latex/vim-latex ............................
 let g:tex_flavor='latex'
 
-" ............................... lervag/vimtex ...............................
+" .............................. lervag/vimtex ................................
 let g:vimtex_compiler_enabled=0
 
 " .......................... jupyter-vim/jupyter-vim ..........................
@@ -173,7 +190,7 @@ endif
 " run current file
 nnoremap <buffer> <silent> <localleader>R :w<CR>:JupyterRunFile<CR>
 nnoremap <buffer> <silent> <localleader>I :JupyterImportThisFile<CR>
-nmap <Leader>co :JupyterConnect<CR>
+nnoremap <Leader>co :JupyterConnect<CR>
 
 " change to directory of current file
 nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
@@ -416,13 +433,10 @@ augroup END
 set background=dark
 colorscheme solardust
 
-" statusbar
-set statusline=
-set statusline+=%#StatusLineNC#%f
-set statusline+=%=
-set statusline+=%#StatusLineNC#%=%(%l:%c%V%)\ %p
-set rulerformat=%30(%#StatusLineNC#%=%(%l:%c%V%)\ %p%*%)
-set fillchars=fold:_,stl:_,stlnc:_,vert:│
+" vim-airline/vim-airline
+let g:airline_powerline_fonts=1
+let g:airline_theme='solarized'
+let g:airline_solarized_bg='dark'
 
 " }}}
 
