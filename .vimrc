@@ -9,15 +9,25 @@
 " general configuration {{{
 " -----------------------------------------------------------------------------
 
+" so vim doesn't behave like vi (don't know if this is still required in Vim 8)
 set nocompatible
+" automatically read a file in Vim when it has been changed outside of Vim
 set autoread
-set modifiable
 set encoding=utf8
+" escape to normal mode delay
 set ttimeoutlen=0
+" avoid redrawing the screen when not required
 set lazyredraw
+" extending command history
 set history=10000
+" scroll lines above and below the cursor 
 set scrolloff=7
+" folding with markers ({{{ and }}})
 set foldmethod=marker
+" always show status bar
+set laststatus=2
+" show column, row and percentage in cmd line
+set ruler
 
 " set <Space> as leader
 let mapleader="\<Space>"
@@ -74,17 +84,13 @@ Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/fzf'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'ryanoasis/vim-devicons'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 
 " language/file type specific
-Plugin 'Chiel92/vim-autoformat'
 Plugin 'python-mode/python-mode'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
@@ -94,9 +100,6 @@ Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
 Plugin 'plasticboy/vim-markdown'
 Plugin 'godlygeek/tabular'
 Plugin 'lervag/vimtex'
-
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()
 filetype plugin indent on
@@ -113,31 +116,6 @@ augroup END
 
 " plugin specific settings and mappings {{{
 " -----------------------------------------------------------------------------
-
-" ........................... Chiel92/vim-autoformat ..........................
-let g:formatter_yapf_style = 'pep8'
-
-" .......................... scrooloose/nerdcommenter .........................
-" add space after comment
-let g:NERDSpaceDelims=1
-
-" scrooloose/nerdtree
-" .............................................................................
-" autocmd VimEnter * NERDTree
-" autocmd VimEnter * wincmd p
-" Quit out of vim if NERDTree is the only buffer
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeAutoDeleteBuffer=1
-let NERDTreeMinimalUI=1
-let NERDTreeShowHidden=1
-let g:NERDTreeLimitedSyntax=1
-let g:NERDTreeHighlightCursorline=1
-let g:NERDTreeWinSize=25
-let NERDTreeIgnore=['\.pyc$', '\~$', '\.swp$'] "ignore files in NERDTree
-
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
-
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
 " ........................... Valloric/YouCompleteMe ..........................
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -198,8 +176,8 @@ nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
 " send a selection of lines
 nnoremap <buffer> <silent> <localleader>X :JupyterSendCell<CR>
 nnoremap <buffer> <silent> <localleader>E :JupyterSendRange<CR>
-nmap     <buffer> <silent> <localleader>e <Plug>JupyterRunTextObj
-vmap     <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
+nnoremap <buffer> <silent> <localleader>e <Plug>JupyterRunTextObj
+vnoremap <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
 
 nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 
@@ -215,11 +193,11 @@ set autochdir
 augroup netrw_mappings
     autocmd!
     autocmd filetype netrw nnoremap <buffer> <C-l> <C-w>l
-    autocmd filetype netrw nnoremap <buffer> <Esc> :bd<CR>
+    autocmd filetype netrw nnoremap <silent> <buffer> <Esc> :bd<CR>
 augroup END
 
 " open netrw in directory of current file
-nnoremap - :e %:p:h<CR>
+nnoremap - :Explore %:p:h<CR>
 nnoremap s- :Sexplore %:p:h<CR>
 nnoremap v- :Vexplore %:p:h<CR>
 
@@ -292,6 +270,7 @@ augroup TeX_mappings
     autocmd filetype tex,latex,markdown inoremap <buffer> \bal \begin{align}<CR><CR>\end{align}<Esc>ki<tab>
     autocmd filetype tex,latex,markdown inoremap <buffer> \nbal \begin{align*}<CR><CR>\end{align*}<Esc>ki<tab>
     autocmd filetype tex,latex,markdown inoremap <buffer> \fig \begin{figure}[H]<CR><CR>\end{figure}<Esc>ki\centering<CR>\includegraphics[width=\textwidth]{<++>}<CR>\caption{<++>}<Esc><CR><CR>i<++><Esc>3k3wli
+    autocmd filetype tex,latex,markdown inoremap <buffer> \ul \underline{}<++><Esc>bli
     " move to next placeholder
     autocmd filetype tex,latex,markdown inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
     " compile and open/update pdf
@@ -353,14 +332,6 @@ inoremap <right> <nop>
 nnoremap <Leader>o :open 
 nnoremap <Leader>pi :PluginInstall<CR>
 
-" open/close fold
-nnoremap fo zo
-nnoremap fc zc
-
-" fold/unfold all
-nnoremap <Leader>fa zM
-nnoremap <Leader>uf zR
-
 " replace all
 nnoremap <Leader>sub :%s///g<left><left><left>
 vnoremap <Leader>sub :s///g<left><left><left>
@@ -414,34 +385,62 @@ nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
 
 set termguicolors
 syntax enable
-
-" needs to go before the highlight_colours augroup
-function! Highlights() abort
-    highlight VertSplit guifg=#002b36 guibg=#002b36      
-    highlight StatusLineNC guibg=#0f3f4c guifg=#002b36
-    highlight CursorLineNR guifg=#38616b guibg=#002b36
-    highlight CursorLine guibg=#01313d
-    highlight WildMenu guifg=#eff1cc guibg=#002b36
-    highlight ErrorMsg guibg=#002b36 guifg=#EC5050
-endfunction
-
-augroup highlight_colours
-    autocmd!
-    autocmd ColorScheme * call Highlights()
-augroup END
-
 set background=dark
 colorscheme solardust
-
-" vim-airline/vim-airline
-let g:airline_powerline_fonts=1
-let g:airline_theme='solarized'
-let g:airline_solarized_bg='dark'
 
 " }}}
 
 " functions {{{
 " -----------------------------------------------------------------------------
+
+" slightly easier way to swap split panes
+" mark the current window
+function! MarkWindow()
+    let g:markedWinNum = winnr()
+endfunction
+
+function! SwapWindow()
+    "mark current position
+    let current_window = winnr()
+    let current_buffer = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "hide and open so that we aren't prompted and keep history
+    exe 'hide buf' current_buffer
+    "switch to dest and shuffle source->dest
+    exe current_window . "wincmd w"
+    "hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf
+endfunction
+
+nnoremap <silent> <Leader>mw :call MarkWindow()<CR>
+nnoremap <silent> <Leader>pw :call SwapWindow()<CR>
+
+" delete the nth above line
+function! DeleteLine(position)
+    let cursor_position=getpos('.')
+    let delete_line = a:position
+    execute 'normal! ' . delete_line . 'k0D'
+    " call setpos('.', cursor_position)
+endfunction
+
+for position in range(1, 9)
+    execute 'nnoremap <Leader>d' . position . ' : call DeleteLine(' . position . ')<CR>'
+endfor
+
+" move the current line to the nth line of the paragraph
+function! MoveLine(position)
+    let cursor_position=getpos('.')
+    let previous_blank_line=search('^$', 'bn')
+    let target_line=previous_blank_line + a:position - 1
+    execute 'move' . target_line
+    call setpos('.', cursor_position)
+endfunction
+
+for position in range(1, 9)
+    execute 'nnoremap <Leader>m' . position . ' : call MoveLine(' . position . ')<CR>'
+endfor
 
 " rename current file
 function! RenameFile()
@@ -461,7 +460,7 @@ function! HelpFileHelp()
   nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<CR>:noh<CR>2l
   nnoremap <buffer> <CR> <C-]>
   nnoremap <buffer> <BS> <C-t>
-  nnoremap <buffer> q :q<CR>
+  nnoremap <silent> <buffer> q :q<CR>
   setlocal nonumber
 endfunction
 
@@ -509,13 +508,11 @@ function! ToggleHideAll() abort
     if s:hidden_all==0
         let s:hidden_all=1
         set showmode
-        set noruler
         set laststatus=0
         set noshowcmd
     else
         let s:hidden_all=0
         set showmode
-        set ruler
         set laststatus=2
         set showcmd
     endif
