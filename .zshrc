@@ -149,7 +149,6 @@ bindkey '^x' autosuggest-execute
 # ---------------------------------- startup ----------------------------------
 
 clear
-neofetch
 ~/.vocab
 
 source $ZSH/oh-my-zsh.sh
