@@ -53,11 +53,11 @@ chunkc set preselect_border_color        0xffd75f5f
 chunkc set preselect_border_width        1.5
 chunkc set preselect_border_outline      0
 
-chunkc set focused_border_color          0x00ffffff
-chunkc set focused_border_width          0
-chunkc set focused_border_radius         0
+chunkc set focused_border_color          0xff365663
+chunkc set focused_border_width          1
+chunkc set focused_border_radius         5
 chunkc set focused_border_outline        0
-chunkc set focused_border_skip_floating  0
+chunkc set focused_border_skip_floating  1
 chunkc set focused_border_skip_monocle   0
 
 chunkc set ffm_bypass_modifier           fn
@@ -79,3 +79,4 @@ chunkc tiling::rule --owner Notes --state float &
 chunkc tiling::rule --owner Grapher --state float &
 chunkc tiling::rule --owner Books --state float &
 chunkc tiling::rule --owner \"GIPHY CAPTURE\" --state float &
+chunkc tiling::rule --owner Emacs --state tile
