@@ -143,7 +143,6 @@ let g:pymode_rope=0
 let g:vimtex_compiler_enabled=0
 
 " .......................... jupyter-vim/jupyter-vim ..........................
-" mostly from jupyter-vim/jupyter-vim README
 if has('nvim')
     let g:python3_host_prog='/usr/local/bin/python3.7'
 else
@@ -152,21 +151,18 @@ else
     set pythonthreedll=/Library/Frameworks/Python.framework/Versions/3.6/Python
 endif
 
-" run current file
-nnoremap <buffer> <silent> <localleader>R :w<CR>:JupyterRunFile<CR>
-nnoremap <buffer> <silent> <localleader>I :JupyterImportThisFile<CR>
-nnoremap <Leader>co :JupyterConnect<CR>
-
-" change to directory of current file
-nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
-
-" send a selection of lines
-nnoremap <buffer> <silent> <localleader>X :JupyterSendCell<CR>
-nnoremap <buffer> <silent> <localleader>E :JupyterSendRange<CR>
-nnoremap <buffer> <silent> <localleader>e <Plug>JupyterRunTextObj
-vnoremap <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
-
-nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
+augroup jupyter_mappings
+    autocmd!
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>R :w<CR>:JupyterRunFile<CR>
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>I :JupyterImportThisFile<CR>
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>co :JupyterConnect<CR>
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>d :JupyterCd %:p:h<CR>
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>X :JupyterSendCell<CR>
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>E :JupyterSendRange<CR>
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>e <Plug>JupyterRunTextObj
+    autocmd filetype python vnoremap <buffer> <silent> <Leader>e <Plug>JupyterRunVisual
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>U :JupyterUpdateShell<CR>
+augroup END
 
 " ............................... vim/netrw.vim ...............................
 let g:netrw_banner=0
