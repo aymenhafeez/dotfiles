@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =4
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/Users/aymen/Documents/work-env'
 let g:netrw_dirhist_4='/Users/aymen/.vim/bundle/Vundle.vim/doc'
 let g:netrw_dirhist_3='/Users/aymen/Documents/notes/atbs'
 let g:netrw_dirhist_2='/Users/aymen/Documents/animplotlib/src'
@@ -9,4 +10,3 @@ let g:netrw_dirhist_9='/Users/aymen'
 let g:netrw_dirhist_8='/Users/aymen/Documents'
 let g:netrw_dirhist_7='/Users/aymen/Documents/notes'
 let g:netrw_dirhist_6='/Users/aymen/Documents/notes/atbs'
-let g:netrw_dirhist_5='/private/tmp'

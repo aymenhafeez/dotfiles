@@ -139,9 +139,6 @@ nnoremap <Leader>mk :InstantMarkdownPreview<CR>
 let g:pymode_python='python3'
 let g:pymode_rope=0
 
-" ............................ vim-latex/vim-latex ............................
-let g:tex_flavor='latex'
-
 " .............................. lervag/vimtex ................................
 let g:vimtex_compiler_enabled=0
 
@@ -234,7 +231,7 @@ nnoremap <Leader>schk :!clear && brew services restart chunkwm<CR>
 nnoremap <Leader>skd :e ~/Documents/work-env/.skhdrc<CR>
 nnoremap <Leader>sskd :!clear && brew services restart skhd<CR>
 
-" shortcut to save and run Python files
+" save and run Python files
 nnoremap <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
 " TeX mappings {{{
@@ -289,7 +286,7 @@ nnoremap <silent> <Leader>bh :bp<CR>
 nnoremap <silent> <Leader>bd :bd<CR>
 nnoremap <Leader>ls :buffers<CR>:buffer<Space>
 
-" open split panes
+" open empty split panes
 nnoremap <silent> <Leader>wh :leftabove vnew<CR>
 nnoremap <silent> <Leader>wl :rightbelow vnew<CR>
 nnoremap <silent> <Leader>wk :leftabove new<CR>
@@ -326,7 +323,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " laziness
-nnoremap <Leader>o :open
 nnoremap <Leader>pi :PluginInstall<CR>
 
 " replace all
@@ -346,34 +342,24 @@ nnoremap <Leader>q :e ~/buffer<CR>
 " copy file path
 nnoremap <silent> yZ :let @" = expand("%:p")<CR>
 
-" open help contents for added plugins
+" open help contents for installed plugins
 nnoremap <Leader>rh :help local-additions<CR>
 
 " copy filename
 nnoremap <silent> yY :let @" = expand("%")<CR>
 
-" ........................ spell checking (amix/vimrc) ........................
-" toggle and untoggle spell checking
-map <Leader>spl :setlocal spell!<CR>
-
-" shortcuts
-map <Leader>sn ]s
-map <Leader>sp [s
-map <Leader>sa zg
-map <Leader>s? z=
-
 " remove trailing whitespace
 nnoremap <Leader>ws :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
-" }}}
+" ........................ spell checking (amix/vimrc) ........................
+" toggle and untoggle spell checking
+nnoremap <Leader>spl :setlocal spell!<CR>
 
-" theme and appearance {{{
-" -----------------------------------------------------------------------------
-
-set termguicolors
-syntax enable
-set background=dark
-colorscheme solardust
+" shortcuts
+nnoremap <Leader>sn ]s
+nnoremap <Leader>sp [s
+nnoremap <Leader>sa zg
+nnoremap <Leader>s? z=
 
 " }}}
 
@@ -398,12 +384,12 @@ function! SwapWindow()
     execute 'hide buf' marked_buffer
 endfunction
 
-" delete the nth line above and insert
+" delete the nth line above
 function! DeleteLine(position)
     let cursor_position=getpos('.')
     let delete_line = a:position
     execute 'normal! ' . delete_line . 'k0D'
-    " call setpos('.', cursor_position)
+    call setpos('.', cursor_position)
 endfunction
 
 for position in range(1, 9)
@@ -428,13 +414,13 @@ function! JumpToIndentMatch(inc)
     let current_line = current_position[1]
     let match_indent = 0
 
-    " Look for a line with the same indent level whithout going out of the buffer
+    " look for a line with the same indent level whithout going out of the buffer
     while !match_indent && current_line != line('$') + 1 && current_line != -1
         let current_line += a:inc
         let match_indent = indent(current_line) == indent('.')
     endwhile
 
-    " If a line is found go to this line
+    " if a line is found go to this line
     if (match_indent)
         let current_position[1] = current_line
         call setpos('.', current_position)
@@ -454,13 +440,13 @@ endfunction
 
 " easier to use help
 function! HelpFileHelp()
-  wincmd _ " maximze help on open
-  nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<CR>:noh<CR>2l
-  nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<CR>:noh<CR>2l
-  nnoremap <buffer> <CR> <C-]>
-  nnoremap <buffer> <BS> <C-t>
-  nnoremap <silent> <buffer> q :q<CR>
-  setlocal nonumber
+    wincmd _ " maximze help on open
+    nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<CR>:noh<CR>2l
+    nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<CR>:noh<CR>2l
+    nnoremap <buffer> <CR> <C-]>
+    nnoremap <buffer> <BS> <C-t>
+    nnoremap <silent> <buffer> q :q<CR>
+    setlocal nonumber
 endfunction
 
 augroup help_help
@@ -535,5 +521,15 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 nnoremap <Leader>spf :call FixLastSpellingError()<CR>
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
+
+" }}}
+
+" theme and appearance {{{
+" -----------------------------------------------------------------------------
+
+set termguicolors
+syntax enable
+set background=dark
+colorscheme solardust
 
 " }}}
