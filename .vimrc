@@ -20,12 +20,12 @@ set ttimeoutlen=0
 set lazyredraw
 " extending command history
 set history=10000
-" scroll lines above and below the cursor 
+" scroll lines above and below the cursor
 set scrolloff=7
 " folding with markers ({{{ and }}})
 set foldmethod=marker
-" always show status bar
-set laststatus=2
+" only show status bar with multiple splits
+set laststatus=1
 " show column, row and percentage in cmd line
 set ruler
 
@@ -80,7 +80,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " general
 Bundle 'Valloric/YouCompleteMe'
-Plugin 'simeji/winresizer'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/fzf'
@@ -91,14 +90,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-commentary'
 
 " language/file type specific
+Plugin 'dense-analysis/ale'
 Plugin 'python-mode/python-mode'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
 Plugin 'jupyter-vim/jupyter-vim'
-Plugin 'vim-scripts/indentpython.vim'
 Plugin 'suan/vim-instant-markdown', {'rtp': 'after'}
-Plugin 'plasticboy/vim-markdown'
-Plugin 'godlygeek/tabular'
 Plugin 'lervag/vimtex'
 
 call vundle#end()
@@ -121,11 +116,6 @@ augroup END
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" ............................. simeji/winresizer .............................
-let g:winresizer_vert_resize=5
-let g:winresizer_finish_with_escape=1
-let g:winresizer_start_key = '<C-t>'
-
 " ...................... christoomey/vim-tmux-navigator .......................
 let g:tmux_navigator_no_mappings = 1
 
@@ -143,7 +133,7 @@ let g:instant_markdown_slow=1
 let g:instant_markdown_allow_unsafe_content=1
 let g:instant_markdown_mathjax=1
 
-nnoremap <Leader>mk :InstantMarkdownPreview<CR> 
+nnoremap <Leader>mk :InstantMarkdownPreview<CR>
 
 " .......................... python-mode/python-mode ..........................
 let g:pymode_python='python3'
@@ -207,8 +197,10 @@ nnoremap v- :Vexplore %:p:h<CR>
 " -----------------------------------------------------------------------------
 
 " move through wrapped lines
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
+noremap gj j
+noremap gk k
 
 " slightly faster scrolling
 nnoremap <C-e> 3<C-e>
@@ -224,16 +216,22 @@ nnoremap <silent> <Leader><Leader> <C-^>
 " open vimrc in new buffer
 nnoremap <Leader>vc :e $MYVIMRC<CR>
 
-" open vimrc in vertically split buffer 
+" open vimrc in vertically split buffer
 nnoremap <Leader>vt :vsp $MYVIMRC<CR>
 
 " source vimrc
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
-" source chunkwmrc
+" edit/source zshrc
+nnoremap <Leader>zc :e ~/Documents/work-env/.zshrc<CR>
+nnoremap <Leader>szc :!source ~/.zshrc<CR><CR>
+
+" edit/source chunkwmrc
+nnoremap <Leader>chk :e ~/Documents/work-env/.chunkwmrc<CR>
 nnoremap <Leader>schk :!clear && brew services restart chunkwm<CR>
 
-" source chunkwmrc
+" edit/source skhdrc
+nnoremap <Leader>skd :e ~/Documents/work-env/.skhdrc<CR>
 nnoremap <Leader>sskd :!clear && brew services restart skhd<CR>
 
 " shortcut to save and run Python files
@@ -288,9 +286,8 @@ nnoremap <silent> tk :tablast<CR>
 " easier navigation between buffers
 nnoremap <silent> <Leader>bl :bn<CR>
 nnoremap <silent> <Leader>bh :bp<CR>
-nnoremap <silent> <Leader>bd :bd<CR>  
+nnoremap <silent> <Leader>bd :bd<CR>
 nnoremap <Leader>ls :buffers<CR>:buffer<Space>
-nnoremap <silent> gF :vertical wincmd f<CR>
 
 " open split panes
 nnoremap <silent> <Leader>wh :leftabove vnew<CR>
@@ -329,7 +326,7 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 
 " laziness
-nnoremap <Leader>o :open 
+nnoremap <Leader>o :open
 nnoremap <Leader>pi :PluginInstall<CR>
 
 " replace all
@@ -355,7 +352,7 @@ nnoremap <Leader>rh :help local-additions<CR>
 " copy filename
 nnoremap <silent> yY :let @" = expand("%")<CR>
 
-" .................. spell checking (taken from amix/vimrc) ...................
+" ........................ spell checking (amix/vimrc) ........................
 " toggle and untoggle spell checking
 map <Leader>spl :setlocal spell!<CR>
 
@@ -365,21 +362,11 @@ map <Leader>sp [s
 map <Leader>sa zg
 map <Leader>s? z=
 
-" ......................... misc functional mappings ..........................
-nnoremap <Leader>n :call RenameFile()<CR>
-
-inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
-inoremap <S-Tab> <C-n>
-
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-nnoremap <Leader>spf :call FixLastSpellingError()<CR>
-
-nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
+" remove trailing whitespace
+nnoremap <Leader>ws :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 " }}}
-    
+
 " theme and appearance {{{
 " -----------------------------------------------------------------------------
 
@@ -390,34 +377,28 @@ colorscheme solardust
 
 " }}}
 
-" functions {{{
+" functions and mappings{{{
 " -----------------------------------------------------------------------------
 
 " slightly easier way to swap split panes
-" mark the current window
 function! MarkWindow()
-    let g:markedWinNum = winnr()
+    let g:marked_window = winnr()
 endfunction
 
 function! SwapWindow()
     "mark current position
     let current_window = winnr()
     let current_buffer = bufnr( "%" )
-    exe g:markedWinNum . "wincmd w"
-    "switch to source and shuffle dest->source
-    let markedBuf = bufnr( "%" )
+    execute g:marked_window . "wincmd w"
+    let marked_buffer = bufnr( "%" )
     "hide and open so that we aren't prompted and keep history
-    exe 'hide buf' current_buffer
+    execute 'hide buf' current_buffer
     "switch to dest and shuffle source->dest
-    exe current_window . "wincmd w"
-    "hide and open so that we aren't prompted and keep history
-    exe 'hide buf' markedBuf
+    execute current_window . "wincmd w"
+    execute 'hide buf' marked_buffer
 endfunction
 
-nnoremap <silent> <Leader>mw :call MarkWindow()<CR>
-nnoremap <silent> <Leader>pw :call SwapWindow()<CR>
-
-" delete the nth above line
+" delete the nth line above and insert
 function! DeleteLine(position)
     let cursor_position=getpos('.')
     let delete_line = a:position
@@ -441,6 +422,24 @@ endfunction
 for position in range(1, 9)
     execute 'nnoremap <Leader>m' . position . ' : call MoveLine(' . position . ')<CR>'
 endfor
+
+function! JumpToIndentMatch(inc)
+    let current_position = getpos('.')
+    let current_line = current_position[1]
+    let match_indent = 0
+
+    " Look for a line with the same indent level whithout going out of the buffer
+    while !match_indent && current_line != line('$') + 1 && current_line != -1
+        let current_line += a:inc
+        let match_indent = indent(current_line) == indent('.')
+    endwhile
+
+    " If a line is found go to this line
+    if (match_indent)
+        let current_position[1] = current_line
+        call setpos('.', current_position)
+    endif
+endfunction
 
 " rename current file
 function! RenameFile()
@@ -479,7 +478,7 @@ function! InsertTabWrapper()
     endif
 endfunction
 
-" press * or # to search for current visual selection (taken from amix/vimrc)
+" press * or # to search for current visual selection (amix/vimrc)
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
     execute "normal! vgvy"
@@ -517,5 +516,24 @@ function! ToggleHideAll() abort
         set showcmd
     endif
 endfunction
+
+" ......................... functional mappings ..........................
+nnoremap <silent> <Leader>mw :call MarkWindow()<CR>
+nnoremap <silent> <Leader>pw :call SwapWindow()<CR>
+
+nnoremap <silent> <Leader>ji :call JumpToIndentMatch(1)<CR>
+nnoremap <silent> <Leader>ki :call JumpToIndentMatch(-1)<CR>
+
+nnoremap <Leader>n :call RenameFile()<CR>
+
+inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
+inoremap <S-Tab> <C-n>
+
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+nnoremap <Leader>spf :call FixLastSpellingError()<CR>
+
+nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
 
 " }}}
