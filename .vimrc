@@ -72,18 +72,14 @@ augroup END
 " plugins {{{
 " -----------------------------------------------------------------------------
 
-" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
 " general
-Bundle 'Valloric/YouCompleteMe'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'junegunn/fzf'
-Plugin 'pbrisbin/vim-mkdir'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
@@ -98,23 +94,21 @@ Plugin 'lervag/vimtex'
 
 call vundle#end()
 filetype plugin indent on
+
 " -----------------------------------------------------------------------------
 
 " turn off autocommenting new line for all filetypes
-" needs to go after Vundle as Vundle turns filetype off
 augroup auto_comment
     autocmd!
     autocmd filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 augroup END
 
+" -----------------------------------------------------------------------------
+
 " }}}
 
 " plugin specific settings and mappings {{{
 " -----------------------------------------------------------------------------
-
-" ........................... Valloric/YouCompleteMe ..........................
-let g:ycm_autoclose_preview_window_after_completion=1
-nnoremap <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " ...................... christoomey/vim-tmux-navigator .......................
 let g:tmux_navigator_no_mappings = 1
@@ -123,10 +117,6 @@ nnoremap <silent> <C-h> :TmuxNavigateLeft<CR>
 nnoremap <silent> <C-j> :TmuxNavigateDown<CR>
 nnoremap <silent> <C-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <C-l> :TmuxNavigateRight<CR>
-
-" ............................... junegunn/fzf ................................
-set rtp+=/usr/local/opt/fzf
-nnoremap <Leader>fz :FZF<CR>
 
 " ......................... suan/vim-instant-markdown .........................
 let g:instant_markdown_slow=1
@@ -138,6 +128,15 @@ nnoremap <Leader>mk :InstantMarkdownPreview<CR>
 " .......................... python-mode/python-mode ..........................
 let g:pymode_python='python3'
 let g:pymode_rope=0
+
+if has('python3') && !has('patch-8.1.201')
+  silent! python3 1
+endif
+
+augroup python_mappings
+    autocmd!
+    autocmd filetype python nnoremap <buffer> <silent> <Leader>li :PymodeLintAuto<CR>
+augroup END
 
 " .............................. lervag/vimtex ................................
 let g:vimtex_compiler_enabled=0
@@ -295,7 +294,6 @@ nnoremap <silent> <Leader>swj :botright new<CR>
 
 " zoom in and out of splits
 nnoremap <silent> <Leader>- :wincmd _<CR>:wincmd \|<CR>
-nnoremap <silent> <Leader>= <C-w>=
 
 " Emacs-like movement in the command line
 cnoremap <C-a>  <Home>
@@ -380,6 +378,9 @@ function! SwapWindow()
     execute 'hide buf' marked_buffer
 endfunction
 
+nnoremap <silent> <Leader>mw :call MarkWindow()<CR>
+nnoremap <silent> <Leader>pw :call SwapWindow()<CR>
+
 " delete the nth line above
 function! DeleteLine(position)
     let cursor_position=getpos('.')
@@ -405,12 +406,13 @@ for position in range(1, 9)
     execute 'nnoremap <Leader>m' . position . ' : call MoveLine(' . position . ')<CR>'
 endfor
 
+" jump between matching indents
 function! JumpToIndentMatch(inc)
     let current_position = getpos('.')
     let current_line = current_position[1]
     let match_indent = 0
 
-    " look for a line with the same indent level whithout going out of the buffer
+    " look for a line with the same indent level without going out of the buffer
     while !match_indent && current_line != line('$') + 1 && current_line != -1
         let current_line += a:inc
         let match_indent = indent(current_line) == indent('.')
@@ -423,6 +425,9 @@ function! JumpToIndentMatch(inc)
     endif
 endfunction
 
+nnoremap <silent> <Leader>ji :call JumpToIndentMatch(1)<CR>
+nnoremap <silent> <Leader>ki :call JumpToIndentMatch(-1)<CR>
+
 " rename current file
 function! RenameFile()
     let old_name = expand('%')
@@ -433,6 +438,8 @@ function! RenameFile()
         redraw!
     endif
 endfunction
+
+nnoremap <Leader>n :call RenameFile()<CR>
 
 " easier to use help
 function! HelpFileHelp()
@@ -460,6 +467,9 @@ function! InsertTabWrapper()
     endif
 endfunction
 
+inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
+inoremap <S-Tab> <C-n>
+
 " press * or # to search for current visual selection (amix/vimrc)
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -478,10 +488,15 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
 " from christoomey's 'vim plugin' talk
 function! FixLastSpellingError()
     normal! mm[s1z=`m
 endfunction
+
+nnoremap <Leader>spf :call FixLastSpellingError()<CR>
 
 " hide ui elements
 let s:hidden_all=0
@@ -498,23 +513,6 @@ function! ToggleHideAll() abort
         set showcmd
     endif
 endfunction
-
-" ......................... functional mappings ..........................
-nnoremap <silent> <Leader>mw :call MarkWindow()<CR>
-nnoremap <silent> <Leader>pw :call SwapWindow()<CR>
-
-nnoremap <silent> <Leader>ji :call JumpToIndentMatch(1)<CR>
-nnoremap <silent> <Leader>ki :call JumpToIndentMatch(-1)<CR>
-
-nnoremap <Leader>n :call RenameFile()<CR>
-
-inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
-inoremap <S-Tab> <C-n>
-
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-nnoremap <Leader>spf :call FixLastSpellingError()<CR>
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
 
