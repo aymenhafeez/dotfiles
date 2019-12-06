@@ -1,9 +1,14 @@
+" Tomorrow Night - Full Colour and 256 Colour
+" http://chriskempson.com
+"
+" Hex colour conversion functions borrowed from the theme "Desert256""
+
 " Default GUI Colours
-let s:foreground = "cbccb1"
+let s:foreground = "DAD9BB"
 let s:background = "041E23"
-let s:selection = "16414c"
-let s:line = "0e516f"
-let s:comment = "5a767b"
+let s:selection = "0A385C"
+let s:line = "282a2e"
+let s:comment = "7B615A"
 let s:red = "E35A00"
 let s:orange = "de935f"
 let s:yellow = "EBC462"
@@ -15,10 +20,10 @@ let s:window = "07161A"
 
 " Console 256 Colours
 if !has("gui_running")
-	let s:background = "002b36"
-	let s:window = "002b36"
-	let s:line = "002e3a"
-	let s:selection = "10404d"
+	let s:background = "003333"
+	let s:window = "003333"
+	let s:line = "333333"
+	let s:selection = "585858"
 end
 
 set background=dark
@@ -349,5 +354,3 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	delf <SID>grey_level
 	delf <SID>grey_number
 endif
-
-
