@@ -1,3 +1,8 @@
+" -----------------------------------------------------------------------------
+" solardust-theme --- based on hallski/spacedust-theme
+" author: aymen hafeez
+" -----------------------------------------------------------------------------
+
 let g:colors_name = "solardust"
 
 " Default GUI Colours
@@ -20,6 +25,7 @@ let s:status_bg = "56737c"
 let s:fade_fg = "0f3f4c"
 let s:wildmenu_fg = "eff1cc"
 let s:wildmenu_bg = "002b36"
+let s:error_msg = "c1392a"
 
 " Console 256 Colours
 if !has("gui_running")
@@ -33,7 +39,7 @@ set background=dark
 hi clear
 syntax reset
 
-let g:colors_name = "Spacedust"
+let g:colors_name = "solardust"
 
 if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	" Returns an approximate grey index for the given grey level
@@ -263,6 +269,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	call <SID>X("Folded", s:comment, s:background, "")
 	call <SID>X("FoldColumn", "", s:background, "")
 	call <SID>X("WildMenu", s:wildmenu_fg, s:wildmenu_bg, "reverse")
+	call <SID>X("ErrorMsg", s:background, s:error_msg, "reverse")
 	if version >= 700
 		call <SID>X("CursorLine", "", s:line, "none")
 		call <SID>X("CursorColumn", "", s:line, "none")
