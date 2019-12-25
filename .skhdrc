@@ -20,10 +20,10 @@ alt - l : chunkc tiling::window --focus east
 shift + alt - 0 : chunkc tiling::desktop --equalize
 
 # swap window
-ctrl + alt - h : chunkc tiling::window --swap west
-ctrl + alt - j : chunkc tiling::window --swap south
-ctrl + alt - k : chunkc tiling::window --swap north
-ctrl + alt - l : chunkc tiling::window --swap east
+alt + ctrl - h : chunkc tiling::window --swap west
+alt + ctrl - j : chunkc tiling::window --swap south
+alt + ctrl - k : chunkc tiling::window --swap north
+alt + ctrl - l : chunkc tiling::window --swap east
 
 # move window
 shift + cmd - h : chunkc tiling::window --warp west
@@ -70,10 +70,10 @@ ctrl + cmd - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::moni
 ctrl + cmd - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
 
 # increase/decrease region size
-shift + alt - a : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.025 --adjust-window-edge east
-shift + alt - s : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.025 --adjust-window-edge north
-shift + alt - w : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.025 --adjust-window-edge south
-shift + alt - d : chunkc tiling::window --use-temporary-ratio 0.025 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.025 --adjust-window-edge west
+shift + alt - a : chunkc tiling::window --use-temporary-ratio 0.035 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.035 --adjust-window-edge east
+shift + alt - s : chunkc tiling::window --use-temporary-ratio 0.035 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.035 --adjust-window-edge north
+shift + alt - w : chunkc tiling::window --use-temporary-ratio 0.035 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.035 --adjust-window-edge south
+shift + alt - d : chunkc tiling::window --use-temporary-ratio 0.035 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.035 --adjust-window-edge west
 
 # increase/decrease padding
 alt - p : chunkc tiling::desktop --padding dec
