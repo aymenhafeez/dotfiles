@@ -155,20 +155,3 @@ function! ToggleHideAll() abort
 endfunction
 
 nnoremap <silent> <Leader>h :call ToggleHideAll()<CR>
-
-function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    hi statusline guibg=magenta
-  elseif a:mode == 'r'
-    hi statusline guibg=blue
-  else
-    hi statusline guibg=red
-  endif
-endfunction
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guibg=green
-
-" default the statusline to green when entering Vim
-hi statusline guibg=green
