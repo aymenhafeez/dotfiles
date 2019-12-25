@@ -5,9 +5,8 @@ export ZSH='/Users/aymen/.oh-my-zsh'
 
 # -------------------------------- appearance ---------------------------------
 
-export CLICOLOR=1
-
-ZSH_THEME="mh"
+ZSH_THEME="afowler"
+TERM=xterm-256color
 
 # ------------------------------ general config -------------------------------
 
@@ -44,17 +43,17 @@ alias python=python3
 alias ipython='~/Library/Python/3.7/bin/ipython'
 alias jupyter-qtconsole='~/Library/Python/3.7/bin/jupyter-qtconsole'
 alias jqt=jupyter-qtconsole
-alias jnb='~/Library/Python/3.7/bin/jupyter-notebook'
+alias jupyter-notebook='~/Library/Python/3.7/bin/jupyter-notebook'
+alias jnb=jupyter-notebook
 
 # ................................. shortcuts .................................
-alias tmks='tmux kill-server'
+alias vimu='vim -u ~/.min-vimrc'
+alias tmn='tmux attach -t notes || tmux new -s notes'
 alias tma='tmux attach -t tmux || tmux new -s tmux'
-alias zshconfig='mate ~/.zshrc'
-alias ohmyzsh='mate ~/.oh-my-zsh'
+alias tmks='tmux kill-server'
 alias rng='ranger'
 alias cl='clear'
 alias lfa='ls -F -a'
-alias vimu='vim -u ~/.min-vimrc'
 alias zc='vim ~/.zshrc'
 alias szc='source ~/.zshrc'
 alias vc='vim ~/.vimrc'
@@ -101,11 +100,6 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 
 bindkey '^e' autosuggest-accept
 bindkey '^x' autosuggest-execute
-
-# ---------------------------------- startup ----------------------------------
-
-clear
-~/.vocab
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
