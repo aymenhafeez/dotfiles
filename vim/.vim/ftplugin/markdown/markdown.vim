@@ -5,3 +5,5 @@ set shiftwidth=4
 set spell
 set nocindent
 set autoindent
+set tw=80
+set fo+=t

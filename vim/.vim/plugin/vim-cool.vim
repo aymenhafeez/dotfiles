@@ -125,3 +125,4 @@ call <SID>PlayItCool(0, &hlsearch)
 
 let &cpo = s:save_cpo
 
+let g:CoolTotalMatches = 1

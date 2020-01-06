@@ -5,10 +5,12 @@ augroup filetype_things
     autocmd BufRead,BufNewFile *.tex set filetype=tex
 augroup END
 
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set smarttab
 set expandtab
+set tw=80
+set fo+=t
 
 inoremap <buffer> $ $$<++><Esc>4hi
 inoremap <buffer> $$ $$$$<++><Esc>5hi
@@ -38,5 +40,4 @@ inoremap <buffer> ` `'<Esc>i
 inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
 
 " compile and open/update pdf
-let maplocalleader="\<Space>"
-nnoremap <buffer> <silent> <localleader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
+nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>

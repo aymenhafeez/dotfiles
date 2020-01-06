@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/Users/aymen/Documents/work-env/vim/.vim/after/syntax'
+let g:netrw_dirhist_8='/Users/aymen/Documents/work-env/vim/.vim/after'
+let g:netrw_dirhist_7='/Users/aymen/Documents/work-env/vim/.vim'
+let g:netrw_dirhist_6='/Users/aymen/Documents/work-env/vim/.vim/after/syntax'
+let g:netrw_dirhist_5='/Users/aymen/Documents/work-env/vim/.vim/after'
+let g:netrw_dirhist_4='/Users/aymen/Documents/work-env/vim/.vim'
+let g:netrw_dirhist_3='/Users/aymen/Documents/work-env/vim/.vim/plugin'
+let g:netrw_dirhist_2='/Users/aymen/Documents/work-env/vim/.vim/after/syntax'
+let g:netrw_dirhist_1='/Users/aymen/Documents/work-env/vim/.vim/after'
+let g:netrw_dirhist_0='/Users/aymen/Documents/work-env/vim/.vim'
