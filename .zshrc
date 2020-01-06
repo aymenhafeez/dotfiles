@@ -5,7 +5,7 @@ export ZSH='/Users/aymen/.oh-my-zsh'
 
 # -------------------------------- appearance ---------------------------------
 
-ZSH_THEME="afowler"
+ZSH_THEME="mh"
 TERM=xterm-256color
 
 # ------------------------------ general config -------------------------------
@@ -29,7 +29,7 @@ plugins=(
     sudo 
 )
 
-cd() { builtin cd "$@" && ls -F -a; }
+cd() { builtin cd "$@" && exa; }
 
 # fzf via Homebrew
 if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
@@ -47,23 +47,32 @@ alias jupyter-notebook='~/Library/Python/3.7/bin/jupyter-notebook'
 alias jnb=jupyter-notebook
 
 # ................................. shortcuts .................................
-alias vimu='vim -u ~/.min-vimrc'
-alias tmn='tmux attach -t notes || tmux new -s notes'
+alias vimu='vim -u NONE'
+
+# open tmux sessions or create if they don't already exist
 alias tma='tmux attach -t tmux || tmux new -s tmux'
-alias tmks='tmux kill-server'
-alias rng='ranger'
-alias cl='clear'
-alias lfa='ls -F -a'
-alias zc='vim ~/.zshrc'
+alias tmb='tmux attach -t WEBSITE || tmux new -s WEBSITE'
+alias tmn='tmux attach -t NOTES || tmux new -s NOTES'
+alias tmp='tmux attach -t PYTHON || tmux new -s PYTHON'
+alias tmr='tmux attach -t REG || tmux new -s REG'
+alias tmt='tmux attach -t TODO || tmux new -s TODO'
+alias tmw='tmux attach -t WORK || tmux new -s WORK'
+
+alias zc='vim ~/Documents/work-env/.zshrc'
 alias szc='source ~/.zshrc'
-alias vc='vim ~/.vimrc'
-alias tmc='vim ~/.tmux.conf'
-alias chk='vim ~/.chunkwmrc'
+alias vc='vim ~/Documents/work-env/vim/.vimrc'
+alias tmc='vim ~/Documents/work-env/.tmux.conf'
+alias chk='vim ~/Documents/work-env/.chunkwmrc'
 alias rschk='brew services restart chunkwm'
-alias skd='vim ~/.skhdrc'
+alias skd='vim ~/Documents/work-env/.skhdrc'
 alias rsskd='brew services restart skhd'
 alias pfzf='python $(fzf)'
 alias vfzf='vim $(fzf)'
+
+alias rng='ranger'
+alias cl='clear'
+alias ls='exa'
+alias lfa='ls -F -a'
 
 # ................................ navigation .................................
 alias ..='cd ..'
@@ -76,6 +85,7 @@ alias de='cd ~/Documents/work-env'
 alias dp='cd ~/Documents/python_files'
 alias dw='cd ~/Documents/website'
 alias dn='cd ~/Documents/notes/'
+alias cv='cd ~/.vim'
 alias conf='cd ~/.config'
 
 # show/hidden files in Finder
@@ -100,6 +110,8 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 
 bindkey '^e' autosuggest-accept
 bindkey '^x' autosuggest-execute
+
+sed -n 1,20p ~/Documents/todos.org
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
