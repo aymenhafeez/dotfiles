@@ -49,4 +49,6 @@ set undofile
 let mapleader="\<Space>"
 let maplocalleader="\<Space>"
 
+let g:tex_flavour="latex"
+
 runtime! config/*.vim

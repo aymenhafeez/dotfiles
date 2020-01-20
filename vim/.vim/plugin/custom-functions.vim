@@ -1,29 +1,5 @@
 " ----------------------- Custom functions and mappings -----------------------
 
-" Delete the nth line above the current position
-function! DeleteLine(position)
-    let cursor_position=getpos('.')
-    let delete_line = a:position
-    execute 'normal! ' . delete_line . 'k0dd'
-    call setpos('.', cursor_position)
-endfunction
-
-for position in range(1, 9)
-    execute 'nnoremap <Leader>d' . position . ' : call DeleteLine(' . position . ')<CR>'
-endfor
-
-" Move current line n lines up
-function! MoveLine(position)
-    let cursor_position=getpos('.')
-    let move_line = a:position
-    execute 'normal! dd' . move_line . 'kP'
-    call setpos('.', cursor_position)
-endfunction
-
-for position in range(1, 9)
-    execute 'nnoremap <Leader>m' . position . ' : call MoveLine(' . position . ')<CR>'
-endfor
-
 " Fix the last spelling error (from christoomey's vim plugin talk)
 function! FixLastSpellingError()
     normal! mm[s1z=`m
@@ -144,3 +120,20 @@ function! DeleteEmptyBuffers()
 endfunction
 
 nnoremap <silent> <Leader>cb :call DeleteEmptyBuffers()<CR>
+
+
+" copy file path
+function! CopyFilePath()
+    let @" = expand("%:p")
+    echo 'File path copied to " register'
+endfunction
+
+nnoremap yZ :call CopyFilePath()<CR>
+
+" copy filename
+function! CopyFileName()
+    let @" = expand("%")
+    echo 'File name copied to " register'
+endfunction
+
+nnoremap yY :call CopyFileName()<CR>

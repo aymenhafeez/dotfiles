@@ -1,12 +1,7 @@
 " ---------------------- Settings and mappings for LaTeX ----------------------
 
-augroup filetype_things
-    autocmd!
-    autocmd BufRead,BufNewFile *.tex set filetype=tex
-augroup END
-
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set smarttab
 set expandtab
 set tw=80
@@ -29,9 +24,10 @@ inoremap <buffer> \l{ \left{\right}<++><Esc>3bli
 inoremap <buffer> \eq[ \[\]<++><Esc>5hi
 inoremap <buffer> \ra $\rightarrow$
 inoremap <buffer> \bg \begin{}<Esc>
-inoremap <buffer> \eqn \begin{align}<Esc><CR>i\end{align}<Esc>ko
-inoremap <buffer> \neqn \begin{align*}<Esc><CR>i\end{align*}<Esc>ko
-inoremap <buffer> \eqa \begin{eqnarray}<Esc><CR>i\end{eqnarray}<Esc>ko
+inoremap <buffer> \itm \begin{itemize}<Esc>o\end{itemize}<Esc>o<Esc>kO\item 
+inoremap <buffer> \eqn \begin{align}<Esc>o\end{align}<Esc>o<Esc>kO
+inoremap <buffer> \neqn \begin{align*}<Esc>o\end{align*}<Esc>o<Esc>kO
+inoremap <buffer> \eqa \begin{eqnarray}<Esc>o\end{eqnarray}<Esc>o<Esc>kO
 inoremap <buffer> \fig \begin{figure}[H]<CR><CR>\end{figure}<Esc>ki\centering<CR>\includegraphics[width=\textwidth]{<++>}<CR>\caption{<++>}<Esc><CR><CR>i<++><Esc>3k3wli
 inoremap <buffer> \ul \underline{}<++><Esc>bli
 inoremap <buffer> ` `'<Esc>i
@@ -40,4 +36,5 @@ inoremap <buffer> ` `'<Esc>i
 inoremap <buffer> <C-l> <Esc>/<++><CR><Esc>cf>
 
 " compile and open/update pdf
-nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
+" nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex % && open %:t:r.pdf<CR><CR>
+nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex %<CR><CR>

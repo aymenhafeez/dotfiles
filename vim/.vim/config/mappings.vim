@@ -3,12 +3,6 @@
 " save and run Python files
 nnoremap <Leader>py <Esc>:w<CR>:!clear;python3 %<CR>
 
-" copy file path
-nnoremap <silent> yZ :let @" = expand("%:p")<CR>
-
-" copy filename
-nnoremap <silent> yY :let @" = expand("%")<CR>
-
 " slightly faster scrolling
 nnoremap <C-y> 3<C-y>
 nnoremap <C-e> 3<C-e>
@@ -32,15 +26,24 @@ nnoremap <silent> <Leader>swj :botright new<CR>
 
 " netrw
 nnoremap - :Explore %:p:h<CR>
-nnoremap <silent> s- :Sexplore %:p:h<CR>
-nnoremap <silent> v- :Vexplore %:p:h<CR>
-nnoremap <silent> <C-n> :Lexplore<CR>:call DeleteEmptyBuffers()<CR>
+nnoremap s- :Sexplore %:p:h<CR>
+nnoremap v- :Vexplore %:p:h<CR>
+nnoremap <C-n> :Lexplore<CR>:call DeleteEmptyBuffers()<CR>
 
 nnoremap <Leader>e :e **/*<C-z><S-Tab><C-z>
 nnoremap <Leader>f :find **/*<C-z><S-Tab><C-z>
 
-noremap <silent> <Leader>so :so %<CR>
+nnoremap <Leader>do :e ~/Documents/<C-z>
+nnoremap <Leader>no :e ~/Documents/notes/<C-z>
+nnoremap <Leader>vi :e ~/.vim/<C-z>
+nnoremap <Leader>vc :e $MYVIMRC<CR>
 
-" visual selection search with ?
-" cnoremap <expr> <space> getcmdtype() == "?" ? ".*" : "<space>"
-cnoremap <expr> <space> '/?' =~ getcmdtype() ? ".*\\_s*.*" : "<space>"
+nnoremap sub :%s///g<left><left><left>
+
+nnoremap <Leader>so :source %<CR>
+
+command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Documents/notes/**/*.tex
+nnoremap <Leader>[ :Ngrep 
+
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
