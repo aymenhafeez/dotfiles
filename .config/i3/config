@@ -1,0 +1,331 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+set $mod Mod4
+set $sup Mod1
+
+floating_modifier $mod
+
+font pango:Fira Code Nerd Font Mono Regular 11
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# start rofi
+# bindsym $mod+d exec "rofi -combi-modi window,drun -show combi -modi combi"
+bindsym $mod+d exec rofi -show run
+bindsym $mod+Shift+s exec rofi -show ssh
+
+bindsym --release $mod+p exec scrot -s 
+bindsym $mod+Shift+p exec scrot
+
+bindsym $mod+Return exec urxvt
+bindsym $mod+Ctrl+f exec firefox
+bindsym $mod+Ctrl+z exec zathura
+bindsym $mod+Ctrl+n exec nautilus
+bindsym $mod+Ctrl+r exec urxvt -e ranger
+bindsym $mod+Ctrl+t exec urxvt -e htop
+bindsym $mod+Ctrl+c exec galculator
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1%      && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1%      && $refresh_i3status
+bindsym XF86AudioMute        exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle     && $refresh_i3status
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# media player controls
+bindsym XF86AudioPlay  exec playerctl play-pause
+bindsym XF86AudioNext  exec playerctl next
+bindsym XF86AudioPrev  exec playerctl previous
+
+# screen brightness
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+
+# hacky way of adjusting keyboard light brightness
+mode "kbd light brightness" {
+    bindsym 0  exec kbdlight -s 0
+    bindsym 1  exec kbdlight -s 10
+    bindsym 2  exec kbdlight -s 20
+    bindsym 3  exec kbdlight -s 30
+    bindsym 4  exec kbdlight -s 40
+    bindsym 5  exec kbdlight -s 50
+    bindsym 6  exec kbdlight -s 60
+    bindsym 7  exec kbdlight -s 70
+    bindsym 8  exec kbdlight -s 80
+    bindsym 9  exec kbdlight -s 90
+    bindsym 10 exec kbdlight -s 100
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+shift+semicolon mode "kbd light brightness"
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split direction
+bindsym $mod+v split h
+bindsym $mod+s split v
+bindsym $mod+t split toggle
+
+# toggle fullscreen mode
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+q layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# move currently focused window to scratcpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# toggle tiling/floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiled and floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# move through workspaces
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+bindsym Ctrl+Tab workspace back_and_forth
+bindsym $mod+Ctrl+Tab move container to workspace back_and_forth; workspace back_and_forth
+
+# caps-lock = esc alone, ctrl with another key
+exec --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
+exec --no-startup-id xcape -e 'Caps_Lock=Escape'
+
+# Define names for default workspaces for which we configure key bindings later on.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace music; exec spotify
+bindsym $mod+m workspace mail; exec mailspring
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace music; workspace music
+bindsym $mod+Shift+m move container to workspace mail; workspace mail
+
+# move focused container and focus to workspace
+bindsym $mod+Ctrl+1 move container to workspace number $ws1
+bindsym $mod+Ctrl+2 move container to workspace number $ws2
+bindsym $mod+Ctrl+3 move container to workspace number $ws3
+bindsym $mod+Ctrl+4 move container to workspace number $ws4
+bindsym $mod+Ctrl+5 move container to workspace number $ws5
+bindsym $mod+Ctrl+6 move container to workspace number $ws6
+bindsym $mod+Ctrl+7 move container to workspace number $ws7
+bindsym $mod+Ctrl+8 move container to workspace number $ws8
+bindsym $mod+Ctrl+9 move container to workspace number $ws9
+bindsym $mod+Ctrl+0 move container to workspace music
+
+# move workspaces between displays
+bindsym $sup+Shift+l move workspace to output left
+bindsym $sup+Shift+h move workspace to output right
+
+# open an empty containier to have single app only fill half the screen
+bindsym $mod+Ctrl+o open
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# float certain applications
+for_window [class="vlc"] floating enable
+for_window [class="Nautilus"] floating enable
+for_window [class="Galculator"] floating enable
+for_window [class="feh"] floating enable
+for_window [class="Python3"] floating enable
+for_window [title="htop"] floating enable
+for_window [urgent=latest] focus
+
+# lock screen
+bindsym $mod+Shift+x exec i3lock -t -i /home/aymen/Documents/wallpapers/lock_win.png
+
+# move floating windows
+mode "move" {
+    bindsym $mod+Tab focus right
+
+    bindsym h     move left
+    bindsym j     move down
+    bindsym k     move up
+    bindsym l     move right
+
+    bindsym Left  move left
+    bindsym Down  move down
+    bindsym Up    move up
+    bindsym Right move right
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Ctrl+m mode "move" focus floating
+
+bindsym $mod+Ctrl+h resize shrink width  1 px or 1 ppt
+bindsym $mod+Ctrl+j resize grow height   1 px or 1 ppt
+bindsym $mod+Ctrl+k resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+l resize grow width    1 px or 1 ppt
+
+for_window [class=".*"] border pixel 1
+
+# resize window border
+mode "border size" {
+
+    bindsym 0 border pixel 0
+    bindsym 1 border pixel 1
+    bindsym 2 border pixel 2
+    bindsym 3 border pixel 3
+    bindsym 4 border pixel 4
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+b mode "border size"
+
+bindsym $mod+o border none
+bindsym $mod+n border normal
+
+# ---------------------------------- i3-status ---------------------------------
+
+bar {
+    i3bar_command i3bar
+    status_command i3status
+
+    colors {
+        background #1E2121
+        statusline #A0ACB0
+        separator  #666666
+
+        #                   border  background text
+        focused_workspace   #3C4141 #3C4141    #dddddd
+    }
+}
+
+# class                 border  backgr. text   indicator child_border
+
+client.focused          #343638 #343638 #9C9C9C #A0ACB0 #49575C
+client.focused_inactive #333333 #5f676a #ffffff #484e50 #49575C
+client.unfocused        #1E2121 #1E2121 #9C9C9C #A0ACB0 #1E2121
+client.urgent           #2f343a #900000 #ffffff #900000 #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
+
+# client.background       #343638
+
+# hide/unhide i3status bar
+bindsym $mod+Shift+b bar mode toggle
+
+# ---------------------------------- i3-gaps ----------------------------------
+
+# Set inner/outer gaps
+gaps inner 0
+gaps outer 0
+
+# Smart gaps (gaps used if only more than one container on the workspace)
+# smart_gaps on
+
+# Smart borders (draw borders around container only if it is not the only
+# container on this workspace)
+# on|no_gaps (on=always activate and no_gaps=only activate if the gap size to
+# the edge of the screen is 0)
+# smart_borders on
+
+# Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying
+# outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or
+# 0 (remove gaps for current workspace). If you also press Shift with these
+# keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# startup
+exec_always --no-startup-id feh --bg-scale ~/Documents/wallpapers/by_upload2_2560.jpg
+exec xautolock -time 30 -locker
+exec xset r rate 200 30
+
+# screen res and monitor setup
+exec xrandr --output eDP-1 --mode 1440x900
+# exec xranrd --auto
+# exec xrandr --output HMDI-2 --right-of eDP-1

@@ -1,0 +1,17 @@
+# colors
+set recolor true
+set recolor-darkcolor "#dcdccc"
+set recolor-lightcolor "#1f1f1f"
+
+# settings
+set height 1024
+set width 768
+set adjust_open width
+set window-title-basename "true"
+set selection-clipboard "clipboard"
+
+# key bindings
+map <PageUp> navigate previous
+map <PageDown> navigate next
+
+map <C-q> quit

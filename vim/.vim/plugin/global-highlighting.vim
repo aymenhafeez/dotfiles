@@ -7,10 +7,10 @@ function! CustomHighlighting()
     hi CursorLine       ctermbg=233                  cterm=None
     hi LineNr           ctermfg=238
     hi VertSplit        ctermfg=248
-    " hi StatusLine       ctermbg=247     ctermfg=235  cterm=underline,bold
-    " hi StatusLineNC     ctermbg=243     ctermfg=235  cterm=underline
+    " hi StatusLine       ctermbg=246     ctermfg=235  cterm=underline,bold
+    " hi StatusLineNC     ctermbg=243     ctermfg=234  cterm=underline
     hi StatusLine       ctermbg=248     ctermfg=235  cterm=bold
-    hi StatusLineNC     ctermbg=245     ctermfg=235  cterm=None
+    hi StatusLineNC     ctermbg=243     ctermfg=235  cterm=None
     hi Pmenu            ctermfg=250     ctermbg=234
     hi PmenuSel         ctermfg=234     ctermbg=250
     hi SignColumn       ctermbg=233
