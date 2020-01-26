@@ -2,35 +2,38 @@
 <JWM>
 
 <!-- startup -->
-<StartupCommand>
-nm-applet
-conky
-xrandr --output eDP-1 --mode 1440x900
-xset r rate 200 30
-setxkbmap -option 'caps:ctrl_modifier'
-xcape -e 'Caps_Lock=Escape'
-</StartupCommand>
+<StartupCommand> xrandr --output eDP-1 --mode 1440x900 &amp;</StartupCommand>
+<StartupCommand> xset r rate 200 30 &amp;</StartupCommand>
+<StartupCommand> setxkbmap -option 'caps:ctrl_modifier' &amp;</StartupCommand>
+<StartupCommand> xcape -e 'Caps_Lock=Escape' &amp;</StartupCommand>
+<StartupCommand> compton --backend glx --paint-on-overlay --vsync opengl-swc &amp;</StartupCommand>
+<StartupCommand> conky &amp;</StartupCommand>
+<StartupCommand> volumeicon &amp;</StartupCommand>
+<StartupCommand> nm-applet &amp;</StartupCommand>
+<!-- <StartupCommand> xrdb ~/.Xresources &amp;</StartupCommand> -->
 
 <!-- TODO: clean up icons paths -->
 
     <!-- The root menu. -->
     <RootMenu onroot="12">
         <Include>$HOME/.jwmrc-mjwm</Include>
-        <!-- <Include>/etc/jwm/debian-menu</Include> -->
+        <Program label="nautilus" icon="folder-green.svg"> nautilus </Program>
+        <Program label="pcmanfm" icon="folder.svg"> pcmanfm </Program>
         <Program icon="terminal.svg" label="Terminal">urxvt</Program>
         <Program icon="/usr/share/icons/hicolor/48x48/apps/firefox.png" label="Firefox">firefox</Program>
         <Program icon="nm-device-wired-secure.png" label="Lock">
-            i3lock -t -i /home/aymen/Documents/wallpapers/lock_win.png
+                i3lock -t -i /home/aymen/Pictures/Wallpapers/lock_win.png
         </Program>
         <Separator/>
         <Restart label="Restart" icon="/snap/gnome-3-28-1804/110/usr/share/icons/Adwaita/scalable/actions/application-exit-symbolic.svg"/>
-        <Exit label="Logout" confirm="true" icon="/usr/share/refind/refind/icons/func_exit.png"/>
+        <!-- <Exit label="Logout" confirm="true" icon="/usr/share/refind/refind/icons/func_exit.png"/> -->
+        <Exit label="Logout" confirm="true" icon="system-log-out.svg"/>
     </RootMenu>
 
     <RootMenu onroot="3">
 
         <Program label="Terminal" icon="terminal.svg"> urxvt || gnome-terminal</Program>
-        <Program label="Files" icon="folder-green.svg"> nautilus </Program>
+        <Program label="Files" icon="folder-green.svg"> pcmanfm </Program>
 
         <Separator/>
 
@@ -49,16 +52,11 @@ xcape -e 'Caps_Lock=Escape'
 
     <!-- Options for program groups. -->
     <Group>
-        <Option>tiled</Option>
-        <Option>aerosnap</Option>
+        <Option>centered</Option>
     </Group>
     <Group>
-        <Class>Pidgin</Class>
-        <Option>sticky</Option>
-    </Group>
-    <Group>
-        <Name>urxvt</Name>
-        <Option>vmax</Option>
+        <Class>Firefox</Class>
+        <Option>notitle</Option>
     </Group>
     <Group>
         <Name>xclock</Name>
@@ -67,18 +65,18 @@ xcape -e 'Caps_Lock=Escape'
     </Group>
 
     <!-- Tray at the bottom. -->
-    <Tray x="0" y="-1" height="25" autohide="off">
+    <Tray x="0" y="-1" height="26" autohide="off">
 
         <TrayButton icon="/usr/share/jwm/jwm-red.svg">root:1</TrayButton>
         <Spacer width="5"/>
-        <TrayButton icon="folder-green.svg">exec:nautilus</TrayButton>
+        <TrayButton icon="folder-green.svg">exec:pcmanfm</TrayButton>
         <Spacer width="5"/>
         <TrayButton icon="firefox.svg">exec:firefox</TrayButton>
         <Spacer width="5"/>
         <TrayButton icon="terminal.svg">exec:urxvt</TrayButton>
         <Spacer width="5"/>
         <TrayButton label="_">showdesktop</TrayButton>
-        <Spacer width="5"/>
+        <Spacer width="7"/>
 
         <Pager labeled="true"/>
 
@@ -88,21 +86,18 @@ xcape -e 'Caps_Lock=Escape'
         <Spacer width="5"/>
         <Clock format="%a %b %d | %H:%M "><Button mask="123">exec:xclock</Button></Clock>
         <Spacer width="3"/>
-        <TrayButton icon="/usr/share/refind/refind/icons/func_exit.png" popup="Exit">exec:jwm -exit</TrayButton>
-        <!-- <TrayButton icon="/snap/gnome-3-28-1804/110/usr/share/icons/Adwaita/scalable/actions/application-exit-symbolic.svg" popup="Exit">exec:jwm -exit</TrayButton> -->
+        <!-- <TrayButton icon="/usr/share/refind/refind/icons/func_exit.png" popup="Exit">exec:jwm -exit</TrayButton> -->
         <Spacer width="3"/>
-
     </Tray>
 
     <!-- Visual Styles -->
     <WindowStyle>
         <Font>Sans-9:bold</Font>
-        <Width>4</Width>
+        <Width>2</Width>
         <Height>21</Height>
         <Corner>3</Corner>
         <Foreground>#FFFFFF</Foreground>
         <Background>#555555</Background>
-        <Outline>#000000</Outline>
         <Opacity>1.0</Opacity>
         <Active>
             <Foreground>#FFFFFF</Foreground>
@@ -112,23 +107,25 @@ xcape -e 'Caps_Lock=Escape'
         </Active>
     </WindowStyle>
     <TrayStyle group="true" list="all">
-        <Font>Sans-9</Font>
+        <Font>Sans-9.5</Font>
         <Background>#333333</Background>
         <Foreground>#FFFFFF</Foreground>
-        <Outline>#000000</Outline>
+        <Outline>#111111</Outline>
         <Opacity>1.0</Opacity>
     </TrayStyle>
-    <TaskListStyle>
-      <Font>Sans-9:bold</Font>
+    <TaskListStyle decorations="motif">
+    <!-- <TaskListStyle> -->
+      <Font>Sans-10</Font>
       <Active>
         <Foreground>#FFFFFF</Foreground>
         <Background>#555555</Background>
+        <Outline>#3D3D3D</Outline>
       </Active>
       <Foreground>#FFFFFF</Foreground>
       <Background>#333333</Background>
+      <Outline>#111111</Outline>
     </TaskListStyle>
     <PagerStyle>
-        <Outline>#000000</Outline>
         <Foreground>#555555</Foreground>
         <Background>#333333</Background>
         <Text>#FFFFFF</Text>
@@ -146,7 +143,7 @@ xcape -e 'Caps_Lock=Escape'
             <Foreground>#FFFFFF</Foreground>
             <Background>#0077CC</Background>
         </Active>
-        <Opacity>1.0</Opacity>
+        <Opacity>0.85</Opacity>
     </MenuStyle>
     <PopupStyle>
         <Font>Sans-9</Font>
@@ -209,8 +206,8 @@ xcape -e 'Caps_Lock=Escape'
 
     <!-- Virtual Desktops -->
     <!-- Desktop tags can be contained within Desktops for desktop names. -->
-    <Desktops width="4" height="2">
-        <Background type="command">feh --bg-scale ~/Documents/wallpapers/uV7sQyB.png</Background>
+    <Desktops width="5" height="1">
+        <Background type="command">feh --bg-scale ~/Pictures/Wallpapers/uV7sQyB.png</Background>
     </Desktops>
 
     <!-- Double click speed (in milliseconds) -->
@@ -244,18 +241,23 @@ xcape -e 'Caps_Lock=Escape'
     <Key key="Return">select</Key>
     <Key key="Escape">escape</Key>
 
-    <Key mask="mod4+S" key="x">exec:i3lock -t -i /home/aymen/Documents/wallpapers/lock_win.png</Key>
+    <Key mask="mod4+S" key="x">exec:i3lock -t -i /home/aymen/Pictures/Wallpapers/lock_win.png</Key>
 
     <!-- navigation -->
     <Key mask="mod4" key="h">prevstacked</Key>
     <Key mask="mod4" key="l">nextstacked</Key>
 
     <Key mask="mod4" key="r">resize</Key>
+    <Key mask="mod1" key="m">move</Key>
 
     <Key mask="mod1" key="l">rdesktop</Key>
     <Key mask="mod1" key="h">ldesktop</Key>
     <Key mask="mod1" key="k">udesktop</Key>
     <Key mask="mod1" key="j">ddesktop</Key>
+    <Key mask="mod1+S" key="h">sendl</Key>
+    <Key mask="mod1+S" key="j">sendd</Key>
+    <Key mask="mod1+S" key="k">sendu</Key>
+    <Key mask="mod1+S" key="l">sendr</Key>
 
     <Key mask="mod4" key="Tab">nextstacked</Key>
     <Key mask="mod4+S" key="Tab">prevstacked</Key>
@@ -269,6 +271,7 @@ xcape -e 'Caps_Lock=Escape'
     <Key mask="mod4+S" key="k">maxtop</Key>
     <Key mask="mod4+S" key="j">maxbottom</Key>
 
+    <!-- quick access to applications -->
     <Key mask="mod4" key="d">exec:rofi -show run</Key>
     <Key mask="mod1" key="d">root:1</Key>
     <Key mask="mod4" key="w">window</Key>
@@ -276,26 +279,35 @@ xcape -e 'Caps_Lock=Escape'
     
     <!-- open applications -->
     <Key mask="mod4" key="Return">exec:urxvt</Key>
-    <Key mask="mod4+C" key="n">exec:nautilus</Key>
+    <Key mask="mod4+C" key="n">exec:pcmanfm</Key>
     <Key mask="mod4+C" key="f">exec:firefox</Key>
     <Key mask="mod4+C" key="m">exec:spotify</Key>
     <Key mask="mod4+C" key="z">exec:zathura</Key>
     <Key mask="mod4+C" key="c">exec:galculator</Key>
     <Key mask="mod4+C" key="r">exec:urxvt -e ranger</Key>
     <Key mask="mod4+C" key="t">exec:urxvt -e htop</Key>
+    <Key mask="mod4" key="p">exec:scrot -s -e 'mv $f ~/Documents/Screenshots/'</Key>
+    <Key mask="mod4+S" key="p">exec:scrot -e 'mv $f ~/Documents/Screenshots/'</Key>
 
-    <Key mask="mod4" key="p">exec:scrot -s</Key>
-    <Key mask="mod4+S" key="p">exec:scrot</Key>
+    <!-- kind of unnecassary but convenient sometimes -->
+    <Key mask="mod1+C" key="r">exec:urxvt -e tmux attach -t REG || tmux new -s REG</Key>
+    <Key mask="mod1+S" key="j">exec:urxvt -e vim ~/.jwmrc</Key>
+    <Key mask="mod1+S" key="x">exec:urxvt -e vim ~/.Xresources</Key>
+    <Key mask="mod1+S" key="r">exec:xrdb ~/.Xresources</Key>
+
+    <!-- second monitor setup -->
+    <Key mask="mod1+S" key="a">exec:xrandr --auto</Key>
+    <Key mask="mod1+S" key="c">exec:xrandr --output HDMI-2 --right-of eDP-1</Key>
 
     <!-- media keys -->
-    <Key mask="" key="XF86MonBrightnessUp">exec:light -A 5</Key>
-    <Key mask="" key="XF86MonBrightnessDown">exec:light -U 5</Key>
-    <Key mask="" key="XF86AudioPlay">exec:playerctl play-pause</Key>
-    <Key mask="" key="XF86AudioNext">exec:playerctl next</Key>
-    <Key mask="" key="XF86AudioPrev">exec:playerctl previous</Key>
-    <Key mask="" key="XF86AudioRaiseVolume">exec:pactl set-sink-volume @DEFAULT_SINK@ +2%</Key>
-    <Key mask="" key="XF86AudioLowerVolume">exec:pactl set-sink-volume @DEFAULT_SINK@ -2%</Key>
-    <Key mask="" key="XF86AudioMute">exec:pactl set-sink-mute @DEFAULT_SINK@ toggle</Key>
-    <Key mask="" key="XF86AudioMicMute">exec:pactl set-source-mute @DEFAULT_SOURCE@ toggle</Key>
+    <Key key="XF86MonBrightnessUp">exec:light -A 5</Key>
+    <Key key="XF86MonBrightnessDown">exec:light -U 5</Key>
+    <Key key="XF86AudioPlay">exec:playerctl play-pause</Key>
+    <Key key="XF86AudioNext">exec:playerctl next</Key>
+    <Key key="XF86AudioPrev">exec:playerctl previous</Key>
+    <Key key="XF86AudioRaiseVolume">exec:pactl set-sink-volume @DEFAULT_SINK@ +2%</Key>
+    <Key key="XF86AudioLowerVolume">exec:pactl set-sink-volume @DEFAULT_SINK@ -2%</Key>
+    <Key key="XF86AudioMute">exec:pactl set-sink-mute @DEFAULT_SINK@ toggle</Key>
+    <Key key="XF86AudioMicMute">exec:pactl set-source-mute @DEFAULT_SOURCE@ toggle</Key>
 
 </JWM>
