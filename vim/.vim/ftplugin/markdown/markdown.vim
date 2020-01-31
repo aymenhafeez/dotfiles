@@ -1,0 +1,13 @@
+set textwidth=79
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set spell
+set nocindent
+set autoindent
+set tw=75
+set fo+=t
+set textwidth=0
+set wrapmargin=1
+set formatoptions+=t
+set formatoptions-=l

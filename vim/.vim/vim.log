@@ -1,0 +1,77 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.008  000.008: --- VIM STARTING ---
+000.123  000.115: Allocated generic buffers
+000.484  000.361: locale set
+000.507  000.023: GUI prepared
+000.510  000.003: clipboard setup
+000.524  000.014: window checked
+001.086  000.562: inits 1
+001.101  000.015: parsing arguments
+004.233  003.132: expanding arguments
+007.356  003.123: shell init
+007.716  000.360: Termcap init
+007.754  000.038: inits 2
+009.689  001.935: init highlight
+010.228  000.374  000.374: sourcing $VIM/vimrc
+017.649  007.152  007.152: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/filetype.vim
+017.906  000.063  000.063: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/ftplugin.vim
+018.121  000.053  000.053: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/indent.vim
+018.893  000.318  000.318: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+019.033  000.617  000.299: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/synload.vim
+019.069  000.816  000.199: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syntax.vim
+019.708  000.266  000.266: sourcing /Users/aymen/.vim/config/autocmds.vim
+019.960  000.173  000.173: sourcing /Users/aymen/.vim/config/mappings.vim
+020.078  000.041  000.041: sourcing /Users/aymen/.vim/config/statusline.vim
+020.163  009.836  001.272: sourcing $HOME/.vimrc
+020.168  000.269: sourcing vimrc file(s)
+022.162  000.451  000.451: sourcing /Users/aymen/.vim/plugin/custom-functions.vim
+023.155  000.229  000.229: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+054.274  000.286  000.286: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+054.867  000.245  000.245: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+054.917  032.416  031.656: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/colors/default.vim
+056.033  000.234  000.234: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+056.557  000.226  000.226: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+056.604  001.287  000.827: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/colors/default.vim
+057.260  000.229  000.229: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/syntax/syncolor.vim
+057.301  035.044  001.112: sourcing /Users/aymen/.vim/plugin/highlights.vim
+057.640  000.255  000.255: sourcing /Users/aymen/.vim/plugin/vim-cool.vim
+058.674  000.087  000.087: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/getscriptPlugin.vim
+058.996  000.236  000.236: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/gzip.vim
+059.375  000.291  000.291: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/logiPat.vim
+059.516  000.052  000.052: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/manpager.vim
+059.827  000.229  000.229: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/matchparen.vim
+060.493  000.576  000.576: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/netrwPlugin.vim
+060.674  000.069  000.069: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/rrhelper.vim
+060.825  000.053  000.053: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/spellfile.vim
+061.103  000.188  000.188: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/tarPlugin.vim
+061.399  000.134  000.134: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/tohtml.vim
+061.804  000.301  000.301: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/vimballPlugin.vim
+062.238  000.280  000.280: sourcing /usr/local/Cellar/macvim/8.1-161/MacVim.app/Contents/Resources/vim/runtime/plugin/zipPlugin.vim
+062.251  003.837: loading plugins
+064.156  000.145  000.145: sourcing /Users/aymen/.vim/pack/git-plugins/start/ale/autoload/ale/events.vim
+064.353  001.366  001.221: sourcing /Users/aymen/Documents/work-env/vim/.vim/pack/git-plugins/start/ale/plugin/ale.vim
+066.222  001.576  001.576: sourcing /Users/aymen/Documents/work-env/vim/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+066.438  000.028  000.028: sourcing /Users/aymen/Documents/work-env/vim/.vim/pack/plugins/start/fugitive/ftdetect/fugitive.vim
+066.942  000.235  000.235: sourcing /Users/aymen/Documents/work-env/vim/.vim/pack/plugins/start/vim-commentary/plugin/commentary.vim
+067.933  000.624  000.624: sourcing /Users/aymen/Documents/work-env/vim/.vim/pack/plugins/start/vim-surround/plugin/surround.vim
+068.508  000.282  000.282: sourcing /Users/aymen/Documents/work-env/vim/.vim/pack/plugins/start/vim-tmux-navigator/plugin/tmux_navigator.vim
+068.661  002.299: loading packages
+068.719  000.058: loading after plugins
+068.726  000.007: inits 3
+073.871  005.145: reading viminfo
+073.915  000.044: setting raw mode
+073.941  000.026: start termcap
+073.966  000.025: clearing screen
+074.833  000.333  000.333: sourcing /Users/aymen/.vim/pack/git-plugins/start/ale/autoload/ale.vim
+074.942  000.643: opening buffers
+075.003  000.061: BufEnter autocommands
+075.006  000.003: editing files in windows
+075.271  000.265: VimEnter autocommands
+075.274  000.003: before starting main loop
+075.890  000.616: first screen update
+075.893  000.003: --- VIM STARTED ---

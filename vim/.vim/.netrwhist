@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/aymen/.vim'
+let g:netrw_dirhist_2='/home/aymen/.vim/plugin'
+let g:netrw_dirhist_3='/home/aymen'
+let g:netrw_dirhist_4='/home/aymen/.vim'
+let g:netrw_dirhist_5='/home/aymen/.vim/plugin'
+let g:netrw_dirhist_6='/home/aymen'
+let g:netrw_dirhist_7='/home/aymen/Documents/animplotlib/animplotlib'
+let g:netrw_dirhist_8='/home/aymen/.vim'
+let g:netrw_dirhist_9='/home/aymen/.vim/ftplugin'
