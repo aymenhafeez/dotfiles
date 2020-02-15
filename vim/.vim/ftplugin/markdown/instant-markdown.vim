@@ -1,6 +1,6 @@
 " # Configuration
 if !exists('g:instant_markdown_slow')
-    let g:instant_markdown_slow = 0
+    let g:instant_markdown_slow = 1
 endif
 
 if !exists('g:instant_markdown_autostart')

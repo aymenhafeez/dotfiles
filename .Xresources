@@ -6,45 +6,45 @@
 *.cursorColor:  #c5c8c6
 
 ! black
-*.color0:       #282a2e
-*.color8:       #373b41
+*.color0:       #1d1f21
+*.color8:       #969896
 
 ! red
-*.color1:       #a54242
-*.color9:       #a54242
+*.color1:       #c25547
+*.color9:       #c25547
 
 ! green
-*.color2:       #799440
-*.color10:      #799440
+*.color2:       #19885c
+*.color10:      #19885c
 
 ! yellow
-*.color3:       #de935f
-*.color11:      #e7be5b
+*.color3:       #e8b054
+*.color11:      #e8b054
 
 ! blue
-*.color4:       #5f819d
-*.color12:      #81a2be
+*.color4:       #4478de
+*.color12:      #4478de
 
 ! magenta
-*.color5:       #85678f
-*.color13:      #ae89b8
+*.color5:       #9473b5
+*.color13:      #9473b5
 
 ! cyan
-*.color6:       #429c90
-*.color14:      #5da49a
+*.color6:       #1d979f
+*.color14:      #1d979f
 
 ! white
-*.color7:       #707880
-*.color15:      #c5c8c6
+*.color7:       #c5c8c6
+*.color15:      #ffffff
 
 !! URxvt Appearance
-urxvt*font: xft:Fira Code Nerd Font Mono:size=10:style=medium
+URxvt*font: xft:Terminus (TTF):size=12:style=regular
 URxvt.letterSpace: 0
-URxvt.lineSpace: 0
+URxvt.lineSpace: 1
 URxvt.cursorBlink: 1
 URxvt.cursorUnderline: false
 URxvt.saveline: 2048
-URxvt.scrollBar: true
+URxvt.scrollBar: false
 URxvt.scrollBar_right: true
 URxvt.urgentOnBell: false
 URxvt.depth: 24
@@ -68,7 +68,8 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
-/* urxvt.perl-ext-common: default,resize-font */
+/* URxvt.perl-ext-common: default,resize-font */
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
+/* URxvt.perl-ext-common:  fullscreen */

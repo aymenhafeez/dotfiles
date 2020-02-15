@@ -5,6 +5,8 @@ syntax on
 
 set backspace=indent,eol,start
 set autoindent
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set hidden
 set number
@@ -25,6 +27,8 @@ set nowritebackup
 set ttimeoutlen=0
 set wildcharm=<C-z>
 set lazyredraw
+set mouse+=n
+" set cursorline
 
 set path+=**
 set wildmenu
@@ -52,3 +56,6 @@ let maplocalleader="\<Space>"
 let g:tex_flavour="latex"
 
 runtime! config/*.vim
+
+packloadall
+silent! helptags ALL

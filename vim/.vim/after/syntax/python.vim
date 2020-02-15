@@ -1,3 +1,7 @@
+" hi pythonInclude ctermfg=111
 syn keyword pythonSelf self
 hi def link pythonSelf pythonInclude
-" hi def link pythonSelf Comment
+hi pythonSelf ctermfg=111
+" hi pythonString ctermfg=209
+" hi pythonExceptions ctermfg=111
+" " hi def link pythonSelf Comment

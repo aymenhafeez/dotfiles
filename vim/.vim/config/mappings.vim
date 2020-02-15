@@ -1,7 +1,7 @@
 " ---------------------------------- mappings ---------------------------------
 
 " save and run Python files
-nnoremap <leader>py <Esc>:w<CR>:!clear;python3 %<CR>
+nnoremap <leader>py :!clear;python3 %<CR>
 
 " slightly faster scrolling
 nnoremap <C-y> 3<C-y>
@@ -28,10 +28,13 @@ nnoremap <silent> <leader>swj :botright new<CR>
 nnoremap - :Explore %:p:h<CR>
 nnoremap s- :Sexplore %:p:h<CR>
 nnoremap v- :Vexplore %:p:h<CR>
-nnoremap <C-n> :Lexplore<CR>:call DeleteEmptyBuffers()<CR>
+nnoremap <leader>- :Lexplore<CR>:call DeleteEmptyBuffers()<CR>
 
 nnoremap <leader>e :e **/*<C-z><S-Tab><C-z>
 nnoremap <leader>f :find **/*<C-z><S-Tab><C-z>
+
+nnoremap <silent> <C-n> :bn<CR>
+nnoremap <silent> <C-p> :bp<CR>
 
 nnoremap <leader>do :e ~/Documents/<C-z>
 nnoremap <leader>no :e ~/Documents/notes/<C-z>
@@ -40,29 +43,21 @@ nnoremap <leader>vc :e $MYVIMRC<CR>
 
 nnoremap sub :%s///g<left><left><left>
 
+nnoremap sg yiw:%s/<C-R>"//g<left><left>
+
 nnoremap <leader>so :source %<CR>
 
+" search for key words in notes and open tex file
 command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Documents/notes/**/*.tex
 nnoremap <leader>[ :Ngrep 
 
-nnoremap <buffer> <leader>R :JupyterConnect<CR>
-nnoremap <buffer> <silent> <leader>I :PythonImportThisFile<CR>
-
-" Change to directory of current file
-nnoremap <buffer> <silent> <leader>d :JupyterCd %:p:h<CR>
-
-" Send a selection of lines
-nnoremap <buffer> <silent> <leader>X :JupyterSendCell<CR>
-nnoremap <buffer> <silent> <leader>E :JupyterSendRange<CR>
-nmap     <buffer> <silent> <leader>e <Plug>JupyterRunTextObj
-vmap     <buffer> <silent> <leader>e <Plug>JupyterRunVisual
-
-nnoremap <buffer> <silent> <leader>U :JupyterUpdateShell<CR>
-
-" Debugging maps
-nnoremap <buffer> <silent> <leader>b :PythonSetBreak<CR>
+vnoremap <Tab> >
+vnoremap <S-Tab> <
 
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
+
+cnoremap ls<CR> buffers<CR>:buffer 
+

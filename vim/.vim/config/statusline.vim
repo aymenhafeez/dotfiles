@@ -1,22 +1,4 @@
 " -------------------------------- statusline ---------------------------------
-function! Buf_total_num()
-    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
-endfunction
-function! File_size(f)
-    let l:size = getfsize(expand(a:f))
-    if l:size == 0 || l:size == -1 || l:size == -2
-        return ''
-    endif
-    if l:size < 1024
-        return l:size.' bytes'
-    elseif l:size < 1024*1024
-        return printf('%.1f', l:size/1024.0).'k'
-    elseif l:size < 1024*1024*1024
-        return printf('%.1f', l:size/1024.0/1024.0) . 'm'
-    else
-        return printf('%.1f', l:size/1024.0/1024.0/1024.0) . 'g'
-    endif
-endfunction
 
 let g:currentmode={
        \ 'n'  : ' <N> ',
@@ -29,6 +11,9 @@ let g:currentmode={
        \ 'c'  : ' <C> ',
        \}
 
+function! TotalNumBuffs()
+    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+endfunction
 
 function! FileSize()
   let bytes = getfsize(expand('%:p'))
@@ -51,23 +36,27 @@ function! FileSize()
 endfunction
 
 set statusline=
-" set statusline+=\ %1*%n%*
-set statusline+=\ %n
-" set statusline+=%{Buf_total_num()}
-set statusline+=\ -:---
-set statusline+=%{toupper(g:currentmode[mode()])}
-set statusline+=%1*%f%*
-set statusline+=\ %1*[%-3(%{FileSize()}%)]%*
-set statusline+=%m
-set statusline+=%=
-set statusline+=%1*%#warningmsg#%*
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=\ %y
-" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}]
-set statusline+=\ %l:%c
-set statusline+=\ 
-set statusline+=\ %P
-set statusline+=\ 
+    \\ %{&readonly\|\|!&modifiable?&modified?':%*-':'U:%%-':&modified?'-:**-':'-:---'}
+    \\ \ %1*%f%*
+    \\ [%{FileSize()}]
+    \\ 
+    \\ %{toupper(g:currentmode[mode()])}
+    \\ 
+    \\ %P
+    \\ (%l,%c)
+    \\ 
+    \%{FugitiveStatusline()}
+    \\ %y
+    \%=
+    \\ 
+    \%1*%#warningmsg#%*
+    \%1*%{SyntasticStatuslineFlag()}%*
+    \%*
+    \B:%n
+    \\ 
+    " \%{TotalNumBuffs()})
+    " \\ 
+    " \\ %{&fileencoding?&fileencoding:&encoding}
+    " \[%{&fileformat}]
 
-hi User1 cterm=bold ctermfg=235 ctermbg=249
+hi User1 cterm=bold ctermbg=250 ctermfg=232

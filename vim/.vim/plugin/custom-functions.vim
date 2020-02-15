@@ -5,7 +5,8 @@ function! FixLastSpellingError()
     normal! mm[s1z=`m
 endfunction
 
-nnoremap <Leader>spf :call FixLastSpellingError()<CR>
+nnoremap <Leader>sf :call FixLastSpellingError()<CR>
+inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " Mappings for when using :help user-manual
 function! HelpFileHelp()
@@ -120,7 +121,6 @@ function! DeleteEmptyBuffers()
 endfunction
 
 nnoremap <silent> <Leader>cb :call DeleteEmptyBuffers()<CR>
-
 
 " copy file path
 function! CopyFilePath()

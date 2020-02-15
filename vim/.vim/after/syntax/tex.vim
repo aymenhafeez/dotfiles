@@ -1,10 +1,12 @@
 " LaTeX highlighting
 
 function! HighLightGroups() abort
-    hi texBeginEnd      ctermfg=30
+    hi texBeginEnd      ctermfg=39
     hi texBeginEndName  ctermfg=130
+    hi texMathMatcher   ctermfg=111
     hi Delimiter        ctermfg=24
-    hi texStatement     ctermfg=6
+    hi texMathZoneE     ctermfg=173
+    hi texStatement     ctermfg=116
     hi texInputFile     ctermfg=130
     hi texNewCmd        ctermfg=130
     hi texCmdName       ctermfg=130
