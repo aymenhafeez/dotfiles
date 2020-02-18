@@ -13,8 +13,8 @@ super + ctrl + e
     emacs
 
 # program launcher
-super + ctrl + d
-	dmenu_run -b
+# super + ctrl + d
+# 	dmenu_run -b
 
 super + shift + f
     rofi -show find -modi find:/home/aymen/.local/share/rofi/finder.sh
@@ -62,10 +62,10 @@ super + ctrl + shift + r
 super + shift + r
     source ~/.config/bspwm/bspwmrc
 
-super + ctrl + shift + x
+super + ctrl + shift + c
     xrandr --output eDP1 --mode 1440x900
 
-super + ctrl + shift + c
+super + ctrl + shift + h
     xrandr --output HDMI2 --auto --right-of eDP1
 
 # lock screen
