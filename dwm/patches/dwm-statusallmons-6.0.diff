@@ -1,5 +1,9 @@
---- dwm.c	Mon Dec 19 15:38:30 2011 +0100
-+++ dwm.c	Fri Apr 06 08:23:39 2012 +0200
+URL: http://dwm.suckless.org/patches/statusallmons
+This patch draws and updates the statusbar on all monitors.
+
+diff -r ec4baab78314 dwm.c
+--- a/dwm.c	Mon Dec 19 15:38:30 2011 +0100
++++ b/dwm.c	Fri Apr 06 08:23:39 2012 +0200
 @@ -740,17 +740,13 @@
  	drawtext(m->ltsymbol, dc.norm, False);
  	dc.x += dc.w;
