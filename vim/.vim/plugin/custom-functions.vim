@@ -1,4 +1,5 @@
-" ----------------------- Custom functions and mappings -----------------------
+" Custom functions and mappings
+" -----------------------------
 
 " Fix the last spelling error (from christoomey's vim plugin talk)
 function! FixLastSpellingError()
@@ -6,18 +7,6 @@ function! FixLastSpellingError()
 endfunction
 
 nnoremap <Leader>sf :call FixLastSpellingError()<CR>
-inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
-
-" Mappings for when using :help user-manual
-function! HelpFileHelp()
-    wincmd _
-    nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<CR>:noh<CR>2l
-    nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<CR>:noh<CR>2l
-    nnoremap <buffer> <CR> <C-]>
-    nnoremap <buffer> <BS> <C-t>
-    nnoremap <silent> <buffer> q :q<CR>
-    setlocal nonumber
-endfunction
 
 " Determine highlight group of text under the cursor
 function! <SID>SynStack()
@@ -137,20 +126,18 @@ function! CopyFileName()
 endfunction
 nnoremap yY :call CopyFileName()<CR>
 
-let s:hidden_all=1
-function! ToggleHideAll() abort
-    if s:hidden_all==0
-        let s:hidden_all=1
-        set showmode
-        set ruler
-        set laststatus=0
-        set showcmd
-    else
-        let s:hidden_all=0
-        set noshowmode
-        set ruler
-        set laststatus=2
-        set showcmd
-    endif
+" cycle through line number types (Greg Hurrell)
+function! CycleNumbering() abort
+  if exists('+relativenumber')
+    execute {
+          \ '00': 'set relativenumber   | set number',
+          \ '01': 'set norelativenumber | set number',
+          \ '10': 'set norelativenumber | set nonumber',
+          \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
+  else
+    " No relative numbering, just toggle numbers on and off.
+    set number!<CR>
+  endif
 endfunction
-nnoremap <silent> <leader>hi :call ToggleHideAll()<CR>
+
+nnoremap <leader>ln :call CycleNumbering()<CR>

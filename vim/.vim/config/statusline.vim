@@ -40,23 +40,18 @@ set statusline=
     \\ \ %1*%f%*
     \\ [%{FileSize()}]
     \\ 
-    \\ %{toupper(g:currentmode[mode()])}
-    \\ 
-    \\ %P
+    \\ \ %P
     \\ (%l,%c)
-    \\ 
-    \%{FugitiveStatusline()}
+    \\ \ 
+    \\ %{toupper(g:currentmode[mode()])}
+    \\ %{FugitiveStatusline()}
     \\ %y
     \%=
-    \\ 
-    \%1*%#warningmsg#%*
+    \\ %1*%#warningmsg#%*
     \%1*%{SyntasticStatuslineFlag()}%*
     \%*
-    \B:%n
+    \\ \ \ 
+    \\ B:%n
     \\ 
-    " \%{TotalNumBuffs()})
-    " \\ 
-    " \\ %{&fileencoding?&fileencoding:&encoding}
-    " \[%{&fileformat}]
 
-hi User1 cterm=bold ctermbg=250 ctermfg=232
+hi User1 ctermbg=250 ctermfg=232 cterm=bold 

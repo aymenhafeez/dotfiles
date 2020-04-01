@@ -4,7 +4,7 @@ if !exists('g:instant_markdown_slow')
 endif
 
 if !exists('g:instant_markdown_autostart')
-    let g:instant_markdown_autostart = 1
+    let g:instant_markdown_autostart = 0
 endif
 
 if !exists('g:instant_markdown_open_to_the_world')

@@ -28,3 +28,9 @@ augroup help_help
     autocmd!
     autocmd filetype help call HelpFileHelp()
 augroup END
+
+" close preview window once cursor moves away or leave insert
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
