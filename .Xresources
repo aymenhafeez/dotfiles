@@ -3,7 +3,8 @@
 ! special
 *.foreground:   #c5c8c6
 *.background:   #000000
-*.cursorColor:  #c5c8c6
+/* *.background:   #2d2d2d */
+*.cursorColor:  #a8a8a8
 
 ! black
 *.color0:       #1d1f21
@@ -41,10 +42,11 @@
 URxvt*font: xft:Terminus (TTF):size=12:style=regular
 URxvt.letterSpace: 0
 URxvt.lineSpace: 1
-URxvt.cursorBlink: 1
+URxvt.geometry: 80x29
+URxvt.cursorBlink: true
 URxvt.cursorUnderline: false
 URxvt.saveline: 2048
-URxvt.scrollBar: false
+URxvt*scrollBar: false
 URxvt.scrollBar_right: true
 URxvt.urgentOnBell: false
 URxvt.depth: 24
@@ -68,8 +70,28 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
-/* URxvt.perl-ext-common: default,resize-font */
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
-/* URxvt.perl-ext-common:  fullscreen */
+URxvt.keysym.C-Up:     font-size:increase
+URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-S-Up:   font-size:incglobal
+URxvt.keysym.C-S-Down: font-size:decglobal
+URxvt.keysym.C-equal:  font-size:reset
+URxvt.keysym.C-slash:  font-size:show
+
+/* ------------------------------------------------------------------------- */
+
+XTerm.termName: xterm-256color
+XTerm*scaleHeight: 1
+XTerm*font: xft:Terminus (TTF):size=12:style=regular
+XTerm*cursorBlink: true
+XTerm*SaveLines: 5000
+XTerm*scrollBar: false
+XTerm*scrollBar_right: true
+XTerm*ScrollKey: true
+XTerm*geometry: 80x31
+XTerm*urgentOnBell: false
+XTerm*iso14755: false
+XTerm*printerCommand: xterm -T History -e sh -c 'less -r <&3' 3<&0
+XTerm*translations: #override Ctrl <Key>slash: print-everything()
