@@ -1,4 +1,9 @@
-" aymenhafeez vimrc
+" aymenhafeez vimrc <aymennh@gmail.com>
+" Created:  23/10/2016
+" Modified: 01/04/2020
+" Version:  VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Mar 15 2020 22:59:24)
+" Location: https://github.com/aymenhafeez/dotfiles/
+" =============================================================================
 
 " general settings
 " ================
@@ -14,7 +19,6 @@ set expandtab
 set hidden
 set number
 set relativenumber
-set scrolloff=3
 set showcmd
 set noshowmode
 set laststatus=2
@@ -45,9 +49,6 @@ set wildmode=list:full
 set wildignore=*.pyc
 set autochdir
 
-set splitbelow
-set splitright
-
 " create undodir if it doesn't exist
 if !isdirectory($HOME."/.vim")
     call mkdir($HOME."/.vim", "", 0770)
@@ -55,6 +56,9 @@ endif
 if !isdirectory($HOME."/.vim/undo-dir")
     call mkdir($HOME."/.vim/undo-dir", "", 0700)
 endif
+
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
 
 set undodir=~/.vim/undo-dir
 set undofile
@@ -64,13 +68,11 @@ let maplocalleader="\<Space>"
 
 let g:tex_flavor="latex"
 
-silent! helptags ALL
-
 "  plugin settings
 " ================
 
- " junegunn/fzf.vim 
- " ----------------
+" junegunn/fzf.vim 
+" ----------------
 set rtp+=~/.fzf
 
 let g:fzf_action = {
@@ -91,9 +93,12 @@ let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 " -------------
 let g:netrw_preview = 1
 let g:netrw_alto=0
-let g:netrw_liststyle = 3
 let g:netrw_winsize = 17
 
 " jpalardy/vim-slime
 " ------------------
 let g:slime_target = "tmux"
+
+" load help files for plugins
+packloadall
+silent! helptags ALL
