@@ -1,10 +1,11 @@
 " mappings
-" --------
+" ========
 
 nnoremap Y y$
 
-nnoremap <C-DOWN> zzj
-nnoremap <C-UP> zzk
+" scroll with cursor
+nnoremap <C-DOWN> <C-e>j
+nnoremap <C-UP> <C-y>k
 
 " open help contents for installed plugins
 nnoremap <leader>rh :help local-additions<CR>
@@ -13,10 +14,14 @@ nnoremap <leader>rh :help local-additions<CR>
 nnoremap <leader>spl :setlocal spell!<CR>
 
 " netrw
+nnoremap <silent> - :Explore<CR>:call DeleteEmptyBuffers()<CR>
 nnoremap <silent> <leader>- :Lexplore<CR>:call DeleteEmptyBuffers()<CR>
+nnoremap <silent> s- :Sexplore<CR>
+nnoremap <silent> v- :Vexplore<CR>
 
 nnoremap <leader>e :e **/*<C-z>
 nnoremap <leader>f :find **/*<C-z>
+
 nnoremap <leader>b :buffers<CR>:buffer 
 
 nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
@@ -40,7 +45,8 @@ nnoremap sc yiw:%s/<C-R>"//c<left><left>
 nnoremap <leader>so :source %<CR>
 
 " toggle linting
-nnoremap <leader>ss :SyntasticToggleMode<CR>
+nnoremap <leader>ad :ALEDisable<CR>
+nnoremap <leader>ae :ALEEnable<CR>
 
 " remove trailing whitespace
 nnoremap <silent> <leader>wh :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
@@ -52,6 +58,9 @@ nnoremap <leader>[ :Ngrep
 nnoremap <Tab> >>
 nnoremap <S-Tab> <<
 
+nnoremap <leader>sc :Scratch<CR>
+nnoremap <leader>ss :Sscratch<CR>
+
 " emacs like bindings in inser mode
 inoremap <C-a> <C-o>^
 inoremap <C-x><C-a> <C-a>
@@ -59,12 +68,6 @@ inoremap <C-e> <Esc>A
 inoremap <C-d> <Esc>lxi
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
-
-" improvements to builtin completion window
-" highlight best match; keep it highlighted and <CR> to complete
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " fix previous spelling error
 inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
@@ -83,6 +86,5 @@ tnoremap <C-j> <C-w>j
 tnoremap <C-h> <C-w>h
 tnoremap <C-l> <C-w>l
 
-" calling functions
-" nnoremap <Leader>n :call rename-file#RenameFile()<CR>
-nnoremap <Leader>n :call RenameFile()<CR>
+" source visual selection
+xnoremap <leader>so :<C-u>@*<CR>

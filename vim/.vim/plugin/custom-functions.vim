@@ -141,3 +141,49 @@ function! CycleNumbering() abort
 endfunction
 
 nnoremap <leader>ln :call CycleNumbering()<CR>
+
+" Paste the output of a command into current buffer
+function! TabMessage(cmd)
+    redir => message
+    silent execute a:cmd
+    redir END
+    if empty(message)
+        echoerr "no output"
+    else
+        silent put=message
+    endif
+endfunction
+command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
+
+" Toggle statusline
+let s:hide_status=0
+function! ToggleStatus() abort
+    if s:hide_status==0
+        let s:hide_status=1
+        set laststatus=1
+        set showmode
+        set ruler
+        set showcmd
+    else
+        let s:hide_status=0
+        set laststatus=2
+        set noshowmode
+        set ruler
+        set showcmd
+    endif
+endfunction
+
+nnoremap <leader>ts :call ToggleStatus()<CR>
+
+" Easier navigation and use of user manual
+" (from Chris Toomey's Vim config)
+function! HelpWithHelp()
+    wincmd _ " Maximze the help on open
+    " 8 wincmd <
+    nnoremap <buffer> <tab> :call search('\|.\{-}\|', 'w')<cr>:noh<cr>2l
+    nnoremap <buffer> <S-tab> F\|:call search('\|.\{-}\|', 'wb')<cr>:noh<cr>2l
+    nnoremap <buffer> <cr> <c-]>
+    nnoremap <buffer> <bs> <c-T>
+    nnoremap <buffer> q :q<CR>
+    setlocal nonumber
+endfunction

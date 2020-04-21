@@ -3,25 +3,26 @@
 
 function! CustomHighlighting()
     hi clear SpellBad
-    hi SpellBad                         ctermfg=11      cterm=underline
-    hi Visual           ctermbg=19
-    hi LineNr           ctermbg=None    ctermfg=243
-    hi CursorLine       ctermbg=248     ctermfg=232     cterm=None
-    hi CursorLineNr     ctermbg=None    ctermfg=243
-    hi VertSplit        ctermbg=None    ctermfg=247     cterm=None
-    hi StatusLine       ctermbg=250     ctermfg=232     cterm=None
-    hi StatusLineNC     ctermbg=238     ctermfg=248     cterm=None
-    hi StatusLineTerm   ctermbg=249     ctermfg=232     cterm=None
-    hi StatusLineTermNc ctermbg=250     ctermfg=239     cterm=reverse
-    hi tabline          ctermbg=249     ctermfg=232     cterm=bold
-    hi tablinefill      ctermbg=249    ctermfg=232      cterm=bold
-    hi tablinesel       ctermbg=239     ctermfg=250     cterm=bold
-    hi Pmenu            ctermbg=249     ctermfg=232
-    hi PmenuSel         ctermbg=241     ctermfg=255
-    hi String           ctermfg=173
-    hi SignColumn       ctermbg=233
-    hi org_heading1                     ctermfg=Magenta cterm=bold
-    hi Conceal          ctermbg=None
+    hi SpellBad                          ctermfg=11  cterm=underline
+    hi Normal              ctermbg=232
+    hi Visual              ctermbg=19                cterm=none
+    hi LineNr              ctermbg=none  ctermfg=243
+    hi CursorLine          ctermbg=248   ctermfg=232 cterm=none
+    hi CursorLineNr        ctermbg=none  ctermfg=243
+    hi VertSplit           ctermbg=none  ctermfg=250 cterm=none
+    hi StatusLine          ctermbg=19    ctermfg=250 cterm=none
+    hi StatusLineNC        ctermbg=248   ctermfg=232 cterm=none
+    hi StatusLineTerm      ctermbg=19    ctermfg=250 cterm=none
+    hi StatusLineTermNc    ctermbg=248   ctermfg=232 cterm=none
+    hi tabline             ctermbg=249   ctermfg=232 cterm=bold
+    hi tablinefill         ctermbg=249   ctermfg=232 cterm=bold
+    hi tablinesel          ctermbg=239   ctermfg=250 cterm=bold
+    hi Pmenu               ctermbg=249   ctermfg=232
+    hi PmenuSel            ctermbg=241   ctermfg=255
+    hi String              ctermfg=173
+    hi SignColumn          ctermbg=none
+    hi org_heading1                      ctermfg=Magenta cterm=bold
+    hi Conceal             ctermbg=none
 endfunction
 call CustomHighlighting()
 set background=dark

@@ -1,12 +1,24 @@
 " python settings
 
-let g:syntastic_python_checkers = ['flake8']
+" let g:syntastic_python_checkers = ['flake8']
+let b:ale_linters = ['flake8']
+" Fix Python files with autopep8 and yapf.
+let b:ale_fixers = ['autopep8', 'yapf']
 
 " run file
 nnoremap <leader>py :%w !python3<CR>
 
 " run visual selection
 xnoremap <leader>p :%w !python3<CR>
+
+" jpalardy/vim-slime 
+" ------------------
+" " send entire file
+" nnoremap <leader>R :%SlimeSend<CR>
+" " send till the current line
+" nnoremap <leader>B :1,.SlimeSend<CR>
+" " send current line
+" nnoremap <leader>E :.SlimeSend<CR>
 
 " wmvanvliet/jupyter-vim 
 " ----------------------
@@ -27,11 +39,11 @@ nnoremap <buffer> <silent> <localleader>d :JupyterCd %:p:h<CR>
 
 " Send a selection of lines
 nnoremap <buffer> <silent> <localleader>X :JupyterSendCell<CR>
-nnoremap <buffer> <silent> <localleader>E :JupyterSendRange<CR>
-nnoremap     <buffer> <silent> <localleader>T <Plug>JupyterRunTextObj
-vmap     <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
+nnoremap <buffer> <silent> <localleader>E :1,.JupyterSendRange<CR>
+nnoremap <buffer> <silent> <localleader>T <Plug>JupyterRunTextObj
+vnoremap <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
 
 nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 
-" Debugging maps
-nnoremap <buffer> <silent> <localleader>B :PythonSetBreak<CR>
+" Debugging
+nnoremap <buffer> <silent> <localleader>Br :PythonSetBreak<CR>
