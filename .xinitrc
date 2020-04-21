@@ -9,6 +9,7 @@ fi
 
 # sxhkd &
 
+~/Documents/scripts/monitor.sh
 xset r rate 200 30 &
 setxkbmap -option 'caps:ctrl_modifier' &
 xcape -e 'Caps_Lock=Escape' &
@@ -16,8 +17,9 @@ xrdb ~/.Xresources &
 nitrogen --restore &
 compton &
 urxvtd -q &
+dunst &
 
-exec /usr/bin/jwm
+exec jwm
 
 # ~/Documents/scripts/dwm_status.sh &
 # exec dwm

@@ -1,10 +1,10 @@
 !! Colorscheme
 
 ! special
-*.foreground:   #c5c8c6
-*.background:   #000000
-/* *.background:   #2d2d2d */
+*.foreground:   #d9d9d9
+*.background:   #3d3d3d
 *.cursorColor:  #a8a8a8
+/* emacs*background: #f6f3e8 */
 
 ! black
 *.color0:       #1d1f21
@@ -15,8 +15,11 @@
 *.color9:       #c25547
 
 ! green
-*.color2:       #19885c
-*.color10:      #19885c
+*.color2:       #8c9440
+*.color10:      #8c9440
+/* *.color2:       #879126 */
+/* ! prompt colour */
+/* *.color10:      #909800 */
 
 ! yellow
 *.color3:       #e8b054
@@ -39,12 +42,12 @@
 *.color15:      #ffffff
 
 !! URxvt Appearance
-URxvt*font: xft:Terminus (TTF):size=12:style=regular
+URxvt*font: xft:Terminus:size=12:antialias=true:autohint=true
 URxvt.letterSpace: 0
-URxvt.lineSpace: 1
-URxvt.geometry: 80x29
+URxvt.lineSpace: 0
 URxvt.cursorBlink: true
 URxvt.cursorUnderline: false
+URxvt*geometry: 80x28
 URxvt.saveline: 2048
 URxvt*scrollBar: false
 URxvt.scrollBar_right: true
@@ -80,7 +83,7 @@ URxvt.keysym.C-S-Down: font-size:decglobal
 URxvt.keysym.C-equal:  font-size:reset
 URxvt.keysym.C-slash:  font-size:show
 
-/* ------------------------------------------------------------------------- */
+/* --------------------------------- xterm --------------------------------- */
 
 XTerm.termName: xterm-256color
 XTerm*scaleHeight: 1
@@ -90,7 +93,7 @@ XTerm*SaveLines: 5000
 XTerm*scrollBar: false
 XTerm*scrollBar_right: true
 XTerm*ScrollKey: true
-XTerm*geometry: 80x31
+XTerm*geometry: 80x28
 XTerm*urgentOnBell: false
 XTerm*iso14755: false
 XTerm*printerCommand: xterm -T History -e sh -c 'less -r <&3' 3<&0
