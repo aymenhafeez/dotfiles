@@ -1,6 +1,6 @@
 " aymenhafeez vimrc <aymennh@gmail.com>
 " Created:  23/10/2016
-" Modified: 01/04/2020
+" Modified: 21/04/2020
 " Version:  VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Mar 15 2020 22:59:24)
 " Location: https://github.com/aymenhafeez/dotfiles/
 " =============================================================================

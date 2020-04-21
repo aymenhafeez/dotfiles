@@ -12,9 +12,8 @@ super + ctrl + f
 super + ctrl + e
     emacs
 
-# program launcher
-# super + ctrl + d
-# 	dmenu_run -b
+super + ctrl + d
+	dmenu_run
 
 super + shift + f
     rofi -show find -modi find:/home/aymen/.local/share/rofi/finder.sh
@@ -67,6 +66,12 @@ super + ctrl + shift + c
 
 super + ctrl + shift + h
     xrandr --output HDMI2 --auto --right-of eDP1
+
+super + ctrl + shift + k
+    source keyboard.sh
+
+super + ctrl + shift + d
+    source ~/Documents/scripts/reload_dwm.sh &
 
 # lock screen
 super + shift + e
