@@ -4,11 +4,14 @@
 export ZSH="/home/aymen/.oh-my-zsh"
 
 if [[ "$TERM" == "dumb" ]]; then
-    PROMPT='[%{$fg[white]%}%B%n%b:%{$fg[red]%}%~%{$reset_color%}] $(git_prompt_info)%(!.#.$) '
+    PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$reset_color%}%(!.#.$) '
+    RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
 else
-    # ZSH_THEME="mh"
-    ZSH_THEME="mh"
+    ZSH_THEME="bira"
 fi
+
+# PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$reset_color%}%(!.#.$) '
+# RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
@@ -21,6 +24,7 @@ plugins=(git vi-mode zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
+# stop vim freezing on C-s
 stty -ixon
 
 # preferred editor for local and remote sessions
@@ -42,9 +46,8 @@ alias tma='tmux a -t'
 alias zc='vim ~/.zshrc'
 alias szc='source ~/.zshrc'
 alias vc='vim ~/.vimrc'
+alias cvim='vim ~/.vim/'
 alias jc='vim ~/.jwmrc'
-alias i3c='vim ~/.config/i3/config'
-alias tmc='vim ~/.tmux.conf'
 alias vxs='vim ~/.Xresources'
 alias xxs='xrdb ~/.Xresources'
 
@@ -68,15 +71,12 @@ alias cv='cd ~/.vim'
 alias wm='cd ~/Documents/clones/dwm/'
 alias cdwm='cd ~/Documents/clones/dwm/'
 
-alias tmr='tmux new -s REG || tmux a -t REG'
-
 alias mkrprt='/home/aymen/Documents/scripts/commands.sh'
 
 alias ytd='youtube-dl -o "~/Music/%(title)s.%(ext)s" -x --audio-format mp3 $1'
 
 alias kybrd='source ~/Documents/scripts/keyboard.sh'
 alias mntr='source ~/Documents/scripts/monitor.sh'
-alias smntr='xrandr --output HDMI2 --auto --right-of eDP1'
 
 alias vfzf='vim $(fzf)'
 
