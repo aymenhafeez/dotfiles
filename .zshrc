@@ -3,15 +3,19 @@
 # oh-my-zsh path
 export ZSH="/home/aymen/.oh-my-zsh"
 
-if [[ "$TERM" == "dumb" ]]; then
-    PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$reset_color%}%(!.#.$) '
-    RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
-else
-    ZSH_THEME="bira"
-fi
+# if [[ "$TERM" == "dumb" ]]; then
+#     PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$reset_color%}%(!.#.$) '
+#     RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
+# else
+#     ZSH_THEME="bira"
+# fi
 
-# PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$reset_color%}%(!.#.$) '
-# RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
+PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$fg[yellow]%}$(git_prompt_info)%{$reset_color%}%(!.#.$) '
+RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b'
+
+# PROMPT='╭─%{$fg[green]%}%B%n@%m%b %{$fg[blue]%}%~ %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%}
+# ╰─%(!.#.$) '
+# RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b'
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true
@@ -34,7 +38,7 @@ else
   export EDITOR='gvim'
 fi
 
-cd() { builtin cd "$@" && ls -l -a -F; }
+cd() { builtin cd "$@" && ls -l -a -h; }
 
 # alias vim=/usr/local/bin/vim
 
@@ -55,7 +59,7 @@ alias sx='sxiv'
 
 alias rng='ranger'
 alias cl='clear'
-alias lfa='ls -l -F -a'
+alias lha='ls -lha'
 
 alias ..='cd ..'
 alias ..='cd ..'
@@ -86,6 +90,16 @@ alias bp='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percenta
 alias guessnumber='/home/aymen/Documents/python_files/guessnumber/guessnumber.sh'
 
 source /home/aymen/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+open_with_fzf() {
+    fd -t f -H -I | fzf -m --preview="xdg-mime query default {}" | xargs -ro -d "\n" xdg-open 2>&-
+}
+cd_with_fzf() {
+    cd $HOME && cd "$(fd -t d | fzf --preview="tree -L 1 {}" --bind="space:toggle-preview" --preview-window=:hidden)"
+}
+pacs() {
+    sudo pacman -Syy $(pacman -Ssq | fzf -m --preview="pacman -Si {}" --preview-window=:hidden --bind=space:toggle-preview)
+}
 
 export VISUAL=vim
 export EDITOR="$VISUAL"

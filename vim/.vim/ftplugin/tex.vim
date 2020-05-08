@@ -20,4 +20,4 @@ inoremap <buffer> <C-c><C-k> <Esc>O\item
 " compile and update pdf
 nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex %<CR><CR>
 " open in zathura
-nnoremap <buffer> <silent> <Leader>pv :w!<CR>:!clear && pdflatex % && nohup zathura %:t:r.pdf &<CR><CR>
+nnoremap <buffer> <silent> <Leader>pv :w!<CR>:!clear && pdflatex % && nohup qpdfview %:t:r.pdf &<CR><CR>

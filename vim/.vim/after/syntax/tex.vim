@@ -1,8 +1,8 @@
 " LaTeX highlighting
 
 function! HighLightGroups() abort
-    hi texBeginEnd      ctermfg=39
-    hi texBeginEndName  ctermfg=130
+    hi texBeginEnd      ctermfg=lightyellow
+    hi texBeginEndName  ctermfg=cyan
     hi texMathMatcher   ctermfg=111
     hi Delimiter        ctermfg=24
     hi texMathZoneE     ctermfg=173
@@ -12,5 +12,4 @@ function! HighLightGroups() abort
     hi texCmdName       ctermfg=130
     hi texError         ctermfg=darkred ctermbg=None cterm=underline
 endfunction
-call HighLightGroups()
-
+" call HighLightGroups()

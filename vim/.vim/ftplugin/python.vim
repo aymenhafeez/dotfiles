@@ -47,3 +47,12 @@ nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 
 " Debugging
 nnoremap <buffer> <silent> <localleader>Br :PythonSetBreak<CR>
+
+function! CopyFilePath()
+    let @" = '%run ' . expand("%:p")
+    echo 'File path copied to " register'
+endfunction
+nnoremap yZ :call CopyFilePath()<CR>
+
+nnoremap <C-c><C-p> :rightbelow terminal ++close ++rows=11 ipython<CR><C-w>k
+nnoremap <C-c><C-c> :call CopyFilePath()<CR>:wincmd j<CR><C-w>""<CR><C-w>k
