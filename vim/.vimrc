@@ -80,8 +80,12 @@ let g:netrw_winsize = 17
 set background=dark
 colorscheme zenburn
 
-hi Conceal             ctermbg=none
-hi StatusLine          ctermbg=108
+hi Conceal          ctermbg=none
+hi cursorline       ctermbg=236
+hi StatusLine       ctermbg=108
+hi StatusLineTerm   cterm=reverse ctermfg=236 ctermbg=109
+hi StatusLineTermNc cterm=reverse ctermfg=235 ctermbg=108
+
 
 " load help files for plugins
 packloadall
