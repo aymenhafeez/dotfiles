@@ -14,8 +14,7 @@ augroup END
 
 augroup netrw_mappings
     autocmd!
-    autocmd filetype netrw nnoremap <silent> <buffer> <C-l> <C-w>l
-    autocmd filetype netrw nnoremap <silent> <buffer> <Esc> :call DeleteEmptyBuffers()<CR>:bd<CR>
+    " get rid of empty buffers created when using :Lexplore
     autocmd filetype netrw nnoremap <silent> <CR> :call DeleteEmptyBuffers()<CR>
-    autocmd filetype netrw nnoremap <silent> <leader>- :Lexplore %:p:h<CR>:call DeleteEmptyBuffers()<CR>
+    autocmd filetype netrw nnoremap <silent> <leader>- :Lexplore<CR>:call DeleteEmptyBuffers()<CR>
 augroup END

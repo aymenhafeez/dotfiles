@@ -12,4 +12,4 @@ function! HighLightGroups() abort
     hi texCmdName       ctermfg=130
     hi texError         ctermfg=darkred ctermbg=None cterm=underline
 endfunction
-" call HighLightGroups()
+call HighLightGroups()

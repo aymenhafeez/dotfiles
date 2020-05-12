@@ -1,11 +1,12 @@
 " aymenhafeez vimrc <aymennh@gmail.com>
 " Created:  23/10/2016
-" Modified: 21/04/2020
+" Modified: 12/05/2020
 " Version:  VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Mar 15 2020 22:59:24)
-" Location: https://github.com/aymenhafeez/dotfiles/
+" Location: https://github.com/aymenhafeez/dotfiles/tree/master/vim
 " =============================================================================
 
-" General settings
+" This file contains general settings and some plugin related settings
+" Functions, autocommands, mappings, etc. live in .vim/
 
 syntax on
 filetype plugin indent on
@@ -57,6 +58,7 @@ let maplocalleader="\<Space>"
 let g:tex_flavor="latex"
 
 " Plugin settings
+" ===============
 
 " junegunn/fzf.vim 
 " ----------------
@@ -77,14 +79,10 @@ let g:netrw_alto=0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 17
 
-set background=dark
-colorscheme zenburn
-
-hi Conceal          ctermbg=none
-hi cursorline       ctermbg=236
-hi StatusLine       ctermbg=108
-hi StatusLineTerm   cterm=reverse ctermfg=236 ctermbg=109
-hi StatusLineTermNc cterm=reverse ctermfg=235 ctermbg=108
+" aymenhafeez/scratch.vim
+" -----------------------
+nnoremap <leader>sc :Scratch<CR>
+nnoremap <leader>ss :Sscratch<CR>
 
 
 " load help files for plugins

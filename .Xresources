@@ -2,7 +2,7 @@
 
 ! special
 *.foreground:   #EEEEEC
-*.background:   #000000
+*.background:   #3f3f3f
 *.cursorColor:  #a8a8a8
 /* emacs*background: #f6f3e8 */
 
@@ -11,23 +11,23 @@
 *.color8:       #969896
 
 ! red
-*.color1:       #c25547
-*.color9:       #c25547
+*.color1:       #CC0000
+*.color9:       #EF2929
 
 ! green
-*.color2:       #8c9440
-*.color10:      #8c9440
+*.color2:       #4E9A06
+*.color10:      #8AE234
 /* *.color2:       #879126 */
 /* ! prompt colour */
 /* *.color10:      #909800 */
 
 ! yellow
-*.color3:       #e8b054
-*.color11:      #e8b054
+*.color3:       #C4A000
+*.color11:      #FCE94F
 
 ! blue
-*.color4:       #4478de
-*.color12:      #4478de
+*.color4:       #3465A4
+*.color12:      #739FCF
 
 ! magenta
 *.color5:       #9473b5
@@ -42,7 +42,7 @@
 *.color15:      #ffffff
 
 !! URxvt Appearance
-URxvt*font: xft:monospace:size=9.85:antialias=true:autohint=true
+URxvt*font: xft:Roboto mono:size=9.25:antialias=true:autohint=true
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.cursorBlink: true

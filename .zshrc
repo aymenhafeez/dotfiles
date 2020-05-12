@@ -10,12 +10,12 @@ export ZSH="/home/aymen/.oh-my-zsh"
 #     ZSH_THEME="bira"
 # fi
 
-PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$fg[yellow]%}$(git_prompt_info)%{$reset_color%}%(!.#.$) '
-RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b'
-
-# PROMPT='╭─%{$fg[green]%}%B%n@%m%b %{$fg[blue]%}%~ %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%}
-# ╰─%(!.#.$) '
+# PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$fg[yellow]%}$(git_prompt_info)%{$reset_color%}%(!.#.$) '
 # RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b'
+
+PROMPT='╭─%{$fg[green]%}%B%n@%m%b %{$fg[blue]%}%~ %{$fg[yellow]%}$(git_prompt_info)%{$reset_color%}
+╰─%(!.#.$) '
+RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b'
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true

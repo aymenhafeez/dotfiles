@@ -59,8 +59,5 @@ set statusline=
     \%*
     \%<
     " \\ [%{&fileformat}]
-    " \\ \ \ %1*%.23f%*
 
-" hi User1 ctermbg=251   ctermfg=232 cterm=bold
-hi User1 ctermbg=229   ctermfg=236 cterm=bold,reverse
-
+hi User1 ctermbg=250   ctermfg=232 cterm=bold

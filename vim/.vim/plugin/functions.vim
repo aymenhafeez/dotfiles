@@ -4,18 +4,7 @@
 function! FixLastSpellingError()
     normal! mm[s1z=`m
 endfunction
-
 nnoremap <leader>sf :call FixLastSpellingError()<CR>
-
-" Determine highlight group of text under the cursor
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunction
-
-nnoremap <leader>hg :call <SID>SynStack()<CR>
 
 " Rename the current file
 function! RenameFile()
@@ -27,8 +16,16 @@ function! RenameFile()
         redraw!
     endif
 endfunction
-
 nnoremap <leader>n :call RenameFile()<CR>
+
+" Determine highlight group of text under the cursor
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+        endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction
+nnoremap <leader>hg :call <SID>SynStack()<CR>
 
 " Close all empty buffers
 " Called with :Lex to close the empty buffers it creates
@@ -44,10 +41,9 @@ function! DeleteEmptyBuffers()
         exe 'bdelete' join(empty)
     endif
 endfunction
-
 nnoremap <silent> <leader>cb :call DeleteEmptyBuffers()<CR>
 
-" cycle through line number types (Greg Hurrell)
+" cycle through line number types (from Greg Hurrell's config)
 function! CycleNumbering() abort
     if exists('+relativenumber')
         execute {
@@ -60,7 +56,6 @@ function! CycleNumbering() abort
         set number!<CR>
     endif
 endfunction
-
 nnoremap <leader>ln :call CycleNumbering()<CR>
 
 " Paste the output of a command into current buffer
@@ -74,5 +69,4 @@ function! TabMessage(cmd)
         silent put=message
     endif
 endfunction
-
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)

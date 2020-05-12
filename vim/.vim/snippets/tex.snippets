@@ -20,7 +20,7 @@ snippet lab \label
 	\\label{${1:eq:}${2:fig:}${3:tab:}${0}}
 
 # Lists
-snippet enm enumerate environment
+snippet enu enumerate environment
 	\\begin{enumerate}
 		\\item ${0}
 	\\end{enumerate}
@@ -242,11 +242,20 @@ snippet ali align environment
 		${0:${VISUAL}}
 	\\end{align}
 
+snippet nali align environment without line numbers
+	\\begin{align*}
+		${0:${VISUAL}}
+	\\end{align*}
 
-snippet gat gather) environment
+snippet gat gather environment
 	\\begin{gather}
 		${0:${VISUAL}}
 	\\end{gather}
+
+snippet ngat gather environment without line numbers
+	\\begin{gather*}
+		${0:${VISUAL}}
+	\\end{gather*}
 
 snippet eq equation environment
 	\\begin{equation}
@@ -258,11 +267,11 @@ snippet eq* unnumbered equation environment
 		${0:${VISUAL}}
 	\\end{equation*}
 
-snippet \ unnumbered equation: \[ ... \]
+snippet mm unnumbered equation: \[ ... \]
 	\\[
-		${0:${VISUAL}}
+		${1:${VISUAL}}
 	\\]
-
+	$0
 snippet eqnarray eqnarray environment
 	\\begin{eqnarray}
 		${0:${VISUAL}}
