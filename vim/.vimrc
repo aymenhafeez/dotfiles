@@ -60,17 +60,6 @@ let g:tex_flavor="latex"
 " Plugin settings
 " ===============
 
-" junegunn/fzf.vim 
-" ----------------
-set rtp+=~/.fzf
-
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-let g:fzf_layout = { 'down': '~25%' }
-
 " vim/netrw.vim
 " -------------
 let g:netrw_banner=0
