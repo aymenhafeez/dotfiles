@@ -11,12 +11,11 @@
 " General Settings:
 
 syntax on
+set backspace=indent,eol,start
 
 filetype plugin indent on
 set autoindent
-set backspace=indent,eol,start
 set expandtab
-set shiftround
 set shiftwidth=4
 set tabstop=4
 
@@ -25,6 +24,7 @@ set ignorecase
 set incsearch
 set smartcase
 
+set laststatus=2
 set ruler
 set showcmd
 
@@ -32,6 +32,7 @@ set nobackup
 set noswapfile
 set nowritebackup
 
+set complete+=d
 set completeopt=menu,longest,menuone,popup
 set omnifunc=syntaxcomplete#Complete
 
@@ -48,6 +49,7 @@ set lazyredraw
 set matchpairs+=<:>
 set mouse=a
 set path+=.,**
+set scrolloff=5
 set ttimeoutlen=0
 set ttymouse=xterm2
 
@@ -60,16 +62,25 @@ let maplocalleader="\<Space>"
 let g:tex_flavor="latex"
 
 " Mappings:
-" ========
 
-nnoremap <silent> <esc><esc> :nohls<CR>
-
+" easier split navigation
 nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" quicker split resizing
+nnoremap <Esc>+ :resize -1<CR>
+nnoremap <Esc>- :resize +1<CR>
+nnoremap <Esc>< :vertical resize -1<CR>
+nnoremap <Esc>> :vertical resize +1<CR>
+
+" toggle spell check
 nnoremap <leader>spl :setlocal spell!<CR>
+
+" replace word under cursor
+nnoremap <leader>rg yiW:%s/<C-r>"//g<left><left>
+nnoremap <leader>rc yiW:%s/<C-r>"//c<left><left>
 
 " netrw
 nnoremap <silent> - :Explore<CR>
@@ -84,23 +95,35 @@ nnoremap <leader>f :FZF<CR>
 
 nnoremap <leader>b :buffers<CR>:buffer 
 
+" open config
+nnoremap <leader>vc :e ~/.vimrc<CR>
+nnoremap <leader>vv :vs ~/.vimrc<CR>
+nnoremap <leader>vs :sp ~/.vimrc<CR>
+nnoremap <leader>dv :vs ~/.vim<CR>
+nnoremap <leader>ds :sp ~/.vim<CR>
+
 " source current file
 nnoremap <leader>so :source %<CR>
-" Source visual selection
+" source visual selection
 xnoremap <leader>so :<C-u>@*<CR>
 
-" Remove trailing whitespace (from the vimwiki)
+" remove trailing whitespace (from the vimwiki)
 nnoremap <silent> <leader>wh :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
-" Fix previous spelling error from insert mode
+" fix previous spelling error from insert mode
 inoremap <C-s> <C-g>u<Esc>[s1z=`]a<C-g>u
 
-" Break undo sequence on Space, Tab and Enter
+" break undo sequence on Space, Tab and Enter
 inoremap <Space> <Space><C-g>u
 inoremap <Tab> <Tab><C-g>u
 inoremap <CR> <CR><C-g>u
 
-" Commnand-line editing (from :h Command-line-editing)
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+" from defautlts.vim
+inoremap <C-U> <C-G>u<C-U>
+
+" commnand-line editing (from :h Command-line-editing)
 cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
@@ -109,17 +132,20 @@ cnoremap <Esc>f <S-Right>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-" Search for key words in notes and open .tex file (borrowed from connermcd's config)
-command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Documents/notes/MyNotes/**/*.{tex,md} | copen
+" search for key words in notes and open .tex file (borrowed from connermcd's config)
+command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Documents/notes/MyNotes/**/*.{tex,md}
 nnoremap <leader>[ :Ngrep 
 " na
 nnoremap <C-c>n :lnext<CR>
 nnoremap <C-c>p :lprev<CR>
 
-" List installed plugins
+" list installed plugins
 command! PackList echo system('ls ~/.vim/pack/plugins/start/')
 
-" Determine highlight group of text under the cursor
+" list contents of /rtp/**/*
+command! List echo system('ls ~/.vim/')
+
+" determine highlight group of text under the cursor
 function! <SID>SynStack()
     if !exists("*synstack")
         return
@@ -128,39 +154,35 @@ function! <SID>SynStack()
 endfunction
 nnoremap <leader>hg :call <SID>SynStack()<CR>
 
-" Call autoload function
+" call autoload functions
 nnoremap <leader>rn :call renamefile#rename()<CR>
 nnoremap <leader>sf :call fixspelling#spelling()<CR>
 nnoremap <leader>sh :call screenshot#screenshot()<CR>
 command! -nargs=+ -complete=command TabMessage call echooutput#tabmessage(<q-args>)
 command! -nargs=0 Pandoc call pandoc#md_to_pdf()
-command! -nargs=0 RenamePandoc call pandoc#md_to_pdf_new_name() 
+command! -nargs=0 PandocRenamePDF call pandoc#md_to_pdf_new_name() 
 
 " Autocommands:
 
-" return to last edit position when opening files
-augroup last_edit_position
+augroup MiscAutocommands
     autocmd!
+    " return to last edit position when opening files
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-augroup END
-
-" turn off autocommenting new line for all filetypes
-augroup auto_comment_off
-    autocmd!
+    " remove automatically adding comment on new line
     autocmd filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+    " automatically open when a quickfix command is executed and there are valid errors
+    autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 
 " Appearance:
 
-set background=dark
+augroup CallHighlightGroups
+    autocmd!
+    autocmd ColorScheme * call highlightgroups#termcolors()
+augroup END
 
-highlight clear spellbad
-highlight spellbad     ctermbg=none ctermfg=222
-highlight conceal      ctermbg=none
-highlight signcolumn   ctermbg=235
-highlight statusline   ctermbg=250   ctermfg=232 cterm=none
-highlight statuslinenc ctermbg=239  ctermfg=250 cterm=none
-highlight vertsplit    ctermbg=none ctermfg=250 cterm=none
+colorscheme default
+set background=dark
 
 if has("gui_running")
     set guioptions-=m
@@ -170,8 +192,12 @@ if has("gui_running")
     colorscheme zenburn
 endif
 
-" let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-" let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+
+" Statusline:
+
+set statusline=%<%f\ %h%m%r%=%-17.(%l/%L,%c%V%)\ %P
 
 " Plugin Settings:
 
@@ -186,11 +212,6 @@ let g:netrw_winsize = 17
 " -----------------------
 nnoremap <leader>sc :Scratch<CR>
 nnoremap <leader>ss :Sscratch<CR>
-
-" dense-analysis/ale
-" ------------------
-nnoremap <leader>ad :ALEDisable<CR>
-nnoremap <leader>ae :ALEEnable<CR>
 
 " sirver/ultisnips
 " ----------------
@@ -209,6 +230,7 @@ let g:fzf_action = {
 
 let g:fzf_layout = { 'down': '~25%' }
 
+" load matchit.vim (builtin, needs enabling)
 runtime macros/matchit.vim
 
 " load help files for plugins
