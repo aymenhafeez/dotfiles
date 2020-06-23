@@ -25,6 +25,7 @@ set incsearch
 set smartcase
 
 set laststatus=2
+set noshowmode
 set ruler
 set showcmd
 
@@ -50,7 +51,7 @@ set matchpairs+=<:>
 set mouse=a
 set path+=.,**
 set scrolloff=5
-set ttimeoutlen=0
+" set ttimeoutlen=0
 set ttymouse=xterm2
 
 set undodir=~/.vim/undo-dir
@@ -81,13 +82,6 @@ nnoremap <leader>spl :setlocal spell!<CR>
 " replace word under cursor
 nnoremap <leader>rg yiW:%s/<C-r>"//g<left><left>
 nnoremap <leader>rc yiW:%s/<C-r>"//c<left><left>
-
-" netrw
-nnoremap <silent> - :Explore<CR>
-nnoremap <silent> <leader>- :Lexplore<CR>
-nnoremap <silent> s- :Sexplore<CR>
-nnoremap <silent> v- :Vexplore<CR>
-nnoremap <leader>no :Explore ~/Documents/notes/MyNotes/<CR>
 
 nnoremap <leader>e :FZF<CR>
 " nnoremap <leader>f :find <C-d>
@@ -133,7 +127,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " search for key words in notes and open .tex file (borrowed from connermcd's config)
-command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Documents/notes/MyNotes/**/*.{tex,md}
+command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Dropbox/notes/MyNotes/**/*.{tex,md}
 nnoremap <leader>[ :Ngrep 
 " na
 nnoremap <C-c>n :lnext<CR>
@@ -145,22 +139,15 @@ command! PackList echo system('ls ~/.vim/pack/plugins/start/')
 " list contents of /rtp/**/*
 command! List echo system('ls ~/.vim/')
 
-" determine highlight group of text under the cursor
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-        endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunction
-nnoremap <leader>hg :call <SID>SynStack()<CR>
-
 " call autoload functions
 nnoremap <leader>rn :call renamefile#rename()<CR>
 nnoremap <leader>sf :call fixspelling#spelling()<CR>
+nnoremap <leader>hg :call highlightgroups#synstack()<CR>
 nnoremap <leader>sh :call screenshot#screenshot()<CR>
 command! -nargs=+ -complete=command TabMessage call echooutput#tabmessage(<q-args>)
-command! -nargs=0 Pandoc call pandoc#md_to_pdf()
+" command! -nargs=0 Pandoc call pandoc#md_to_pdf()
 command! -nargs=0 PandocRenamePDF call pandoc#md_to_pdf_new_name() 
+command! -nargs=0 PandocPDFPreview call pandoc#pdf_preview()
 
 " Autocommands:
 
@@ -189,15 +176,15 @@ if has("gui_running")
     set guioptions-=T
     set guioptions-=l
     set guioptions-=b
-    colorscheme zenburn
+    set background=dark
 endif
 
+" true colors
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-" Statusline:
-
-set statusline=%<%f\ %h%m%r%=%-17.(%l/%L,%c%V%)\ %P
+" set statusline=%<%f\ (%Y)\ %h%m%r%=%{FugitiveStatusline()}\ \ %-17.(%l/%L,%c%V%)\ %P
+set statusline=%{statusline#statusline()}
 
 " Plugin Settings:
 
@@ -207,6 +194,12 @@ let g:netrw_banner=0
 let g:netrw_alto=0
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 17
+
+nnoremap <silent> - :Explore<CR>
+nnoremap <silent> <leader>- :Lexplore<CR>
+nnoremap <silent> s- :Sexplore<CR>
+nnoremap <silent> v- :Vexplore<CR>
+nnoremap <leader>no :Explore ~/Documents/notes/MyNotes/<CR>
 
 " aymenhafeez/scratch.vim
 " -----------------------

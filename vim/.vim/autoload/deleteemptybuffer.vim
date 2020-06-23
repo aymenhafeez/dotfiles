@@ -1,5 +1,4 @@
 
-
 " Close all empty buffers
 " Called with :Lex to close the empty buffers it creates
 function! deleteemptybuffer#deletebuffers() abort

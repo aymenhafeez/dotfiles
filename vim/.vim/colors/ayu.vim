@@ -14,7 +14,7 @@ let g:colors_name = "ayu"
 
 let s:palette = {}
 
-let s:palette.bg        = {'dark': "#0F1419",  'light': "#FAFAFA",  'mirage': "#212733"}
+let s:palette.bg        = {'dark': "#000000",  'light': "#FAFAFA",  'mirage': "#212733"}
 
 let s:palette.comment   = {'dark': "#5C6773",  'light': "#ABB0B6",  'mirage': "#5C6773"}
 let s:palette.markup    = {'dark': "#F07178",  'light': "#F07178",  'mirage': "#F07178"}
@@ -188,11 +188,11 @@ exe "hi! qfLineNr"        .s:fg_keyword   .s:bg_none        .s:fmt_none
 "   qfLineNr"
 "   qfError"
 
-exe "hi! Conceal"         .s:fg_fg     .s:bg_none        .s:fmt_none
+exe "hi! Conceal"         .s:fg_guide     .s:bg_none        .s:fmt_none
 exe "hi! CursorLineConceal" .s:fg_guide   .s:bg_line        .s:fmt_none
 
 
-" Terminal
+" Terminal in NVIM
 " ---------
 if has("nvim")
   let g:terminal_color_0 =  s:palette.bg[s:style]
@@ -213,30 +213,21 @@ if has("nvim")
   let g:terminal_color_15 = s:palette.comment[s:style]
   let g:terminal_color_background = g:terminal_color_0
   let g:terminal_color_foreground = s:palette.fg[s:style]
-else
-  let g:terminal_ansi_colors =  [s:palette.bg[s:style],      s:palette.markup[s:style]]
-  let g:terminal_ansi_colors += [s:palette.string[s:style],  s:palette.accent[s:style]]
-  let g:terminal_ansi_colors += [s:palette.tag[s:style],     s:palette.constant[s:style]]
-  let g:terminal_ansi_colors += [s:palette.regexp[s:style],  "#FFFFFF"]
-  let g:terminal_ansi_colors += [s:palette.fg_idle[s:style], s:palette.error[s:style]]
-  let g:terminal_ansi_colors += [s:palette.string[s:style],  s:palette.accent[s:style]]
-  let g:terminal_ansi_colors += [s:palette.tag[s:style],     s:palette.constant[s:style]]
-  let g:terminal_ansi_colors += [s:palette.regexp[s:style],  s:palette.comment[s:style]]
 endif
 
 
 " NerdTree
 " ---------
-exe "hi! NERDTreeOpenable"          .s:fg_fg_idle     .s:bg_none        .s:fmt_none
+exe "hi! NERDTreeOpenable"          .s:fg_accent     .s:bg_none        .s:fmt_none
 exe "hi! NERDTreeClosable"          .s:fg_accent      .s:bg_none        .s:fmt_none
 " exe "hi! NERDTreeBookmarksHeader"   .s:fg_pink        .s:bg_none        .s:fmt_none
 " exe "hi! NERDTreeBookmarksLeader"   .s:fg_bg          .s:bg_none        .s:fmt_none
 " exe "hi! NERDTreeBookmarkName"      .s:fg_keyword     .s:bg_none        .s:fmt_none
 " exe "hi! NERDTreeCWD"               .s:fg_pink        .s:bg_none        .s:fmt_none
-exe "hi! NERDTreeUp"                .s:fg_fg_idle    .s:bg_none        .s:fmt_none
-exe "hi! NERDTreeDir"               .s:fg_function   .s:bg_none        .s:fmt_none
-exe "hi! NERDTreeFile"              .s:fg_none       .s:bg_none        .s:fmt_none
-exe "hi! NERDTreeDirSlash"          .s:fg_accent     .s:bg_none        .s:fmt_none
+exe "hi! NERDTreeUp"                .s:fg_fg    .s:bg_none        .s:fmt_none
+exe "hi! NERDTreeDir"               .s:fg_function    .s:bg_none        .s:fmt_none
+" exe "hi! NERDTreeFile"              .s:fg_fg_idle    .s:bg_none        .s:fmt_none
+exe "hi! NERDTreeDirSlash"          .s:fg_function      .s:bg_none        .s:fmt_none
 
 
 " GitGutter
@@ -273,6 +264,5 @@ hi! link diffAdded String
 " This is needed for some reason: {{{
 
 let &background = s:style
-
+" hi Normal ctermbg=none guibg=none
 " }}}
-

@@ -43,4 +43,4 @@ function statusline#statusline() abort
         " \\ \ \ %1*%.23f%*
 endfunction
 
-hi User1 ctermbg=lightgray ctermfg=232 cterm=bold
+" hi User1 ctermbg=251 ctermfg=232 cterm=bold

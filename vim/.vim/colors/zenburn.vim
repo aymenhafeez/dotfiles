@@ -269,7 +269,7 @@ hi SpecialComment  guifg=#82a282 gui=bold                     ctermfg=108 cterm=
 hi Special         guifg=#cfbfaf                              ctermfg=181
 hi SpecialKey      guifg=#9ece9e                              ctermfg=151
 hi Statement       guifg=#e3ceab gui=none                     ctermfg=187 cterm=none
-hi StatusLine      guifg=#313633 guibg=#ccdc90                ctermfg=236 ctermbg=186 cterm=reverse
+hi StatusLine      guifg=#313633 guibg=#ccdc90                ctermfg=236 ctermbg=186
 hi StatusLineNC    guifg=#2e3330 guibg=#88b090                ctermfg=235 ctermbg=108
 hi StorageClass    guifg=#c3bf9f gui=bold                     ctermfg=249 cterm=bold
 hi String          guifg=#cc9393                              ctermfg=174
@@ -294,8 +294,7 @@ hi SpellLocal guisp=#7cac7c guifg=#9ccc9c  ctermfg=151 ctermbg=237
 if exists("g:zenburn_high_Contrast") && g:zenburn_high_Contrast
     " use new darker background
     hi Normal        guifg=#dcdccc guibg=#1f1f1f           ctermfg=188 ctermbg=234
-    " hi Conceal       guifg=#8f8f8f guibg=#333333           ctermfg=246 ctermbg=235
-    hi Conceal             ctermbg=none
+    hi Conceal       guifg=#8f8f8f guibg=#333333           ctermfg=246 ctermbg=235
     hi ColorColumn   guibg=#33332f                         ctermbg=235
     hi CursorLine    guibg=#121212 gui=bold                ctermbg=233 cterm=none
     hi CursorLineNr  guifg=#f2f3bb guibg=#161616           ctermfg=229 ctermbg=233
@@ -488,27 +487,6 @@ if exists("g:zenburn_enable_TagHighlight") && g:zenburn_enable_TagHighlight
         hi link Structure         WarningMsg
         hi link Union             WarningMsg
 endif
-
-hi clear SpellBad
-hi SpellBad                          ctermfg=11  cterm=underline
-hi Visual              ctermbg=19                cterm=none
-hi LineNr              ctermbg=none  ctermfg=243
-hi CursorLine          ctermbg=248   ctermfg=232 cterm=none
-hi CursorLineNr        ctermbg=none  ctermfg=243
-hi VertSplit           ctermbg=none  ctermfg=250 cterm=none
-hi StatusLine          ctermbg=250   ctermfg=232 cterm=none
-hi StatusLineNC        ctermbg=239   ctermfg=250 cterm=none
-hi StatusLineTerm      ctermbg=19    ctermfg=250 cterm=none
-hi StatusLineTermNc    ctermbg=239   ctermfg=250 cterm=none
-hi tabline             ctermbg=249   ctermfg=232 cterm=bold
-hi tablinefill         ctermbg=249   ctermfg=232 cterm=bold
-hi tablinesel          ctermbg=239   ctermfg=250 cterm=bold
-hi Pmenu               ctermbg=249   ctermfg=232
-hi PmenuSel            ctermbg=241   ctermfg=255
-hi String              ctermfg=173
-hi SignColumn          ctermbg=none
-hi FoldColumn          ctermbg=none
-hi Conceal             ctermbg=none
 
 " Terminal support for Vim 8+
 if version >= 800

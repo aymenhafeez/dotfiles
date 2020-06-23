@@ -1,5 +1,4 @@
 
-
 " Paste the output of a command into current buffer
 function! echooutput#tabmessage(cmd) abort
     redir => message

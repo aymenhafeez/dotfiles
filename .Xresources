@@ -2,7 +2,7 @@
 
 ! special
 *.foreground:   #EEEEEC
-*.background:   #3f3f3f
+*.background:   #000000
 *.cursorColor:  #a8a8a8
 /* emacs*background: #f6f3e8 */
 
@@ -11,19 +11,16 @@
 *.color8:       #969896
 
 ! red
-*.color1:       #CC0000
-*.color9:       #EF2929
+*.color1:       #A73C3C
+*.color9:       #CC5252
 
 ! green
-*.color2:       #4E9A06
-*.color10:      #8AE234
-/* *.color2:       #879126 */
-/* ! prompt colour */
-/* *.color10:      #909800 */
+*.color2:       #4C8B5F
+*.color10:      #69973C
 
 ! yellow
-*.color3:       #C4A000
-*.color11:      #FCE94F
+*.color3:       #FFE058
+*.color11:      #FFF182
 
 ! blue
 *.color4:       #3465A4
@@ -42,12 +39,11 @@
 *.color15:      #ffffff
 
 !! URxvt Appearance
-URxvt*font: xft:Roboto mono:size=9.25:antialias=true:autohint=true
+URxvt*font: xft:monospace:size=9.85:style=regular
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.cursorBlink: true
 URxvt.cursorUnderline: false
-URxvt*geometry: 80x28
 URxvt.saveline: 2048
 URxvt*scrollBar: false
 URxvt.scrollBar_right: true
@@ -76,8 +72,8 @@ URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
-URxvt.keysym.C-Up:     font-size:increase
-URxvt.keysym.C-Down:   font-size:decrease
+URxvt.keysym.C-+:     font-size:increase
+URxvt.keysym.C--:   font-size:decrease
 URxvt.keysym.C-S-Up:   font-size:incglobal
 URxvt.keysym.C-S-Down: font-size:decglobal
 URxvt.keysym.C-equal:  font-size:reset
@@ -86,8 +82,8 @@ URxvt.keysym.C-slash:  font-size:show
 /* --------------------------------- xterm --------------------------------- */
 
 XTerm.termName: xterm-256color
-XTerm*scaleHeight: 1
-XTerm*font: xft:Terminus (TTF):size=12:style=regular
+XTerm*font: xft:Monospace:size=9.5:style=regular
+/* XTerm*scaleHeight: 1.01 */
 XTerm*cursorBlink: true
 XTerm*SaveLines: 5000
 XTerm*scrollBar: false

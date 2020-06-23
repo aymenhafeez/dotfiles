@@ -114,7 +114,7 @@
     </WindowStyle>
     <TrayStyle group="false" list="desktop">
         <Font>monospace-10</Font>
-        <Background>#3D3D3D:#333333</Background>
+        <Background>#333333</Background>
         <Foreground>#FFFFFF</Foreground>
         <Opacity>1.0</Opacity>
     </TrayStyle>
