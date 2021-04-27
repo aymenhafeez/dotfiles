@@ -12,5 +12,6 @@ function! HighLightGroups() abort
     hi texCmdName       ctermfg=130
     hi texError         ctermfg=darkred ctermbg=None cterm=underline
     hi texOnlyMath      ctermbg=none
+    hi conceal          ctermbg=none                 cterm=bold
 endfunction
 call HighLightGroups()

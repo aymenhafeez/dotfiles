@@ -25,7 +25,7 @@ let g:currentmode={
 function statusline#statusline() abort
         set statusline=
         \\ %{&readonly\|\|!&modifiable?&modified?'U:**-':'U:%%-':&modified?'-:**-':'-:---'}
-        \\ \ \ %1*%f%*
+        \\ \ \ %f
         \%10{(g:currentmode[mode()])}
         \\ %7P
         \\ of
@@ -38,9 +38,10 @@ function statusline#statusline() abort
         \%=
         \%1*%#warningmsg#%*
         \%*
-        \%<
+        \\ \ %<
         " \\ [%{&fileformat}]
         " \\ \ \ %1*%.23f%*
+        " \\ \ \ %1*%f%*
 endfunction
 
-" hi User1 ctermbg=251 ctermfg=232 cterm=bold
+hi User1 ctermbg=251 ctermfg=232 cterm=bold

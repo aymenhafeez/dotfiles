@@ -25,7 +25,6 @@ set incsearch
 set smartcase
 
 set laststatus=2
-set noshowmode
 set ruler
 set showcmd
 
@@ -63,6 +62,10 @@ let maplocalleader="\<Space>"
 let g:tex_flavor="latex"
 
 " Mappings:
+
+" use j and k to actually move line wise
+nnoremap j gj
+nnoremap k gk
 
 " easier split navigation
 nnoremap <C-k> <C-w>k
@@ -112,6 +115,8 @@ inoremap <Space> <Space><C-g>u
 inoremap <Tab> <Tab><C-g>u
 inoremap <CR> <CR><C-g>u
 
+imap <Tab> <Plug>snipMateNextOrTrigger
+
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 " from defautlts.vim
@@ -127,7 +132,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " search for key words in notes and open .tex file (borrowed from connermcd's config)
-command! -nargs=1 Ngrep vimgrep "<args>" /home/aymen/Dropbox/notes/MyNotes/**/*.{tex,md}
+command! -nargs=1 Ngrep vimgrep "<args>" /Users/Aymen/Dropbox/notes/MyNotes/**/*.{tex,md}
 nnoremap <leader>[ :Ngrep 
 " na
 nnoremap <C-c>n :lnext<CR>
@@ -163,27 +168,19 @@ augroup END
 
 " Appearance:
 
-augroup CallHighlightGroups
-    autocmd!
-    autocmd ColorScheme * call highlightgroups#termcolors()
-augroup END
+" augroup CallHighlightGroups
+"     autocmd!
+"     autocmd ColorScheme * call highlightgroups#termcolors()
+" augroup END
 
-colorscheme default
+set termguicolors
+colorscheme ayu
 set background=dark
-
-if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set guioptions-=l
-    set guioptions-=b
-    set background=dark
-endif
 
 " true colors
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-" set statusline=%<%f\ (%Y)\ %h%m%r%=%{FugitiveStatusline()}\ \ %-17.(%l/%L,%c%V%)\ %P
 set statusline=%{statusline#statusline()}
 
 " Plugin Settings:
@@ -225,6 +222,7 @@ let g:fzf_layout = { 'down': '~25%' }
 
 " load matchit.vim (builtin, needs enabling)
 runtime macros/matchit.vim
+runtime! ftplugin/man.vim
 
 " load help files for plugins
 packloadall

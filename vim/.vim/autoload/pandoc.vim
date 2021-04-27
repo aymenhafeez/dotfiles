@@ -15,6 +15,6 @@ endfunction
 
 " run pandoc and open PDF preview
 function! pandoc#pdf_preview() abort
-    execute '!clear && pandoc -s -o %:t:r.pdf % && nohup qpdfview %:t:r.pdf &'
+    execute '!clear && pandoc -s -o %:t:r.pdf % && nohup open %:t:r.pdf &'
 endfunction
 

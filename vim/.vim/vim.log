@@ -13367,3 +13367,270 @@ times in msec
 039.881  000.018  000.018: sourcing /home/aymen/.vim/autoload/filesize.vim
 040.602  001.439: first screen update
 040.603  000.001: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.017  000.017: --- VIM STARTING ---
+005.855  005.838: Allocated generic buffers
+007.447  001.592: locale set
+007.454  000.007: clipboard setup
+007.464  000.010: window checked
+014.175  006.711: inits 1
+014.845  000.670: parsing arguments
+014.851  000.006: expanding arguments
+019.933  005.082: shell init
+020.931  000.998: Termcap init
+020.954  000.023: inits 2
+021.724  000.770: init highlight
+027.563  002.531  002.531: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+027.823  003.455  000.924: sourcing /usr/local/share/vim/vim82/syntax/synload.vim
+037.283  009.282  009.282: sourcing /usr/local/share/vim/vim82/filetype.vim
+040.410  001.424  001.424: sourcing /usr/local/share/vim/vim82/scripts.vim
+040.537  016.716  002.555: sourcing /usr/local/share/vim/vim82/syntax/syntax.vim
+040.732  000.023  000.023: sourcing /usr/local/share/vim/vim82/filetype.vim
+041.273  000.383  000.383: sourcing /usr/local/share/vim/vim82/ftplugin.vim
+041.832  000.329  000.329: sourcing /usr/local/share/vim/vim82/indent.vim
+044.041  000.252  000.252: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+044.602  000.228  000.228: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+045.092  000.232  000.232: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+045.141  002.008  001.296: sourcing /usr/local/share/vim/vim82/colors/default.vim
+045.604  000.357  000.357: sourcing /Users/Aymen/.vim/autoload/highlightgroups.vim
+046.550  000.350  000.350: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+047.119  000.245  000.245: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+047.176  001.300  000.705: sourcing /usr/local/share/vim/vim82/colors/default.vim
+049.831  001.011  001.011: sourcing /usr/local/share/vim/vim82/pack/dist/opt/matchit/plugin/matchit.vim
+049.964  002.411  001.400: sourcing /usr/local/share/vim/vim82/macros/matchit.vim
+052.157  000.651  000.651: sourcing /Users/Aymen/.vim/pack/plugins/start/commentary/plugin/commentary.vim
+055.696  003.187  003.187: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+056.267  000.372  000.372: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/ftdetect/fugitive.vim
+057.892  001.148  001.148: sourcing /Users/Aymen/.vim/pack/plugins/start/markdown-preview.vim/plugin/mkdp.vim
+059.115  000.682  000.682: sourcing /Users/Aymen/.vim/pack/plugins/start/mathjax-support-for-mkdp/plugin/mathjax.vim
+059.879  000.374  000.374: sourcing /Users/Aymen/.vim/pack/plugins/start/scratch.vim/plugin/scratch.vim
+061.908  001.541  001.541: sourcing /Users/Aymen/.vim/pack/plugins/start/surround/plugin/surround.vim
+063.452  000.415  000.415: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/autoload/UltiSnips/map_keys.vim
+063.617  001.387  000.972: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/plugin/UltiSnips.vim
+064.311  000.470  000.470: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/ftdetect/snippets.vim
+071.757  007.095  007.095: sourcing /Users/Aymen/.vim/pack/plugins/start/vim-line-motion/plugin/vim-line-motion.vim
+098.559  076.437  036.003: sourcing $HOME/.vimrc
+098.573  000.412: sourcing vimrc file(s)
+099.583  000.838  000.838: sourcing /Users/Aymen/.vim/plugin/cool.vim
+099.839  000.026  000.026: sourcing /Users/Aymen/.vim/pack/plugins/start/vim-line-motion/plugin/vim-line-motion.vim
+100.027  000.015  000.015: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/plugin/UltiSnips.vim
+100.219  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/surround/plugin/surround.vim
+100.396  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/scratch.vim/plugin/scratch.vim
+100.588  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/mathjax-support-for-mkdp/plugin/mathjax.vim
+100.772  000.020  000.020: sourcing /Users/Aymen/.vim/pack/plugins/start/markdown-preview.vim/plugin/mkdp.vim
+100.947  000.017  000.017: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+101.122  000.017  000.017: sourcing /Users/Aymen/.vim/pack/plugins/start/commentary/plugin/commentary.vim
+102.951  000.470  000.470: sourcing /usr/local/share/vim/vim82/plugin/getscriptPlugin.vim
+103.858  000.764  000.764: sourcing /usr/local/share/vim/vim82/plugin/gzip.vim
+105.207  001.205  001.205: sourcing /usr/local/share/vim/vim82/plugin/logiPat.vim
+105.825  000.396  000.396: sourcing /usr/local/share/vim/vim82/plugin/manpager.vim
+106.799  000.831  000.831: sourcing /usr/local/share/vim/vim82/plugin/matchparen.vim
+108.480  001.552  001.552: sourcing /usr/local/share/vim/vim82/plugin/netrwPlugin.vim
+108.948  000.306  000.306: sourcing /usr/local/share/vim/vim82/plugin/rrhelper.vim
+109.453  000.334  000.334: sourcing /usr/local/share/vim/vim82/plugin/spellfile.vim
+110.259  000.629  000.629: sourcing /usr/local/share/vim/vim82/plugin/tarPlugin.vim
+111.452  001.024  001.024: sourcing /usr/local/share/vim/vim82/plugin/tohtml.vim
+112.282  000.659  000.659: sourcing /usr/local/share/vim/vim82/plugin/vimballPlugin.vim
+113.109  000.654  000.654: sourcing /usr/local/share/vim/vim82/plugin/zipPlugin.vim
+113.502  000.043  000.043: sourcing /usr/local/share/vim/vim82/pack/dist/opt/matchit/plugin/matchit.vim
+113.549  005.122: loading plugins
+113.550  000.001: loading packages
+114.317  000.543  000.543: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/after/plugin/UltiSnips_after.vim
+114.427  000.334: loading after plugins
+114.438  000.011: inits 3
+116.505  002.067: reading viminfo
+116.595  000.090: setting raw mode
+116.607  000.012: start termcap
+116.622  000.015: clearing screen
+117.085  000.463: opening buffers
+117.167  000.082: BufEnter autocommands
+117.176  000.009: editing files in windows
+117.872  000.696: VimEnter autocommands
+117.878  000.006: before starting main loop
+119.823  000.559  000.559: sourcing /Users/Aymen/.vim/autoload/statusline.vim
+120.647  000.326  000.326: sourcing /Users/Aymen/.vim/autoload/filesize.vim
+121.001  002.238: first screen update
+121.003  000.002: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.015  000.015: --- VIM STARTING ---
+000.193  000.178: Allocated generic buffers
+001.096  000.903: locale set
+001.102  000.006: clipboard setup
+001.114  000.012: window checked
+002.399  001.285: inits 1
+002.422  000.023: parsing arguments
+002.424  000.002: expanding arguments
+009.642  007.218: shell init
+010.248  000.606: Termcap init
+010.277  000.029: inits 2
+010.543  000.266: init highlight
+013.465  001.116  001.116: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+013.677  001.639  000.523: sourcing /usr/local/share/vim/vim82/syntax/synload.vim
+023.445  009.609  009.609: sourcing /usr/local/share/vim/vim82/filetype.vim
+024.749  000.683  000.683: sourcing /usr/local/share/vim/vim82/scripts.vim
+024.844  013.160  001.229: sourcing /usr/local/share/vim/vim82/syntax/syntax.vim
+025.008  000.018  000.018: sourcing /usr/local/share/vim/vim82/filetype.vim
+025.191  000.051  000.051: sourcing /usr/local/share/vim/vim82/ftplugin.vim
+025.371  000.048  000.048: sourcing /usr/local/share/vim/vim82/indent.vim
+026.630  000.195  000.195: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+027.091  000.192  000.192: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+027.498  000.197  000.197: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+027.541  001.334  000.750: sourcing /usr/local/share/vim/vim82/colors/default.vim
+027.658  000.029  000.029: sourcing /Users/Aymen/.vim/autoload/highlightgroups.vim
+028.251  000.190  000.190: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+028.643  000.189  000.189: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+028.690  000.877  000.498: sourcing /usr/local/share/vim/vim82/colors/default.vim
+030.040  000.331  000.331: sourcing /usr/local/share/vim/vim82/pack/dist/opt/matchit/plugin/matchit.vim
+030.155  001.139  000.808: sourcing /usr/local/share/vim/vim82/macros/matchit.vim
+031.940  000.246  000.246: sourcing /Users/Aymen/.vim/pack/plugins/start/commentary/plugin/commentary.vim
+034.328  002.146  002.146: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+034.500  000.017  000.017: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/ftdetect/fugitive.vim
+035.002  000.273  000.273: sourcing /Users/Aymen/.vim/pack/plugins/start/markdown-preview.vim/plugin/mkdp.vim
+035.549  000.258  000.258: sourcing /Users/Aymen/.vim/pack/plugins/start/mathjax-support-for-mkdp/plugin/mathjax.vim
+035.911  000.115  000.115: sourcing /Users/Aymen/.vim/pack/plugins/start/scratch.vim/plugin/scratch.vim
+036.780  000.633  000.633: sourcing /Users/Aymen/.vim/pack/plugins/start/surround/plugin/surround.vim
+037.437  000.103  000.103: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/autoload/UltiSnips/map_keys.vim
+037.549  000.528  000.425: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/plugin/UltiSnips.vim
+037.719  000.028  000.028: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/ftdetect/snippets.vim
+043.672  005.752  005.752: sourcing /Users/Aymen/.vim/pack/plugins/start/vim-line-motion/plugin/vim-line-motion.vim
+073.089  061.741  035.089: sourcing $HOME/.vimrc
+073.100  000.816: sourcing vimrc file(s)
+073.708  000.447  000.447: sourcing /Users/Aymen/.vim/plugin/cool.vim
+073.921  000.023  000.023: sourcing /Users/Aymen/.vim/pack/plugins/start/vim-line-motion/plugin/vim-line-motion.vim
+074.100  000.014  000.014: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/plugin/UltiSnips.vim
+074.279  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/surround/plugin/surround.vim
+074.456  000.017  000.017: sourcing /Users/Aymen/.vim/pack/plugins/start/scratch.vim/plugin/scratch.vim
+074.641  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/mathjax-support-for-mkdp/plugin/mathjax.vim
+074.823  000.021  000.021: sourcing /Users/Aymen/.vim/pack/plugins/start/markdown-preview.vim/plugin/mkdp.vim
+074.997  000.016  000.016: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+075.171  000.016  000.016: sourcing /Users/Aymen/.vim/pack/plugins/start/commentary/plugin/commentary.vim
+076.074  000.083  000.083: sourcing /usr/local/share/vim/vim82/plugin/getscriptPlugin.vim
+076.441  000.287  000.287: sourcing /usr/local/share/vim/vim82/plugin/gzip.vim
+077.062  000.430  000.430: sourcing /usr/local/share/vim/vim82/plugin/logiPat.vim
+077.266  000.046  000.046: sourcing /usr/local/share/vim/vim82/plugin/manpager.vim
+077.759  000.402  000.402: sourcing /usr/local/share/vim/vim82/plugin/matchparen.vim
+078.996  001.021  001.021: sourcing /usr/local/share/vim/vim82/plugin/netrwPlugin.vim
+079.243  000.027  000.027: sourcing /usr/local/share/vim/vim82/plugin/rrhelper.vim
+079.385  000.042  000.042: sourcing /usr/local/share/vim/vim82/plugin/spellfile.vim
+079.774  000.300  000.300: sourcing /usr/local/share/vim/vim82/plugin/tarPlugin.vim
+080.009  000.138  000.138: sourcing /usr/local/share/vim/vim82/plugin/tohtml.vim
+080.297  000.198  000.198: sourcing /usr/local/share/vim/vim82/plugin/vimballPlugin.vim
+080.655  000.255  000.255: sourcing /usr/local/share/vim/vim82/plugin/zipPlugin.vim
+080.948  000.034  000.034: sourcing /usr/local/share/vim/vim82/pack/dist/opt/matchit/plugin/matchit.vim
+080.987  004.034: loading plugins
+080.988  000.001: loading packages
+081.350  000.173  000.173: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/after/plugin/UltiSnips_after.vim
+081.410  000.249: loading after plugins
+081.417  000.007: inits 3
+082.136  000.719: reading viminfo
+082.188  000.052: setting raw mode
+082.197  000.009: start termcap
+082.209  000.012: clearing screen
+082.316  000.107: opening buffers
+082.359  000.043: BufEnter autocommands
+082.365  000.006: editing files in windows
+082.764  000.399: VimEnter autocommands
+082.768  000.004: before starting main loop
+083.860  000.069  000.069: sourcing /Users/Aymen/.vim/autoload/statusline.vim
+084.314  000.033  000.033: sourcing /Users/Aymen/.vim/autoload/filesize.vim
+084.556  001.686: first screen update
+084.557  000.001: --- VIM STARTED ---
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.010  000.010: --- VIM STARTING ---
+000.130  000.120: Allocated generic buffers
+000.683  000.553: locale set
+000.686  000.003: clipboard setup
+000.694  000.008: window checked
+001.460  000.766: inits 1
+001.470  000.010: parsing arguments
+001.471  000.001: expanding arguments
+004.758  003.287: shell init
+005.126  000.368: Termcap init
+005.142  000.016: inits 2
+005.303  000.161: init highlight
+007.180  001.062  001.062: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+007.402  001.446  000.384: sourcing /usr/local/share/vim/vim82/syntax/synload.vim
+016.171  008.586  008.586: sourcing /usr/local/share/vim/vim82/filetype.vim
+017.829  000.877  000.877: sourcing /usr/local/share/vim/vim82/scripts.vim
+017.961  012.188  001.279: sourcing /usr/local/share/vim/vim82/syntax/syntax.vim
+018.135  000.019  000.019: sourcing /usr/local/share/vim/vim82/filetype.vim
+018.329  000.056  000.056: sourcing /usr/local/share/vim/vim82/ftplugin.vim
+018.515  000.050  000.050: sourcing /usr/local/share/vim/vim82/indent.vim
+020.074  000.240  000.240: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+020.611  000.226  000.226: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+021.084  000.229  000.229: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+021.136  001.587  000.892: sourcing /usr/local/share/vim/vim82/colors/default.vim
+021.275  000.035  000.035: sourcing /Users/Aymen/.vim/autoload/highlightgroups.vim
+021.971  000.232  000.232: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+022.427  000.223  000.223: sourcing /usr/local/share/vim/vim82/syntax/syncolor.vim
+022.474  001.020  000.565: sourcing /usr/local/share/vim/vim82/colors/default.vim
+023.957  000.372  000.372: sourcing /usr/local/share/vim/vim82/pack/dist/opt/matchit/plugin/matchit.vim
+024.040  001.231  000.859: sourcing /usr/local/share/vim/vim82/macros/matchit.vim
+025.806  000.305  000.305: sourcing /Users/Aymen/.vim/pack/plugins/start/commentary/plugin/commentary.vim
+028.900  002.802  002.802: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+029.337  000.024  000.024: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/ftdetect/fugitive.vim
+029.872  000.285  000.285: sourcing /Users/Aymen/.vim/pack/plugins/start/markdown-preview.vim/plugin/mkdp.vim
+030.355  000.233  000.233: sourcing /Users/Aymen/.vim/pack/plugins/start/mathjax-support-for-mkdp/plugin/mathjax.vim
+030.685  000.108  000.108: sourcing /Users/Aymen/.vim/pack/plugins/start/scratch.vim/plugin/scratch.vim
+031.599  000.690  000.690: sourcing /Users/Aymen/.vim/pack/plugins/start/surround/plugin/surround.vim
+032.333  000.108  000.108: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/autoload/UltiSnips/map_keys.vim
+032.448  000.587  000.479: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/plugin/UltiSnips.vim
+032.618  000.029  000.029: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/ftdetect/snippets.vim
+038.461  005.640  005.640: sourcing /Users/Aymen/.vim/pack/plugins/start/vim-line-motion/plugin/vim-line-motion.vim
+068.450  062.820  035.931: sourcing $HOME/.vimrc
+068.463  000.340: sourcing vimrc file(s)
+069.068  000.443  000.443: sourcing /Users/Aymen/.vim/plugin/cool.vim
+069.277  000.023  000.023: sourcing /Users/Aymen/.vim/pack/plugins/start/vim-line-motion/plugin/vim-line-motion.vim
+069.454  000.014  000.014: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/plugin/UltiSnips.vim
+069.632  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/surround/plugin/surround.vim
+069.806  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/scratch.vim/plugin/scratch.vim
+070.005  000.020  000.020: sourcing /Users/Aymen/.vim/pack/plugins/start/mathjax-support-for-mkdp/plugin/mathjax.vim
+070.206  000.022  000.022: sourcing /Users/Aymen/.vim/pack/plugins/start/markdown-preview.vim/plugin/mkdp.vim
+070.397  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/fugitive/plugin/fugitive.vim
+070.587  000.018  000.018: sourcing /Users/Aymen/.vim/pack/plugins/start/commentary/plugin/commentary.vim
+071.534  000.091  000.091: sourcing /usr/local/share/vim/vim82/plugin/getscriptPlugin.vim
+071.915  000.296  000.296: sourcing /usr/local/share/vim/vim82/plugin/gzip.vim
+072.303  000.301  000.301: sourcing /usr/local/share/vim/vim82/plugin/logiPat.vim
+072.427  000.037  000.037: sourcing /usr/local/share/vim/vim82/plugin/manpager.vim
+072.745  000.241  000.241: sourcing /usr/local/share/vim/vim82/plugin/matchparen.vim
+073.483  000.653  000.653: sourcing /usr/local/share/vim/vim82/plugin/netrwPlugin.vim
+073.617  000.020  000.020: sourcing /usr/local/share/vim/vim82/plugin/rrhelper.vim
+073.754  000.041  000.041: sourcing /usr/local/share/vim/vim82/plugin/spellfile.vim
+074.038  000.197  000.197: sourcing /usr/local/share/vim/vim82/plugin/tarPlugin.vim
+074.278  000.146  000.146: sourcing /usr/local/share/vim/vim82/plugin/tohtml.vim
+074.563  000.196  000.196: sourcing /usr/local/share/vim/vim82/plugin/vimballPlugin.vim
+074.915  000.251  000.251: sourcing /usr/local/share/vim/vim82/plugin/zipPlugin.vim
+075.186  000.035  000.035: sourcing /usr/local/share/vim/vim82/pack/dist/opt/matchit/plugin/matchit.vim
+075.220  003.658: loading plugins
+075.221  000.001: loading packages
+075.564  000.161  000.161: sourcing /Users/Aymen/.vim/pack/plugins/start/ultisnips/after/plugin/UltiSnips_after.vim
+075.623  000.241: loading after plugins
+075.629  000.006: inits 3
+076.358  000.729: reading viminfo
+076.413  000.055: setting raw mode
+076.424  000.011: start termcap
+076.438  000.014: clearing screen
+076.570  000.132: opening buffers
+076.618  000.048: BufEnter autocommands
+076.624  000.006: editing files in windows
+076.986  000.362: VimEnter autocommands
+076.992  000.006: before starting main loop
+078.007  000.081  000.081: sourcing /Users/Aymen/.vim/autoload/statusline.vim
+078.491  000.034  000.034: sourcing /Users/Aymen/.vim/autoload/filesize.vim
+078.746  001.639: first screen update
+078.748  000.002: --- VIM STARTED ---

@@ -1,3 +1,4 @@
+.DS_Store
 .*.swp
 undo-dir/
 vim/.vim/undo-dir/
