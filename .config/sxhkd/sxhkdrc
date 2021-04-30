@@ -9,9 +9,6 @@ alt + Return
 super + ctrl + f
 	firefox
 
-super + ctrl + e
-    emacs
-
 super + ctrl + d
 	dmenu_run
 

@@ -78,19 +78,3 @@ URxvt.keysym.C-S-Up:   font-size:incglobal
 URxvt.keysym.C-S-Down: font-size:decglobal
 URxvt.keysym.C-equal:  font-size:reset
 URxvt.keysym.C-slash:  font-size:show
-
-/* --------------------------------- xterm --------------------------------- */
-
-XTerm.termName: xterm-256color
-XTerm*font: xft:Monospace:size=9.5:style=regular
-/* XTerm*scaleHeight: 1.01 */
-XTerm*cursorBlink: true
-XTerm*SaveLines: 5000
-XTerm*scrollBar: false
-XTerm*scrollBar_right: true
-XTerm*ScrollKey: true
-XTerm*geometry: 80x28
-XTerm*urgentOnBell: false
-XTerm*iso14755: false
-XTerm*printerCommand: xterm -T History -e sh -c 'less -r <&3' 3<&0
-XTerm*translations: #override Ctrl <Key>slash: print-everything()

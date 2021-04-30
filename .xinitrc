@@ -19,7 +19,5 @@ compton &
 urxvtd -q &
 dunst &
 
-exec jwm
-
-# ~/Documents/scripts/dwm_status.sh &
-# exec dwm
+~/Documents/scripts/dwm_status.sh &
+exec dwm

@@ -181,8 +181,6 @@ set background=dark
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-set statusline=%{statusline#statusline()}
-
 " Plugin Settings:
 
 " vim/netrw.vim
@@ -203,6 +201,9 @@ nnoremap <leader>no :Explore ~/Documents/notes/MyNotes/<CR>
 nnoremap <leader>sc :Scratch<CR>
 nnoremap <leader>ss :Sscratch<CR>
 
+let g:split_size=7
+let g:split_direction='topleft'
+
 " sirver/ultisnips
 " ----------------
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -222,7 +223,6 @@ let g:fzf_layout = { 'down': '~25%' }
 
 " load matchit.vim (builtin, needs enabling)
 runtime macros/matchit.vim
-runtime! ftplugin/man.vim
 
 " load help files for plugins
 packloadall
