@@ -6,22 +6,23 @@ nnoremap <localleader>py :%w !python3<CR>
 " run visual selection
 xnoremap <localleader>p :%w !python3<CR>
 
+" run everything til the cursor position
 nnoremap <localleader>x Vgg:%w !python3<CR>
 
-" complete hack to work with IPython.
+" sending code to IPython (very janky)
 function! GetFilePath()
     let @" = '%run ' . expand("%:p")
 endfunction
 
 nnoremap <C-c><C-p> :rightbelow terminal ++close ++rows=11 ipython<CR><C-w>k
 nnoremap <C-c><C-c> :call GetFilePath()<CR>:wincmd j<CR><C-w>""<CR><C-w>k
-vnoremap <C-c><C-c> y:wincmd j<CR><C-w>"+<CR><C-w>k
+vnoremap <C-c><C-c> y:wincmd j<CR><C-w>"*<CR><C-w>k
 
 " linting
 setlocal makeprg=pylint\ --output-format=parseable
 command! -nargs=0 Lint :make %
 
-" wmvanvliet/jupyter-vim 
+" jupyter-vim/jupyter-vim 
 " ----------------------
 nnoremap <buffer> <silent> <localleader>R :JupyterRunFile<CR>
 nnoremap <buffer> <silent> <localleader>I :PythonImportThisFile<CR>
@@ -39,4 +40,4 @@ vnoremap <buffer> <silent> <localleader>e <Plug>JupyterRunVisual
 nnoremap <buffer> <silent> <localleader>U :JupyterUpdateShell<CR>
 
 " Debugging
-nnoremap <buffer> <silent> <localleader>Br :PythonSetBreak<CR>
+nnoremap <buffer> <silent> <localleader>db :PythonSetBreak<CR>

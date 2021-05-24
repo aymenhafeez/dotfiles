@@ -167,7 +167,7 @@ snippet \oo "infinity" iA
 endsnippet
 
 snippet -> "to" iA
-\to
+$\to$
 endsnippet
 
 snippet => "implies" Ai
@@ -176,6 +176,14 @@ endsnippet
 
 snippet =< "implied by" Ai
 \impliedby
+endsnippet
+
+snippet th "therefore"
+$\therefore$
+endsnippet
+
+snippet ap "approx"
+$\approx$
 endsnippet
 
 context "math()"
@@ -197,6 +205,10 @@ endsnippet
 
 snippet l< "leftangle rightangle" i
 \left<${1:${VISUAL}} \right>$0
+endsnippet
+
+snippet lng "langle rangle" i
+\langle ${1:${VISUAL}} \rangle$0
 endsnippet
 
 snippet "bar" "bar"
@@ -243,11 +255,14 @@ snippet v.. "vdots" iA
 \vdots
 endsnippet
 
-snippet box "boxed"
-\boxed{$1}$0
+snippet bx "Box"
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
 endsnippet
 
-snippet box "boxed" iA
+snippet box "boxed"
 \boxed{${VISUAL}}$0
 endsnippet
 
@@ -272,7 +287,7 @@ snippet ss "sub section without number"
 endsnippet
 
 snippet sss "sub sub section without number"
-\subsubsection{$0}
+\subsubsection*{$0}
 endsnippet
 
 snippet sct "section"
@@ -287,6 +302,11 @@ snippet sssct "sub sub section"
 \subsubsection{$0}
 endsnippet
 
+snippet incg "include basic graphic"
+	\includegraphics[width=$1\textwidth]{$2}
+$0
+endsnippet
+
 snippet fig "figure"
 \begin{figure}[H]
 	\centering
@@ -294,6 +314,22 @@ snippet fig "figure"
 	\caption{$3}
 \end{figure}
 $0
+endsnippet
+
+snippet 2subfig "subfigure with two figures"
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{$1\linewidth}
+	\includegraphics[width=\linewidth]{$2} 
+	\caption{$3}
+	\end{subfigure}\vspace{5mm}
+	\centering
+	\begin{subfigure}[b]{$4\linewidth}
+	\includegraphics[width=\linewidth]{$5}
+	\caption{$6}
+	\end{subfigure}
+	\caption{$7}
+\end{figure}
 endsnippet
 
 snippet table "Table environment" b
@@ -307,6 +343,10 @@ snippet table "Table environment" b
 \end{table}
 endsnippet
 
+snippet href "link to url"
+\href{${1:url}}{${2:text to display}} $0
+endsnippet
+
 snippet begindoc "create basic template"
 \documentclass[12pt]{article}
 
@@ -318,6 +358,7 @@ snippet begindoc "create basic template"
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{chngcntr}
+\usepackage{hyperref}
 \setlength{\parindent}{0pt}
 
 \newcommand{\dd}{\mathrm{d}}

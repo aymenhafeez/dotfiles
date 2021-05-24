@@ -148,7 +148,7 @@ snippet \oo "infinity" iA
 endsnippet
 
 snippet -> "to" iA
-$\to$
+\to
 endsnippet
 
 snippet => "implies" Ai
@@ -186,15 +186,15 @@ snippet "bar" "bar" riA
 endsnippet
 
 snippet bf "bold text"
-\textbf{${1:${VISUAL}}}$0
+\textbf{$1}$0
 endsnippet
 
 snippet it "italic text"
-\textit{${1:${VISUAL}}}$0
+\textit{$1}$0
 endsnippet
 
-snippet ul "underlined text"
-\underline{${1:${VISUAL}}}$0
+snippet ul "unerlined text"
+\underline{$1}$0
 endsnippet
 
 snippet ... "ldots" iA
@@ -210,6 +210,10 @@ snippet v.. "vdots" iA
 endsnippet
 
 snippet box "boxed"
+\boxed{$1}$0
+endsnippet
+
+snippet box "boxed" iA
 \boxed{${VISUAL}}$0
 endsnippet
 
@@ -234,40 +238,7 @@ snippet papernote "heading and authors title for notes on papers"
 $0
 endsnippet
 
-snippet th "therefore"
-$\therefore$ $0
-endsnippet
-	
 snippet co "inline code"
 \`${1:${VISUAL}}\`$0
 endsnippet
-
-snippet blogpost "boiler plate for blog post"
----
-layout: post
-mathjax: true
-title: ${1:Title}
----
-
-$\newcommand{\dd}{\mathrm{d}}$
-
-$0
-endsnippet
-
-snippet eqal "begin equation and align"
-$$
-\begin{equation*}
-\begin{aligned}
-	$1
-\end{aligned}
-\end{equation*}
-$$
-$0
-endsnippet
-
-snippet himg "html image"
-<center>
-<img src="${1:image path}" width="${2:width}"/>
-</center>
-$0
-endsnippet
+	

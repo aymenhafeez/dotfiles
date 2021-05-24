@@ -1,7 +1,7 @@
 " LaTeX highlighting
 
 function! HighLightGroups() abort
-    hi texBeginEnd      ctermfg=lightyellow
+    " hi texBeginEnd      ctermfg=lightyellow
     hi texBeginEndName  ctermfg=cyan
     hi texMathMatcher   ctermfg=111
     hi Delimiter        ctermfg=24
