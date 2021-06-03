@@ -145,7 +145,8 @@ augroup CallHighlightGroups
     autocmd ColorScheme * call highlightgroups#termcolors()
 augroup END
 
-colorscheme default
+set termguicolors
+colorscheme sitruuna
 set background=dark
 
 " true colors
@@ -171,7 +172,7 @@ nnoremap <silent> v- :Vexplore<CR>
 " aymenhafeez/scratch.vim
 " -----------------------
 nnoremap <leader>sc :Scratch<CR>
-nnoremap <leader>ss :ScratchToggle<CR>
+nnoremap <leader>ss :Sscratch<CR>
 
 " sirver/ultisnips
 " ----------------

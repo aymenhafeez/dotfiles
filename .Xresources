@@ -39,7 +39,7 @@
 *.color15:      #ffffff
 
 !! URxvt Appearance
-URxvt*font: xft:monospace:size=9.85:style=regular
+URxvt*font: xft:Fira Mono:size=9.5:style=regular
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.cursorBlink: true

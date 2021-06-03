@@ -69,7 +69,7 @@ function! s:HL(group, fg, ...)
 endfunction
 " }}}
 " Highlights {{{
-call s:HL('Normal',          'foreground', 'background')
+call s:HL('Normal',          'foreground', 'none')
 call s:HL('NonText',         'comment',    'background')
 call s:HL('EndOfBuffer',     'lighter_bg')
 call s:HL('LineNr',          'comment',    'light_bg')
