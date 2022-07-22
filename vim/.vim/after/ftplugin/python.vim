@@ -16,7 +16,7 @@ endfunction
 
 nnoremap <C-c><C-p> :rightbelow terminal ++close ++rows=11 ipython<CR><C-w>k
 nnoremap <C-c><C-c> :call GetFilePath()<CR>:wincmd j<CR><C-w>""<CR><C-w>k
-vnoremap <C-c><C-c> y:wincmd j<CR><C-w>"*<CR><C-w>k
+vnoremap <C-c><C-c> y:wincmd j<CR><C-w>""<CR><C-w>k
 
 " linting
 setlocal makeprg=pylint\ --output-format=parseable

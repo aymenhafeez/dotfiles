@@ -97,8 +97,8 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')
   hi SpellCap guifg=#875f87 guibg=NONE guisp=#875f87 gui=undercurl cterm=undercurl
   hi SpellLocal guifg=#875f87 guibg=NONE guisp=#875f87 gui=undercurl cterm=undercurl
   hi SpellRare guifg=#875f87 guibg=NONE guisp=#875f87 gui=undercurl cterm=undercurl
-  hi StatusLine guifg=#1c1c1d guibg=#a8a8a8 guisp=NONE gui=reverse cterm=reverse
-  hi StatusLineNC guifg=#1c1c1d guibg=#1c1c1d guisp=NONE gui=reverse cterm=reverse
+  hi StatusLine guifg=#14191e guibg=#a8a8a8 guisp=NONE gui=reverse cterm=reverse
+  hi StatusLineNC guifg=#44515b guibg=#14191e guisp=NONE gui=NONE cterm=NONE
   hi TabLine guifg=#1c1c1d guibg=#87af87 guisp=NONE gui=NONE cterm=NONE
   hi TabLineFill guifg=#a8a8a8 guibg=#87af87 guisp=NONE gui=NONE cterm=NONE
   hi TabLineSel guifg=#a8a8a8 guibg=#87af87 guisp=NONE gui=NONE cterm=NONE
@@ -245,7 +245,7 @@ if s:t_Co >= 256
   hi SpellLocal ctermfg=96 ctermbg=NONE cterm=underline
   hi SpellRare ctermfg=96 ctermbg=NONE cterm=underline
   hi StatusLine ctermfg=234 ctermbg=248 cterm=reverse
-  hi StatusLineNC ctermfg=234 ctermbg=234 cterm=reverse
+  hi StatusLineNC ctermfg=234 ctermbg=248 cterm=NONE
   hi TabLine ctermfg=234 ctermbg=108 cterm=NONE
   hi TabLineFill ctermfg=248 ctermbg=108 cterm=NONE
   hi TabLineSel ctermfg=248 ctermbg=108 cterm=NONE
@@ -392,7 +392,7 @@ if s:t_Co >= 8
   hi SpellLocal ctermfg=DarkMagenta ctermbg=NONE cterm=underline
   hi SpellRare ctermfg=DarkMagenta ctermbg=NONE cterm=underline
   hi StatusLine ctermfg=Black ctermbg=Gray cterm=reverse
-  hi StatusLineNC ctermfg=Black ctermbg=Black cterm=reverse
+  hi StatusLineNC ctermfg=Black ctermbg=Black cterm=NONE
   hi TabLine ctermfg=Black ctermbg=DarkCyan cterm=NONE
   hi TabLineFill ctermfg=Gray ctermbg=DarkCyan cterm=NONE
   hi TabLineSel ctermfg=Gray ctermbg=DarkCyan cterm=NONE

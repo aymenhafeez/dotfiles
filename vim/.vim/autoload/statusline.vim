@@ -1,31 +1,31 @@
 " Statusline:
 
 let g:currentmode={
-       \ 'n'  : ' <N> ',
-       \ 'v'  : ' <V> ',
-       \ 'V'  : ' <V·L> ',
-       \ "\<C-V>" : ' <V·B> ',
-       \ 'i'  : ' <I> ',
-       \ 'R'  : ' <R> ',
-       \ 'Rv' : ' <V·R> ',
-       \ 'c'  : ' <C> ',
-       \ 's'  : ' <S> ',
-       \ 'S'  : ' <S·L> ',
-       \ "\<C-S>"  : ' <S·B> ',
-       \ 'cv' : ' <V·Ex> ',
-       \ 'ce' : ' <Ex> ',
-       \ 'r' : ' <Prompt> ',
-       \ 'rm' : ' <More> ',
-       \ 'r?' : ' <C?> ',
-       \ '!' : ' <Sh> ',
-       \ 'no' : ' <N·Op Pend> ',
-       \ 't' : ' <TERM> '
+       \ 'n'  : ' N ',
+       \ 'v'  : ' V ',
+       \ 'V'  : ' V·L ',
+       \ "\<C-V>" : ' V·B ',
+       \ 'i'  : ' I ',
+       \ 'R'  : ' R ',
+       \ 'Rv' : ' V·R ',
+       \ 'c'  : ' C ',
+       \ 's'  : ' S ',
+       \ 'S'  : ' S·L ',
+       \ "\<C-S>"  : ' S·B ',
+       \ 'cv' : ' V·Ex ',
+       \ 'ce' : ' Ex ',
+       \ 'r' : ' Prompt ',
+       \ 'rm' : ' More ',
+       \ 'r?' : ' C? ',
+       \ '!' : ' Sh ',
+       \ 'no' : ' N·Op Pend ',
+       \ 't' : ' TERM '
        \}
 
 function statusline#statusline() abort
         set statusline=
         \\ %{&readonly\|\|!&modifiable?&modified?'U:**-':'U:%%-':&modified?'-:**-':'-:---'}
-        \\ \ \ %f
+        \\ \ \ %1*%f%*
         \%10{(g:currentmode[mode()])}
         \\ %7P
         \\ of
@@ -43,5 +43,3 @@ function statusline#statusline() abort
         " \\ \ \ %1*%.23f%*
         " \\ \ \ %1*%f%*
 endfunction
-
-hi User1 ctermbg=251 ctermfg=232 cterm=bold

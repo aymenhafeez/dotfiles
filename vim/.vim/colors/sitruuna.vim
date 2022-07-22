@@ -69,7 +69,7 @@ function! s:HL(group, fg, ...)
 endfunction
 " }}}
 " Highlights {{{
-call s:HL('Normal',          'foreground', 'none')
+call s:HL('Normal',          'foreground', 'background')
 call s:HL('NonText',         'comment',    'background')
 call s:HL('EndOfBuffer',     'lighter_bg')
 call s:HL('LineNr',          'comment',    'light_bg')
@@ -133,7 +133,7 @@ call s:HL('htmlArg',         'function',   'none')
 call s:HL('IncSearch',  'special', 'background', 'reverse,bold')
 call s:HL('Search',     'special', 'background', 'reverse,bold')
 call s:HL('Substitute', 'special', 'background', 'reverse,bold')
-call s:HL('SpellBad',   'error',   'none',       'bold,underline')
+call s:HL('SpellBad',   'error',   'none',       'bold')
 call s:HL('SpellCap',   'error',   'none',       'bold,underline')
 call s:HL('SpellLocal', 'special', 'none',       'bold,underline')
 call s:HL('SpellRare',  'special', 'none',       'bold,underline')
@@ -269,4 +269,3 @@ if has('nvim')
   let g:terminal_color_15 = s:col.foreground[0]
 endif
 " }}}
-

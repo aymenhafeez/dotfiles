@@ -102,7 +102,6 @@ let s:theme = {
     \   'MatchParen'             : ['color07', 'color08', 'bold'],
     \   'ModeMsg'                : ['color13', 'color05'],
     \   'MoreMsg'                : ['color13', 'color05'],
-    \   'NonText'                : ['color06', 'background'],
     \   'Normal'                 : ['foreground', 'background'],
     \   'Number'                 : ['color07'],
     \   'Operator'               : ['color14', 'none', 'none'],
@@ -222,4 +221,4 @@ highlight conceal guibg=#071014
 
 call s:apply_theme()
 
-
+hi User1 guibg=#081d22 guifg=#bbf2db gui=bold cterm=bold
