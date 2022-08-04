@@ -2,17 +2,17 @@
 
 function! HighLightGroups() abort
     " hi texBeginEnd      ctermfg=yellow
-    hi texBeginEndName  ctermfg=cyan
-    hi texMathMatcher   ctermfg=111
-    hi Delimiter        ctermfg=24
-    hi texMathZoneE     ctermfg=173
-    hi texStatement     ctermfg=lightcyan
-    hi texInputFile     ctermfg=lightyellow
-    hi texNewCmd        ctermfg=cyan
-    hi texCmdName       ctermfg=lightyellow
-    hi texError         ctermfg=darkred ctermbg=None cterm=underline
-    hi texOnlyMath      ctermbg=none
-    hi conceal          ctermbg=none                 cterm=bold
-    hi texComment       ctermfg=darkcyan
+    hi texStatement     guifg=#C678DD ctermfg=170
+    hi texSubscripts    guifg=#D19A66 ctermfg=173
+    hi texSuperscripts  guifg=#D19A66 ctermfg=173
+    hi texTodo          guifg=#BE5046 ctermfg=196
+    hi texBeginEnd      guifg=#C678DD ctermfg=170
+    hi texBeginEndName  guifg=#61AFEF ctermfg=39
+    hi texMathMatcher   guifg=#61AFEF ctermfg=39
+    hi texMathDelim     guifg=#61AFEF ctermfg=39
+    hi texDelimiter     guifg=#61AFEF ctermfg=39
+    hi texSpecialChar   guifg=#D19A66 ctermfg=173
+    hi texCite          guifg=#61AFEF ctermfg=39
+    hi texRefZone       guifg=#61AFEF ctermfg=39
 endfunction
 " call HighLightGroups()

@@ -140,23 +140,27 @@ ins_left {
 ins_left {
   'branch',
   color = { fg = colors.orange, gui = 'bold' },
-  padding = { left = 1, right = 3 },
+  padding = { left = 1, right = 2 },
 }
 
 ins_left {
   'filetype',
   cond = conditions.buffer_not_empty,
   color = { fg = colors.violet, gui = 'bold' },
-  padding = { left = 1, right = 3 },
+  padding = { left = 1, right = 2 },
 }
 
-ins_left {
-  'filename',
-  cond = conditions.buffer_not_empty,
-  color = { fg = colors.fg, gui = 'bold' },
-  padding = { left = 1, right = 3 },
-}
-
+-- ins_left {
+--   'filename',
+--   file_status = true,
+--   cond = conditions.buffer_not_empty,
+--   symbols = {
+--     modified = ' ●',
+--     readonly = ' -',
+--   },
+--   color = { fg = colors.fg, gui = 'bold' },
+--   padding = { left = 1, right = 2 },
+-- }
 
 ins_left {
   'diagnostics',
@@ -169,13 +173,13 @@ ins_left {
   },
 }
 
--- Insert mid section. You can make any number of sections in neovim :)
--- for lualine it's any number greater then 2
-ins_left {
-  function()
-    return '%='
-  end,
-}
+-- -- Insert mid section. You can make any number of sections in neovim :)
+-- -- for lualine it's any number greater then 2
+-- ins_left {
+--   function()
+--     return '%='
+--   end,
+-- }
 
 ins_right {
   -- Lsp server name .

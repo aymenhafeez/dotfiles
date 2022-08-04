@@ -15,4 +15,3 @@ vim.cmd [[
         autocmd TermOpen * setlocal nonumber norelativenumber nocursorline
     augroup END
 ]]
-

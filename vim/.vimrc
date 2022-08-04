@@ -5,6 +5,10 @@
 " Location: https://github.com/aymenhafeez/dotfiles/tree/master/vim
 " =============================================================================
 
+if &compatible
+    set nocompatible
+endif
+
 " This file contains general settings, mappings and some plugin related settings
 " Autoload functions, filetype settings and plugins, etc. live in .vim/
 
@@ -18,43 +22,36 @@ set autoindent
 set expandtab
 set shiftwidth=4
 set tabstop=4
-set noshowmode
+
 set conceallevel=2
-set laststatus=2
-set cursorline
-set number
+set linebreak
 
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
 
-set ruler
-set showcmd
-
 set nobackup
 set noswapfile
 set nowritebackup
 
-set complete+=d
-set completeopt=menu,longest,menuone
+set completeopt=menu,longest,menuone,popup
 set omnifunc=syntaxcomplete#Complete
 
 set autochdir
 set wildcharm=<C-z>
 set wildignore=*.pyc
 set wildmenu
-set wildmode=full
+set wildoptions=pum
 
 set autoread
 set hidden
-set history=1000
+set history=250
 set ttimeoutlen=0
 set lazyredraw
 set matchpairs+=<:>
 set mouse=a
 set path+=.,**
-set ttymouse=xterm2
 
 set undodir=~/.vim/undo-dir
 set undofile
@@ -66,9 +63,11 @@ let g:tex_flavor="latex"
 
 " Mappings:
 
-" use j and k to actually move line wise
 nnoremap j gj
 nnoremap k gk
+
+" load helptags for plugins
+nnoremap <leader>ht :packloadall<CR>:helptags ALL<CR>
 
 " slightly easier split navigation
 nnoremap <C-k> <C-w>k
@@ -76,28 +75,18 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" navigate through quickfixes
-nnoremap <C-n> :cnext<CR>
-nnoremap <C-p> :cprev<CR>
+nnoremap <silent> <S-l> :bnext<CR>
+nnoremap <silent> <S-h> :bprev<CR>
 
 " toggle spell check
 nnoremap <leader>spl :setlocal spell!<CR>
 
-" replace every instance of the word under the cursor
-nnoremap <leader>rg yiW:%s/<C-r>"//g<left><left>
-" replace the word under the cursor with confirmation after each instance
-nnoremap <leader>rc yiW:%s/<C-r>"//c<left><left>
-
-nnoremap <leader>b :Buffers<CR>
-" nnoremap <leader>b :Clap buffers<CR>
+nnoremap <leader>b :buffer <C-z><C-p>
 
 " source current file
 nnoremap <leader>so :source %<CR>
 " source visual selection
 vnoremap <leader>so "ay:<C-r>a<Backspace><CR>
-
-" remove trailing whitespace (from the vimwiki)
-nnoremap <silent> <leader>wh :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 " fix previous spelling error from insert mode
 inoremap <C-s> <C-g>u<Esc>[s1z=`]a<C-g>u
@@ -121,10 +110,8 @@ command! -nargs=1 Search vimgrep "<args>" ~/Dropbox/notes/MyNotes/**/*.{tex,md}
 nnoremap <leader>[ :Search 
 
 " call autoload functions
-nnoremap <leader>sf :call fixspelling#spelling()<CR>
-" nnoremap <leader>hg :call highlightgroups#synstack()<CR>
+nnoremap <C-s> :call fixspelling#spelling()<CR>
 nnoremap <leader>hg :call SyntaxAttr()<CR>
-nnoremap <leader>hh :call sendhelp#help()<CR>
 command! -nargs=0 Pandoc call pandoc#md_to_pdf()
 command! -nargs=0 PandocRenamePDF call pandoc#md_to_pdf_new_name()
 command! -nargs=0 PandocPDFPreview call pandoc#pdf_preview()
@@ -138,8 +125,15 @@ augroup MiscAutocommands
     autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     " remove automatically adding comment on new line
     autocmd filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+	" autocmd CursorHold * silent call CocActionAsync('highlight')
+    " autocmd bufenter * call statusline#lightlineconfig()
     " automatically open when a quickfix command is executed and there are valid errors
     autocmd QuickFixCmdPost [^l]* cwindow
+	" mappings for quickfix location list
+	autocmd BufReadPost quickfix nnoremap <buffer> <leader>cn :cnext<CR>
+	autocmd BufReadPost quickfix nnoremap <buffer> <leader>cp :cprev<CR>
+	autocmd BufReadPost quickfix nnoremap <buffer> <leader>ln :lnext<CR>
+	autocmd BufReadPost quickfix nnoremap <buffer> <leader>lp :lprev<CR>
 augroup END
 
 " Appearance:
@@ -149,111 +143,26 @@ augroup CallHighlightGroups
     autocmd ColorScheme * call highlightgroups#termcolors()
 augroup END
 
-set termguicolors
-colorscheme onedark
-set background=dark
+" set termguicolors
+" colorscheme onedark
 
 " true colors
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-" set statusline=%{statusline#statusline()}
-
-let g:lightline = {
-	\ 'colorscheme': 'one',
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-    \             [ ],
-	\             [ 'readonly', 'filename', 'modified', 'gitbranch' ] ],
-    \   'right': [ [ 'percentwin', 'cocstatus'], 
-    \               [ 'lineinfo' ],
-    \             [ 'filetype', ] ]
-	\ },
-	\ 'component_function': {
-	\   'cocstatus': 'coc#status',
-    \   'readonly': 'LightlineReadonly',
-    \   'space': ' ',
-    \   'gitbranch': 'FugitiveHead'
-	\ },
-	\ }
-
-function! LightlineReadonly()
-    return &readonly && &filetype !=# 'help' ? 'RO' : ''
-endfunction
-
-function! Spaceing()
-    echo('  ')
-endfunction
-
-" Plugin Settings:
-
-" voldikss/vim-floaterm
-nnoremap <silent> <leader>tt :FloatermToggle<CR>
-tnoremap <silent> <leader>tt <C-\><C-n>:FloatermToggle<CR>
-nnoremap <silent> <leader>kf :FloatermKill<CR>
-
 let g:floaterm_wintype='split'
 let g:floaterm_height=9
 let g:floaterm_position='rightbelow'
-
-" liuchengxu/vim-clap
-" -------------------
-hi link ClapInput Normal
-hi link ClapDisplay Normal
-hi link ClapPreview Normal
-
-let g:clap_layout = { 'relative': 'editor' }
-" let g:clap_theme = 'nord'
 
 " vim/netrw.vim
 " -------------
 let g:netrw_banner=0
 let g:netrw_alto=0
 let g:netrw_liststyle = 3
-let g:netrw_winsize = 23
+let g:netrw_winsize = 15
 let g:netrw_special_syntax=1
 
-" nnoremap <silent> - :Explore<CR>
-" nnoremap <silent> <leader>- :Lexplore<CR>
-" nnoremap <silent> s- :Sexplore<CR>
-" nnoremap <silent> v- :Vexplore<CR>
-
-" preservevim/NERDTree
-nnoremap <silent> <leader>- :NERDTreeToggle<CR>
-" let g:NERDTreeStatusline = '%#NonText#'
-let NERDTreeDirArrowExpandable = ""
-let NERDTreeDirArrowCollapsible = ""
-let NERDTreeWinSize = 26
-let NERDTreeMinimalUI=1
-
-" aymenhafeez/scratch.vim
-" -----------------------
-nnoremap <leader>sc :Scratch<CR>
-nnoremap <leader>ss :Sscratch<CR>
-
-" sirver/ultisnips
-" ----------------
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" junegunn/fzf.vim
-" ----------------
-set rtp+=~/.fzf
-
-nnoremap <leader>f :FZF<CR>
-
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" let g:fzf_layout = { 'down': '~19%' }
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.4, 'relative': v:true, 'yoffset': 1.0 } }
+nnoremap <silent> <leader>- :Lexplore<CR>
 
 " load matchit.vim (builtin, needs enabling)
 runtime macros/matchit.vim
-
-" " load help files for plugins
-" packloadall
-" silent! helptags ALL

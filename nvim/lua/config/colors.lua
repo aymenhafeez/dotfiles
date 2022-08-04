@@ -1,9 +1,9 @@
 local colors = {
 	white = "#abb2bf",
 	darker_black = "#1b1f27",
-	black = "#1e222a", --  nvim bg
+	black = "#1e222a",
 	black2 = "#252931",
-	one_bg = "#282c34", -- real bg of onedark
+	one_bg = "#282c34",
 	one_bg2 = "#353b45",
 	one_bg3 = "#30343c",
 	grey = "#42464e",
@@ -13,7 +13,7 @@ local colors = {
 	red = "#d47d85",
 	baby_pink = "#DE8C92",
 	pink = "#ff75a0",
-	line = "#2a2e36", -- for lines like vertsplit
+	line = "#2a2e36",
 	green = "#A3BE8C",
 	vibrant_green = "#7eca9c",
 	nord_blue = "#81A1C1",
@@ -30,6 +30,10 @@ local colors = {
 	lightbg2 = "#262a32",
 	pmenu_bg = "#A3BE8C",
 	folder_bg = "#61afef",
+
+    vim.cmd [[
+        hi Comment gui=italic
+    ]]
 }
 
 return colors

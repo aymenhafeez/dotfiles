@@ -7,8 +7,9 @@ keymap("n", "<leader>-", ":NvimTreeToggle<CR>", opts)
 require("nvim-tree").setup({
   hijack_cursor = true,
   sort_by = "case_sensitive",
+  respect_buf_cwd = true,
   view = {
-    width = 25,
+    width = 26,
     adaptive_size = true,
     hide_root_folder = true,
     mappings = {

@@ -25,12 +25,16 @@ nnoremap <buffer> <C-c><C-l> i\left<Esc>l%i\right<Esc>
 nnoremap <buffer> <C-c><C-j> <Esc>o\item 
 nnoremap <buffer> <C-c><C-k> <Esc>O\item 
 
+" open a terminal
+" nnoremap <leader>tt :rightbelow terminal ++close ++rows=7<CR>
+" compile and update pdf
+" nnoremap <C-c><C-c> :rightbelow terminal ++close ++rows=7<CR><C-w>k<CR>:call GetFilePath()<CR>:wincmd j<CR>pdflatex <C-w>"".tex<CR>
+" nnoremap <C-c><C-p> :rightbelow terminal ++close ++rows=7<CR><C-w>k<CR>:call GetFilePath()<CR>:wincmd j<CR>open <C-w>"".pdf<CR>
+
 " " compile and update pdf
 " nnoremap <buffer> <silent> <Leader>cm :w!<CR>:!clear && pdflatex %<CR><CR>
 " " open pdf preview
 " nnoremap <buffer> <silent> <Leader>pv :w!<CR>:!clear && pdflatex % && nohup open %:t:r.pdf &<CR><CR>
 
-nnoremap <leader>cm :call GetFilePath()<CR>:FloatermToggle<CR>pdflatex <C-w>"".tex<CR><C-w>w
-nnoremap <leader>pv :call GetFilePath()<CR>:FloatermToggle<CR>pdflatex <C-w>"".tex<CR>zathura <C-w>"".pdf &<CR><C-w>w
-
-
+nnoremap <buffer> <leader>c :call GetFilePath()<CR>:FloatermToggle<CR>pdflatex <C-w>"".tex<CR>
+nnoremap <buffer> <leader>p :call GetFilePath()<CR>:FloatermToggle<CR>pdflatex <C-w>"".tex<CR>open <C-w>"".pdf<CR>

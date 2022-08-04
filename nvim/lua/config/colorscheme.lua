@@ -1,9 +1,4 @@
--- local colorscheme = "onedark"
 local colorscheme = "neodark"
-
--- require('onedark').setup {
---     style = 'darker'
--- }
 
 require("neodark").setup({
   theme_style = "neodarker"

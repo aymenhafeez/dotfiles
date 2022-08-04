@@ -41,7 +41,6 @@ snippet ngat "gather without numbering"
 \end{gather*}
 endsnippet
 
-
 snippet nali "begin align"
 \begin{align*}
 	${VISUAL}$0
@@ -84,7 +83,7 @@ snippet ^ "superscript" iA
 endsnippet
 
 snippet int "integral"
-\int_{$1}^{${2:\infty}} $0 \dd $3
+\int_{$1}^{${2:\infty}} ${0:${VISUAL}} \dd $3
 endsnippet
 
 snippet dint "integral"
@@ -179,7 +178,7 @@ snippet =< "implied by" Ai
 endsnippet
 
 snippet th "therefore"
-$\therefore$
+$\therefore$ 
 endsnippet
 
 snippet ap "approx"
@@ -191,18 +190,34 @@ snippet iff "iff" Ai
 \iff
 endsnippet
 
+snippet ( "brackets" iA
+(${1:${VISUAL}}) $0
+endsnippet
+
+snippet [ "square brackets" iA
+[${1:${VISUAL}}] $0
+endsnippet
+
+snippet { "curly brackets" iA
+{${1:${VISUAL}}} $0
+endsnippet
+
+context "math()"
 snippet l( "left( right)" i
 \left( ${1:${VISUAL}} \right) $0
 endsnippet
 
+context "math()"
 snippet l[ "square brackets" i
 \left[ ${1:${VISUAL}} \right] $0
 endsnippet
 
+context "math()"
 snippet l{ "curly brackets" i
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
+context "math()"
 snippet l< "leftangle rightangle" i
 \left<${1:${VISUAL}} \right>$0
 endsnippet
@@ -245,6 +260,10 @@ endsnippet
 
 snippet ... "ldots" iA
 \ldots
+endsnippet
+
+snippet \c. "cdots" iA
+\cdot
 endsnippet
 
 snippet c.. "cdots" iA

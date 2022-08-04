@@ -6,46 +6,131 @@ end
 local lsp_installer = require("nvim-lsp-installer")
 local lspconfig = require("lspconfig")
 
--- 1. Set up nvim-lsp-installer first!
+-- auto setup installed servers
+------------------------------
+-- 1. Set up nvim-lsp-installer first
 lsp_installer.setup {}
 
 -- 2. (optional) Override the default configuration to be applied to all servers.
-lspconfig.util.default_config = vim.tbl_extend(
-    "force",
-    lspconfig.util.default_config,
-    {
-        on_attach = on_attach
-    }
-)
+-- lspconfig.util.default_config = vim.tbl_extend(
+--     "force",
+--     lspconfig.util.default_config,
+--     {
+--         on_attach = on_attach
+--     }
+-- )
 
 -- 3. Loop through all of the installed servers and set it up via lspconfig
 for _, server in ipairs(lsp_installer.get_installed_servers()) do
-  lspconfig[server.name].setup {}
+    lspconfig[server.name].setup {}
 end
 
 -- lsp server settings
 require("config.lsp.lsp_installer")
--- load custom settings for sumeneko lua
-require("config.lsp.settings.sumneko_lua")
--- require("config.lsp.settings.pyright")
--- require("config.lsp.settings.texlab")
--- require("config.lsp.settings.vimls")
-
--- local lspconfig = require 'lspconfig'
--- local configs = require 'lspconfig/configs'
-
--- require("config.lsp.handlers").setup()
 
 vim.diagnostic.config({
-    virtual_text = false,
     -- virtual_text = {
     --     prefix = '●'
     -- },
+    virtual_text = false,
     signs = true,
     underline = true,
     update_in_insert = true,
     severity_sort = false,
+    float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+    },
 })
+
+local opts = { noremap=true, silent=true }
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+
+local on_attach = function(client, bufnr)
+    if client.resolved_capabilities.document_highlight then
+        vim.cmd [[
+        hi! LspReferenceRead cterm=bold ctermbg=red guibg=#313742
+        hi! LspReferenceText cterm=bold ctermbg=red guibg=#313742
+        hi! LspReferenceWrite cterm=bold ctermbg=red guibg=#313742
+        ]]
+        vim.api.nvim_create_augroup('lsp_document_highlight', {
+            clear = false
+        })
+        vim.api.nvim_clear_autocmds({
+            buffer = bufnr,
+            group = 'lsp_document_highlight',
+        })
+        vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+            group = 'lsp_document_highlight',
+            buffer = bufnr,
+            callback = vim.lsp.buf.document_highlight,
+        })
+        vim.api.nvim_create_autocmd('CursorMoved', {
+            group = 'lsp_document_highlight',
+            buffer = bufnr,
+            callback = vim.lsp.buf.clear_references,
+        })
+    end
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
+end
+
+local lsp_flags = {
+    -- default = 150
+    debounce_text_changes = 50,
+}
+require('lspconfig')['pyright'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require('lspconfig')['vimls'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+}
+require'lspconfig'.sumneko_lua.setup {
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+}
 
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
@@ -53,11 +138,9 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- You will likely want to reduce updatetime which affects CursorHold
--- note: this setting is global and should be set only once
 vim.o.updatetime = 150
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-
+-- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
 vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=#abb2bf guibg=#1f2335]]
 
@@ -74,17 +157,18 @@ local border = {
 
 -- LSP settings (for overriding per client)
 local handlers =  {
-  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+    ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {
+        border = "rounded",
+        width=60
+    }),
+    ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {
+        border = border,
+    }),
 }
 
--- Do not forget to use the on_attach function
--- require 'lspconfig'.settings.setup { handlers=handlers }
-
--- To instead override globally
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.border = opts.border or border
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or border
+    return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end

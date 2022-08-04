@@ -13,7 +13,7 @@ keymap("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 require("bufferline").setup{
     options = {
         offsets = {{filetype = "NvimTree", text="", padding=1}},
-        show_buffer_close_icons = true,
+        show_buffer_close_icons = false,
         show_tab_indicators = true,
         enforce_regular_tabs = true,
         max_name_length = 30,
@@ -22,7 +22,7 @@ require("bufferline").setup{
         -- diagnostics = "nvim_lsp",
         separator_style = "thin",
         buffer_close_icon = "",
-		modified_icon = "",
+		modified_icon = "●",
 		close_icon = "",
 		show_close_icon = true,
 		left_trunc_marker = "",
@@ -76,6 +76,10 @@ require("bufferline").setup{
 		indicator_selected = {
 			guifg = colors.blue,
 			guibg = colors.black,
+		},
+		indicator_visible = {
+			guifg = colors.light_grey,
+			guibg = colors.black2,
 		},
 
 		-- modified

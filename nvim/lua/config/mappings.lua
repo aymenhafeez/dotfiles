@@ -1,98 +1,86 @@
 local opts = { noremap = true, silent = true }
+local nopts = { noremap = true, silent = false }
 local term_opts = { silent = true }
-local keymap = vim.api.nvim_set_keymap
+local map = vim.api.nvim_set_keymap
 
---Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
+map("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Modes
---   normal_mode = "n",
---   insert_mode = "i",
---   visual_mode = "v",
---   visual_block_mode = "x",
---   term_mode = "t",
---   command_mode = "c",
--- Insert --
-keymap("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", opts)
+-- insert mode
 
--- Command_line_mode --
--- ----------------- --
-keymap("c", "<C-b>", "<Left>", opts)
-keymap("c", "<C-f>", "<Right>", opts)
-keymap("c", "<Esc>b", "<S-Left>", opts)
-keymap("c", "<Esc>f", "<S-Right>", opts)
-keymap("c", "<C-p>", "<Up>", opts)
-keymap("c", "<C-n>", "<Down>", opts)
+map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", opts)
 
--- Normal --
--- ------ --
--- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+map("i", "<Space>", "<Space><C-g>u", opts)
+map("i", "<Tab>", "<Tab><C-g>u", opts)
+map("i", "<CR>", "<CR><C-g>u", opts)
 
--- stop highlighting search
-keymap("n", "<leader>hh", ":set hlsearch!<CR>", opts)
+-- command line mode
 
-keymap("n", "j", "gj", opts)
-keymap("n", "k", "gk", opts)
+map("c", "<C-b>", "<Left>", opts)
+map("c", "<C-f>", "<Right>", opts)
+map("c", "<Esc>b", "<S-Left>", opts)
+map("c", "<Esc>f", "<S-Right>", opts)
+map("c", "<C-p>", "<Up>", opts)
+map("c", "<C-n>", "<Down>", opts)
 
-keymap("n", "<leader>spl", ":setlocal spell!<CR>", opts)
-keymap("n", "<leader>b", ":buffer <C-z><C-p>", opts)
+-- normal mode
 
-keymap("n", "<leader>so", ":source %<CR>", opts)
+map("n", "<C-h>", "<C-w>h", opts)
+map("n", "<C-j>", "<C-w>j", opts)
+map("n", "<C-k>", "<C-w>k", opts)
+map("n", "<C-l>", "<C-w>l", opts)
 
-keymap("n", "<leader>e", ":Lex 30<cr>", opts)
+map("n", "j", "gj", opts)
+map("n", "k", "gk", opts)
 
--- Resize with arrows
-keymap("n", "<S-Up>", ":resize +2<CR>", opts)
-keymap("n", "<S-Down>", ":resize -2<CR>", opts)
-keymap("n", "<S-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<S-Right>", ":vertical resize +2<CR>", opts)
+map("n", "<leader>spl", ":setlocal spell!<CR>", opts)
 
--- Navigate buffers
-keymap("n", "<S-l>", ":bnext<CR>", opts)
-keymap("n", "<S-h>", ":bprevious<CR>", opts)
+map("n", "<leader>so", ":source %<CR>", opts)
 
--- fix spelling
-keymap("n", "<C-s>", "mm[s1z=`m", opts)
+map("n", "<S-Up>", ":resize +2<CR>", opts)
+map("n", "<S-Down>", ":resize -2<CR>", opts)
+map("n", "<S-Left>", ":vertical resize -2<CR>", opts)
+map("n", "<S-Right>", ":vertical resize +2<CR>", opts)
 
--- Visual --
--- ------ --
--- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+map("n", "<leader>b", ":buffer <C-z><C-p>", nopts)
+map("n", "<S-l>", ":bnext<CR>", opts)
+map("n", "<S-h>", ":bprevious<CR>", opts)
 
-keymap("v", "<leader>so", "\"ay:<C-r>a<Backspace><CR>", opts)
+map("n", "<C-s>", "mm[s1z=`m", opts)
 
--- Move text up and down
--- keymap("v", "<A-j>", ":m .+1<CR>==", opts)
--- keymap("v", "<A-k>", ":m .-2<CR>==", opts)
--- keymap("v", "p", '"_dP', opts)
+map("n", "<C-n>", ":cnext<CR>", opts)
+map("n", "<C-p>", ":cprev<CR>", opts)
+map("n", "<C-c><C-l>", ":ccl<CR>", opts)
 
--- Visual Block --
--- Move text up and down
-keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+map("n", "<leader>hh", "yiw:help <C-r>\"<CR>", opts)
 
--- Terminal --
--- Better terminal navigation
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+-- visual mode
 
--- ----------------------------------------------------
+map("v", "<", "<gv", opts)
+map("v", ">", ">gv", opts)
+
+map("v", "<leader>so", "\"ay:<C-r>a<Backspace><CR>", opts)
+
+-- visual mode
+
+map("x", "J", ":move '>+1<CR>gv-gv", opts)
+map("x", "K", ":move '<-2<CR>gv-gv", opts)
+
+-- terminal
+
+map("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
+map("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
+map("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
+map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+
+-- misc commands
 
 vim.cmd [[
     command! -nargs=1 Search vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}
-    nnoremap <leader>[ :Search 
 ]]
+map("n", "<leader>[", ":Search ", nopts)
 
-keymap("n", "<C-n>", ":cnext<CR>", opts)
-keymap("n", "<C-p>", ":cprev<CR>", opts)
+vim.cmd [[
+    cnoreabbrev bd Bd
+]]

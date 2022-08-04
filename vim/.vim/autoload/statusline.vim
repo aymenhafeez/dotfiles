@@ -1,45 +1,36 @@
-" Statusline:
 
-let g:currentmode={
-       \ 'n'  : ' N ',
-       \ 'v'  : ' V ',
-       \ 'V'  : ' V·L ',
-       \ "\<C-V>" : ' V·B ',
-       \ 'i'  : ' I ',
-       \ 'R'  : ' R ',
-       \ 'Rv' : ' V·R ',
-       \ 'c'  : ' C ',
-       \ 's'  : ' S ',
-       \ 'S'  : ' S·L ',
-       \ "\<C-S>"  : ' S·B ',
-       \ 'cv' : ' V·Ex ',
-       \ 'ce' : ' Ex ',
-       \ 'r' : ' Prompt ',
-       \ 'rm' : ' More ',
-       \ 'r?' : ' C? ',
-       \ '!' : ' Sh ',
-       \ 'no' : ' N·Op Pend ',
-       \ 't' : ' TERM '
-       \}
+function! statusline#lightlineconfig() abort
+    let g:lightline = {
+        \ 'colorscheme': 'one',
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ],
+        \             [ ],
+        \             [ 'readonly', 'filename', 'gitbranch', 'modified', 'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings' ] ],
+        \   'right': [ [  ], 
+        \               [ 'percentwin' ],
+        \             [ 'filetype',  'lineinfo' ] ]
+        \ },
+        \ 'tabline': {
+        \   'left': [ ['buffers'] ],
+        \   'right': [ ['close'] ]
+        \ },
+        \ 'component_expand': {
+        \   'buffers': 'lightline#bufferline#buffers'
+        \ },
+        \ 'component_type': {
+        \   'buffers': 'tabsel'
+        \ },
+        \ 'component_function': {
+        \   'cocstatus': 'coc#status',
+        \   'readonly': 'LightlineReadonly',
+        \   'space': ' ',
+        \   'gitbranch': 'FugitiveHead'
+        \ },
+        \ }
+    call lightline#coc#register()
 
-function statusline#statusline() abort
-        set statusline=
-        \\ %{&readonly\|\|!&modifiable?&modified?'U:**-':'U:%%-':&modified?'-:**-':'-:---'}
-        \\ \ \ %1*%f%*
-        \%10{(g:currentmode[mode()])}
-        \\ %7P
-        \\ of
-        \\ %{filesize#filesize()}
-        \\ \ (%l,%c)
-        \\ \ Tot
-        \\ %L
-        \\ \ \ \ %{FugitiveStatusline()}
-        \\ \ (%{&fileencoding?&fileencoding:&encoding}/%Y)
-        \%=
-        \%1*%#warningmsg#%*
-        \%*
-        \\ \ %<
-        " \\ [%{&fileformat}]
-        " \\ \ \ %1*%.23f%*
-        " \\ \ \ %1*%f%*
+    function! LightlineReadonly()
+        return &readonly && &filetype !=# 'help' ? 'RO' : ''
+    endfunction
 endfunction
+
