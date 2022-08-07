@@ -30,6 +30,11 @@ local colors = {
 	lightbg2 = "#262a32",
 	pmenu_bg = "#A3BE8C",
 	folder_bg = "#61afef",
+    magenta = '#c678dd',
+    violet = '#a9a1e1',
+    darkblue = '#081633',
+    bg = '#282c34',
+    fg = '#abb2bf',
 
     vim.cmd [[
         hi Comment gui=italic

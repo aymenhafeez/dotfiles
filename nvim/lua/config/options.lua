@@ -41,3 +41,4 @@ vim.opt.splitright = true
 vim.opt.termguicolors = true
 
 vim.g.CoolTotalMatches = 1
+vim.g.tex_flavor = "latex"

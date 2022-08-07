@@ -60,6 +60,9 @@ cmp.setup {
             return vim_item
         end,
     },
+    view = {
+        entries = {name = 'custom', selection_order = 'near_cursor' }
+    },
     sources = {
         { name = "latex_symbols" },
         { name = "nvim_lsp" },

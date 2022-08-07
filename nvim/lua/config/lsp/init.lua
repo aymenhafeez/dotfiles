@@ -29,10 +29,11 @@ end
 require("config.lsp.lsp_installer")
 
 vim.diagnostic.config({
-    -- virtual_text = {
-    --     prefix = '●'
-    -- },
-    virtual_text = false,
+    virtual_text = {
+        prefix = '●',
+        padding = 7
+    },
+    -- virtual_text = false,
     signs = true,
     underline = true,
     update_in_insert = true,
@@ -113,7 +114,6 @@ require'lspconfig'.sumneko_lua.setup {
     settings = {
         Lua = {
             runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                 version = 'LuaJIT',
             },
             diagnostics = {
@@ -131,6 +131,28 @@ require'lspconfig'.sumneko_lua.setup {
         },
     },
 }
+-- require'lspconfig'.ltex.setup{}
+-- require("grammar-guard").init()
+-- require("lspconfig").grammar_guard.setup({
+--   cmd = { '/usr/local/bin/ltex-ls' }, -- add this if you install ltex-ls yourself
+-- 	settings = {
+-- 		ltex = {
+-- 			enabled = { "latex", "tex", "bib", "markdown" },
+-- 			language = "en",
+-- 			diagnosticSeverity = "hint",
+--             checkFrequency="save",
+-- 			setenceCacheSize = 2000,
+-- 			additionalRules = {
+-- 				enablePickyRules = true,
+-- 				motherTongue = "en",
+-- 			},
+-- 			trace = { server = "verbose" },
+-- 			dictionary = {},
+-- 			disabledRules = {},
+-- 			hiddenFalsePositives = {},
+-- 		},
+-- 	},
+-- })
 
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
