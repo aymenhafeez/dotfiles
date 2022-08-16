@@ -1,18 +1,19 @@
-local lualine = require('lualine')
+local status, lualine = pcall(require, "lualine")
+if (not status) then return end
 
 -- onedark deep cursorline bg = '#21283b'
 -- onedark darker cursorline bg = '#282c34'
 -- lighter onedark cursorline bg = '2c313a'
 -- astrovim theme cursorline bg = '#252931'
 -- astrovim2 theme cursorline bg = '#2c323c'
+-- medium bg = '#222732'
 -- dark statusline color option = '#1b1f27'
-
--- default lualine theme fg = '#bbc2cf'
--- neodark fg = '#abb2bf'
+-- darker statusline color option = '#181c23'
+-- another dark statusline color option = '#191d25'
 
 -- stylua: ignore
 local colors = {
-    bg       = '#252931',
+    bg       = '#191d25',
     fg       = '#bbc2cf',
     yellow   = '#e5c07b',
     cyan     = '#008080',
@@ -41,32 +42,24 @@ local conditions = {
     end,
 }
 
--- Config
 local config = {
     options = {
-        -- Disable sections and component separators
         component_separators = '',
         section_separators = '',
         theme = {
-            -- We are going to use lualine_c an lualine_x as left and
-            -- right section. Both are highlighted by c theme .  So we
-            -- are just setting default looks o statusline
             normal = { c = { fg = colors.fg, bg = colors.bg } },
             inactive = { c = { fg = colors.fg, bg = colors.bg } },
         },
     },
     sections = {
-        -- these are to remove the defaults
         lualine_a = {},
         lualine_b = {},
         lualine_y = {},
         lualine_z = {},
-        -- These will be filled later
         lualine_c = {},
         lualine_x = {},
     },
     inactive_sections = {
-        -- these are to remove the defaults
         lualine_a = {},
         lualine_b = {},
         lualine_y = {},
@@ -76,23 +69,19 @@ local config = {
     },
 }
 
--- Inserts a component in lualine_c at left section
 local function ins_left(component)
     table.insert(config.sections.lualine_c, component)
 end
 
--- Inserts a component in lualine_x ot right section
 local function ins_right(component)
     table.insert(config.sections.lualine_x, component)
 end
 
 ins_left {
-    -- mode component
     function()
         return '▊'
     end,
     color = function()
-        -- auto change color according to neovims mode
         local mode_color = {
             n = colors.blue,
             i = colors.green,
@@ -117,13 +106,14 @@ ins_left {
         }
         return { fg = mode_color[vim.fn.mode()] }
     end,
-    padding = { left=0, right = 1 },
+    padding = { left = 0, right = 1 },
 }
 
 -- ins_left {
 --   -- filesize component
 --   'filesize',
 --   cond = conditions.buffer_not_empty,
+--   padding = { left = 1, right = 2 }
 -- }
 
 -- ins_left {
@@ -230,12 +220,10 @@ ins_right {
 }
 
 ins_right {
-    -- mode component
     function()
         return '▊'
     end,
     color = function()
-        -- auto change color according to neovims mode
         local mode_color = {
             n = colors.blue,
             i = colors.green,
@@ -263,5 +251,4 @@ ins_right {
     padding = { left = 0, right = 0 },
 }
 
--- Now don't forget to initialize lualine
 lualine.setup(config)

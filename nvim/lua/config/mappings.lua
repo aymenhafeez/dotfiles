@@ -55,6 +55,21 @@ map("n", "<C-c><C-l>", ":ccl<CR>", opts)
 
 map("n", "<leader>hh", "yiw:help <C-r>\"<CR>", opts)
 
+map("n", "<leader>mm", ":message<CR>", nopts)
+
+-- plugin mappings
+
+map("n", "<leader>-", ":NvimTreeToggle<CR>", opts)
+
+map("n", "<leader>tt", ":FloatermToggle<CR>", opts)
+map("t", "<leader>tt", "<C-\\><C-n>:FloatermToggle<CR>", opts)
+
+map("n", "<leader>sc", ":Scratch<CR>", opts)
+map("n", "<leader>ss", ":Sscratch<CR>", opts)
+
+map('n', '<leader>ff', ':Telescope find_files<CR>', opts)
+map('n', '<leader>rr', ':Telescope live_grep<CR>', opts)
+
 -- visual mode
 
 map("v", "<", "<gv", opts)
@@ -62,10 +77,10 @@ map("v", ">", ">gv", opts)
 
 map("v", "<leader>so", "\"ay:<C-r>a<Backspace><CR>", opts)
 
--- visual mode
-
 map("x", "J", ":move '>+1<CR>gv-gv", opts)
 map("x", "K", ":move '<-2<CR>gv-gv", opts)
+
+map("v", "<leader>hh", "y:help <C-r>\"<CR>", opts)
 
 -- terminal
 

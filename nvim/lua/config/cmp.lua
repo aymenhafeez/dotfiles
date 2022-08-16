@@ -61,7 +61,7 @@ cmp.setup {
         end,
     },
     view = {
-        entries = {name = 'custom', selection_order = 'near_cursor' }
+        entries = { name = 'custom', selection_order = 'near_cursor' }
     },
     sources = {
         { name = "latex_symbols" },
@@ -82,8 +82,7 @@ cmp.setup {
         },
     },
     experimental = {
-        ghost_text = false,
-        native_menu = false,
+        ghost_text = true,
     },
 }
 
@@ -97,17 +96,27 @@ cmp.setup.filetype('gitcommit', {
 
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
-    completion = {autocomplete = false },
-    sources = {
+    sources = cmp.config.sources({
         { name = 'buffer' }
-    }
+    }, {
+        { name = 'cmdline_history' }
+    })
+})
+
+cmp.setup.cmdline('?', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'buffer' }
+    }, {
+        { name = 'cmdline_history' }
+    })
 })
 
 cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
+    sources = cmp.config.sources(
+    { { name = 'path' } },
+    { { name = 'cmdline' } },
+    { { name = 'cmdline_history' } }
+    )
 })

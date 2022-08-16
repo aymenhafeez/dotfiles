@@ -1,14 +1,14 @@
-require'nvim-treesitter.configs'.setup {
+local status, treesitter = pcall(require, 'nvim-treesitter.configs')
+if (not status) then return end
+local colors = require("config.colors")
+
+treesitter.setup {
   highlight = {
     enable = true,
     ensure_installed = "maintained",
     additional_vim_regex_highlighting = true,
     ignore_install = { "vim" },
   },
-  -- rainbow = {
-  --   enable = true,
-  --   max_file_lines = nil
-  -- },
   playground = {
     enable = true,
     disable = {},

@@ -339,15 +339,36 @@ snippet 2subfig "subfigure with two figures"
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{$1\linewidth}
-	\includegraphics[width=\linewidth]{$2} 
+	\includegraphics[width=\linewidth]{${2:fig_path}} 
 	\caption{$3}
 	\end{subfigure}\vspace{5mm}
 	\centering
 	\begin{subfigure}[b]{$4\linewidth}
-	\includegraphics[width=\linewidth]{$5}
+	\includegraphics[width=\linewidth]{${5:fig_path}}
 	\caption{$6}
 	\end{subfigure}
 	\caption{$7}
+\end{figure}
+endsnippet
+
+snippet 3subfig "subfigure with three figures"
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{$1\linewidth}
+	\includegraphics[width=\linewidth]{${2:fig_path}} 
+	\caption{$3}
+	\end{subfigure}\hspace{5mm}
+	\centering
+	\begin{subfigure}[b]{$4\linewidth}
+	\includegraphics[width=\linewidth]{${5:fig_path}}
+	\caption{$6}
+	\end{subfigure}\hspace{5mm}
+	\centering
+	\begin{subfigure}[b]{$7\linewidth}
+	\includegraphics[width=\linewidth]{${8:fig_path}}
+	\caption{$9}
+	\end{subfigure}
+	\caption{$10}
 \end{figure}
 endsnippet
 

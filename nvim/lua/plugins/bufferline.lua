@@ -1,3 +1,6 @@
+local status, bufferline = pcall(require, "bufferline")
+if (not status) then return end
+
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 local colors = require("config.colors")
@@ -10,7 +13,7 @@ keymap("n", "<leader>5", ":BufferLineGoToBuffer 5<CR>", opts)
 keymap("n", "<leader>6", ":BufferLineGoToBuffer 6<CR>", opts)
 keymap("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 
-require("bufferline").setup{
+bufferline.setup{
     options = {
         offsets = {{filetype = "NvimTree", text="", padding=1}},
         show_buffer_close_icons = false,
@@ -19,7 +22,6 @@ require("bufferline").setup{
         max_name_length = 30,
         max_prefix_length = 30,
         tab_size = 21,
-        -- diagnostics = "nvim_lsp",
         separator_style = "thin",
         buffer_close_icon = "",
 		modified_icon = "●",
@@ -31,98 +33,97 @@ require("bufferline").setup{
     },
     highlights = {
 		background = {
-			guifg = colors.grey_fg,
-			guibg = colors.black2,
+			fg = colors.grey_fg,
+			bg = colors.black4,
 		},
 
 		-- buffers
 		buffer_selected = {
-			guifg = colors.white,
-			guibg = colors.black,
-			gui = "bold",
+			fg = colors.white,
+			bg = colors.black,
+			bold = true
 		},
 		buffer_visible = {
-			guifg = colors.light_grey,
-			guibg = colors.black2,
+			fg = colors.light_grey,
+			bg = colors.black4,
 		},
 
-		-- for diagnostics = "nvim_lsp"
+        -- diagnostics = "nvim_lsp",
 		error = {
-			guifg = colors.light_grey,
-			guibg = colors.black2,
+			fg = colors.light_grey,
+			bg = colors.black4,
 		},
 		error_diagnostic = {
-			guifg = colors.light_grey,
-			guibg = colors.black2,
+			fg = colors.light_grey,
+			bg = colors.black4,
 		},
 
 		-- close buttons
 		close_button = {
-			guifg = colors.light_grey,
-			guibg = colors.black2,
+			fg = colors.light_grey,
+			bg = colors.black4,
 		},
 		close_button_visible = {
-			guifg = colors.light_grey,
-			guibg = colors.black2,
+			fg = colors.light_grey,
+			bg = colors.black4,
 		},
 		close_button_selected = {
-			guifg = colors.red,
-			guibg = colors.black,
+			fg = colors.red,
+			bg = colors.black,
 		},
 		fill = {
-			guifg = colors.grey_fg,
-			guibg = colors.black2,
+			fg = colors.grey_fg,
+			bg = colors.black4,
 		},
 		indicator_selected = {
-			guifg = colors.blue,
-			guibg = colors.black,
+			fg = colors.blue,
+			bg = colors.black,
 		},
 		indicator_visible = {
-			guifg = colors.light_grey,
-			guibg = colors.black2,
+			fg = colors.light_grey,
+			bg = colors.black4,
 		},
 
 		-- modified
 		modified = {
-			guifg = colors.red,
-			guibg = colors.black2,
+			fg = colors.nord_blue,
+			bg = colors.black4,
 		},
 		modified_visible = {
-			guifg = colors.red,
-			guibg = colors.black2,
+			fg = colors.nord_blue,
+			bg = colors.black4,
 		},
 		modified_selected = {
-			guifg = colors.green,
-			guibg = colors.black,
+			fg = colors.blue,
+			bg = colors.black,
 		},
 
 		-- separators
 		separator = {
-			guifg = colors.black2,
-			guibg = colors.black2,
+			fg = colors.black4,
+			bg = colors.black4,
 		},
 		separator_visible = {
-			guifg = colors.black2,
-			guibg = colors.black2,
+			fg = colors.black4,
+			bg = colors.black4,
 		},
 		separator_selected = {
-			guifg = colors.black2,
-			guibg = colors.black2,
+			fg = colors.black4,
+			bg = colors.black4,
 		},
 
 		-- tabs
 		tab = {
-			guifg = colors.light_grey,
-			guibg = colors.one_bg3,
+			fg = colors.light_grey,
+			bg = colors.one_bg3,
 		},
 		tab_selected = {
-			guifg = colors.black2,
-			guibg = colors.nord_blue,
+			fg = colors.black4,
+			bg = colors.nord_blue,
 		},
 		tab_close = {
-			guifg = colors.red,
-			guibg = colors.black,
+			fg = colors.red,
+			bg = colors.black,
 		},
 	},
 }
--- 21252b
