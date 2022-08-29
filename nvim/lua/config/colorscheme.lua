@@ -1,17 +1,13 @@
 local colorscheme = "neodark"
 
--- require("neodark").setup({
---   theme_style = "neodark"
--- })
-
 if colorscheme == "tokyonight" then
-    vim.g.tokyonight_style = "night"
+  vim.g.tokyonight_style = "night"
 end
 
 if colorscheme == "onedark" then
-    require("onedark").setup({
-      style = "darker"
-    })
+  require("onedark").setup({
+    style = "darker"
+  })
 end
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)

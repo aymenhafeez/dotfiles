@@ -10,9 +10,11 @@ vim.opt.cursorline = true
 vim.opt.showmode = false
 vim.opt.showcmd = false
 vim.opt.number = true
+vim.opt.numberwidth = 5
 vim.opt.linebreak = true
-vim.opt.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
+vim.opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 vim.opt.cmdheight = 0
+vim.opt.formatoptions = vim.opt.formatoptions - 'cro'
 
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
@@ -35,14 +37,15 @@ vim.opt.autoread = true
 vim.opt.hidden = true
 vim.opt.ttimeoutlen = 0
 vim.opt.lazyredraw = true
-vim.opt.mouse = "a"
-vim.opt.clipboard = 'unnamed'
+vim.opt.mouse = "nvia"
+vim.opt.clipboard:append { 'unnamedplus' }
 
 vim.opt.splitright = true
 
 vim.opt.termguicolors = true
 
-vim.opt.rtp:append{ '/usr/local/opt/fzf' }
+vim.o.winbar = "%{%v:lua.require'config.winbar'.get_winbar()%}"
 
 vim.g.CoolTotalMatches = 1
 vim.g.tex_flavor = "latex"
+

@@ -53,6 +53,12 @@ snippet itm "begin itemize"
 \end{itemize}
 endsnippet
 
+snippet itm- "begin itemize with arrow bullet"
+\begin{itemize}
+	\item[$\to$] ${VISUAL}$0
+\end{itemize}
+endsnippet
+
 snippet enu "begin enumerate"
 \begin{enumerate}
 	\item ${VISUAL}$0
@@ -298,35 +304,48 @@ snippet bmat
 endsnippet
 
 snippet s "section without number"
-\section*{$0}
+\section*{$1}
+
+$0
 endsnippet
 
 snippet ss "sub section without number"
-\subsection*{$0}
+\subsection*{$1}
+
+$0
 endsnippet
 
 snippet sss "sub sub section without number"
-\subsubsection*{$0}
+\subsubsection*{$1}
+
+$0
 endsnippet
 
 snippet sct "section"
-\section{$0}
+\section{$1}
+
+$0
 endsnippet
 
 snippet ssct "sub section"
-\subsection{$0}
+\subsection{$1}
+
+$0
 endsnippet
 
 snippet sssct "sub sub section"
-\subsubsection{$0}
+\subsubsection{$1}
+
+$0
 endsnippet
 
 snippet incg "include basic graphic"
-	\includegraphics[width=$1\textwidth]{$2}
+\includegraphics[width=$1\textwidth]{$2}
 $0
 endsnippet
 
 snippet fig "figure"
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=$1\textwidth]{$2}
@@ -336,6 +355,7 @@ $0
 endsnippet
 
 snippet 2subfig "subfigure with two figures"
+
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{$1\linewidth}
@@ -349,6 +369,7 @@ snippet 2subfig "subfigure with two figures"
 	\end{subfigure}
 	\caption{$7}
 \end{figure}
+$0
 endsnippet
 
 snippet 3subfig "subfigure with three figures"
@@ -370,6 +391,7 @@ snippet 3subfig "subfigure with three figures"
 	\end{subfigure}
 	\caption{$10}
 \end{figure}
+$0
 endsnippet
 
 snippet table "Table environment" b

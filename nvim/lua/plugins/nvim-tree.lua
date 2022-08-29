@@ -1,16 +1,12 @@
 local status, tree = pcall(require, "nvim-tree")
 if (not status) then return end
 
--- local opts = { noremap = true, silent = true }
--- local keymap = vim.api.nvim_set_keymap
-
--- toggle NvimTree
--- keymap("n", "<leader>-", ":NvimTreeToggle<CR>", opts)
-
 tree.setup({
   hijack_cursor = true,
+  disable_netrw = true,
+  hijack_netrw = true,
   sort_by = "case_sensitive",
-  respect_buf_cwd = true,
+  respect_buf_cwd = false,
   view = {
     width = 29,
     adaptive_size = false,
@@ -23,11 +19,10 @@ tree.setup({
   },
   renderer = {
     group_empty = true,
-    -- root_folder_modifier = ":t",
     icons = {
-        show = {
-            folder_arrow = false
-        },
+      show = {
+        folder_arrow = false
+      },
     },
   },
   filters = {
@@ -43,5 +38,5 @@ tree.setup({
 })
 
 vim.cmd [[
-    autocmd bufenter * if (winnr("$") == 1 && &filetype == "nvimtree") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && &filetype == "nvimtree") | q | endif
 ]]
