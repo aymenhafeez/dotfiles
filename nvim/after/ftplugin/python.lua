@@ -2,6 +2,11 @@ local opts = { noremap = true, silent = true }
 local nopts = { noremap = true, silent = false }
 local map = vim.api.nvim_set_keymap
 
+vim.opt.autoindent = true
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+
 vim.opt_local.makeprg = 'pylint\\ --output-format=parseable'
 vim.cmd [[
     command! -nargs=0 Lint :make %

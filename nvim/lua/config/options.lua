@@ -1,4 +1,5 @@
 vim.opt.autoindent = true
+vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
@@ -14,7 +15,8 @@ vim.opt.numberwidth = 5
 vim.opt.linebreak = true
 vim.opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 vim.opt.cmdheight = 0
-vim.opt.formatoptions = vim.opt.formatoptions - 'cro'
+vim.opt.formatoptions = vim.opt.formatoptions - 'c'
+vim.opt.spelllang='en_gb'
 
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
@@ -28,6 +30,8 @@ vim.opt.undofile = true
 vim.opt.completeopt = { "menu", "menuone" }
 vim.opt.omnifunc = "syntaxcomplete#Complete"
 vim.opt.pumheight = 10
+vim.opt.pumblend = 10
+vim.opt.winblend = 10
 
 vim.opt.autochdir = true
 vim.opt.wildmenu = true

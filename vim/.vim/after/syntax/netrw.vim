@@ -1,1 +1,0 @@
-" hi normal ctermbg=white 

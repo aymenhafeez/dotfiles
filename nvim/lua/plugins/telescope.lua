@@ -25,17 +25,16 @@ telescope.setup(
       layout_config = {
         horizontal = {
           prompt_position = "top",
-          preview_width = 0.45,
-          results_width = 0.55
+          preview_width = 0.5,
+          results_width = 0.5
         },
-        width = 0.85,
-        height = 0.6,
-        preview_cutoff = 75
+        width = 0.9,
+        -- height = 0.6,
+        -- preview_cutoff = 75
       },
       file_sorter = require "telescope.sorters".get_fuzzy_file,
       file_ignore_patterns = {},
       generic_sorter = require "telescope.sorters".get_generic_fuzzy_sorter,
-      winblend = 15,
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       color_devicons = true,
@@ -50,21 +49,37 @@ telescope.setup(
     extensions = {
       ["ui-select"] = {
         require("telescope.themes").get_dropdown {
-          winblend = 10
         },
       },
       fzf = {
         fuzzy = true,
-        override_generic_sorter = false,
+        override_generic_sorter = true,
         override_file_sorter = true,
+        case_mode = "smart_case",
       },
       media_files = {
         filetypes = { "png", "webp", "jpg", "jpeg" },
         find_cmd = "rg"
       },
+      heading = {
+        theme = 'ivy',
+        layout_config = {
+          height = 0.35
+        },
+        treesitter = true,
+      },
+      packer = {
+        theme = 'ivy',
+        layout_config = {
+          height = 0.5
+        }
+      }
     }
   }
 )
 
-pcall(require('telescope').load_extension, 'fzf')
-require("telescope").load_extension("ui-select")
+require('telescope').load_extension('heading')
+require('telescope').load_extension('fzf')
+require("telescope").load_extension('ui-select')
+require("telescope").load_extension('packer')
+require'telescope'.load_extension('zoxide')

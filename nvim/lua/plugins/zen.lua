@@ -1,21 +1,7 @@
-local api = vim.api
-local opts = { noremap = true, silent = true }
+local status, zen = pcall(require, 'true-zen')
+if (not status) then return end
 
-api.nvim_set_keymap("n", "<leader>z", ":TZMinimalist<CR>", opts)
-api.nvim_set_keymap("n", "<leader>x", ":TZAtaraxis<CR>", opts)
-
-local function open_opts()
-  vim.o.cursorline = false
-  vim.o.cmdheight = 0
-  vim.o.winbar = ""
-end
-
-local function close_opts()
-  vim.o.winbar = "%{%v:lua.require'config.winbar'.get_winbar()%}"
-  vim.o.cursorline = true
-end
-
-require("true-zen").setup {
+zen.setup {
   modes = {
     ataraxis = {
       padding = {
@@ -24,10 +10,6 @@ require("true-zen").setup {
         top = 0,
         bottom = 0,
       },
-      callbacks = {
-        open_pos = open_opts(),
-        close_pos = close_opts()
-      }
     },
     minimalist = {
       ignored_buf_types = { "nofile" },
@@ -35,6 +17,7 @@ require("true-zen").setup {
         signcolumn = "yes",
         cmdheight = 0,
         winbar = false,
+        cursorline = false
       },
     },
   },

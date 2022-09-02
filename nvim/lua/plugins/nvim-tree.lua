@@ -6,7 +6,7 @@ tree.setup({
   disable_netrw = true,
   hijack_netrw = true,
   sort_by = "case_sensitive",
-  respect_buf_cwd = false,
+  respect_buf_cwd = true,
   view = {
     width = 29,
     adaptive_size = false,
@@ -21,7 +21,7 @@ tree.setup({
     group_empty = true,
     icons = {
       show = {
-        folder_arrow = false
+        folder_arrow = false,
       },
     },
   },

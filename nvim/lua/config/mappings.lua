@@ -98,6 +98,9 @@ map('n', '<leader>sd', require('telescope.builtin').diagnostics, opts)
 map('n', '<leader>sh', require('telescope.builtin').command_history, opts)
 map('n', '<leader>tl', require('telescope.builtin').builtin, opts)
 map('n', '<leader>s=', require('telescope.builtin').spell_suggest, opts)
+map('n', '<leader>s]', ':Telescope heading theme=ivy<CR>', opts)
+map('n', '<leader>cd', ':Telescope zoxide list theme=ivy<CR>', opts)
+map('n', '<leader>pl', ':Telescope packer<CR>', opts)
 
 map('n', '<leader>/', function()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -123,6 +126,9 @@ end)
 -- Pocco81/true-zen.nvim
 map("n", "<leader>z", ":TZMinimalist<CR>", opts)
 map("n", "<leader>x", ":TZAtaraxis<CR>", opts)
+
+-- nvim-treesitter/playground
+map('n', '<leader>hi', ':TSHighlightCapturesUnderCursor<CR>', opts)
 
 -- misc commands
 

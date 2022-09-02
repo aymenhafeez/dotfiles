@@ -8,7 +8,7 @@ require("config.lsp.lsp_installer")
 
 vim.diagnostic.config({
   virtual_text = {
-    prefix = '●',
+    prefix = ' ●',
     spacing = 7
   },
   float = {
@@ -16,7 +16,6 @@ vim.diagnostic.config({
     scope = "cursor",
     source = true,
     header = "",
-    -- pos = 1,
     prefix = function(diagnostic)
       local icon, highlight
       if diagnostic.severity == 1 then
@@ -32,7 +31,7 @@ vim.diagnostic.config({
         icon = " "
         highlight = "DiagnosticHint"
       end
-      return icon .. "  ", highlight
+      return icon .. " ", highlight
     end,
   },
   signs = true,
@@ -50,11 +49,7 @@ local map = vim.keymap.set
 local signature_opts = {
   bind = true,
   floating_window_above_cur_line = false,
-  -- doc_lines = 0,
   hint_prefix = " ",
-  -- max_height = 12,
-  -- max_width = 80,
-  floating_window = false,
   handler_opts = {
     border = "rounded"
   },
@@ -95,12 +90,13 @@ local on_attach = function(client, bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   map('n', 'gD', vim.lsp.buf.declaration, bufopts)
   map('n', 'gd', require('telescope.builtin').lsp_definitions, bufopts)
+  map('n', 'gp', ':Lspsaga preview_definition<CR>', bufopts)
   map('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, bufopts)
   map('n', 'gr', require('telescope.builtin').lsp_references, bufopts)
   map('n', 'K', vim.lsp.buf.hover, bufopts)
   map('n', 'gi', vim.lsp.buf.implementation, bufopts)
   map('n', '<leader>k', vim.lsp.buf.signature_help, bufopts)
-  map('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  map('n', '<leader>rn', ':Lspsaga rename<CR>', bufopts)
   map('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
 
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', vim.lsp.buf.format or vim.lsp.buf.formatting,
@@ -117,11 +113,10 @@ local on_attach = function(client, bufnr)
 end
 
 local lsp_flags = {
-  -- default = 150
   debounce_text_changes = 50,
 }
 
-local servers = { 'pyright', 'sumneko_lua', 'vimls', 'texlab', 'cssls', 'remark_ls', 'html' }
+local servers = { 'pyright', 'sumneko_lua', 'vimls', 'texlab', 'cssls', 'remark_ls', 'html', 'ltex' }
 
 require('nvim-lsp-installer').setup {
   ensure_installed = servers,
@@ -149,42 +144,36 @@ require 'lspconfig'.sumneko_lua.setup {
         path = runtime_path
       },
       diagnostics = {
-        -- Get the language server to recognize the `vim` global
         globals = { 'vim' },
       },
-      -- workspace = {
-      --   -- Make the server aware of Neovim runtime files
-      --   library = vim.api.nvim_get_runtime_file("", true),
-      -- },
-      -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
         enable = false,
       },
     },
   },
 }
--- require'lspconfig'.ltex.setup{}
--- require("grammar-guard").init()
--- require("lspconfig").grammar_guard.setup({
---   cmd = { '/usr/local/bin/ltex-ls' }, -- add this if you install ltex-ls yourself
--- 	settings = {
--- 		ltex = {
--- 			enabled = { "latex", "tex", "bib", "markdown" },
--- 			language = "en",
--- 			diagnosticSeverity = "hint",
---             checkFrequency="save",
--- 			setenceCacheSize = 2000,
--- 			additionalRules = {
--- 				enablePickyRules = true,
--- 				motherTongue = "en",
--- 			},
--- 			trace = { server = "verbose" },
--- 			dictionary = {},
--- 			disabledRules = {},
--- 			hiddenFalsePositives = {},
--- 		},
--- 	},
--- })
+require("grammar-guard").init()
+require("lspconfig").grammar_guard.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd = { '/usr/local/bin/ltex-ls' },
+  settings = {
+    ltex = {
+      enabled = { "latex", "tex", "bib", "markdown" },
+      language = "en-GB",
+      diagnosticSeverity = "info",
+      checkFrequency="save",
+      setenceCacheSize = 2000,
+      additionalRules = {
+        enablePickyRules = false,
+      },
+      trace = { server = "verbose" },
+      dictionary = {},
+      disabledRules = {},
+      hiddenFalsePositives = {},
+    },
+  },
+})
 
 local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 for type, icon in pairs(signs) do
@@ -194,8 +183,6 @@ end
 
 vim.o.updatetime = 150
 -- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
-vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
-vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=#abb2bf guibg=#1f2335]]
 
 local border = {
   { "╭", "FloatBorder" },

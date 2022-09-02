@@ -1,5 +1,9 @@
 local colorscheme = "neodark"
 
+-- require("neodark").setup({
+--   theme_style = "neodark"
+-- })
+
 if colorscheme == "tokyonight" then
   vim.g.tokyonight_style = "night"
 end

@@ -24,6 +24,7 @@ local colors = {
   blue_1   = '#8094b4',
   blue_2   = '#51afef',
   red      = '#ec5f67',
+  light_grey = '#2c323c'
 }
 
 local conditions = {
@@ -44,11 +45,6 @@ local config = {
   options = {
     component_separators = '',
     section_separators = '',
-    -- theme = {
-    --     normal = { c = { fg = colors.fg, bg = colors.bg } },
-    --     inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    -- },
-    theme = 'neodark'
   },
   sections = {
     lualine_a = {},
@@ -108,31 +104,29 @@ ins_left {
   padding = { left = 0, right = 1 },
 }
 
--- ins_left {
---   -- filesize component
---   'filesize',
---   cond = conditions.buffer_not_empty,
---   padding = { left = 1, right = 2 }
--- }
-
--- ins_left {
---   'filename',
---   file_status = true,
---   cond = conditions.buffer_not_empty,
---   symbols = {
---     -- modified = ' ●',
---     modified = ' ',
---     readonly = ' -',
---   },
---   color = { fg = colors.fg, gui = 'bold' },
---   padding = { left = 0, right = 2 },
--- }
+ins_left {
+  'filesize',
+  cond = conditions.buffer_not_empty,
+  padding = { left = 1, right = 3 }
+}
 
 ins_left {
   'filetype',
   cond = conditions.buffer_not_empty,
-  icon_only = false,
+  icon_only = true,
   color = { fg = colors.fg, gui = '' },
+  padding = { left = 0, right = 1 },
+}
+
+ins_left {
+  'filename',
+  file_status = true,
+  cond = conditions.buffer_not_empty,
+  symbols = {
+    modified = ' ',
+    readonly = ' -',
+  },
+  color = { fg = colors.fg, gui = 'bold' },
   padding = { left = 0, right = 2 },
 }
 
@@ -187,7 +181,7 @@ ins_right {
     end
     return ""
   end,
-  color = { fg = colors.blue_1 },
+  color = { fg = colors.blue_2 },
   padding = { left = 2, right = 2 },
   cond = conditions.hide_in_width,
 }
@@ -209,7 +203,7 @@ ins_right {
     return msg
   end,
   icon = '',
-  color = { fg = colors.fg, gui = 'bold' },
+  color = { fg = colors.fg },
   padding = { left = 1, right = 2 }
 }
 
@@ -226,7 +220,6 @@ ins_right {
   separators = {
     component = ' ',
     progress = ' | ',
-    -- message = { pre = '(', post = ')'},
     percentage = { pre = '', post = '%% ' },
     title = { pre = '', post = ': ' },
     lsp_client_name = { pre = '[', post = ']' },
@@ -235,13 +228,7 @@ ins_right {
   },
   display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
   timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-  spinner_symbols = { '🌑 ', '🌒 ', '🌓 ', '🌔 ', '🌕 ', '🌖 ', '🌗 ', '🌘 ' },
-}
-
-ins_right {
-  'location',
-  color = { fg = colors.blue_1 },
-  padding = { left = 1, right = 1},
+  spinner_symbols = { '◐ ',  '◓ ',  '◑ ',  '◒ ' },
 }
 
 ins_right {

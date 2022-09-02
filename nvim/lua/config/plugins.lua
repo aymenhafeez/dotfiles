@@ -14,12 +14,12 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd [[packadd packer.nvim]]
 end
 
-vim.cmd [[
-  augroup packer_user_config
-      autocmd!
-      autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]]
+local packGroup = vim.api.nvim_create_augroup("PackWriteSync", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*plugins.lua",
+  command = "source <afile> | PackerSync",
+  group = packGroup
+})
 
 local status_ok, packer = pcall(require, 'packer')
 if not status_ok then
@@ -29,7 +29,7 @@ end
 packer.init {
   display = {
     open_fn = function()
-      return require('packer.util').float { border = "rounded"}
+      return require('packer.util').float { border = "rounded" }
     end,
   },
 }
@@ -76,6 +76,7 @@ return packer.startup(function(use)
     event = 'BufWinEnter',
     config = 'require "plugins.treesitter"'
   }
+  use 'nvim-treesitter/playground'
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -111,14 +112,19 @@ return packer.startup(function(use)
     -- cmd = 'Telescope',
     config = 'require "plugins.telescope"'
   }
-  use {'nvim-telescope/telescope-ui-select.nvim' }
+  use 'nvim-telescope/telescope-ui-select.nvim'
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use 'nvim-telescope/telescope-packer.nvim'
+  use 'crispgm/telescope-heading.nvim'
+  use 'jvgrootveld/telescope-zoxide'
+
   use {
     'Pocco81/true-zen.nvim',
     config = 'require "plugins.zen"'
   }
   use 'ixru/nvim-markdown'
 
--- lsp/cmp stuff --
+  -- lsp/cmp stuff --
 
   use {
     'neovim/nvim-lspconfig',
@@ -134,6 +140,10 @@ return packer.startup(function(use)
   use {
     'williamboman/nvim-lsp-installer',
     config = 'require "config.lsp"'
+  }
+  use {
+    'glepnir/lspsaga.nvim',
+    config = 'require "plugins.lspsaga"',
   }
   use {
     'hrsh7th/nvim-cmp',
@@ -157,10 +167,6 @@ return packer.startup(function(use)
     after = 'nvim-cmp'
   }
   use {
-    'dmitmel/cmp-cmdline-history',
-    after = 'nvim-cmp'
-  }
-  use {
     'hrsh7th/cmp-nvim-lua',
     after = 'nvim-cmp'
   }
@@ -179,14 +185,27 @@ return packer.startup(function(use)
   }
   use 'ray-x/lsp_signature.nvim'
   use 'arkav/lualine-lsp-progress'
+  use 'brymer-meneses/grammar-guard.nvim'
 
--- colorschemes --
+  use {
+    "goolord/alpha-nvim",
+    config = function()
+      require("plugins.alpha").setup()
+    end,
+  }
+
+  -- colorschemes --
 
   use 'navarasu/onedark.nvim'
   use 'aymenhafeez/neodark.nvim'
   use 'folke/tokyonight.nvim'
-  use "EdenEast/nightfox.nvim"
   use "rebelot/kanagawa.nvim"
+  use 'Mofiqul/vscode.nvim'
+
+  use {
+    'NvChad/nvim-colorizer.lua',
+    config = function() require('colorizer').setup {} end,
+  }
 
   if PACKER_BOOTSTRAP then
     require('packer').sync()

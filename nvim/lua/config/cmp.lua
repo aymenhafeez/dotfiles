@@ -3,12 +3,10 @@ if not cmp_status_ok then
   return
 end
 
-local colors = require "config.colors"
-
 local kind_icons = {
   Text = "",
   Method = "",
-  Function = " ",
+  Function = "",
   Constructor = "",
   Field = "",
   Variable = "",
@@ -42,22 +40,26 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-c><C-c>'] = cmp.mapping.complete(),
+    ['<C-l>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        return cmp.complete_common_string()
+      end
+      fallback()
+    end, { 'i', 'c' }),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
   }),
   formatting = {
-    fields = { "kind", "abbr", "menu" },
+    fields = { "menu", "abbr", "kind" },
     format = function(entry, vim_item)
-      vim_item.kind = string.format("%s ", kind_icons[vim_item.kind])
-      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- concatonate icons with item kind
+      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
       vim_item.menu = ({
-        nvim_lsp = "[LSP]",
-        nvim_lua = "[NVIM_LUA]",
-        ultisnips = "[Snippet]",
-        buffer = "[Buffer]",
-        latex_symbols = "[Latex]",
-        path = "[Path]",
+        nvim_lsp = '',
+        nvim_lua = 'λ',
+        ultisnips = '⋗',
+        buffer = '',
+        latex_symbols = '',
+        path = '',
       })[entry.source.name]
       return vim_item
     end,
@@ -79,9 +81,7 @@ cmp.setup {
   },
   window = {
     completion = cmp.config.window.bordered(),
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
+    documentation = cmp.config.window.bordered()
   },
   experimental = {
     ghost_text = true,
@@ -98,16 +98,14 @@ cmp.setup.filetype('gitcommit', {
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources(
-    { { name = 'buffer' } },
-    { { name = 'cmdline_history' } }
+    { { name = 'buffer' } }
   )
 })
 
 cmp.setup.cmdline('?', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources(
-    { { name = 'buffer' } },
-    { { name = 'cmdline_history' } }
+    { { name = 'buffer' } }
   )
 })
 
@@ -115,11 +113,6 @@ cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources(
     { { name = 'path' } },
-    { { name = 'cmdline' } },
-    { { name = 'cmdline_history' } }
+    { { name = 'cmdline' } }
   )
 })
-
-vim.api.nvim_set_hl(0, "CmpItemMenuDefault", { fg = colors.sun })
-vim.api.nvim_set_hl(0, "CmpItemKindFieldDefault", { fg = colors.dark_purple })
-vim.api.nvim_set_hl(0, "CmpItemKindSnippetDefault", { fg = colors.yellow3 })
