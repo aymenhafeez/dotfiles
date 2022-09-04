@@ -3,7 +3,6 @@ if not status_ok then
   return
 end
 
--- lsp server settings
 require("config.lsp.lsp_installer")
 
 vim.diagnostic.config({

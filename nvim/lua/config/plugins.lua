@@ -39,9 +39,17 @@ return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
-  use 'rcarriga/nvim-notify'
+  use {
+    'rcarriga/nvim-notify',
+    event = "UIEnter",
+    config = 'require "plugins.notify"'
+  }
   use 'moll/vim-bbye'
   use 'aymenhafeez/scratch.vim'
+  -- use {
+  --   'aymenhafeez/vim-line-motion',
+  --   branch = 'test'
+  -- }
   use 'romainl/vim-cool'
   use {
     'karb94/neoscroll.nvim',
@@ -49,7 +57,7 @@ return packer.startup(function(use)
   }
   use {
     "voldikss/vim-floaterm",
-    cmd = 'FloatermToggle',
+    cmd ={  'FloatermToggle', 'FloatermNew' },
     config = 'require "plugins.floaterm"',
   }
   use {
@@ -72,13 +80,24 @@ return packer.startup(function(use)
   }
   use {
     'nvim-treesitter/nvim-treesitter',
+    event = { 'BufRead', 'BufNewFile' },
     run = ':TSUpdate',
-    event = 'BufWinEnter',
+    cmd = {
+      "TSInstall",
+      "TSInstallInfo",
+      "TSInstallSync",
+      "TSUninstall",
+      "TSUpdate",
+      "TSUpdateSync",
+      "TSDisableAll",
+      "TSEnableAll",
+    },
     config = 'require "plugins.treesitter"'
   }
   use 'nvim-treesitter/playground'
   use {
     'lewis6991/gitsigns.nvim',
+    event = "BufWinEnter",
     config = function()
       require('gitsigns').setup()
     end
@@ -109,8 +128,9 @@ return packer.startup(function(use)
   }
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
-    -- cmd = 'Telescope',
-    config = 'require "plugins.telescope"'
+    config = function()
+      require('plugins.telescope')
+    end
   }
   use 'nvim-telescope/telescope-ui-select.nvim'
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -147,6 +167,7 @@ return packer.startup(function(use)
   }
   use {
     'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
     config = 'require "config.cmp"',
     after = 'nvim-lspconfig'
   }
@@ -189,10 +210,18 @@ return packer.startup(function(use)
 
   use {
     "goolord/alpha-nvim",
-    config = function()
-      require("plugins.alpha").setup()
-    end,
+    config = 'require "plugins.alpha"'
   }
+
+  -- use {
+  --   "glepnir/dashboard-nvim",
+  --   config = 'require "plugins.dashboard"'
+  -- }
+
+  -- use {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   config = function() require("plugins.indent") end
+  -- }
 
   -- colorschemes --
 
@@ -201,11 +230,6 @@ return packer.startup(function(use)
   use 'folke/tokyonight.nvim'
   use "rebelot/kanagawa.nvim"
   use 'Mofiqul/vscode.nvim'
-
-  use {
-    'NvChad/nvim-colorizer.lua',
-    config = function() require('colorizer').setup {} end,
-  }
 
   if PACKER_BOOTSTRAP then
     require('packer').sync()

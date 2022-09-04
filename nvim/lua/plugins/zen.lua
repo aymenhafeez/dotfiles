@@ -1,5 +1,7 @@
-local status, zen = pcall(require, 'true-zen')
-if (not status) then return end
+local present, zen = pcall(require, "true-zen")
+if not present then
+  return
+end
 
 zen.setup {
   modes = {

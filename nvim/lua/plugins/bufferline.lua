@@ -1,5 +1,7 @@
-local status, bufferline = pcall(require, "bufferline")
-if (not status) then return end
+local present, bufferline = pcall(require, "bufferline")
+if not present then
+  return
+end
 
 local colors = require("config.colors")
 local opts = { noremap = true, silent = true }

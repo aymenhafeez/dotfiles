@@ -83,6 +83,8 @@ map("n", "<leader>f-", ":NvimTreeFindFile<CR>", opts)
 -- voldikss/vim-floaterm
 map("n", "<leader>tt", ":FloatermToggle<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n>:FloatermToggle<CR>", opts)
+map("n", "<leader>lg", ":FloatermNew --position=center --wintype=float --width=0.85 --height=0.85 title='lazygit' lazygit<CR>", opts)
+map("n", "<leader>bt", ":FloatermNew --position=center --wintype=float --width=0.85 --height=0.85 title='system monitor' btm<CR>", opts)
 
 -- aymenhafeez/scratch.vim
 map("n", "<leader>sc", ":Scratch<CR>", opts)
@@ -98,9 +100,11 @@ map('n', '<leader>sd', require('telescope.builtin').diagnostics, opts)
 map('n', '<leader>sh', require('telescope.builtin').command_history, opts)
 map('n', '<leader>tl', require('telescope.builtin').builtin, opts)
 map('n', '<leader>s=', require('telescope.builtin').spell_suggest, opts)
+map('n', '<leader>sr', require('telescope.builtin').oldfiles, opts)
 map('n', '<leader>s]', ':Telescope heading theme=ivy<CR>', opts)
 map('n', '<leader>cd', ':Telescope zoxide list theme=ivy<CR>', opts)
 map('n', '<leader>pl', ':Telescope packer<CR>', opts)
+map('n', '<leader>ps', ':PackerSync<CR>', opts)
 
 map('n', '<leader>/', function()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {

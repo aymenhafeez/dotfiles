@@ -1,5 +1,7 @@
-local status, lualine = pcall(require, "lualine")
-if (not status) then return end
+local present, lualine = pcall(require, "lualine")
+if not present then
+  return
+end
 
 -- astrovim theme cursorline bg = '#252931'
 -- astrovim2 theme cursorline bg = '#2c323c'
@@ -104,18 +106,18 @@ ins_left {
   padding = { left = 0, right = 1 },
 }
 
-ins_left {
-  'filesize',
-  cond = conditions.buffer_not_empty,
-  padding = { left = 1, right = 3 }
-}
+-- ins_left {
+--   'filesize',
+--   cond = conditions.buffer_not_empty,
+--   padding = { left = 1, right = 3 }
+-- }
 
 ins_left {
   'filetype',
   cond = conditions.buffer_not_empty,
   icon_only = true,
   color = { fg = colors.fg, gui = '' },
-  padding = { left = 0, right = 1 },
+  padding = { left = 1, right = 1 },
 }
 
 ins_left {
@@ -126,7 +128,7 @@ ins_left {
     modified = ' ',
     readonly = ' -',
   },
-  color = { fg = colors.fg, gui = 'bold' },
+  color = { fg = colors.fg },
   padding = { left = 0, right = 2 },
 }
 
@@ -231,10 +233,10 @@ ins_right {
   spinner_symbols = { '◐ ',  '◓ ',  '◑ ',  '◒ ' },
 }
 
-ins_right {
-  'progress',
-  color = { fg = colors.blue_1 }
-}
+-- ins_right {
+--   'progress',
+--   color = { fg = colors.blue_1 }
+-- }
 
 ins_right {
   function()

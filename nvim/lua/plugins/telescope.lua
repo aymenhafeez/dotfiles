@@ -29,9 +29,9 @@ telescope.setup(
           results_width = 0.5
         },
         width = 0.9,
-        -- height = 0.6,
-        -- preview_cutoff = 75
+        height = 0.75,
       },
+      winblend = 10,
       file_sorter = require "telescope.sorters".get_fuzzy_file,
       file_ignore_patterns = {},
       generic_sorter = require "telescope.sorters".get_generic_fuzzy_sorter,

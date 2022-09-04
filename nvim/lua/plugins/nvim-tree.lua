@@ -1,12 +1,14 @@
-local status, tree = pcall(require, "nvim-tree")
-if (not status) then return end
+local present, tree = pcall(require, "nvim-tree")
+if not present then
+  return
+end
 
 tree.setup({
   hijack_cursor = true,
   disable_netrw = true,
   hijack_netrw = true,
   sort_by = "case_sensitive",
-  respect_buf_cwd = true,
+  respect_buf_cwd = false,
   view = {
     width = 29,
     adaptive_size = false,
