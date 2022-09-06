@@ -54,6 +54,7 @@ vim.api.nvim_create_autocmd("BufUnload", {
 })
 
 dashboard.section.header.val = {
+  [[                                                ]],
   [[                                          _.oo. ]],
   [[                  _-u[[/;:,.         .odMMMMMM' ]],
   [[               .o888UU[[[/;:-.. .o@P^    MMM^   ]],
@@ -68,6 +69,8 @@ dashboard.section.header.val = {
   [[   .dMMM    .o@^ ^;::---.....                   ]],
   [[  dMMMMMMM@^`       `^^^^^                      ]],
   [[ YMMMUP^                                        ]],
+  [[                                                ]],
+  [[                                                ]],
   [[                                                ]],
 }
 

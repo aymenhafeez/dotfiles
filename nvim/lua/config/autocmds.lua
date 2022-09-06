@@ -8,7 +8,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 -- automatically open quickfix window when there's errors
 local quickFix = vim.api.nvim_create_augroup('QuickFix', { clear = true })
-vim.api.nvim_create_autocmd( 'QuickFixCmdPost', {
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
   pattern = '[^l]*',
   command = 'cwindow',
   group = quickFix
@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd( 'QuickFixCmdPost', {
 local highlightGroup = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank({ higroup = 'Visual' })
   end,
   pattern = '*',
   group = highlightGroup,

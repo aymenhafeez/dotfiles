@@ -39,7 +39,7 @@ function M.get_winbar()
     return "%#EmptyWinbar#" .. ""
   end
   if navic.is_available() then
-    return get_location() .. "  "
+    return get_location()
   else
     return ""
   end

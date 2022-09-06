@@ -134,6 +134,9 @@ map("n", "<leader>x", ":TZAtaraxis<CR>", opts)
 -- nvim-treesitter/playground
 map('n', '<leader>hi', ':TSHighlightCapturesUnderCursor<CR>', opts)
 
+-- aymenhafeez/OxfDictionary.nvim
+map('n', '<leader>d', ':Definition<CR>', opts)
+
 -- misc commands
 
 vim.cmd [[

@@ -10,7 +10,7 @@ tree.setup({
   sort_by = "case_sensitive",
   respect_buf_cwd = false,
   view = {
-    width = 29,
+    width = 27,
     adaptive_size = false,
     hide_root_folder = true,
     mappings = {

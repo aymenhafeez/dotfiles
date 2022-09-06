@@ -208,6 +208,7 @@ return packer.startup(function(use)
   use 'arkav/lualine-lsp-progress'
   use 'brymer-meneses/grammar-guard.nvim'
 
+  use 'aymenhafeez/OxfDictionary.nvim'
   use {
     "goolord/alpha-nvim",
     config = 'require "plugins.alpha"'

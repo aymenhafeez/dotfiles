@@ -53,3 +53,7 @@ vim.o.winbar = "%{%v:lua.require'config.winbar'.get_winbar()%}"
 vim.g.CoolTotalMatches = 1
 vim.g.tex_flavor = "latex"
 
+vim.cmd [[
+let g:OxfDictionary#app_id='ed82927e'
+let g:OxfDictionary#app_key='97ed8b2daccd553e7f62a3aebdbdc492'
+]]

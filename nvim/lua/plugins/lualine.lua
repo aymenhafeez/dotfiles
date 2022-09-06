@@ -106,30 +106,13 @@ ins_left {
   padding = { left = 0, right = 1 },
 }
 
--- ins_left {
---   'filesize',
---   cond = conditions.buffer_not_empty,
---   padding = { left = 1, right = 3 }
--- }
 
 ins_left {
   'filetype',
   cond = conditions.buffer_not_empty,
-  icon_only = true,
+  icon_only = false,
   color = { fg = colors.fg, gui = '' },
-  padding = { left = 1, right = 1 },
-}
-
-ins_left {
-  'filename',
-  file_status = true,
-  cond = conditions.buffer_not_empty,
-  symbols = {
-    modified = ' ',
-    readonly = ' -',
-  },
-  color = { fg = colors.fg },
-  padding = { left = 0, right = 2 },
+  padding = { left = 1, right = 2 },
 }
 
 ins_left {
@@ -233,10 +216,10 @@ ins_right {
   spinner_symbols = { '◐ ',  '◓ ',  '◑ ',  '◒ ' },
 }
 
--- ins_right {
---   'progress',
---   color = { fg = colors.blue_1 }
--- }
+ins_right {
+  'progress',
+  color = { fg = colors.blue_1 }
+}
 
 ins_right {
   function()
