@@ -15,8 +15,8 @@ vim.opt.numberwidth = 5
 vim.opt.linebreak = true
 vim.opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 vim.opt.cmdheight = 0
-vim.opt.formatoptions = vim.opt.formatoptions - 'c'
-vim.opt.spelllang='en_gb'
+vim.opt.formatoptions = vim.opt.formatoptions - "c"
+vim.opt.spelllang="en_gb"
 
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
@@ -26,6 +26,7 @@ vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.writebackup = false
 vim.opt.undofile = true
+vim.opt.inccommand = "split"
 
 vim.opt.completeopt = { "menu", "menuone" }
 vim.opt.omnifunc = "syntaxcomplete#Complete"
@@ -42,18 +43,23 @@ vim.opt.hidden = true
 vim.opt.ttimeoutlen = 0
 vim.opt.lazyredraw = true
 vim.opt.mouse = "nvia"
-vim.opt.clipboard:append { 'unnamedplus' }
+vim.opt.clipboard:append { "unnamedplus" }
+vim.opt.path:append {"**"}
 
 vim.opt.splitright = true
 
 vim.opt.termguicolors = true
 
-vim.o.winbar = "%{%v:lua.require'config.winbar'.get_winbar()%}"
+vim.o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
 vim.g.CoolTotalMatches = 1
 vim.g.tex_flavor = "latex"
 
+vim.g.UltiSnipsExpandTrigger = "<tab>"
+vim.g.UltiSnipsJumpForwardTrigger = "<tab>"
+vim.g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
 vim.cmd [[
-let g:OxfDictionary#app_id='ed82927e'
-let g:OxfDictionary#app_key='97ed8b2daccd553e7f62a3aebdbdc492'
+let g:OxfDictionary#app_id="ed82927e"
+let g:OxfDictionary#app_key="97ed8b2daccd553e7f62a3aebdbdc492"
 ]]

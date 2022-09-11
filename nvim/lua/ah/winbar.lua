@@ -1,6 +1,6 @@
 local M = {}
 
-local colors = require "config.colors"
+local colors = require "ah.colors"
 local navic = require "nvim-navic"
 
 vim.api.nvim_set_hl(0, "WinBarFilename", { fg = colors.blue, bg = colors.black })

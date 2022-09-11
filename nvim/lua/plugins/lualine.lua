@@ -3,50 +3,43 @@ if not present then
   return
 end
 
--- astrovim theme cursorline bg = '#252931'
--- astrovim2 theme cursorline bg = '#2c323c'
--- medium bg = '#222732'
--- dark statusline color option = '#1b1f27'
--- darker statusline color option = '#181c23'
--- match nvimtree color = '#191d25'
--- onedark dark = '#21252b'
-
 -- stylua: ignore
 local colors = {
-  bg       = '#191d25',
-  fg       = '#a0a8b7',
-  yellow   = '#e5c07b',
-  cyan     = '#008080',
-  darkblue = '#081633',
-  green    = '#98c379',
-  orange   = '#FF8800',
-  violet   = '#a9a1e1',
-  magenta  = '#c678dd',
-  blue     = '#61afef',
-  blue_1   = '#8094b4',
-  blue_2   = '#51afef',
-  red      = '#ec5f67',
-  light_grey = '#2c323c'
+  bg           = "#191d25",
+  fg           = "#a0a8b7",
+  yellow       = "#e5c07b",
+  cyan         = "#008080",
+  darkblue     = "#081633",
+  green        = "#98c379",
+  orange       = "#FF8800",
+  violet       = "#a9a1e1",
+  magenta      = "#c678dd",
+  blue         = "#61afef",
+  blue_1       = "#8094b4",
+  blue_2       = "#51afef",
+  red          = "#ec5f67",
+  light_grey   = "#2c323c",
+  light_grey_2 = "#282d39"
 }
 
 local conditions = {
   buffer_not_empty = function()
-    return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
+    return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
   end,
   hide_in_width = function()
     return vim.fn.winwidth(0) > 80
   end,
   check_git_workspace = function()
-    local filepath = vim.fn.expand('%:p:h')
-    local gitdir = vim.fn.finddir('.git', filepath .. ';')
+    local filepath = vim.fn.expand("%:p:h")
+    local gitdir = vim.fn.finddir(".git", filepath .. ";")
     return gitdir and #gitdir > 0 and #gitdir < #filepath
   end,
 }
 
 local config = {
   options = {
-    component_separators = '',
-    section_separators = '',
+    component_separators = "",
+    section_separators = ""
   },
   sections = {
     lualine_a = {},
@@ -76,20 +69,20 @@ end
 
 ins_left {
   function()
-    return '▊'
+    return "▊"
   end,
   color = function()
     local mode_color = {
       n = colors.blue,
       i = colors.green,
       v = colors.magenta,
-      [''] = colors.blue,
+      [""] = colors.blue,
       V = colors.magenta,
       c = colors.yellow,
       no = colors.red,
       s = colors.orange,
       S = colors.orange,
-      [''] = colors.orange,
+      [""] = colors.orange,
       ic = colors.yellow,
       R = colors.violet,
       Rv = colors.violet,
@@ -97,8 +90,8 @@ ins_left {
       ce = colors.red,
       r = colors.cyan,
       rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
+      ["r?"] = colors.cyan,
+      ["!"] = colors.red,
       t = colors.orange,
     }
     return { fg = mode_color[vim.fn.mode()] }
@@ -108,23 +101,24 @@ ins_left {
 
 
 ins_left {
-  'filetype',
+  "filetype",
   cond = conditions.buffer_not_empty,
   icon_only = false,
-  color = { fg = colors.fg, gui = '' },
+  color = { fg = colors.fg, gui = "" },
   padding = { left = 1, right = 2 },
 }
 
 ins_left {
-  'branch',
-  color = { fg = colors.orange, gui = 'bold' },
+  "branch",
+  -- icon = "",
+  color = { fg = colors.orange, gui = "bold" },
   padding = { left = 1, right = 2 },
 }
 
 ins_left {
-  'diagnostics',
-  sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', hint = ' ', info = ' ' },
+  "diagnostics",
+  sources = { "nvim_diagnostic" },
+  symbols = { error = " ", warn = " ", hint = " ", info = " " },
   diagnostics_color = {
     color_error = { fg = colors.red },
     color_warn = { fg = colors.yellow },
@@ -133,9 +127,8 @@ ins_left {
 }
 
 ins_left {
-  'diff',
-  -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = ' ', removed = ' ' },
+  "diff",
+  symbols = { added = " ", modified = " ", removed = " " },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },
@@ -145,12 +138,14 @@ ins_left {
   padding = { darkpurpleleft = 2, right = 2 },
 }
 
+-- right
+
 ins_right {
   function()
     if vim.api.nvim_get_vvar("hlsearch") == 1 then
       local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
       if res.total > 0 then
-        return string.format("%s/%d %s", res.current, res.total, vim.fn.getreg('/'))
+        return string.format("%s/%d %s", res.current, res.total, vim.fn.getreg("/"))
       end
     end
     return ""
@@ -167,14 +162,14 @@ ins_right {
     return ""
   end,
   color = { fg = colors.blue_2 },
-  padding = { left = 2, right = 2 },
+  padding = { left = 2, right = 3 },
   cond = conditions.hide_in_width,
 }
 
 ins_right {
   function()
-    local msg = 'LS Inactive'
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local msg = "LS Inactive"
+    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
     local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
       return msg
@@ -187,37 +182,13 @@ ins_right {
     end
     return msg
   end,
-  icon = '',
+  icon = "",
   color = { fg = colors.fg },
   padding = { left = 1, right = 2 }
 }
 
 ins_right {
-  'lsp_progress',
-  colors = {
-    percentage  = colors.blue,
-    title  = colors.blue,
-    message  = colors.blue,
-    spinner = colors.blue,
-    lsp_client_name = colors.magenta,
-    use = true,
-  },
-  separators = {
-    component = ' ',
-    progress = ' | ',
-    percentage = { pre = '', post = '%% ' },
-    title = { pre = '', post = ': ' },
-    lsp_client_name = { pre = '[', post = ']' },
-    spinner = { pre = '', post = '' },
-    message = { commenced = 'In Progress', completed = 'Completed' },
-  },
-  display_components = { 'lsp_client_name', 'spinner', { 'title', 'percentage', 'message' } },
-  timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-  spinner_symbols = { '◐ ',  '◓ ',  '◑ ',  '◒ ' },
-}
-
-ins_right {
-  'progress',
+  "progress",
   color = { fg = colors.blue_1 }
 }
 
@@ -230,26 +201,26 @@ ins_right {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
-  color = { fg = colors.yellow, gui = '' },
+  color = { fg = colors.yellow, gui = "" },
   padding = { right = 1, left = 0 }
 }
 
 ins_right {
   function()
-    return '▊'
+    return "▊"
   end,
   color = function()
     local mode_color = {
       n = colors.blue,
       i = colors.green,
       v = colors.magenta,
-      [''] = colors.blue,
+      [""] = colors.blue,
       V = colors.magenta,
       c = colors.yellow,
       no = colors.red,
       s = colors.orange,
       S = colors.orange,
-      [''] = colors.orange,
+      [""] = colors.orange,
       ic = colors.yellow,
       R = colors.red,
       Rv = colors.red,
@@ -257,8 +228,8 @@ ins_right {
       ce = colors.violet,
       r = colors.cyan,
       rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
+      ["r?"] = colors.cyan,
+      ["!"] = colors.red,
       t = colors.orange,
     }
     return { fg = mode_color[vim.fn.mode()] }

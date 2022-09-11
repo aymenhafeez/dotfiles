@@ -2,16 +2,6 @@ local present, treesitter = pcall(require, "nvim-treesitter.configs")
 if not present then
   return
 end
--- local colors = require("config.colors")
-
--- treesitter.setup {
---   highlight = {
---     enable = true,
---     ensure_installed = "maintained",
---     additional_vim_regex_highlighting = true,
---     ignore_install = { "vim" },
---   },
--- }
 
 treesitter.setup {
   highlight = {
@@ -24,52 +14,61 @@ treesitter.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      -- -- TODO: I'm not sure for this one.
-      -- scope_incremental = '<c-s>',
-      -- node_decremental = '<c-backspace>',
+      init_selection = "<c-space>",
+      node_incremental = "<c-space>",
     },
   },
   textobjects = {
     select = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+      selection_modes = {
+        ["@parameter.outer"] = "v",
+        ["@function.outer"] = "V",
+        ["@class.outer"] = "<c-v>",
+      },
+    },
+    lsp_interop = {
+      enable = true,
+      border = 'none',
+      peek_definition_code = {
+        ["<leader>df"] = "@function.outer",
+        ["<leader>dF"] = "@class.outer",
       },
     },
     move = {
       enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
+      set_jumps = true,
       goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+        ["]f"] = "@function.outer",
+        ["]]"] = "@class.outer",
       },
       goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
+        ["]F"] = "@function.outer",
+        ["]["] = "@class.outer",
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
+        ["[f"] = "@function.outer",
+        ["[["] = "@class.outer",
       },
       goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
+        ["[F"] = "@function.outer",
+        ["[]"] = "@class.outer",
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ['<leader>a'] = '@parameter.inner',
+        ["<leader>a"] = "@parameter.inner",
       },
       swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
+        ['<leader>A'] = "@parameter.inner",
       },
     },
   },

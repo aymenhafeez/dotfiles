@@ -5,13 +5,20 @@ end
 
 navic.setup {
   icons = {
-    Function      = " ",
+    Function      = " ",
+    Method        = " ",
+    Property      = " ",
     Variable      = " ",
     Struct        = " ",
     Module        = " ",
+    -- Field         = " ",
     Field         = "[] ",
+    Object        = "  ",
+    -- Object        = "ﬥ  ",
+    Constant      = " ",
   },
   highlight = true,
+  separator = "  ",
 }
    -- icons = { -- default icons
    --      File          = " ",
@@ -28,7 +35,7 @@ navic.setup {
    --      Variable      = " ",
    --      Constant      = " ",
    --      String        = " ",
-   --      Number        = " ",
+   --      Number        = " ",
    --      Boolean       = "◩ ",
    --      Array         = " ",
    --      Object        = " ",

@@ -5,6 +5,7 @@ end
 
 notify.setup({
   timeout = 2000,
-  max_width = 70,
-  stages = 'slide',
+  stages = "fade"
 })
+
+vim.notify = require("notify")

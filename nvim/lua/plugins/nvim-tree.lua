@@ -7,12 +7,13 @@ tree.setup({
   hijack_cursor = true,
   disable_netrw = true,
   hijack_netrw = true,
-  sort_by = "case_sensitive",
   respect_buf_cwd = false,
+  sort_by = "case_sensitive",
   view = {
-    width = 27,
+    width = 30,
     adaptive_size = false,
     hide_root_folder = true,
+    preserve_window_proportions = true,
     mappings = {
       list = {
         { key = "u", action = "dir_up" },
@@ -39,6 +40,6 @@ tree.setup({
   }
 })
 
-vim.cmd [[
-autocmd bufenter * if (winnr("$") == 1 && &filetype == "nvimtree") | q | endif
-]]
+-- vim.cmd [[
+-- autocmd bufenter * if (winnr('$') == 1 && &filetype == 'nvimtree') | q | endif
+-- ]]

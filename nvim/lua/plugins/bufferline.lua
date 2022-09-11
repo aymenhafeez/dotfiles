@@ -3,7 +3,7 @@ if not present then
   return
 end
 
-local colors = require("config.colors")
+local colors = require("ah.colors")
 local opts = { noremap = true, silent = true }
 local keymap = vim.api.nvim_set_keymap
 
@@ -18,14 +18,16 @@ keymap("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 bufferline.setup {
   options = {
     offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    numbers = "none",
     show_buffer_close_icons = false,
     show_tab_indicators = true,
     enforce_regular_tabs = true,
     max_name_length = 30,
     max_prefix_length = 30,
     tab_size = 21,
+    color_icons = true,
     separator_style = "thin",
-    buffer_close_icon = "",
+    buffer_close_icon = "",
     modified_icon = "●",
     close_icon = "",
     show_close_icon = false,
@@ -34,16 +36,16 @@ bufferline.setup {
     indicator = {
       icon = "▎",
       style = "icon"
-    }
+    },
   },
   highlights = {
     background = {
       fg = colors.grey_fg,
-      bg = colors.black4,
+      bg = colors.black,
     },
     buffer_visible = {
       fg = colors.light_grey,
-      bg = colors.black4,
+      bg = colors.black,
     },
   },
 }

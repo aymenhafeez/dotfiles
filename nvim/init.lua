@@ -1,5 +1,10 @@
-require "config.options"
-require "config.mappings"
-require "config.plugins"
-require "config.colorscheme"
-require "config.autocmds"
+require "ah.plugins"
+require "ah.options"
+require "ah.mappings"
+require "ah.colorscheme"
+require "ah.autocmds"
+
+require "ah.globals"
+
+require "ah.telescope"
+require "ah.telescope.mappings"
