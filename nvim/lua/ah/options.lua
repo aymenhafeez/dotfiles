@@ -1,63 +1,67 @@
-vim.opt.autoindent = true
-vim.opt.smartindent = true
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
+local opt = vim.opt
+local o = vim.o
+local g = vim.g
 
-vim.opt.conceallevel = 2
-vim.opt.laststatus = 3
-vim.opt.showtabline = 2
-vim.opt.cursorline = true
-vim.opt.showmode = false
-vim.opt.showcmd = false
-vim.opt.number = true
-vim.opt.numberwidth = 5
-vim.opt.linebreak = true
-vim.opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
-vim.opt.cmdheight = 0
-vim.opt.formatoptions = vim.opt.formatoptions - "c"
-vim.opt.spelllang="en_gb"
+opt.autoindent = true
+opt.smartindent = true
+opt.expandtab = true
+opt.shiftwidth = 4
+opt.tabstop = 4
 
-vim.opt.hlsearch = true
-vim.opt.ignorecase = true
-vim.opt.incsearch = true
-vim.opt.smartcase = true
-vim.opt.backup = false
-vim.opt.swapfile = false
-vim.opt.writebackup = false
-vim.opt.undofile = true
-vim.opt.inccommand = "split"
+opt.conceallevel = 2
+opt.laststatus = 3
+opt.showtabline = 2
+opt.cursorline = true
+opt.showmode = false
+opt.showcmd = false
+opt.number = true
+opt.numberwidth = 5
+opt.linebreak = true
+opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
+opt.cmdheight = 0
+opt.formatoptions = vim.opt.formatoptions - "c"
+opt.spelllang="en_gb"
 
-vim.opt.completeopt = { "menu", "menuone" }
-vim.opt.omnifunc = "syntaxcomplete#Complete"
-vim.opt.pumheight = 10
-vim.opt.pumblend = 10
-vim.opt.winblend = 10
+opt.hlsearch = true
+opt.ignorecase = true
+opt.incsearch = true
+opt.smartcase = true
+opt.backup = false
+opt.swapfile = false
+opt.writebackup = false
+opt.undofile = true
+opt.inccommand = "split"
 
-vim.opt.autochdir = true
-vim.opt.wildmenu = true
-vim.opt.wildoptions = "pum"
+opt.completeopt = { "menu", "menuone" }
+opt.omnifunc = "syntaxcomplete#Complete"
+opt.pumheight = 10
+opt.pumblend = 10
+opt.winblend = 10
 
-vim.opt.autoread = true
-vim.opt.hidden = true
-vim.opt.ttimeoutlen = 0
-vim.opt.lazyredraw = true
-vim.opt.mouse = "nvia"
-vim.opt.clipboard:append { "unnamedplus" }
-vim.opt.path:append {"**"}
+opt.autochdir = true
+opt.wildmenu = true
+opt.wildoptions = "pum"
 
-vim.opt.splitright = true
+opt.autoread = true
+opt.hidden = true
+opt.ttimeoutlen = 0
+opt.lazyredraw = true
+opt.mouse = "nvia"
+opt.clipboard:append { "unnamedplus" }
+opt.path:append {"**"}
 
-vim.opt.termguicolors = true
+opt.splitright = true
 
-vim.o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
+opt.termguicolors = true
 
-vim.g.CoolTotalMatches = 1
-vim.g.tex_flavor = "latex"
+o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
-vim.g.UltiSnipsExpandTrigger = "<tab>"
-vim.g.UltiSnipsJumpForwardTrigger = "<tab>"
-vim.g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
+g.CoolTotalMatches = 1
+g.tex_flavor = "latex"
+
+g.UltiSnipsExpandTrigger = "<tab>"
+g.UltiSnipsJumpForwardTrigger = "<tab>"
+g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 vim.cmd [[
 let g:OxfDictionary#app_id="ed82927e"
