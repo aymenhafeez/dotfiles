@@ -108,7 +108,9 @@ map("n", "<leader>ps", "<cmd>PackerSync<CR>", opts)
 
 -- misc commands
 
-vim.cmd [[
-command! -nargs=1 Search vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}
-]]
-map("n", "<leader>[", "<cmd>Search ", nopts)
+-- vim.cmd [[
+-- command! -nargs=1 Search vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}
+-- ]]
+-- map("n", "<leader>[", "<cmd>Search ", nopts)
+
+vim.api.nvim_buf_create_user_command(0, "Search ", "vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}", {})
