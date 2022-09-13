@@ -1,4 +1,4 @@
-require "ah.plugins"
+require "plugins"
 require "ah.options"
 require "ah.mappings"
 require "ah.autocmds"

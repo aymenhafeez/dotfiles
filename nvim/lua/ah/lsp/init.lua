@@ -39,50 +39,50 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-local runtime_path = vim.split(package.path, ";")
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
-
 lspconfig.sumneko_lua.setup {
   on_attach = handlers.on_attach,
   capabilities = capabilities,
   settings = {
     Lua = {
-      runtime = {
-        version = 'LuaJIT',
-        path = runtime_path
-      },
       diagnostics = {
         globals = { 'vim' },
       },
-      -- workspace = {
-      --   library = vim.api.nvim_get_runtime_file("", true),
-      -- },
+      workspace = {
+        library = {
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+        },
+        maxPreload = 100000,
+        preloadFileSize = 10000,
+      },
       telemetry = {
         enable = false,
       },
     },
   },
 }
--- require("grammar-guard").init()
--- lspconfig.grammar_guard.setup({
---   on_attach = handlers.on_attach,
---   capabilities = capabilities,
---   cmd = { "/usr/local/bin/ltex-ls" },
---   settings = {
---     ltex = {
---       enabled = { "latex", "tex", "bib", "markdown" },
---       language = "en-GB",
---       diagnosticSeverity = "info",
---       checkFrequency = "save",
---       setenceCacheSize = 2000,
---       additionalRules = {
---         enablePickyRules = false,
---       },
---       trace = { server = "verbose" },
---       dictionary = {},
---       disabledRules = {},
---       hiddenFalsePositives = {},
---     },
---   },
--- })
+
+require("grammar-guard").init()
+lspconfig.grammar_guard.setup({
+  on_attach = handlers.on_attach,
+  capabilities = capabilities,
+  cmd = { "/usr/local/bin/ltex-ls" },
+  settings = {
+    ltex = {
+      enabled = { "latex", "tex", "bib", "markdown" },
+      language = "en-GB",
+      diagnosticSeverity = "info",
+      checkFrequency = "save",
+      setenceCacheSize = 2000,
+      additionalRules = {
+        enablePickyRules = false,
+      },
+      trace = { server = "verbose" },
+      dictionary = {},
+      disabledRules = {
+        ["en-GB"] = { "MORFOLOGIK_RULE_EN_GB" },
+      },
+      hiddenFalsePositives = {},
+    },
+  },
+})

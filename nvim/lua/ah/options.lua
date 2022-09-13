@@ -15,12 +15,13 @@ opt.cursorline = true
 opt.showmode = false
 opt.showcmd = false
 opt.number = true
-opt.numberwidth = 5
+opt.numberwidth = 4
 opt.linebreak = true
 opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 opt.cmdheight = 0
 opt.formatoptions = vim.opt.formatoptions - "c"
-opt.spelllang="en_gb"
+opt.spelllang = "en_gb"
+opt.shortmess:append "sI"
 
 opt.hlsearch = true
 opt.ignorecase = true
@@ -47,8 +48,8 @@ opt.hidden = true
 opt.ttimeoutlen = 0
 opt.lazyredraw = true
 opt.mouse = "nvia"
-opt.clipboard:append { "unnamedplus" }
-opt.path:append {"**"}
+opt.clipboard = "unnamedplus"
+opt.path:append { "**" }
 
 opt.splitright = true
 
@@ -68,11 +69,44 @@ let g:OxfDictionary#app_id="ed82927e"
 let g:OxfDictionary#app_key="97ed8b2daccd553e7f62a3aebdbdc492"
 ]]
 
+local default_plugins = {
+  "2html_plugin",
+  "getscript",
+  "getscriptPlugin",
+  "gzip",
+  "logipat",
+  "netrw",
+  "netrwPlugin",
+  "netrwSettings",
+  "netrwFileHandlers",
+  "matchit",
+  "tar",
+  "tarPlugin",
+  "rrhelper",
+  "spellfile_plugin",
+  "vimball",
+  "vimballPlugin",
+  "zip",
+  "zipPlugin",
+  "tutor",
+  "rplugin",
+  "syntax",
+  "synmenu",
+  "optwin",
+  "compiler",
+  "bugreport",
+  "ftplugin",
+}
+
+for _, plugin in pairs(default_plugins) do
+  g["loaded_" .. plugin] = 1
+end
+
 local colorscheme = "neodark"
 
 if colorscheme == "onedark" then
   require("onedark").setup({
-    style = "darker"
+    style = "deep"
   })
 end
 
@@ -82,7 +116,6 @@ end
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
-  -- vim.notify = require("notify")
   vim.notify("colorscheme " .. colorscheme .. " not found!")
   return
 end

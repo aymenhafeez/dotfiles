@@ -145,19 +145,21 @@ M.on_attach = function(client, bufnr)
 end
 
 M.updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-M.updated_capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
-M.updated_capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.updated_capabilities.textDocument.completion.completionItem.preselectSupport = true
-M.updated_capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-M.updated_capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-M.updated_capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-M.updated_capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-M.updated_capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-M.updated_capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    "documentation",
-    "detail",
-    "additionalTextEdits",
+M.updated_capabilities.textDocument.completion.completionItem = {
+  documentationFormat = { "markdown", "plaintext" },
+  snippetSupport = true,
+  preselectSupport = true,
+  insertReplaceSupport = true,
+  labelDetailsSupport = true,
+  deprecatedSupport = true,
+  commitCharactersSupport = true,
+  tagSupport = { valueSet = { 1 } },
+  resolveSupport = {
+    properties = {
+      "documentation",
+      "detail",
+      "additionalTextEdits",
+    },
   },
 }
 

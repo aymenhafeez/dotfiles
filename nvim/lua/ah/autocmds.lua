@@ -34,11 +34,14 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufReadPost" }, {
   group = lastEditPos
 })
 
--- local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "help",
-  command = "wincmd J | resize +13",
-  -- group = helpFiles
+local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  callback = function()
+    if vim.bo.filetype == "help" then
+      vim.api.nvim_exec("wincmd L", false)
+    end
+  end,
+  group = helpFiles
 })
 
 local closeNvimTree = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true })

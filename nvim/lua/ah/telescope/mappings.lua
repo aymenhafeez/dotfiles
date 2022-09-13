@@ -4,6 +4,7 @@ end
 
 local utils = require("ah.telescope.utils")
 local telescope = require("telescope.builtin")
+local telescope_extensions = require("telescope").extensions
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
@@ -22,5 +23,3 @@ map("n", "<leader>/", utils.buffer_fuzzy_search, opts)
 map("n", "<leader>sn", utils.search_notes, opts)
 map("n", "<leader>s.", utils.search_dotfiles, opts)
 map("n", "<leader>s]", "<cmd>Telescope heading theme=ivy<CR>", opts)
-map("n", "<leader>cd", "<cmd>Telescope zoxide list theme=ivy<CR>", opts)
-map("n", "<leader>pl", "<cmd>Telescope packer<CR>", opts)

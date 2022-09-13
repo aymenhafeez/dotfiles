@@ -1,10 +1,10 @@
 local colors = {
-  white = "#abb2bf",
+  white = "#93a4c3",
   darker_black = "#1b1f27",
   black = "#1e222a",
   black2 = "#252931",
   black3 = "#181c23",
-  black4 = "#232833",
+  black4 = "#282d39",
   black5 = "#222732",
   black6 = "#191d25",
   one_bg = "#282c34",
@@ -42,6 +42,8 @@ local colors = {
   darkblue = "#081633",
   bg = "#282c34",
   fg = "#abb2bf",
+
+  deep_bg = "#21283b",
 }
 
 return colors

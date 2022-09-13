@@ -38,12 +38,13 @@ map("n", "<leader>cl", "<cmd>ccl<CR>", opts)
 
 map("n", "<leader>mm", "<cmd>message<CR>", nopts)
 
+map("n", "<leader>hl", "<cmd>nohlsearch<CR>", nopts)
+
 -- insert mode
 
 map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", opts)
 
 map("i", "<Space>", "<Space><C-g>u", opts)
-map("i", "<Tab>", "<Tab><C-g>u", opts)
 map("i", "<CR>", "<CR><C-g>u", opts)
 
 -- command-line mode
