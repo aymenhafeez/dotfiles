@@ -105,13 +105,21 @@ map("n", "<leader>hi", "<cmd>TSHighlightCapturesUnderCursor<CR>", opts)
 map("n", "<leader>dd", "<cmd>Definition<CR>", opts)
 
 -- wbthomason/packer.nvim
-map("n", "<leader>ps", "<cmd>PackerSync<CR>", opts)
+map("n", "<leader>ps", function()
+  vim.api.nvim_exec(
+    "luafile ~/.config/nvim/lua/plugins/init.lua",
+    false
+  )
+  vim.api.nvim_exec("PackerSync", false)
+end, opts)
 
 -- misc commands
 
--- vim.cmd [[
--- command! -nargs=1 Search vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}
--- ]]
--- map("n", "<leader>[", "<cmd>Search ", nopts)
+vim.cmd [[
+command! -nargs=1 Search vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}
+]]
+map("n", "<leader>[", "<cmd>Search ", nopts)
 
 vim.api.nvim_buf_create_user_command(0, "Search ", "vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}", {})
+
+map("n", "<leader>fl", utils.open_float, opts)

@@ -4,21 +4,8 @@ if not cmp_status_ok then
 end
 
 local icons = require("ah.utils").icons
+local border = require("ah.utils").cmp_border
 
-local function border(hl_name)
-  return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
-  }
-end
-
-local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -40,18 +27,6 @@ cmp.setup {
     ["<CR>"] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = false},
-    ["<Tab>"] = cmp.mapping(
-      function(fallback)
-        cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-      end,
-      { "i", "s", "c" }
-    ),
-    ["<S-Tab>"] = cmp.mapping(
-      function(fallback)
-        cmp_ultisnips_mappings.jump_backwards(fallback)
-      end,
-      { "i", "s", "c" }
-    ),
   }),
   formatting = {
     format = function(_, vim_item)
@@ -64,11 +39,10 @@ cmp.setup {
   },
   sources = {
     { name = "nvim_lsp" },
-    { name = "nvim_lua" },
-    { name = "latex_symbols" },
+    -- { name = "nvim_lua" },
     { name = 'nvim_lsp_signature_help' },
     { name = "ultisnips" },
-    { name = "buffer" },
+    { name = "buffer", keyword_length = 4 },
     { name = "path" },
   },
   confirm_opts = {
@@ -77,25 +51,20 @@ cmp.setup {
   },
   window = {
     completion = {
-      border = border "CmpBorder",
+      border = border("CmpBorder"),
       winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
     },
     documentation = {
-      border = border "CmpDocBorder",
+      border = border("CmpDocBorder"),
       winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      max_width = 60,
+      max_height = 15
     },
   },
   experimental = {
     ghost_text = true,
   },
 }
-
-cmp.setup.filetype("gitcommit", {
-  sources = cmp.config.sources(
-    { { name = "cmp_git" } },
-    { { name = "buffer" } }
-  )
-})
 
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline(),

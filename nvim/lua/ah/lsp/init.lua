@@ -39,28 +39,37 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- local runtime_path = vim.split(package.path, ";")
+-- table.insert(runtime_path, "lua/?.lua")
+-- table.insert(runtime_path, "lua/?/init.lua")
+
 lspconfig.sumneko_lua.setup {
   on_attach = handlers.on_attach,
   capabilities = capabilities,
   settings = {
     Lua = {
+      -- completions = {
+      --   callSnippet = "Replace"
+      -- },
       diagnostics = {
         globals = { 'vim' },
       },
-      workspace = {
-        library = {
-          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-        },
-        maxPreload = 100000,
-        preloadFileSize = 10000,
-      },
+      -- workspace = {
+      --   -- library = {
+      --   --   [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+      --   --   [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+      --   -- },
+      --   library = vim.api.nvim_get_runtime_file("", true),
+      --   maxPreload = 100000,
+      --   preloadFileSize = 10000,
+      -- },
       telemetry = {
         enable = false,
       },
     },
   },
 }
+
 
 require("grammar-guard").init()
 lspconfig.grammar_guard.setup({

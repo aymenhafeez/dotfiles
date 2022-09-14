@@ -15,6 +15,7 @@ telescope.setup {
     winblend = 10,
     color_devicons = true,
 
+    layout_strategy = "horizontal",
     layout_config = {
       horizontal = {
         prompt_position = "bottom",
@@ -53,24 +54,24 @@ telescope.setup {
       override_file_sorter = true,
       case_mode = "smart_case",
     },
-    media_files = {
-      filetypes = { "png", "webp", "jpg", "jpeg" },
-      find_cmd = "rg"
-    },
-    heading = {
-      theme = "ivy",
-      layout_config = {
-        height = 0.35
-      },
-      treesitter = true,
-    },
+  --   heading = {
+  --     theme = "ivy",
+  --     layout_config = {
+  --       height = 0.35
+  --     },
+  --     treesitter = true,
+  --   },
+  --   packer = {
+  --     theme = "ivy",
+  --     layout_config = {
+  --       height = 0.5
+  --     }
+  --   }
   }
 }
 
-telescope.load_extension("heading")
+-- pcall(telescope.load_extension, "heading")
+-- pcall(telescope.load_extension, "packer")
+-- pcall(telescope.load_extension, "zoxide")
 telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
---[[ 
--- doesn't work if packer is in the opt dir --> tries to load extension before telescope has been loaded
-telescope.load_extension("packer")
-]]

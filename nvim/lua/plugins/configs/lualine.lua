@@ -22,7 +22,7 @@ local colors = {
   blue_1       = "#8094b4",
   blue_2       = "#51afef",
   red          = "#ec5f67",
-  light_grey   = "#2c323c",
+  light_grey   = "#343b46",
   light_grey_2 = "#282d39"
 }
 
@@ -98,7 +98,7 @@ ins_left {
       ["!"] = colors.red,
       t = colors.orange,
     }
-    return { fg = mode_color[vim.fn.mode()] }
+    return { fg = mode_color[vim.fn.mode()], bg = colors.light_grey }
   end,
   padding = { left = 0, right = 1 },
 }
@@ -108,7 +108,7 @@ ins_left {
   "filetype",
   cond = conditions.buffer_not_empty,
   icon_only = false,
-  color = { fg = colors.fg, gui = "" },
+  color = { fg = colors.fg, bg = colors.light_grey, ggui = "" },
   padding = { left = 1, right = 2 },
 }
 
@@ -120,7 +120,7 @@ ins_left {
     end
     return ""
   end,
-  color = { fg = colors.blue_2 },
+  color = { fg = colors.blue_2, bg = colors.light_grey },
   padding = { left = 1, right = 3 },
   cond = conditions.hide_in_width,
 }
@@ -128,7 +128,7 @@ ins_left {
 ins_left {
   "branch",
   icon = "",
-  color = { fg = colors.orange, gui = "bold" },
+  color = { fg = colors.orange, bg = colors.light_grey, gui = "bold" },
   padding = { left = 1, right = 2 },
 }
 
@@ -136,9 +136,9 @@ ins_left {
   "diff",
   symbols = { added = " ", modified = " ", removed = " " },
   diff_color = {
-    added = { fg = colors.green },
-    modified = { fg = colors.orange },
-    removed = { fg = colors.red },
+    added = { fg = colors.green, bg = colors.light_grey },
+    modified = { fg = colors.orange, bg = colors.light_grey},
+    removed = { fg = colors.red, bg = colors.light_grey },
   },
   cond = conditions.hide_in_width,
   padding = { darkpurpleleft = 2, right = 2 },

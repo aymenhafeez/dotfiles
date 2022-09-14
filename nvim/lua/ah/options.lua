@@ -64,6 +64,8 @@ g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
 g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
+g.scratch_filetype = "lua"
+
 vim.cmd [[
 let g:OxfDictionary#app_id="ed82927e"
 let g:OxfDictionary#app_key="97ed8b2daccd553e7f62a3aebdbdc492"

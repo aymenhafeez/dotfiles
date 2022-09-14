@@ -30,7 +30,7 @@ bufferline.setup {
     buffer_close_icon = "",
     modified_icon = "●",
     close_icon = "",
-    show_close_icon = true,
+    show_close_icon = false,
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
@@ -48,12 +48,12 @@ bufferline.setup {
   --     bg = colors.deep_bg,
   --   },
   -- },
-  highlights = {
-    background = {
-      bg = colors.black4,
-    },
-    buffer_visible = {
-      bg = colors.black4,
-    },
-  },
+  -- highlights = {
+  --   background = {
+  --     bg = colors.black4,
+  --   },
+  --   buffer_visible = {
+  --     bg = colors.black4,
+  --   },
+  -- },
 }

@@ -2,3 +2,4 @@
 .*.swp
 undo-dir/
 vim/.vim/undo-dir/
+nvim/nvim.log

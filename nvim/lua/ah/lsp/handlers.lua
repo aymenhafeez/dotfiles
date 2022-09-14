@@ -49,21 +49,13 @@ function M.setup()
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
-  local border = {
-    { "╭", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╮", "FloatBorder" },
-    { "│", "FloatBorder" },
-    { "╯", "FloatBorder" },
-    { "─", "FloatBorder" },
-    { "╰", "FloatBorder" },
-    { "│", "FloatBorder" },
-  }
-
+  local border = require("ah.utils").border
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
     util_opts = util_opts or {}
     util_opts.border = util_opts.border or border
+    util_opts.max_width = 60
+    util_opts.max_height = 15
     return orig_util_open_floating_preview(contents, syntax, util_opts, ...)
   end
 

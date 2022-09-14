@@ -190,7 +190,9 @@ return packer.startup {
       requires = {
         "nvim-telescope/telescope-ui-select.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-        "crispgm/telescope-heading.nvim",
+        -- { "crispgm/telescope-heading.nvim", cmd = "Telescope" },
+        -- { "nvim-telescope/telescope-packer.nvim", cmd = "Telescope"},
+        -- { "jvgrootveld/telescope-zoxide", cmd = "Telescope" }
       },
       config = function()
         require("ah.telescope")
@@ -218,6 +220,7 @@ return packer.startup {
     }
     use {
       "neovim/nvim-lspconfig",
+      commit = "253a9aa4191b1eb5c7816c4ea58b6e9613580b3e",
       opt = true,
       after = "nvim-lsp-installer",
       config = function()
@@ -249,6 +252,12 @@ return packer.startup {
       after = "nvim-cmp"
     }
     use {
+      "folke/lua-dev.nvim",
+      config = function()
+        require("lua-dev").setup()
+      end
+    }
+    use {
       "hrsh7th/cmp-buffer",
       after = "nvim-cmp"
     }
@@ -261,13 +270,9 @@ return packer.startup {
       after = "nvim-cmp"
     }
     use {
-      "hrsh7th/cmp-nvim-lua",
-      after = "nvim-cmp"
-    }
-    use {
       "quangnguyen30192/cmp-nvim-ultisnips",
       after = "nvim-cmp",
-      ft = "tex"
+      ft = { "tex", "md "}
     }
     use {
       "SirVer/ultisnips",
@@ -284,6 +289,11 @@ return packer.startup {
 
     -- colorschemes --
 
+    use {
+      "uga-rosa/ccc.nvim",
+      cmd = "CccPick"
+    }
+
     use "navarasu/onedark.nvim"
     use "folke/tokyonight.nvim"
     use "Mofiqul/vscode.nvim"
@@ -295,8 +305,8 @@ return packer.startup {
     use "aymenhafeez/OxfDictionary.nvim"
     -- local_use "OxfDictionary"
 
-    use "aymenhafeez/scratch.vim"
-    -- local_use "scratch.vim"
+    -- use "aymenhafeez/scratch.vim"
+    local_use "scratch.vim"
 
     -- use "aymenhafeez/vim-line-motion"
     -- local_use "vim-line-motion"

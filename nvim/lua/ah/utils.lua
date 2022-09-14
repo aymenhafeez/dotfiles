@@ -102,7 +102,7 @@ M.icons = {
   Class = " ",
   Interface = " ",
   Module = " ",
-  Property = "ﰠ ",
+  Property = " ",
   Unit = " ",
   Value = " ",
   Enum = " ",
@@ -119,7 +119,7 @@ M.icons = {
   Operator = " ",
   TypeParameter = " ",
   Table = "",
-  Object = " ",
+  Object = "  ",
   Tag = "",
   Array = "[]",
   Boolean = " ",
@@ -130,5 +130,50 @@ M.icons = {
   Watch = " ",
   Package = "",
 }
+
+M.border = {
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
+
+M.cmp_border = function(hl_name)
+  return {
+    { "╭", hl_name },
+    { "─", hl_name },
+    { "╮", hl_name },
+    { "│", hl_name },
+    { "╯", hl_name },
+    { "─", hl_name },
+    { "╰", hl_name },
+    { "│", hl_name },
+  }
+end
+
+-- testing some stuff
+M.open_float = function()
+  local opts = {
+    relative = "cursor",
+    bufpos = {0, 1},
+    width = 40,
+    height = 10,
+    border = "rounded",
+  }
+  local buf vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(0, 0, -1, true, {"0", "1"})
+  vim.api.nvim_open_win(0, true, opts)
+end
+
+M.tableCount = function(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+--
 
 return M
