@@ -1,5 +1,7 @@
 local M = {}
 
+local border = require("ah.utils").border
+
 function M.setup()
   local signs = {
     Error = "",
@@ -49,7 +51,6 @@ function M.setup()
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
-  local border = require("ah.utils").border
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
     util_opts = util_opts or {}
@@ -61,7 +62,7 @@ function M.setup()
 
 end
 
-local function notify(content, type, opts, force)
+local function _notify(content, type, opts, force)
   if force then
     if packer_plugins['nvim-notify'] ~= nil and packer_plugins['nvim-notify'].loaded then
       require('notify')(content, type, opts)
@@ -72,28 +73,27 @@ local function notify(content, type, opts, force)
   vim.notify(content, type, opts)
 end
 
-local function lsp_highlight_document(client)
+local function _lsp_highlight_document(client)
   if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
-    hi! LspReferenceRead cterm=bold ctermbg=red guibg=#353d4b
-    hi! LspReferenceText cterm=bold ctermbg=red guibg=#353d4b
-    hi! LspReferenceWrite cterm=bold ctermbg=red guibg=#353d4b
-    ]]
-    vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    vim.api.nvim_clear_autocmds { group = "lsp_document_highlight" }
+    vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#353d4b" })
+    vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#353d4b" })
+    vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#353d4b" })
+
+    local lsp_document_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+    vim.api.nvim_clear_autocmds({ group = "lsp_document_highlight" })
     vim.api.nvim_create_autocmd("CursorHold", {
       callback = vim.lsp.buf.document_highlight,
-      group = "lsp_document_highlight",
+      group = lsp_document_highlight,
     })
     vim.api.nvim_create_autocmd("CursorMoved", {
       callback = vim.lsp.buf.clear_references,
-      group = "lsp_document_highlight",
+      group = lsp_document_highlight,
     })
   end
 
   --[[ -- show diagnostic message on CursorHold
   local floatDiagnostics = vim.api.nvim_create_augroup("FloatDiagnostics", { clear = true })
-  vim.api.nvim_create_autocmd("CursorHold" , {
+  vim.api.nvim_create_autocmd("CursorHold", {
     pattern = "*",
     command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
     group = floatDiagnostics
@@ -101,7 +101,7 @@ local function lsp_highlight_document(client)
 
 end
 
-M.on_attach = function(client, bufnr)
+function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   local map = vim.keymap.set
@@ -131,13 +131,13 @@ M.on_attach = function(client, bufnr)
     navic.attach(client, bufnr)
   end
 
-  notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
+  _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
 
-  lsp_highlight_document(client)
+  _lsp_highlight_document(client)
 end
 
-M.updated_capabilities = vim.lsp.protocol.make_client_capabilities()
-M.updated_capabilities.textDocument.completion.completionItem = {
+M.lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
+M.lsp_capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext" },
   snippetSupport = true,
   preselectSupport = true,

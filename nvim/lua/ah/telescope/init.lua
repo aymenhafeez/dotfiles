@@ -8,23 +8,20 @@ local action_layout = require "telescope.actions.layout"
 
 telescope.setup {
   defaults = {
-    prompt_prefix = "   ",
-    selection_caret = " ",
-    multi_icon = "",
-    sorting_strategy = "ascending",
-    winblend = 10,
-    color_devicons = true,
-
     layout_strategy = "horizontal",
     layout_config = {
-      horizontal = {
-        prompt_position = "bottom",
-        preview_width = 0.5,
-        results_width = 0.5
-      },
       width = 0.9,
       height = 0.75,
     },
+
+    sorting_strategy = "ascending",
+    prompt_prefix = "   ",
+    prompt_title = "",
+    preview_title = "",
+    selection_caret = " ",
+    multi_icon = "",
+    winblend = 0,
+    color_devicons = true,
 
     mappings = {
       i = {

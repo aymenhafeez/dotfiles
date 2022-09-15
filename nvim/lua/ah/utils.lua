@@ -3,8 +3,10 @@ local M = {}
 M.source_lua = function()
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec("luafile %", false)
+    print("luafiled")
   elseif vim.bo.filetype == "vim" then
     vim.api.nvim_exec("source %", false)
+    print("sauced")
   end
 end
 
@@ -128,7 +130,7 @@ M.icons = {
   String = " ",
   Calendar = "",
   Watch = " ",
-  Package = "",
+  Package = " ",
 }
 
 M.border = {
@@ -155,7 +157,7 @@ M.cmp_border = function(hl_name)
   }
 end
 
--- testing some stuff
+--[[ -- testing some stuff
 M.open_float = function()
   local opts = {
     relative = "cursor",
@@ -173,7 +175,6 @@ M.tableCount = function(T)
   local count = 0
   for _ in pairs(T) do count = count + 1 end
   return count
-end
---
+end ]]
 
 return M

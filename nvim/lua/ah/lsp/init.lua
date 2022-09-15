@@ -4,7 +4,8 @@ if not lsp_status_ok then
 end
 
 local handlers = require("ah.lsp.handlers")
-local capabilities = handlers.updated_capabilities
+local capabilities = handlers.lsp_capabilities
+local updated_capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 local lsp_flags = {
   debounce_text_changes = 50,
@@ -34,33 +35,32 @@ lspinstaller.setup {
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = handlers.on_attach,
-    capabilities = capabilities,
+    capabilities = updated_capabilities,
     lsp_flags = lsp_flags
   }
 end
 
--- local runtime_path = vim.split(package.path, ";")
--- table.insert(runtime_path, "lua/?.lua")
--- table.insert(runtime_path, "lua/?/init.lua")
-
 lspconfig.sumneko_lua.setup {
   on_attach = handlers.on_attach,
-  capabilities = capabilities,
+  capabilities = updated_capabilities,
   settings = {
     Lua = {
-      -- completions = {
-      --   callSnippet = "Replace"
-      -- },
+      runtime = {
+        version = "LuaJIT",
+        path = vim.split(package.path, ';')
+      },
+      completions = {
+        callSnippet = "Replace"
+      },
       diagnostics = {
         globals = { 'vim' },
       },
       -- workspace = {
-      --   -- library = {
-      --   --   [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-      --   --   [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-      --   -- },
-      --   library = vim.api.nvim_get_runtime_file("", true),
-      --   maxPreload = 100000,
+      --   library = {
+      --     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+      --     [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+      --   },
+      --   maxPreload = 10000,
       --   preloadFileSize = 10000,
       -- },
       telemetry = {
@@ -70,11 +70,10 @@ lspconfig.sumneko_lua.setup {
   },
 }
 
-
 require("grammar-guard").init()
 lspconfig.grammar_guard.setup({
   on_attach = handlers.on_attach,
-  capabilities = capabilities,
+  capabilities = updated_capabilities,
   cmd = { "/usr/local/bin/ltex-ls" },
   settings = {
     ltex = {

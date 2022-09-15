@@ -17,7 +17,6 @@ opt.showcmd = false
 opt.number = true
 opt.numberwidth = 4
 opt.linebreak = true
-opt.guicursor = "n-i-ci-ve-v-c:block,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 opt.cmdheight = 0
 opt.formatoptions = vim.opt.formatoptions - "c"
 opt.spelllang = "en_gb"
@@ -64,14 +63,14 @@ g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
 g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-g.scratch_filetype = "lua"
+g.scratch_filetype = "markdown"
 
 vim.cmd [[
 let g:OxfDictionary#app_id="ed82927e"
 let g:OxfDictionary#app_key="97ed8b2daccd553e7f62a3aebdbdc492"
 ]]
 
-local default_plugins = {
+local builtin_plugins = {
   "2html_plugin",
   "getscript",
   "getscriptPlugin",
@@ -100,7 +99,7 @@ local default_plugins = {
   "ftplugin",
 }
 
-for _, plugin in pairs(default_plugins) do
+for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
 

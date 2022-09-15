@@ -86,7 +86,7 @@ return packer.startup {
 
     use {
       "karb94/neoscroll.nvim",
-      keys = {"<C-d>", "<C-u>", "<C-e>", "<C-y>", "zz", "zt", "zb" },
+      event = "BufEnter",
       config = function()
         require("plugins.configs.neoscroll")
       end
@@ -127,10 +127,11 @@ return packer.startup {
       config = function()
         require("fidget").setup {
           text = {
-            spinner = "circle_halves",
+            spinner = "arc",
             done = ""
           }
         }
+        vim.api.nvim_create_autocmd("VimLeavePre", { command = [[silent! FidgetClose]] })
       end,
       after = "nvim-lspconfig"
     }
@@ -141,7 +142,7 @@ return packer.startup {
         "nvim-treesitter/nvim-treesitter-textobjects",
         {
           "nvim-treesitter/playground",
-          cmd = "TSPlayground"
+          cmd = { "TSPlayground", "TSHighlightCapturesUnderCursor" }
         }
       },
       event = { "BufRead", "BufWinEnter", "BufNewFile" },
@@ -171,7 +172,7 @@ return packer.startup {
     }
     use {
       "kylechui/nvim-surround",
-      event = "InsertEnter",
+      event = "BufReadPre",
       config = function()
         require("nvim-surround").setup()
       end,
@@ -220,7 +221,6 @@ return packer.startup {
     }
     use {
       "neovim/nvim-lspconfig",
-      commit = "253a9aa4191b1eb5c7816c4ea58b6e9613580b3e",
       opt = true,
       after = "nvim-lsp-installer",
       config = function()
@@ -251,8 +251,7 @@ return packer.startup {
       "hrsh7th/cmp-nvim-lsp",
       after = "nvim-cmp"
     }
-    use {
-      "folke/lua-dev.nvim",
+    use {"folke/lua-dev.nvim",
       config = function()
         require("lua-dev").setup()
       end

@@ -34,8 +34,8 @@ bufferline.setup {
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      icon = "▎",
-      style = "icon"
+      -- icon = "▎",
+      style = "none"
     },
   },
   -- highlights = {
@@ -48,12 +48,12 @@ bufferline.setup {
   --     bg = colors.deep_bg,
   --   },
   -- },
-  -- highlights = {
-  --   background = {
-  --     bg = colors.black4,
-  --   },
-  --   buffer_visible = {
-  --     bg = colors.black4,
-  --   },
-  -- },
+  highlights = {
+    background = {
+      bg = colors.black4,
+    },
+    buffer_visible = {
+      bg = colors.black4,
+    },
+  },
 }

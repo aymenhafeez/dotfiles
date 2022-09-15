@@ -3,8 +3,6 @@ if not present then
   return
 end
 
-local var = "var"
-
 -- stylua: ignore
 local colors = {
   bg           = "#191d25",
@@ -12,6 +10,8 @@ local colors = {
   bg_d         = "#141b24",
   fg           = "#a0a8b7",
   yellow       = "#e5c07b",
+  yellow_2     =  "#ffbc03",
+  yellow_3     = "#ee9d28",
   cyan         = "#008080",
   darkblue     = "#081633",
   green        = "#98c379",
@@ -98,7 +98,7 @@ ins_left {
       ["!"] = colors.red,
       t = colors.orange,
     }
-    return { fg = mode_color[vim.fn.mode()], bg = colors.light_grey }
+    return { fg = mode_color[vim.fn.mode()] }
   end,
   padding = { left = 0, right = 1 },
 }
@@ -108,7 +108,7 @@ ins_left {
   "filetype",
   cond = conditions.buffer_not_empty,
   icon_only = false,
-  color = { fg = colors.fg, bg = colors.light_grey, ggui = "" },
+  color = { fg = colors.fg },
   padding = { left = 1, right = 2 },
 }
 
@@ -120,25 +120,25 @@ ins_left {
     end
     return ""
   end,
-  color = { fg = colors.blue_2, bg = colors.light_grey },
-  padding = { left = 1, right = 3 },
+  color = { fg = colors.blue_2 },
+  padding = { left = 1, right = 2 },
   cond = conditions.hide_in_width,
 }
 
 ins_left {
   "branch",
   icon = "",
-  color = { fg = colors.orange, bg = colors.light_grey, gui = "bold" },
-  padding = { left = 1, right = 2 },
+  color = { fg = colors.orange },
+  padding = { left = 2, right = 2 },
 }
 
 ins_left {
   "diff",
   symbols = { added = " ", modified = " ", removed = " " },
   diff_color = {
-    added = { fg = colors.green, bg = colors.light_grey },
-    modified = { fg = colors.orange, bg = colors.light_grey},
-    removed = { fg = colors.red, bg = colors.light_grey },
+    added = { fg = colors.green },
+    modified = { fg = colors.yellow_3 },
+    removed = { fg = colors.red },
   },
   cond = conditions.hide_in_width,
   padding = { darkpurpleleft = 2, right = 2 },
@@ -201,8 +201,8 @@ ins_right {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
-  color = { fg = colors.yellow, gui = "" },
-  padding = { right = 1, left = 0 }
+  color = { fg = colors.yellow, --[[ bg=colors.blue,  ]]gui = "" },
+  padding = { right = 0, left = 0 }
 }
 
 ins_right {
@@ -234,7 +234,7 @@ ins_right {
     }
     return { fg = mode_color[vim.fn.mode()] }
   end,
-  padding = { left = 0, right = 0 },
+  padding = { left = 1, right = 0 },
 }
 
 lualine.setup(config)

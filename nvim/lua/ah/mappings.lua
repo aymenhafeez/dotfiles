@@ -10,7 +10,7 @@ vim.g.maplocalleader = " "
 
 -- normal mode
 
-map("n", "<leader>so", utils.source_lua, opts)
+map("n", "<leader>so", utils.source_lua, nopts)
 
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
@@ -32,8 +32,8 @@ map("n", "<S-h>", "<cmd>bprevious<CR>", opts)
 
 map("n", "<C-s>", "mm[s1z=`m", opts)
 
-map("n", "<C-n>", "<cmd>cnext<CR>", opts)
-map("n", "<C-p>", "<cmd>cprev<CR>", opts)
+map("n", "<leader>cn", "<cmd>cnext<CR>", opts)
+map("n", "<leader>cp", "<cmd>cprev<CR>", opts)
 map("n", "<leader>cl", "<cmd>ccl<CR>", opts)
 
 map("n", "<leader>mm", "<cmd>message<CR>", nopts)
@@ -57,9 +57,7 @@ map("c", "<M-f>", "<S-Right>", nopts)
 map("c", "<C-p>", "<Up>", nopts)
 map("c", "<C-n>", "<Down>", nopts)
 
-vim.cmd [[
-cnoreabbrev bd Bw
-]]
+vim.cmd("cnoreabbrev bd Bw")
 
 -- visual mode
 
@@ -85,10 +83,13 @@ map("n", "<leader>-", "<cmd>NvimTreeToggle<CR>", opts)
 map("n", "<leader>f-", "<cmd>NvimTreeFindFile<CR>", opts)
 
 -- voldikss/vim-floaterm
+local floaterm_opts = "--position=center --wintype=float --width=0.85 --height=0.85"
+
 map("n", "<leader>tt", "<cmd>FloatermToggle<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>FloatermToggle<CR>", opts)
-map("n", "<leader>lg", "<cmd>FloatermNew --position=center --wintype=float --width=0.85 --height=0.85 title='lazygit' lazygit<CR>", opts)
-map("n", "<leader>bt", "<cmd>FloatermNew --position=center --wintype=float --width=0.85 --height=0.85 title='system monitor' btm<CR>", opts)
+map("n", "<leader>lg", "<cmd>FloatermNew " .. floaterm_opts .. " lazygit<CR>", opts)
+map("n", "<leader>bt", "<cmd>FloatermNew " .. floaterm_opts .. " btm<CR>", opts)
+map("n", "<leader>ht", "<cmd>FloatermNew " .. floaterm_opts .. " htop<CR>", opts)
 
 -- aymenhafeez/scratch.vim
 map("n", "<leader>sc", "<cmd>Scratch<CR>", opts)
@@ -107,19 +108,7 @@ map("n", "<leader>dd", "<cmd>Definition<CR>", opts)
 -- wbthomason/packer.nvim
 map("n", "<leader>ps", function()
   vim.api.nvim_exec(
-    "luafile ~/.config/nvim/lua/plugins/init.lua",
+    "source ~/.config/nvim/lua/plugins/init.lua | PackerSync",
     false
   )
-  vim.api.nvim_exec("PackerSync", false)
 end, opts)
-
--- misc commands
-
-vim.cmd [[
-command! -nargs=1 Search vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}
-]]
-map("n", "<leader>[", "<cmd>Search ", nopts)
-
-vim.api.nvim_buf_create_user_command(0, "Search ", "vimgrep <args> ~/Dropbox/notes/MyNotes/**/*.{tex,md}", {})
-
-map("n", "<leader>fl", utils.open_float, opts)
