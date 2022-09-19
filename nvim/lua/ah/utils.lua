@@ -1,5 +1,15 @@
 local M = {}
 
+M.reload_config = function()
+  for name,_ in pairs(package.loaded) do
+    if name:match("ah") then
+      package.loaded[name] = nil
+    end
+  end
+
+  dofile(vim.env.MYVIMRC)
+end
+
 M.source_lua = function()
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec("luafile %", false)
@@ -101,9 +111,9 @@ M.icons = {
   Constructor = " ",
   Field = "[]",
   Variable = " ",
-  Class = " ",
+  Class = " ",
   Interface = " ",
-  Module = " ",
+  Module = " ",
   Property = " ",
   Unit = " ",
   Value = " ",
@@ -155,6 +165,18 @@ M.cmp_border = function(hl_name)
     { "╰", hl_name },
     { "│", hl_name },
   }
+end
+
+function M.warn(msg, name)
+  vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
+end
+
+function M.error(msg, name)
+  vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
+end
+
+function M.info(msg, name)
+  vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
 
 --[[ -- testing some stuff

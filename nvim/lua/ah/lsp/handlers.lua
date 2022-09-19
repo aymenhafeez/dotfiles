@@ -48,8 +48,8 @@ function M.setup()
     severity_sort = false,
   })
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
@@ -75,17 +75,15 @@ end
 
 local function _lsp_highlight_document(client)
   if client.server_capabilities.documentHighlightProvider then
-    vim.api.nvim_set_hl(0, "LspReferenceRead", { bg = "#353d4b" })
-    vim.api.nvim_set_hl(0, "LspReferenceText", { bg = "#353d4b" })
-    vim.api.nvim_set_hl(0, "LspReferenceWrite", { bg = "#353d4b" })
-
     local lsp_document_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
     vim.api.nvim_clear_autocmds({ group = "lsp_document_highlight" })
     vim.api.nvim_create_autocmd("CursorHold", {
+      pattern = "<buffer>",
       callback = vim.lsp.buf.document_highlight,
       group = lsp_document_highlight,
     })
     vim.api.nvim_create_autocmd("CursorMoved", {
+      pattern = "<buffer>",
       callback = vim.lsp.buf.clear_references,
       group = lsp_document_highlight,
     })
@@ -109,8 +107,8 @@ function M.on_attach(client, bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   map("n", "<leader>e", vim.diagnostic.open_float, opts)
-  map("n", "<leader>dn", vim.diagnostic.goto_next, opts)
-  map("n", "<leader>dp", vim.diagnostic.goto_prev, opts)
+  map("n", "]d", vim.diagnostic.goto_next, opts)
+  map("n", "[d", vim.diagnostic.goto_prev, opts)
   map("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
   map("n", "gD", vim.lsp.buf.declaration, bufopts)
@@ -133,7 +131,18 @@ function M.on_attach(client, bufnr)
 
   _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
 
-  _lsp_highlight_document(client)
+  -- _lsp_highlight_document(client)
+
+  if client.server_capabilities.documentHighlightProvider then
+    vim.cmd [[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]
+  end
+
 end
 
 M.lsp_capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -11,6 +11,7 @@ vim.g.maplocalleader = " "
 -- normal mode
 
 map("n", "<leader>so", utils.source_lua, nopts)
+map("n", "<leader><leader>r", utils.reload_config, opts)
 
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)

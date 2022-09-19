@@ -6,10 +6,7 @@ end
 local handlers = require("ah.lsp.handlers")
 local capabilities = handlers.lsp_capabilities
 local updated_capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
-local lsp_flags = {
-  debounce_text_changes = 50,
-}
+local lspconfig_ui = require("lspconfig.ui.windows")
 
 handlers.setup()
 vim.o.updatetime = 100
@@ -19,7 +16,71 @@ if not install_status_ok then
   return
 end
 
-local servers = { "pyright", "sumneko_lua", "vimls", "texlab", "cssls", "remark_ls", "html", "jsonls" }
+require("grammar-guard").init()
+local servers = {
+  pyright = {},
+  vimls = {},
+  texlab = {},
+  cssls = {},
+  remark_ls = {},
+  html = {},
+  jsonls = {},
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+          path = vim.split(package.path, ';')
+        },
+        completions = {
+          callSnippet = "Replace"
+        },
+        diagnostics = {
+          globals = { 'vim' }
+        },
+        format = {
+          enable = true,
+          defaultConfig = {
+            indent_style = "space",
+            indent_size = "2",
+            continuation_indent_size = "2"
+          }
+        },
+        --[[ -- folke/lua-dev.nvim takes care of this
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+          maxPreload = 1000,
+          preloadFileSize = 1000,
+        }, ]]
+        telemetry = {
+          enable = false,
+        },
+      },
+    },
+  },
+  grammar_guard = {
+    cmd = { "/usr/local/bin/ltex-ls" },
+    settings = {
+      ltex = {
+        enabled = { "latex", "tex", "bib", "markdown" },
+        language = "en-GB",
+        diagnosticSeverity = "info",
+        checkFrequency = "save",
+        setenceCacheSize = 2000,
+        additionalRules = {
+          enablePickyRules = false,
+        },
+        trace = { server = "verbose" },
+        dictionary = {},
+        disabledRules = {
+          ["en-GB"] = { "MORFOLOGIK_RULE_EN_GB" },
+        },
+        hiddenFalsePositives = {},
+      },
+    },
+  },
+}
+
 lspinstaller.setup {
   ensure_installed = servers,
   automatic_installation = true,
@@ -31,66 +92,17 @@ lspinstaller.setup {
     }
   }
 }
+lspconfig_ui.default_options.border = "rounded"
 
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = handlers.on_attach,
-    capabilities = updated_capabilities,
-    lsp_flags = lsp_flags
-  }
-end
-
-lspconfig.sumneko_lua.setup {
+local options = {
   on_attach = handlers.on_attach,
   capabilities = updated_capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT",
-        path = vim.split(package.path, ';')
-      },
-      completions = {
-        callSnippet = "Replace"
-      },
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      -- workspace = {
-      --   library = {
-      --     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-      --     [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-      --   },
-      --   maxPreload = 10000,
-      --   preloadFileSize = 10000,
-      -- },
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
+  flags = {
+    debounce_text_changes = 150,
+  }
 }
 
-require("grammar-guard").init()
-lspconfig.grammar_guard.setup({
-  on_attach = handlers.on_attach,
-  capabilities = updated_capabilities,
-  cmd = { "/usr/local/bin/ltex-ls" },
-  settings = {
-    ltex = {
-      enabled = { "latex", "tex", "bib", "markdown" },
-      language = "en-GB",
-      diagnosticSeverity = "info",
-      checkFrequency = "save",
-      setenceCacheSize = 2000,
-      additionalRules = {
-        enablePickyRules = false,
-      },
-      trace = { server = "verbose" },
-      dictionary = {},
-      disabledRules = {
-        ["en-GB"] = { "MORFOLOGIK_RULE_EN_GB" },
-      },
-      hiddenFalsePositives = {},
-    },
-  },
-})
+for server, opts in pairs(servers) do
+  opts = vim.tbl_deep_extend("force", {}, options, opts or {})
+  lspconfig[server].setup(opts)
+end

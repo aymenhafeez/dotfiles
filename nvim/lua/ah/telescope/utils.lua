@@ -31,11 +31,19 @@ end
 
 function M.search_buffers()
   telescope.buffers(
-    theme.get_dropdown {
-      previewer = false,
+    theme.get_ivy {
+      preview_title = "",
+      prompt_title = "",
+      results_title = "Buffers",
+      -- layout_strategy = "horizontal",
       layout_config = {
-        anchor = "S",
-        height = 0.25
+      anchor = "S",
+      horizontal = {
+        preview_width = 0.5,
+        results_width = 0.5,
+      },
+      height = 0.25,
+        width = 0.6
       }
     })
 end

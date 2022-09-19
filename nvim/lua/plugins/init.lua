@@ -18,7 +18,10 @@ end
 local packGroup = vim.api.nvim_create_augroup("PackWriteSync", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*plugins/init.lua",
-  command = "source <afile> | PackerSync",
+  callback = function()
+    vim.cmd("source <afile> | PackerSync")
+    utils.info("Running PackerSync...", "Packer")
+  end,
   group = packGroup
 })
 
@@ -86,7 +89,7 @@ return packer.startup {
 
     use {
       "karb94/neoscroll.nvim",
-      event = "BufEnter",
+      keys = {"<C-d>", "<C-u>", "<C-e>", "<C-y>", "zz", "zt", "zb" },
       config = function()
         require("plugins.configs.neoscroll")
       end
@@ -108,7 +111,6 @@ return packer.startup {
     }
     use {
       "akinsho/bufferline.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
       event = "UIEnter",
       config = function()
         require("plugins.configs.bufferline")
@@ -116,7 +118,6 @@ return packer.startup {
     }
     use {
       "nvim-lualine/lualine.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
       event = "UIEnter",
       config = function()
         require("plugins.configs.lualine")
@@ -183,7 +184,6 @@ return packer.startup {
       config = function()
         require("nvim-autopairs").setup()
       end,
-      after = "nvim-cmp"
     }
 
     use {
@@ -212,6 +212,14 @@ return packer.startup {
       "ixru/nvim-markdown",
       ft = "markdown"
     }
+    use({
+      "iamcco/markdown-preview.nvim",
+      run = function()
+        vim.fn["mkdp#util#install"]()
+      end,
+      ft = "markdown",
+      cmd = { "MarkdownPreview" }
+    })
 
     -- lsp stuff --
 
@@ -281,10 +289,19 @@ return packer.startup {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       after = "nvim-cmp"
     }
-    use "brymer-meneses/grammar-guard.nvim"
+    use  "brymer-meneses/grammar-guard.nvim"
 
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
+
+    use {
+      "folke/trouble.nvim",
+      opt = true,
+      cmd = "TroubleToggle",
+      config = function()
+        require("trouble").setup()
+      end
+    }
 
     -- colorschemes --
 
@@ -297,6 +314,7 @@ return packer.startup {
     use "folke/tokyonight.nvim"
     use "Mofiqul/vscode.nvim"
     use "catppuccin/nvim"
+    use "sam4llis/nvim-tundra"
 
     -- use "aymenhafeez/neodark.nvim"
     local_use "neodark.nvim"

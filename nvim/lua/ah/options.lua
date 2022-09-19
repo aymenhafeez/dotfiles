@@ -9,15 +9,31 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 
 opt.conceallevel = 2
+opt.concealcursor = "nc"
 opt.laststatus = 3
 opt.showtabline = 2
 opt.cursorline = true
 opt.showmode = false
 opt.showcmd = false
 opt.number = true
-opt.numberwidth = 4
+opt.numberwidth = 2
+opt.signcolumn = "yes"
 opt.linebreak = true
-opt.cmdheight = 0
+
+vim.opt.foldmethod = "expr" -- TreeSitter folding
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
+vim.opt.foldlevel = 0
+vim.opt.fillchars = {
+  -- fold = " ",
+  foldopen = "",
+  -- foldsep = " ",
+  foldclose = "",
+}
+
+if vim.fn.has("nvim-0.8") ~= 0 then
+  vim.opt.cmdheight = 1
+end
+
 opt.formatoptions = vim.opt.formatoptions - "c"
 opt.spelllang = "en_gb"
 opt.shortmess:append "sI"
@@ -37,6 +53,7 @@ opt.omnifunc = "syntaxcomplete#Complete"
 opt.pumheight = 10
 opt.pumblend = 10
 opt.winblend = 10
+opt.scrolloff = 5
 
 opt.autochdir = true
 opt.wildmenu = true
@@ -102,6 +119,20 @@ local builtin_plugins = {
 for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
+
+-- Use proper syntax highlighting in code blocks
+local fences = {
+  "lua",
+  "vim",
+  "json",
+  "shell=sh",
+  "python",
+  "sh",
+  "console=sh",
+}
+vim.g.markdown_fenced_languages = fences
+
+vim.cmd("au FocusGained * :checktime")
 
 local colorscheme = "neodark"
 
