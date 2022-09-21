@@ -23,6 +23,7 @@ map("n", "<leader>gn", utils.grep_notes, opts)
 map("n", "<leader>s.", utils.search_dotfiles, opts)
 map("n", "<leader>g.", utils.grep_dotfiles, opts)
 map("n", "<leader>vo", utils.vim_options, opts)
+map("n", "<leader>rm", utils.reload_module, opts)
 
 map("n", "<leader>s]", "<cmd>Telescope heading theme=ivy<CR>", opts)
 map("n", "<leader>cd", "<cmd>Telescope zoxide list theme=ivy<CR>", opts)

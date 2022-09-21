@@ -3,6 +3,60 @@ local M = {}
 local telescope = require("telescope.builtin")
 local theme = require("telescope.themes")
 
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
+
+if pcall(require, "plenary") then
+  RELOAD = require("plenary.reload").reload_module
+
+  R = function(name)
+    RELOAD(name)
+    return require(name)
+  end
+end
+
+function M.reload_module()
+  local function get_module_name(s)
+    local module_name;
+
+    module_name = s:gsub("%.lua", "")
+    module_name = module_name:gsub("%/", ".")
+    module_name = module_name:gsub("%.init", "")
+
+    return module_name
+  end
+
+  local prompt_title = ""
+  local preview_title = ""
+  local results_title = "Neovim modules"
+  local info = require("ah.utils").info
+
+  local path = "~/.config/nvim/lua"
+
+  local opts = {
+    prompt_title = prompt_title,
+    results_title = results_title,
+    preview_title = preview_title,
+    cwd = path,
+
+    attach_mappings = function(_, map)
+      map("i", "<c-e>", function(_)
+        local entry = require("telescope.actions.state").get_selected_entry()
+        local name = get_module_name(entry.value)
+
+        R(name)
+        info(name .. " Reloaded")
+      end)
+
+      return true
+    end
+  }
+
+  require('telescope.builtin').find_files(opts)
+end
+
 function M.buffer_fuzzy_search()
   telescope.current_buffer_fuzzy_find(
     theme.get_ivy {
@@ -34,15 +88,14 @@ function M.search_buffers()
     theme.get_ivy {
       preview_title = "",
       prompt_title = "",
-      results_title = "Buffers",
-      -- layout_strategy = "horizontal",
+      results_title = "",
       layout_config = {
-      anchor = "S",
-      horizontal = {
-        preview_width = 0.5,
-        results_width = 0.5,
-      },
-      height = 0.25,
+        prompt_position = "bottom",
+        horizontal = {
+          preview_width = 0.5,
+          results_width = 0.5,
+        },
+        height = 0.25,
         width = 0.6
       }
     })

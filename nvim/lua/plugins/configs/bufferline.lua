@@ -5,15 +5,15 @@ end
 
 local colors = require("ah.colors")
 local opts = { noremap = true, silent = true }
-local keymap = vim.api.nvim_set_keymap
+local map = vim.api.nvim_set_keymap
 
-keymap("n", "<leader>1", ":BufferLineGoToBuffer 1<CR>", opts)
-keymap("n", "<leader>2", ":BufferLineGoToBuffer 2<CR>", opts)
-keymap("n", "<leader>3", ":BufferLineGoToBuffer 3<CR>", opts)
-keymap("n", "<leader>4", ":BufferLineGoToBuffer 4<CR>", opts)
-keymap("n", "<leader>5", ":BufferLineGoToBuffer 5<CR>", opts)
-keymap("n", "<leader>6", ":BufferLineGoToBuffer 6<CR>", opts)
-keymap("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
+map("n", "<leader>1", ":BufferLineGoToBuffer 1<CR>", opts)
+map("n", "<leader>2", ":BufferLineGoToBuffer 2<CR>", opts)
+map("n", "<leader>3", ":BufferLineGoToBuffer 3<CR>", opts)
+map("n", "<leader>4", ":BufferLineGoToBuffer 4<CR>", opts)
+map("n", "<leader>5", ":BufferLineGoToBuffer 5<CR>", opts)
+map("n", "<leader>6", ":BufferLineGoToBuffer 6<CR>", opts)
+map("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 
 bufferline.setup {
   options = {

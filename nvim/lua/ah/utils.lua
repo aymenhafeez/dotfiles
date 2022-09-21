@@ -1,22 +1,23 @@
 local M = {}
 
 M.reload_config = function()
-  for name,_ in pairs(package.loaded) do
+  for name, _ in pairs(package.loaded) do
     if name:match("ah") then
       package.loaded[name] = nil
     end
   end
 
   dofile(vim.env.MYVIMRC)
+  vim.notify("Reloaded configuration", vim.log.levels.INFO, { title = "init.lua" } )
 end
 
 M.source_lua = function()
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec("luafile %", false)
-    print("luafiled")
+    print("LUAED")
   elseif vim.bo.filetype == "vim" then
     vim.api.nvim_exec("source %", false)
-    print("sauced")
+    print("SAUCED")
   end
 end
 
@@ -167,15 +168,15 @@ M.cmp_border = function(hl_name)
   }
 end
 
-function M.warn(msg, name)
+M.warn = function(msg, name)
   vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
 end
 
-function M.error(msg, name)
+M.error = function(msg, name)
   vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
 end
 
-function M.info(msg, name)
+M.info = function(msg, name)
   vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
 

@@ -13,6 +13,9 @@ vim.g.maplocalleader = " "
 map("n", "<leader>so", utils.source_lua, nopts)
 map("n", "<leader><leader>r", utils.reload_config, opts)
 
+-- map("n", "<C-e>", "4<C-e>", opts)
+-- map("n", "<C-y>", "4<C-y>", opts)
+
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
 map("n", "<C-k>", "<C-w>k", opts)

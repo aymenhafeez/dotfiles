@@ -141,7 +141,7 @@ ins_left {
     removed = { fg = colors.red },
   },
   cond = conditions.hide_in_width,
-  padding = { darkpurpleleft = 2, right = 2 },
+  padding = { left = 0, right = 2 },
 }
 
 -- right

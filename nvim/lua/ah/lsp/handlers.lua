@@ -122,7 +122,13 @@ function M.on_attach(client, bufnr)
   map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
   map("n", "<leader>lr", "<cmd>:LspRestart<CR>", bufopts)
 
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, { desc = "Format file with LSP" })
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    if vim.lsp.buf.format then
+      vim.lsp.buf.format()
+    elseif vim.lsp.buf.formatting then
+      vim.lsp.buf.formatting()
+    end
+  end, { desc = 'Format current buffer with LSP' })
 
   if client.server_capabilities.documentSymbolProvider then
     local navic = require "nvim-navic"

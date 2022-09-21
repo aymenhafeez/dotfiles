@@ -53,8 +53,8 @@ return packer.startup {
         home = first
       end
 
-      if vim.fn.isdirectory(vim.fn.expand("~/Documents/projects/" .. plug_path)) == 1 then
-        opts[1] = "~/Documents/projects/" .. plug_path
+      if vim.fn.isdirectory(vim.fn.expand("~/Documents/git/projects/" .. plug_path)) == 1 then
+        opts[1] = "~/Documents/git/projects/" .. plug_path
       else
         opts[1] = string.format("%s/%s", home, plug_path)
       end
@@ -97,9 +97,9 @@ return packer.startup {
     use {
       "voldikss/vim-floaterm",
       cmd = { "FloatermToggle", "FloatermNew" },
-      config = function()
-        require("plugins.configs.floaterm")
-      end
+      -- config = function()
+      --   require("plugins.configs.floaterm")
+      -- end
     }
     use {
       "kyazdani42/nvim-tree.lua",
@@ -316,8 +316,8 @@ return packer.startup {
     use "catppuccin/nvim"
     use "sam4llis/nvim-tundra"
 
-    -- use "aymenhafeez/neodark.nvim"
-    local_use "neodark.nvim"
+    use "aymenhafeez/neodark.nvim"
+    -- local_use "neodark.nvim"
 
     use "aymenhafeez/OxfDictionary.nvim"
     -- local_use "OxfDictionary"

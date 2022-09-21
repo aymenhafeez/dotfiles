@@ -15,24 +15,28 @@ opt.showtabline = 2
 opt.cursorline = true
 opt.showmode = false
 opt.showcmd = false
+opt.cmdheight = 1
 opt.number = true
+opt.relativenumber = true
 opt.numberwidth = 2
 opt.signcolumn = "yes"
 opt.linebreak = true
 
 vim.opt.foldmethod = "expr" -- TreeSitter folding
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
-vim.opt.foldlevel = 0
+vim.opt.foldlevel = 6
 vim.opt.fillchars = {
-  -- fold = " ",
-  foldopen = "",
-  -- foldsep = " ",
-  foldclose = "",
+  fold = ' ',
+  foldopen = '',
+  foldsep = ' ',
+  foldclose = '',
 }
+vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))"
 
+--[[ -- cmdheight = 0 is a little buggy atm
 if vim.fn.has("nvim-0.8") ~= 0 then
-  vim.opt.cmdheight = 1
-end
+  vim.opt.cmdheight = 0
+end ]]
 
 opt.formatoptions = vim.opt.formatoptions - "c"
 opt.spelllang = "en_gb"
@@ -71,16 +75,19 @@ opt.splitright = true
 
 opt.termguicolors = true
 
-o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
+opt.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
-g.CoolTotalMatches = 1
 g.tex_flavor = "latex"
 
 g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
 g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
-g.scratch_filetype = "markdown"
+g.scratch_filetype = "lua"
+
+g.floaterm_wintype = "split"
+g.floaterm_height = 13
+g.floaterm_position = "rightbelow"
 
 vim.cmd [[
 let g:OxfDictionary#app_id="ed82927e"
@@ -120,7 +127,7 @@ for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
 
--- Use proper syntax highlighting in code blocks
+-- use proper syntax highlighting in code blocks
 local fences = {
   "lua",
   "vim",

@@ -17,6 +17,7 @@ if not install_status_ok then
 end
 
 require("grammar-guard").init()
+
 local servers = {
   pyright = {},
   vimls = {},
@@ -30,21 +31,9 @@ local servers = {
       Lua = {
         runtime = {
           version = "LuaJIT",
-          path = vim.split(package.path, ';')
-        },
-        completions = {
-          callSnippet = "Replace"
         },
         diagnostics = {
           globals = { 'vim' }
-        },
-        format = {
-          enable = true,
-          defaultConfig = {
-            indent_style = "space",
-            indent_size = "2",
-            continuation_indent_size = "2"
-          }
         },
         --[[ -- folke/lua-dev.nvim takes care of this
         workspace = {
