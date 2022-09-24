@@ -102,7 +102,11 @@ return packer.startup {
       "akinsho/toggleterm.nvim",
       tag = '*',
       config = function()
-        require("toggleterm").setup()
+        require("toggleterm").setup {
+          float_opts = {
+            border = "curved"
+          }
+        }
       end
     }
 
