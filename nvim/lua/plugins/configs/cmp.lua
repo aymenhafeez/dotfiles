@@ -41,7 +41,7 @@ cmp.setup {
     { name = "nvim_lsp" },
     { name = 'nvim_lsp_signature_help' },
     { name = "ultisnips" },
-    { name = "buffer", keyword_length = 4 },
+    { name = "buffer" },
     { name = "path" },
   },
   confirm_opts = {

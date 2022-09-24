@@ -75,9 +75,7 @@ opt.splitright = true
 
 opt.termguicolors = true
 
-opt.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
-
-g.tex_flavor = "latex"
+o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
 g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
@@ -88,6 +86,19 @@ g.scratch_filetype = "lua"
 g.floaterm_wintype = "split"
 g.floaterm_height = 13
 g.floaterm_position = "rightbelow"
+g.floaterm_borderchars = "─│─│╭╮╯╰"
+
+-- use proper syntax highlighting in code blocks
+local fences = {
+  "lua",
+  "vim",
+  "json",
+  "shell=sh",
+  "python",
+  "sh",
+  "console=sh",
+}
+vim.g.markdown_fenced_languages = fences
 
 vim.cmd [[
 let g:OxfDictionary#app_id="ed82927e"
@@ -126,18 +137,6 @@ local builtin_plugins = {
 for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
-
--- use proper syntax highlighting in code blocks
-local fences = {
-  "lua",
-  "vim",
-  "json",
-  "shell=sh",
-  "python",
-  "sh",
-  "console=sh",
-}
-vim.g.markdown_fenced_languages = fences
 
 vim.cmd("au FocusGained * :checktime")
 

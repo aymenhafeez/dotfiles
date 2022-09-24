@@ -40,7 +40,7 @@ local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
 vim.api.nvim_create_autocmd("BufWinEnter", {
   callback = function()
     if vim.bo.filetype == "help" then
-      vim.api.nvim_exec("wincmd L", false)
+      vim.api.nvim_exec("wincmd L | vertical resize -8", false)
     end
   end,
   group = helpFiles

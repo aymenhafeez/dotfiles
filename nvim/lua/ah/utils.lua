@@ -8,7 +8,7 @@ M.reload_config = function()
   end
 
   dofile(vim.env.MYVIMRC)
-  vim.notify("Reloaded configuration", vim.log.levels.INFO, { title = "init.lua" } )
+  vim.notify("Reloaded configuration", vim.log.levels.INFO, { title = "init.lua" })
 end
 
 M.source_lua = function()
@@ -78,15 +78,6 @@ M.treesitter_cmds = {
   "TSEnable",
   "TSDisable",
   "TSModuleInfo",
-}
-
-M.mason_cmds = {
-  "Mason",
-  "MasonInstall",
-  "MasonInstallAll",
-  "MasonUninstall",
-  "MasonUninstallAll",
-  "MasonLog",
 }
 
 M.gitsigns = function()
@@ -199,5 +190,21 @@ M.tableCount = function(T)
   for _ in pairs(T) do count = count + 1 end
   return count
 end ]]
+
+
+-- TODO: need to open this only if it isn't open already.
+-- otherwise just go to the window
+M.make_todo = function()
+  local bufnr = vim.fn.bufnr(vim.fn.expand "~/tmp/todos/todo.txr", true)
+
+  for _, win_id in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    local open_bufnr = vim.api.nvim_win_get_buf(win_id)
+    if open_bufnr == bufnr then
+      return vim.api.nvim_set_current_win(win_id)
+    end
+  end
+
+  vim.api.nvim_win_set_buf(0, bufnr)
+end
 
 return M

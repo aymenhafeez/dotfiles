@@ -30,13 +30,13 @@ if not status_ok then
   return
 end
 
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-}
+-- packer.init {
+--   display = {
+--     open_fn = function()
+--       return require("packer.util").float { border = "rounded" }
+--     end,
+--   },
+-- }
 
 return packer.startup {
   function(use)
@@ -85,7 +85,7 @@ return packer.startup {
       end
     }
 
-    use "moll/vim-bbye"
+    use  "moll/vim-bbye"
 
     use {
       "karb94/neoscroll.nvim",
@@ -94,13 +94,18 @@ return packer.startup {
         require("plugins.configs.neoscroll")
       end
     }
+    -- use {
+    --   "voldikss/vim-floaterm",
+    --   cmd = { "FloatermToggle", "FloatermNew" },
+    -- }
     use {
-      "voldikss/vim-floaterm",
-      cmd = { "FloatermToggle", "FloatermNew" },
-      -- config = function()
-      --   require("plugins.configs.floaterm")
-      -- end
+      "akinsho/toggleterm.nvim",
+      tag = '*',
+      config = function()
+        require("toggleterm").setup()
+      end
     }
+
     use {
       "kyazdani42/nvim-tree.lua",
       requires = "kyazdani42/nvim-web-devicons",
@@ -111,14 +116,14 @@ return packer.startup {
     }
     use {
       "akinsho/bufferline.nvim",
-      event = "UIEnter",
+      event = "VimEnter",
       config = function()
         require("plugins.configs.bufferline")
       end
     }
     use {
       "nvim-lualine/lualine.nvim",
-      event = "UIEnter",
+      event = "VimEnter",
       config = function()
         require("plugins.configs.lualine")
       end
@@ -316,8 +321,8 @@ return packer.startup {
     use "catppuccin/nvim"
     use "sam4llis/nvim-tundra"
 
-    use "aymenhafeez/neodark.nvim"
-    -- local_use "neodark.nvim"
+    -- use "aymenhafeez/neodark.nvim"
+    local_use "neodark.nvim"
 
     use "aymenhafeez/OxfDictionary.nvim"
     -- local_use "OxfDictionary"

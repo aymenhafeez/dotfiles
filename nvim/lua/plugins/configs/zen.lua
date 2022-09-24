@@ -28,6 +28,7 @@ zen.setup {
     },
   },
   integrations = {
-    lualine = true
+    lualine = true,
+    tmux = true
   }
 }

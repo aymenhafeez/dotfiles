@@ -3,10 +3,20 @@ local M = {}
 local telescope = require("telescope.builtin")
 local theme = require("telescope.themes")
 
-P = function(v)
-  print(vim.inspect(v))
-  return v
-end
+local ignore_patterns = {
+  "%.pdf",
+  "%.log",
+  "%.aux",
+  "%.out",
+  "%.png",
+  "%.fdb_latexmk",
+  "%.fls",
+  "%.tex~",
+  "%.texl1#",
+  "%.dvi",
+  "%.jpg",
+  "%_region_"
+}
 
 if pcall(require, "plenary") then
   RELOAD = require("plenary.reload").reload_module
@@ -19,9 +29,7 @@ end
 
 function M.reload_module()
   local function get_module_name(s)
-    local module_name;
-
-    module_name = s:gsub("%.lua", "")
+    local module_name = s:gsub("%.lua", "")
     module_name = module_name:gsub("%/", ".")
     module_name = module_name:gsub("%.init", "")
 
@@ -32,17 +40,23 @@ function M.reload_module()
   local preview_title = ""
   local results_title = "Neovim modules"
   local info = require("ah.utils").info
+  local layout_config = {
+    height = 0.7,
+    width = 0.75,
+    preview_width = 0.6
+  }
 
   local path = "~/.config/nvim/lua"
 
   local opts = {
+    cwd = path,
     prompt_title = prompt_title,
     results_title = results_title,
     preview_title = preview_title,
-    cwd = path,
+    layout_config = layout_config,
 
     attach_mappings = function(_, map)
-      map("i", "<c-e>", function(_)
+      map("i", "<cr>", function(_)
         local entry = require("telescope.actions.state").get_selected_entry()
         local name = get_module_name(entry.value)
 
@@ -107,9 +121,12 @@ function M.search_notes()
     results_title = "Notes",
     preview_title = "",
     prompt_title = "",
+    path_display = { "tail" },
+    file_ignore_patterns = ignore_patterns,
     layout_config = {
-      height = 0.85,
-      width = 0.95
+      height = 0.75,
+      width = 0.75,
+      preview_width = 0.6
     }
   }
 end
@@ -121,19 +138,22 @@ function M.grep_notes()
     results_title = "",
     prompt_title = "",
     layout_strategy = "vertical",
+    path_display = { "tail" },
+    file_ignore_patterns = ignore_patterns,
     layout_config = {
       height = 0.85,
-      width = 0.75
+      width = 0.65,
+      preview_height = 0.6
     }
   }
 end
 
 function M.search_dotfiles()
   telescope.find_files {
+    cwd = "~/.config/nvim/",
     results_title = "dotfiles",
     prompt_title = "",
     preview_title = "",
-    cwd = "~/.config/nvim/",
     layout_config = {
       height = 0.75,
       width = 0.75,
@@ -144,14 +164,16 @@ end
 
 function M.grep_dotfiles()
   telescope.live_grep {
-    results_title = "dotfiles grep",
-    prompt_title = "",
-    preview_title = "",
     cwd = "~/.config/nvim/",
+    preview_title = "dotfiles grep",
+    results_title = "",
+    prompt_title = "",
+    layout_strategy = "vertical",
+    path_display = { "smart" },
     layout_config = {
-      height = 0.75,
-      width = 0.75,
-      preview_width = 0.6
+      height = 0.85,
+      width = 0.65,
+      preview_height = 0.6
     }
   }
 end
@@ -163,8 +185,8 @@ function M.search_help()
     preview_title = "",
     layout_config = {
       prompt_position = "top",
-      height = 0.85,
-      width = 0.85,
+      height = 0.75,
+      width = 0.75,
       preview_width = 0.6
     }
   }
@@ -176,7 +198,7 @@ function M.spell_check()
       prompt_title = "",
       layout_config = {
         height = 0.2,
-        width = 0.2
+        width = 0.3
       }
     })
 end
@@ -207,7 +229,13 @@ function M.find_files()
   telescope.find_files {
     results_title = "Find files",
     prompt_title = "",
-    preview_title = ""
+    preview_title = "",
+    path_display = { "smart" },
+    layout_config = {
+      width = 0.8,
+      height = 0.8,
+      preview_width = 0.6
+    }
   }
 end
 
@@ -225,7 +253,7 @@ function M.live_grep()
     preview_title = "",
     prompt_title = "Live grep",
     layout_config = {
-      height = 0.5,
+      height = 0.6,
       prompt_position = "top"
     }
   }
@@ -236,6 +264,11 @@ function M.oldfiles()
     prompt_title = "",
     preview_title = "",
     results_title = "Recent files",
+    path_display = { "smart" },
+    layout_config = {
+      width = 0.75,
+      preview_width = 0.6
+    }
   }
 end
 
@@ -244,7 +277,11 @@ function M.grep_string()
     prompt_title = "",
     preview_title = "",
     results_title = "Grep string",
+    layout_config = {
+      width = 0.75,
+      preview_width = 0.6
+    }
   }
 end
-
+print("hi")
 return M

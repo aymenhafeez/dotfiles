@@ -3,8 +3,8 @@ local M = {}
 local colors = require("ah.colors")
 local navic = require("nvim-navic")
 
-vim.api.nvim_set_hl(0, "WinBarFilename", { fg = colors.blue, bg = colors.black })
-vim.api.nvim_set_hl(0, "WinBarContext", { fg = colors.blue, bg = colors.black })
+vim.api.nvim_set_hl(0, "WinBarFilename", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "WinBarContext", { fg = colors.blue })
 
 -- seeing if porting this and this whole winbar config to nvim navic will work
 vim.cmd [[

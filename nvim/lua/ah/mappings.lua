@@ -13,6 +13,8 @@ vim.g.maplocalleader = " "
 map("n", "<leader>so", utils.source_lua, nopts)
 map("n", "<leader><leader>r", utils.reload_config, opts)
 
+map("n", "<leader>td", utils.make_todo, nopts)
+
 -- map("n", "<C-e>", "4<C-e>", opts)
 -- map("n", "<C-y>", "4<C-y>", opts)
 
@@ -26,8 +28,8 @@ map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 map("n", "<leader>spl", "<cmd>setlocal spell!<CR>", opts)
 
-map("n", "<S-Up>", "<cmd>resize +2<CR>", opts)
-map("n", "<S-Down>", "<cmd>resize -2<CR>", opts)
+map("n", "<S-Up>", "<cmd>resize +1<CR>", opts)
+map("n", "<S-Down>", "<cmd>resize -1<CR>", opts)
 map("n", "<S-Left>", "<cmd>vertical resize -2<CR>", opts)
 map("n", "<S-Right>", "<cmd>vertical resize +2<CR>", opts)
 
@@ -86,14 +88,21 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 map("n", "<leader>-", "<cmd>NvimTreeToggle<CR>", opts)
 map("n", "<leader>f-", "<cmd>NvimTreeFindFile<CR>", opts)
 
--- voldikss/vim-floaterm
+--[[ -- voldikss/vim-floaterm
 local floaterm_opts = "--position=center --wintype=float --width=0.85 --height=0.85"
 
 map("n", "<leader>tt", "<cmd>FloatermToggle<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>FloatermToggle<CR>", opts)
 map("n", "<leader>lg", "<cmd>FloatermNew " .. floaterm_opts .. " lazygit<CR>", opts)
 map("n", "<leader>bt", "<cmd>FloatermNew " .. floaterm_opts .. " btm<CR>", opts)
-map("n", "<leader>ht", "<cmd>FloatermNew " .. floaterm_opts .. " htop<CR>", opts)
+map("n", "<leader>ht", "<cmd>FloatermNew " .. floaterm_opts .. " htop<CR>", opts) ]]
+
+-- akinsho/toggleterm.nvim
+map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
+map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
+map("n", "<leader>lg", "<cmd>TermExec direction=float cmd='lazygit'<CR>", opts)
+map("n", "<leader>bt", "<cmd>TermExec direction=float cmd='btm'<CR>", opts)
+map("n", "<leader>ht", "<cmd>TermExec direction=float cmd='htop'<CR>", opts)
 
 -- aymenhafeez/scratch.vim
 map("n", "<leader>sc", "<cmd>Scratch<CR>", opts)

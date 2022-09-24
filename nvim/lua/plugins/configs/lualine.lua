@@ -43,7 +43,11 @@ local conditions = {
 local config = {
   options = {
     component_separators = "",
-    section_separators = ""
+    section_separators = "",
+    -- theme = {
+    --   normal = { c = { fg = colors.fg, bg = "#292e42" } },
+    --   inactive = { c = { fg = colors.fg, bg = colors.bg } },
+    -- }
   },
   sections = {
     lualine_a = {},

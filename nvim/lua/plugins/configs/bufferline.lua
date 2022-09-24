@@ -34,8 +34,8 @@ bufferline.setup {
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      -- icon = "▎",
-      style = "none"
+      icon = "▎",
+      style = "icon"
     },
   },
   -- highlights = {
