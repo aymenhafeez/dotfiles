@@ -37,7 +37,10 @@ local servers = {
         },
         --[[ -- folke/lua-dev.nvim takes care of this
         workspace = {
-          library = vim.api.nvim_get_runtime_file("", true),
+          library = {
+            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+          },
           maxPreload = 1000,
           preloadFileSize = 1000,
         }, ]]

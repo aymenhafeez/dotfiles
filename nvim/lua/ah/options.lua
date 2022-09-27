@@ -77,6 +77,16 @@ opt.termguicolors = true
 
 o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
+-- add `gf` functionality inside `.lua` files.
+vim.opt_local.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
+vim.opt_local.includeexpr = "substitute(v:fname,'\\.','/','g')"
+
+for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+  vim.opt_local.path:append(path .. '/lua')
+end
+
+vim.opt_local.suffixesadd:prepend('.lua')
+
 g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
 g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
@@ -140,7 +150,7 @@ end
 
 vim.cmd("au FocusGained * :checktime")
 
-local colorscheme = "neodark"
+local colorscheme = "tokyonight-night"
 
 if colorscheme == "onedark" then
   require("onedark").setup({

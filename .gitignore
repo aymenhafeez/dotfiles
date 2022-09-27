@@ -3,3 +3,5 @@
 undo-dir/
 vim/.vim/undo-dir/
 *nvim.log
+package.json
+package-lock.json

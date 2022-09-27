@@ -21,40 +21,69 @@ M.source_lua = function()
   end
 end
 
-M.lazy_load = function(tb)
-  vim.api.nvim_create_autocmd(tb.events, {
-    group = vim.api.nvim_create_augroup(tb.augroup_name, {}),
-    callback = function()
-      if tb.condition() then
-        vim.api.nvim_del_augroup_by_name(tb.augroup_name)
-
-        -- dont defer for treesitter as it will show slow highlighting
-        -- This deferring only happens only when we do "nvim filename"
-        if tb.plugin ~= "nvim-treesitter" then
-          vim.defer_fn(function()
-            require("packer").loader(tb.plugin)
-            if tb.plugin == "nvim-lspconfig" then
-              vim.cmd "silent! do FileType"
-            end
-          end, 0)
-        else
-          require("packer").loader(tb.plugin)
-        end
-      end
-    end,
-  })
+function M.require(mod)
+  return M.try(require, mod)
 end
 
-M.on_file_open = function(plugin_name)
-  M.lazy_load {
-    events = { "BufRead", "BufWinEnter", "BufNewFile" },
-    augroup_name = "BeLazyOnFileOpen" .. plugin_name,
-    plugin = plugin_name,
-    condition = function()
-      local file = vim.fn.expand "%"
-      return file ~= "NvimTree_1" and file ~= "[packer]" and file ~= ""
-    end,
+function M.try(fn, ...)
+  local args = { ... }
+
+  return xpcall(function()
+    return fn(unpack(args))
+  end, function(err)
+    local lines = {}
+    table.insert(lines, err)
+    table.insert(lines, debug.traceback("", 3))
+
+    M.error(table.concat(lines, "\n"))
+    return err
+  end)
+end
+
+function M.float_terminal(cmd)
+  local buf = vim.api.nvim_create_buf(false, true)
+  local vpad = 4
+  local hpad = 10
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = vim.o.columns - hpad * 2,
+    height = vim.o.lines - vpad * 2,
+    row = vpad,
+    col = hpad,
+    style = "minimal",
+    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  })
+  vim.fn.termopen(cmd)
+  local autocmd = {
+    "autocmd! TermClose <buffer> lua",
+    string.format("vim.api.nvim_win_close(%d, {force = true});", win),
+    string.format("vim.api.nvim_buf_delete(%d, {force = true});", buf),
   }
+  vim.cmd(table.concat(autocmd, " "))
+  vim.cmd([[startinsert]])
+end
+
+function M.version()
+  local v = vim.version()
+  if not v.prerelease then
+    vim.notify(
+      ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
+      vim.log.levels.WARN,
+      { title = "Neovim: not running nightly!" }
+    )
+  end
+end
+
+M.warn = function(msg, name)
+  vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
+end
+
+M.error = function(msg, name)
+  vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
+end
+
+M.info = function(msg, name)
+  vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
 
 M.packer_cmds = {
@@ -79,21 +108,6 @@ M.treesitter_cmds = {
   "TSDisable",
   "TSModuleInfo",
 }
-
-M.gitsigns = function()
-  vim.api.nvim_create_autocmd({ "BufRead" }, {
-    group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
-    callback = function()
-      vim.fn.system("git rev-parse " .. vim.fn.expand "%:p:h")
-      if vim.v.shell_error == 0 then
-        vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-        vim.schedule(function()
-          require("packer").loader "gitsigns.nvim"
-        end)
-      end
-    end,
-  })
-end
 
 M.icons = {
   Namespace = "",
@@ -157,18 +171,6 @@ M.cmp_border = function(hl_name)
     { "╰", hl_name },
     { "│", hl_name },
   }
-end
-
-M.warn = function(msg, name)
-  vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
-end
-
-M.error = function(msg, name)
-  vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
-end
-
-M.info = function(msg, name)
-  vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
 
 --[[ -- testing some stuff

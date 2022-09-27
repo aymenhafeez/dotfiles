@@ -118,11 +118,18 @@ return packer.startup {
         require("plugins.configs.nvim-tree")
       end
     }
+    -- use {
+    --   "akinsho/bufferline.nvim",
+    --   event = "VimEnter",
+    --   config = function()
+    --     require("plugins.configs.bufferline")
+    --   end
+    -- }
     use {
-      "akinsho/bufferline.nvim",
-      event = "VimEnter",
+      "romgrk/barbar.nvim",
+      event = "BufRead",
       config = function()
-        require("plugins.configs.bufferline")
+        require("plugins.configs.barbar")
       end
     }
     use {
@@ -303,15 +310,6 @@ return packer.startup {
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
 
-    use {
-      "folke/trouble.nvim",
-      opt = true,
-      cmd = "TroubleToggle",
-      config = function()
-        require("trouble").setup()
-      end
-    }
-
     -- colorschemes --
 
     use {
@@ -320,10 +318,12 @@ return packer.startup {
     }
 
     use "navarasu/onedark.nvim"
-    use "folke/tokyonight.nvim"
     use "Mofiqul/vscode.nvim"
     use "catppuccin/nvim"
     use "sam4llis/nvim-tundra"
+
+    -- use "folke/tokyonight.nvim"
+    local_use "../tokyonight.nvim"
 
     -- use "aymenhafeez/neodark.nvim"
     local_use "neodark.nvim"
@@ -331,7 +331,10 @@ return packer.startup {
     use "aymenhafeez/OxfDictionary.nvim"
     -- local_use "OxfDictionary"
 
-    -- use "aymenhafeez/scratch.vim"
+    -- use {
+    --   "aymenhafeez/scratch.vim",
+    --   cmd = {"Scratch", "Sscratch" }
+    -- }
     local_use "scratch.vim"
 
     -- use "aymenhafeez/vim-line-motion"

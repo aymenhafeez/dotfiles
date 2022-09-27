@@ -20,7 +20,7 @@ telescope.setup {
     preview_title = "",
     selection_caret = " ",
     multi_icon = "",
-    winblend = 0,
+    winblend = 10,
     color_devicons = true,
     border = true,
 

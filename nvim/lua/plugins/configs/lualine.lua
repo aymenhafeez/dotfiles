@@ -5,25 +5,29 @@ end
 
 -- stylua: ignore
 local colors = {
-  bg           = "#191d25",
-  bg1          = "#21283b",
-  bg_d         = "#141b24",
-  fg           = "#a0a8b7",
-  yellow       = "#e5c07b",
-  yellow_2     =  "#ffbc03",
-  yellow_3     = "#ee9d28",
-  cyan         = "#008080",
-  darkblue     = "#081633",
-  green        = "#98c379",
-  orange       = "#FF8800",
-  violet       = "#a9a1e1",
-  magenta      = "#c678dd",
-  blue         = "#61afef",
-  blue_1       = "#8094b4",
-  blue_2       = "#51afef",
-  red          = "#ec5f67",
-  light_grey   = "#343b46",
-  light_grey_2 = "#282d39"
+  bg             = "#191d25",
+  bg1            = "#21283b",
+  bg_d           = "#141b24",
+  fg             = "#a0a8b7",
+  yellow         = "#e5c07b",
+  yellow_2       =  "#ffbc03",
+  yellow_3       = "#ee9d28",
+  cyan           = "#008080",
+  darkblue       = "#081633",
+  green          = "#98c379",
+  orange         = "#FF8800",
+  orange_2       = "#FF9E64",
+  violet         = "#a9a1e1",
+  magenta        = "#c678dd",
+  blue           = "#61afef",
+  blue_1         = "#8094b4",
+  blue_2         = "#51afef",
+  red            = "#ec5f67",
+  light_grey     = "#343b46",
+  light_grey_2   = "#282d39",
+
+  tokyo_night_bg = "#202230",
+  tokyo_night_fg = "#c0caf5",
 }
 
 local conditions = {
@@ -44,10 +48,7 @@ local config = {
   options = {
     component_separators = "",
     section_separators = "",
-    -- theme = {
-    --   normal = { c = { fg = colors.fg, bg = "#292e42" } },
-    --   inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    -- }
+    -- theme = "tokyonight"
   },
   sections = {
     lualine_a = {},
@@ -112,7 +113,7 @@ ins_left {
   "filetype",
   cond = conditions.buffer_not_empty,
   icon_only = false,
-  color = { fg = colors.fg },
+  -- color = { fg = colors.fg },
   padding = { left = 1, right = 2 },
 }
 
@@ -132,7 +133,7 @@ ins_left {
 ins_left {
   "branch",
   icon = "",
-  color = { fg = colors.orange },
+  color = { fg = colors.orange_2, gui="bold" },
   padding = { left = 2, right = 2 },
 }
 
@@ -141,7 +142,7 @@ ins_left {
   symbols = { added = " ", modified = " ", removed = " " },
   diff_color = {
     added = { fg = colors.green },
-    modified = { fg = colors.yellow_3 },
+    modified = { fg = colors.yellow },
     removed = { fg = colors.red },
   },
   cond = conditions.hide_in_width,
@@ -205,7 +206,7 @@ ins_right {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
-  color = { fg = colors.yellow, --[[ bg=colors.blue,  ]]gui = "" },
+  color = { fg = colors.orange_2, gui = "" },
   padding = { right = 0, left = 0 }
 }
 

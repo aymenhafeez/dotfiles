@@ -15,7 +15,10 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 local highlightGroup = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank({ higroup = "Visual" })
+    vim.highlight.on_yank({
+      higroup = "Visual",
+      timeout = 75
+    })
   end,
   pattern = '*',
   group = highlightGroup,

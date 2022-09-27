@@ -48,12 +48,23 @@ bufferline.setup {
   --     bg = colors.deep_bg,
   --   },
   -- },
+  -- highlights = {
+  --   background = {
+  --     bg = colors.black4,
+  --   },
+  --   buffer_visible = {
+  --     bg = colors.black4,
+  --   },
+  -- },
   highlights = {
+    fill = {
+      bg = "#202230"
+    },
     background = {
-      bg = colors.black4,
+      bg = "#202230"
     },
-    buffer_visible = {
-      bg = colors.black4,
-    },
+    -- buffer_visible = {
+    --   bg = colors.black4,
+    -- },
   },
 }

@@ -10,6 +10,16 @@ vim.g.maplocalleader = " "
 
 -- normal mode
 
+map("n", "<leader>lg", function()
+  utils.float_terminal("lazygit")
+end, opts)
+map("n", "<leader>ht", function()
+  utils.float_terminal("htop")
+end, opts)
+map("n", "<leader>bt", function()
+  utils.float_terminal("btm")
+end, opts)
+
 map("n", "<leader>so", utils.source_lua, nopts)
 map("n", "<leader><leader>r", utils.reload_config, opts)
 
@@ -32,9 +42,6 @@ map("n", "<S-Up>", "<cmd>resize +1<CR>", opts)
 map("n", "<S-Down>", "<cmd>resize -1<CR>", opts)
 map("n", "<S-Left>", "<cmd>vertical resize -2<CR>", opts)
 map("n", "<S-Right>", "<cmd>vertical resize +2<CR>", opts)
-
-map("n", "<S-l>", "<cmd>bnext<CR>", opts)
-map("n", "<S-h>", "<cmd>bprevious<CR>", opts)
 
 map("n", "<C-s>", "mm[s1z=`m", opts)
 
@@ -84,6 +91,10 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- plugin mappings
 
+-- romgrk/barbar.nvim
+map("n", "<S-l>", "<cmd>BufferNext<CR>", opts)
+map("n", "<S-h>", "<cmd>BufferPrevious<CR>", opts)
+
 -- kyazdani42/nvim-tree.lua
 map("n", "<leader>-", "<cmd>NvimTreeToggle<CR>", opts)
 map("n", "<leader>f-", "<cmd>NvimTreeFindFile<CR>", opts)
@@ -99,10 +110,11 @@ map("n", "<leader>ht", "<cmd>FloatermNew " .. floaterm_opts .. " htop<CR>", opts
 
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
+map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
-map("n", "<leader>lg", "<cmd>TermExec direction=float cmd='lazygit'<CR>", opts)
-map("n", "<leader>bt", "<cmd>TermExec direction=float cmd='btm'<CR>", opts)
-map("n", "<leader>ht", "<cmd>TermExec direction=float cmd='htop'<CR>", opts)
+-- map("n", "<leader>lg", "<cmd>TermExec direction=float cmd='lazygit'<CR>", opts)
+-- map("n", "<leader>bt", "<cmd>TermExec direction=float cmd='btm'<CR>", opts)
+-- map("n", "<leader>ht", "<cmd>TermExec direction=float cmd='htop'<CR>", opts)
 
 -- aymenhafeez/scratch.vim
 map("n", "<leader>sc", "<cmd>Scratch<CR>", opts)

@@ -55,7 +55,7 @@ cmp.setup {
     },
     documentation = {
       border = border("CmpDocBorder"),
-      winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
       max_width = 60,
       max_height = 15
     },

@@ -36,24 +36,19 @@ function M.reload_module()
     return module_name
   end
 
-  local prompt_title = ""
-  local preview_title = ""
-  local results_title = "Neovim modules"
   local info = require("ah.utils").info
-  local layout_config = {
-    height = 0.7,
-    width = 0.75,
-    preview_width = 0.6
-  }
-
   local path = "~/.config/nvim/lua"
 
   local opts = {
     cwd = path,
-    prompt_title = prompt_title,
-    results_title = results_title,
-    preview_title = preview_title,
-    layout_config = layout_config,
+    prompt_title = "",
+    preview_title = "",
+    results_title = "Neovim modules",
+    layout_config = {
+      height = 0.7,
+      width = 0.75,
+      preview_width = 0.6
+    },
 
     attach_mappings = function(_, map)
       map("i", "<cr>", function(_)
@@ -252,9 +247,11 @@ function M.live_grep()
     results_title = "",
     preview_title = "",
     prompt_title = "Live grep",
+    layout_strategy = "vertical",
     layout_config = {
-      height = 0.6,
-      prompt_position = "top"
+      height = 0.85,
+      width = 0.65,
+      preview_height = 0.6
     }
   }
 end
@@ -283,5 +280,5 @@ function M.grep_string()
     }
   }
 end
-print("hi")
+
 return M
