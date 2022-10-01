@@ -38,9 +38,9 @@ module.update = function()
     module.widget:frame(hs.screen.mainScreen():fullFrame())
 
     local radius = 10
-    local border = 2
-    local offset = 1
-    local alpha = 0.75
+    local border = 1
+    local offset = 0
+    local alpha = 0.35
 
     module.widget
       :replaceElements({

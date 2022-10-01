@@ -13,7 +13,8 @@ hi link EmptyWinbar NvimTreeNormal
 
 M.winbar_filetype_exclude = {
   "NvimTree",
-  "help"
+  "help",
+  "packer"
 }
 
 local excludes = function()

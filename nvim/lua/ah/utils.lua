@@ -1,6 +1,6 @@
 local M = {}
 
-M.reload_config = function()
+function M.reload_config()
   for name, _ in pairs(package.loaded) do
     if name:match("ah") then
       package.loaded[name] = nil
@@ -11,13 +11,19 @@ M.reload_config = function()
   vim.notify("Reloaded configuration", vim.log.levels.INFO, { title = "init.lua" })
 end
 
-M.source_lua = function()
+function M.execute_line()
+  if vim.bo.filetype == "lua" then
+    vim.api.nvim_exec("execute(printf(\":lua %s\", getline(\".\")))", false)
+  elseif vim.bo.filetype == "vim" then
+    vim.api.nvim_exec("execute getline('>')", false)
+  end
+end
+
+function M.source_lua()
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec("luafile %", false)
-    print("LUAED")
   elseif vim.bo.filetype == "vim" then
     vim.api.nvim_exec("source %", false)
-    print("SAUCED")
   end
 end
 
@@ -74,15 +80,15 @@ function M.version()
   end
 end
 
-M.warn = function(msg, name)
+function M.warn(msg, name)
   vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
 end
 
-M.error = function(msg, name)
+function M.error(msg, name)
   vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
 end
 
-M.info = function(msg, name)
+function M.info(msg, name)
   vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
 
@@ -109,13 +115,26 @@ M.treesitter_cmds = {
   "TSModuleInfo",
 }
 
+function M.border(hl_name)
+  return {
+    { "╭", hl_name },
+    { "─", hl_name },
+    { "╮", hl_name },
+    { "│", hl_name },
+    { "╯", hl_name },
+    { "─", hl_name },
+    { "╰", hl_name },
+    { "│", hl_name },
+  }
+end
+
 M.icons = {
   Namespace = "",
   Text = "﬍ ",
   Method = " ",
   Function = " ",
   Constructor = " ",
-  Field = "[]",
+  Field = "",
   Variable = " ",
   Class = " ",
   Interface = " ",
@@ -149,30 +168,6 @@ M.icons = {
   Package = " ",
 }
 
-M.border = {
-  { "╭", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╮", "FloatBorder" },
-  { "│", "FloatBorder" },
-  { "╯", "FloatBorder" },
-  { "─", "FloatBorder" },
-  { "╰", "FloatBorder" },
-  { "│", "FloatBorder" },
-}
-
-M.cmp_border = function(hl_name)
-  return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
-  }
-end
-
 --[[ -- testing some stuff
 M.open_float = function()
   local opts = {
@@ -192,21 +187,5 @@ M.tableCount = function(T)
   for _ in pairs(T) do count = count + 1 end
   return count
 end ]]
-
-
--- TODO: need to open this only if it isn't open already.
--- otherwise just go to the window
-M.make_todo = function()
-  local bufnr = vim.fn.bufnr(vim.fn.expand "~/tmp/todos/todo.txr", true)
-
-  for _, win_id in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-    local open_bufnr = vim.api.nvim_win_get_buf(win_id)
-    if open_bufnr == bufnr then
-      return vim.api.nvim_set_current_win(win_id)
-    end
-  end
-
-  vim.api.nvim_win_set_buf(0, bufnr)
-end
 
 return M

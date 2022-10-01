@@ -3,7 +3,6 @@ if not present then
   return
 end
 
--- stylua: ignore
 local colors = {
   bg             = "#191d25",
   bg1            = "#21283b",
@@ -113,9 +112,17 @@ ins_left {
   "filetype",
   cond = conditions.buffer_not_empty,
   icon_only = false,
-  -- color = { fg = colors.fg },
-  padding = { left = 1, right = 2 },
+  padding = { left = 1, right = 3 },
 }
+
+-- ins_left {
+--   "filename",
+--   symbols = {
+--     modified = ""
+--   },
+--   color = { gui = "bold" },
+--   padding = { left = 1, right = 3 },
+-- }
 
 ins_left {
   function()
@@ -126,14 +133,14 @@ ins_left {
     return ""
   end,
   color = { fg = colors.blue_2 },
-  padding = { left = 1, right = 2 },
+  padding = { left = 1, right = 3 },
   cond = conditions.hide_in_width,
 }
 
 ins_left {
   "branch",
   icon = "",
-  color = { fg = colors.orange_2, gui="bold" },
+  color = { fg = colors.orange, gui="bold" },
   padding = { left = 2, right = 2 },
 }
 
@@ -206,7 +213,7 @@ ins_right {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
-  color = { fg = colors.orange_2, gui = "" },
+  color = { fg = colors.yellow, gui = "" },
   padding = { right = 0, left = 0 }
 }
 

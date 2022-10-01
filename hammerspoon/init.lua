@@ -71,8 +71,6 @@ function maybeEnableDebug()
   end
 end
 
--- Main
-
 maybeEnableDebug()
 setUpAppBindings()
 

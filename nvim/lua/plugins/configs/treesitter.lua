@@ -8,7 +8,7 @@ treesitter.setup {
     enable = true,
     ensure_installed = "maintained",
     additional_vim_regex_highlighting = true,
-    ignore_install = { "vim" },
+    -- ignore_install = { "vim" },
   },
   indent = { enable = true },
   incremental_selection = {

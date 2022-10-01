@@ -4,7 +4,7 @@ if not cmp_status_ok then
 end
 
 local icons = require("ah.utils").icons
-local border = require("ah.utils").cmp_border
+local border = require("ah.utils").border
 
 cmp.setup {
   snippet = {
@@ -50,11 +50,11 @@ cmp.setup {
   },
   window = {
     completion = {
-      border = border("CmpBorder"),
+      border = border("FloatBorder"),
       winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
     },
     documentation = {
-      border = border("CmpDocBorder"),
+      border = border("FloatBorder"),
       winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
       max_width = 60,
       max_height = 15

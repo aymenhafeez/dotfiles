@@ -1,7 +1,6 @@
 .DS_Store
 .*.swp
-undo-dir/
-vim/.vim/undo-dir/
 *nvim.log
 package.json
 package-lock.json
+nvim/scratch/

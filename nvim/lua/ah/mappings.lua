@@ -13,20 +13,26 @@ vim.g.maplocalleader = " "
 map("n", "<leader>lg", function()
   utils.float_terminal("lazygit")
 end, opts)
+
 map("n", "<leader>ht", function()
   utils.float_terminal("htop")
 end, opts)
+
 map("n", "<leader>bt", function()
   utils.float_terminal("btm")
 end, opts)
 
+map("n", "<leader><leader>t", function()
+  utils.float_terminal("zsh")
+end, opts)
+
+map("n", "<leader>hh", "\"tyiw:help <C-r>t<CR>", opts)
+
 map("n", "<leader>so", utils.source_lua, nopts)
+map("n", "<leader><leader>x", utils.execute_line, nopts)
 map("n", "<leader><leader>r", utils.reload_config, opts)
 
-map("n", "<leader>td", utils.make_todo, nopts)
-
--- map("n", "<C-e>", "4<C-e>", opts)
--- map("n", "<C-y>", "4<C-y>", opts)
+map("n", "<leader><leader>c", ":<up>", nopts)
 
 map("n", "<C-h>", "<C-w>h", opts)
 map("n", "<C-j>", "<C-w>j", opts)
@@ -35,13 +41,15 @@ map("n", "<C-l>", "<C-w>l", opts)
 
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map("n", "gj", "<cmd>let _=&lazyredraw<CR><cmd>set lazyredraw<CR>/\\%<C-R>=virtcol('.')<CR>v\\S<CR><cmd>nohl<CR><cmd>let &lazyredraw=_<CR>", opts)
+map("n", "gk", "<cmd>let _=&lazyredraw<CR><cmd>set lazyredraw<CR>?\\%<C-R>=virtcol('.')<CR>v\\S<CR><cmd>nohl<CR><cmd>let &lazyredraw=_<CR>", opts)
 
-map("n", "<leader>spl", "<cmd>setlocal spell!<CR>", opts)
+map("n", "<leader><leader>s", "<cmd>setlocal spell!<CR>", opts)
 
 map("n", "<S-Up>", "<cmd>resize +1<CR>", opts)
 map("n", "<S-Down>", "<cmd>resize -1<CR>", opts)
-map("n", "<S-Left>", "<cmd>vertical resize -2<CR>", opts)
-map("n", "<S-Right>", "<cmd>vertical resize +2<CR>", opts)
+map("n", "<S-Left>", "<cmd>vertical resize -1<CR>", opts)
+map("n", "<S-Right>", "<cmd>vertical resize +1<CR>", opts)
 
 map("n", "<C-s>", "mm[s1z=`m", opts)
 
@@ -49,7 +57,7 @@ map("n", "<leader>cn", "<cmd>cnext<CR>", opts)
 map("n", "<leader>cp", "<cmd>cprev<CR>", opts)
 map("n", "<leader>cl", "<cmd>ccl<CR>", opts)
 
-map("n", "<leader>mm", "<cmd>message<CR>", nopts)
+map("n", "<leader>mm", "<cmd>Message<CR>", nopts)
 
 map("n", "<leader>hl", "<cmd>nohlsearch<CR>", nopts)
 
@@ -77,7 +85,7 @@ vim.cmd("cnoreabbrev bd Bw")
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
-map("v", "<leader>so", "\"ay:<C-r>a<Backspace><CR>", opts)
+map("v", "<leader>so", ":<C-w>exe join(getline(\"'<\",\"'>\"),'<Bar>')<CR>", opts)
 
 map("x", "J", "<cmd>move '>+1<CR>gv-gv", opts)
 map("x", "K", "<cmd>move '<-2<CR>gv-gv", opts)
@@ -94,35 +102,30 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 -- romgrk/barbar.nvim
 map("n", "<S-l>", "<cmd>BufferNext<CR>", opts)
 map("n", "<S-h>", "<cmd>BufferPrevious<CR>", opts)
+-- map("n", "<S-l>", "<cmd>bnext<CR>", opts)
+-- map("n", "<S-h>", "<cmd>bprev<CR>", opts)
 
 -- kyazdani42/nvim-tree.lua
 map("n", "<leader>-", "<cmd>NvimTreeToggle<CR>", opts)
 map("n", "<leader>f-", "<cmd>NvimTreeFindFile<CR>", opts)
 
 --[[ -- voldikss/vim-floaterm
-local floaterm_opts = "--position=center --wintype=float --width=0.85 --height=0.85"
-
 map("n", "<leader>tt", "<cmd>FloatermToggle<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>FloatermToggle<CR>", opts)
-map("n", "<leader>lg", "<cmd>FloatermNew " .. floaterm_opts .. " lazygit<CR>", opts)
-map("n", "<leader>bt", "<cmd>FloatermNew " .. floaterm_opts .. " btm<CR>", opts)
-map("n", "<leader>ht", "<cmd>FloatermNew " .. floaterm_opts .. " htop<CR>", opts) ]]
+]]
 
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
-map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", opts)
+-- map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
--- map("n", "<leader>lg", "<cmd>TermExec direction=float cmd='lazygit'<CR>", opts)
--- map("n", "<leader>bt", "<cmd>TermExec direction=float cmd='btm'<CR>", opts)
--- map("n", "<leader>ht", "<cmd>TermExec direction=float cmd='htop'<CR>", opts)
 
 -- aymenhafeez/scratch.vim
 map("n", "<leader>sc", "<cmd>Scratch<CR>", opts)
 map("n", "<leader>ss", "<cmd>Sscratch<CR>", opts)
 
 -- Pocco81/true-zen.nvim
-map("n", "<leader>z", "<cmd>TZMinimalist<CR>", opts)
-map("n", "<leader>x", "<cmd>TZAtaraxis<CR>", opts)
+map("n", "<leader>zz", "<cmd>TZMinimalist<CR>", opts)
+map("n", "<leader>zx", "<cmd>TZAtaraxis<CR>", opts)
 
 -- nvim-treesitter/playground
 map("n", "<leader>hi", "<cmd>TSHighlightCapturesUnderCursor<CR>", opts)
@@ -132,8 +135,5 @@ map("n", "<leader>dd", "<cmd>Definition<CR>", opts)
 
 -- wbthomason/packer.nvim
 map("n", "<leader>ps", function()
-  vim.api.nvim_exec(
-    "source ~/.config/nvim/lua/plugins/init.lua | PackerSync",
-    false
-  )
+  vim.api.nvim_exec("source ~/.config/nvim/lua/plugins/init.lua | PackerSync", false)
 end, opts)

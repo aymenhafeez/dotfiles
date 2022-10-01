@@ -17,7 +17,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank({
       higroup = "Visual",
-      timeout = 75
+      timeout = 100
     })
   end,
   pattern = '*',
@@ -40,13 +40,23 @@ vim.api.nvim_create_autocmd("BufReadPre", {
 })
 
 local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
-vim.api.nvim_create_autocmd("BufWinEnter", {
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "help",
   callback = function()
-    if vim.bo.filetype == "help" then
-      vim.api.nvim_exec("wincmd L | vertical resize -8", false)
-    end
+    vim.api.nvim_exec("wincmd L | vertical resize -9", false)
+    vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
   end,
   group = helpFiles
+})
+
+local packerHighlight = vim.api.nvim_create_augroup("PackerHiglight", { clear = true})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "packer",
+  -- command = "lua vim.opt.winhighlight = 'Normal:NvimTreeNormal,SignColumn:NvimTreeNormal'",
+  callback = function()
+    vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
+  end,
+  group = packerHighlight
 })
 
 local closeNvimTree = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true })

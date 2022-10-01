@@ -15,7 +15,7 @@ local options = {
   },
   sort_by = "case_sensitive",
   view = {
-    width = 30,
+    width = 31,
     adaptive_size = false,
     hide_root_folder = true,
     preserve_window_proportions = true,

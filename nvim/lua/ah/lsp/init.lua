@@ -33,17 +33,20 @@ local servers = {
           version = "LuaJIT",
         },
         diagnostics = {
-          globals = { 'vim' }
+          globals = { 'vim', "hs" }
         },
-        --[[ -- folke/lua-dev.nvim takes care of this
-        workspace = {
-          library = {
-            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-          },
-          maxPreload = 1000,
-          preloadFileSize = 1000,
-        }, ]]
+        -- folke/lua-dev.nvim takes care of this
+        -- workspace = {
+        --   -- library = {
+        --   --   [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+        --   --   [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+        --   -- },
+        --   -- maxPreload = 1000,
+        --   -- preloadFileSize = 1000,
+        --   library = vim.list_extend(handlers.get_lua_runtime(), config.library or {}),
+        --   maxPreload = 10000,
+        --   preloadFileSize = 10000,
+        -- },
         telemetry = {
           enable = false,
         },

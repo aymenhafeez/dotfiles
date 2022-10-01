@@ -9,7 +9,7 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 
 opt.conceallevel = 2
-opt.concealcursor = "nc"
+-- opt.concealcursor = "nc"
 opt.laststatus = 3
 opt.showtabline = 2
 opt.cursorline = true
@@ -33,10 +33,10 @@ vim.opt.fillchars = {
 }
 vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))"
 
---[[ -- cmdheight = 0 is a little buggy atm
-if vim.fn.has("nvim-0.8") ~= 0 then
+-- cmdheight = 0 is a little buggy atm
+if vim.fn.has("nvim-0.9") ~= 0 then
   vim.opt.cmdheight = 0
-end ]]
+end
 
 opt.formatoptions = vim.opt.formatoptions - "c"
 opt.spelllang = "en_gb"

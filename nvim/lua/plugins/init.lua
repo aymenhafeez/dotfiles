@@ -87,13 +87,13 @@ return packer.startup {
 
     use  "moll/vim-bbye"
 
-    use {
-      "karb94/neoscroll.nvim",
-      keys = {"<C-d>", "<C-u>", "<C-e>", "<C-y>", "zz", "zt", "zb" },
-      config = function()
-        require("plugins.configs.neoscroll")
-      end
-    }
+    -- use {
+    --   "karb94/neoscroll.nvim",
+    --   keys = {"<C-d>", "<C-u>", "<C-e>", "<C-y>", "zz", "zt", "zb" },
+    --   config = function()
+    --     require("plugins.configs.neoscroll")
+    --   end
+    -- }
     -- use {
     --   "voldikss/vim-floaterm",
     --   cmd = { "FloatermToggle", "FloatermNew" },
@@ -107,7 +107,8 @@ return packer.startup {
             border = "curved"
           }
         }
-      end
+      end,
+      cmd = { "ToggleTerm", "TermExec" }
     }
 
     use {
@@ -118,16 +119,9 @@ return packer.startup {
         require("plugins.configs.nvim-tree")
       end
     }
-    -- use {
-    --   "akinsho/bufferline.nvim",
-    --   event = "VimEnter",
-    --   config = function()
-    --     require("plugins.configs.bufferline")
-    --   end
-    -- }
     use {
       "romgrk/barbar.nvim",
-      event = "BufRead",
+      event = "VimEnter",
       config = function()
         require("plugins.configs.barbar")
       end
@@ -207,9 +201,6 @@ return packer.startup {
       requires = {
         "nvim-telescope/telescope-ui-select.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-        -- { "crispgm/telescope-heading.nvim", cmd = "Telescope" },
-        -- { "nvim-telescope/telescope-packer.nvim", cmd = "Telescope"},
-        -- { "jvgrootveld/telescope-zoxide", cmd = "Telescope" }
       },
       config = function()
         require("ah.telescope")
@@ -236,6 +227,13 @@ return packer.startup {
       ft = "markdown",
       cmd = { "MarkdownPreview" }
     })
+    use {
+      "tpope/vim-scriptease",
+      cmd = {
+        "Messages",
+        "Verbose"
+      }
+    }
 
     -- lsp stuff --
 
@@ -276,9 +274,10 @@ return packer.startup {
       after = "nvim-cmp"
     }
     use {"folke/lua-dev.nvim",
+      -- opt = true,
       config = function()
         require("lua-dev").setup()
-      end
+      end,
     }
     use {
       "hrsh7th/cmp-buffer",
@@ -310,6 +309,8 @@ return packer.startup {
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
 
+    -- use "tjdevries/nlua.nvim"
+
     -- colorschemes --
 
     use {
@@ -318,9 +319,8 @@ return packer.startup {
     }
 
     use "navarasu/onedark.nvim"
-    use "Mofiqul/vscode.nvim"
     use "catppuccin/nvim"
-    use "sam4llis/nvim-tundra"
+    use "rebelot/kanagawa.nvim"
 
     -- use "folke/tokyonight.nvim"
     local_use "../tokyonight.nvim"
@@ -328,8 +328,8 @@ return packer.startup {
     -- use "aymenhafeez/neodark.nvim"
     local_use "neodark.nvim"
 
-    use "aymenhafeez/OxfDictionary.nvim"
-    -- local_use "OxfDictionary"
+    -- use "aymenhafeez/OxfDictionary.nvim"
+    local_use "OxfDictionary.nvim"
 
     -- use {
     --   "aymenhafeez/scratch.vim",

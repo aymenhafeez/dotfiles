@@ -54,7 +54,7 @@ function M.setup()
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
     util_opts = util_opts or {}
-    util_opts.border = util_opts.border or border
+    util_opts.border = util_opts.border or border("FloatBorder")
     util_opts.max_width = 60
     util_opts.max_height = 15
     return orig_util_open_floating_preview(contents, syntax, util_opts, ...)
@@ -149,6 +149,25 @@ function M.on_attach(client, bufnr)
     ]]
   end
 
+end
+
+function M.get_lua_runtime()
+    local result = {};
+    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+        local lua_path = path .. "/lua/";
+        if vim.fn.isdirectory(lua_path) then
+            result[lua_path] = true
+        end
+    end
+
+    -- This loads the `lua` files from nvim into the runtime.
+    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+
+    -- TODO: Figure out how to get these to work...
+    --  Maybe we need to ship these instead of putting them in `src`?...
+    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+
+    return result;
 end
 
 M.lsp_capabilities = vim.lsp.protocol.make_client_capabilities()

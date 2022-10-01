@@ -3,11 +3,13 @@ if not present then
   return
 end
 
+local view = require("nvim-tree.view")
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
 barbar.setup {
-  -- autohide = true,
+  autohide = true,
+  maximum_padding = 4,
   closable = true,
   icon_close_tab = "",
   icon_separator_inactive = "",
@@ -25,8 +27,9 @@ map("n", "<leader>7", "<cmd>BufferGoto 7<CR>", opts)
 map("n", "<leader>8", "<cmd>BufferGoto 8<CR>", opts)
 map("n", "<leader>9", "<cmd>BufferGoto 9<CR>", opts)
 
-local nvim_tree_events = require('nvim-tree.events')
-local bufferline_state = require('bufferline.state')
+local nvim_tree_events = require("nvim-tree.events")
+-- local bufferline_state = require("bufferline.state")
+local bufferline_state = require("bufferline.api")
 
 local function get_tree_size()
   return require'nvim-tree.view'.View.width
@@ -43,3 +46,5 @@ end)
 nvim_tree_events.subscribe('TreeClose', function()
   bufferline_state.set_offset(0)
 end)
+
+vim.cmd("hi link BufferOffset NvimTreeNormal")

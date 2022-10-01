@@ -5,6 +5,8 @@ local theme = require("telescope.themes")
 
 local ignore_patterns = {
   "%.pdf",
+  "%.py",
+  "%.gif",
   "%.log",
   "%.aux",
   "%.out",
@@ -110,69 +112,6 @@ function M.search_buffers()
     })
 end
 
-function M.search_notes()
-  telescope.find_files {
-    cwd = "~/Dropbox/notes/MyNotes/",
-    results_title = "Notes",
-    preview_title = "",
-    prompt_title = "",
-    path_display = { "tail" },
-    file_ignore_patterns = ignore_patterns,
-    layout_config = {
-      height = 0.75,
-      width = 0.75,
-      preview_width = 0.6
-    }
-  }
-end
-
-function M.grep_notes()
-  telescope.live_grep {
-    cwd = "~/Dropbox/notes/MyNotes",
-    preview_title = "Notes",
-    results_title = "",
-    prompt_title = "",
-    layout_strategy = "vertical",
-    path_display = { "tail" },
-    file_ignore_patterns = ignore_patterns,
-    layout_config = {
-      height = 0.85,
-      width = 0.65,
-      preview_height = 0.6
-    }
-  }
-end
-
-function M.search_dotfiles()
-  telescope.find_files {
-    cwd = "~/.config/nvim/",
-    results_title = "dotfiles",
-    prompt_title = "",
-    preview_title = "",
-    layout_config = {
-      height = 0.75,
-      width = 0.75,
-      preview_width = 0.6
-    }
-  }
-end
-
-function M.grep_dotfiles()
-  telescope.live_grep {
-    cwd = "~/.config/nvim/",
-    preview_title = "dotfiles grep",
-    results_title = "",
-    prompt_title = "",
-    layout_strategy = "vertical",
-    path_display = { "smart" },
-    layout_config = {
-      height = 0.85,
-      width = 0.65,
-      preview_height = 0.6
-    }
-  }
-end
-
 function M.search_help()
   telescope.help_tags {
     results_title = "",
@@ -201,11 +140,12 @@ end
 function M.search_history()
   telescope.command_history(
     theme.get_ivy {
-      results_title = "Command history",
+      results_title = "",
       prompt_title = "",
+      prompt_prefix = ":",
       layout_config = {
         prompt_position = "bottom",
-        height = 0.35
+        height = 0.25
       }
     })
 end
@@ -220,38 +160,10 @@ function M.search_builtins()
     })
 end
 
-function M.find_files()
-  telescope.find_files {
-    results_title = "Find files",
-    prompt_title = "",
-    preview_title = "",
-    path_display = { "smart" },
-    layout_config = {
-      width = 0.8,
-      height = 0.8,
-      preview_width = 0.6
-    }
-  }
-end
-
 function M.vim_options()
   telescope.vim_options {
     layout_config = {
       width = 0.5
-    }
-  }
-end
-
-function M.live_grep()
-  telescope.live_grep {
-    results_title = "",
-    preview_title = "",
-    prompt_title = "Live grep",
-    layout_strategy = "vertical",
-    layout_config = {
-      height = 0.85,
-      width = 0.65,
-      preview_height = 0.6
     }
   }
 end
@@ -261,7 +173,7 @@ function M.oldfiles()
     prompt_title = "",
     preview_title = "",
     results_title = "Recent files",
-    path_display = { "smart" },
+    path_display = { "truncate" },
     layout_config = {
       width = 0.75,
       preview_width = 0.6
@@ -277,6 +189,41 @@ function M.grep_string()
     layout_config = {
       width = 0.75,
       preview_width = 0.6
+    }
+  }
+end
+
+M.find_files_in_path = function(path)
+ local _path = path or vim.fn.getcwd()
+  telescope.find_files {
+    cwd = _path,
+    results_title = "",
+    preview_title = "",
+    prompt_title = "",
+    path_display = { "truncate" },
+    file_ignore_patterns = ignore_patterns,
+    layout_config = {
+      height = 0.75,
+      width = 0.75,
+      preview_width = 0.6
+    }
+  }
+end
+
+function M.live_grep_in_path(path)
+  local _path = path or vim.fn.getcwd()
+  telescope.live_grep {
+    cwd = _path,
+    preview_title = "",
+    results_title = "",
+    prompt_title = "",
+    layout_strategy = "vertical",
+    path_display = { "truncate" },
+    file_ignore_patterns = ignore_patterns,
+    layout_config = {
+      height = 0.85,
+      width = 0.65,
+      preview_height = 0.6
     }
   }
 end
