@@ -30,14 +30,6 @@ if not status_ok then
   return
 end
 
--- packer.init {
---   display = {
---     open_fn = function()
---       return require("packer.util").float { border = "rounded" }
---     end,
---   },
--- }
-
 return packer.startup {
   function(use)
 
@@ -69,7 +61,6 @@ return packer.startup {
         require("impatient").enable_profile()
       end
     }
-
     use {
       "wbthomason/packer.nvim",
       opt = true,
@@ -94,10 +85,6 @@ return packer.startup {
     --     require("plugins.configs.neoscroll")
     --   end
     -- }
-    -- use {
-    --   "voldikss/vim-floaterm",
-    --   cmd = { "FloatermToggle", "FloatermNew" },
-    -- }
     use {
       "akinsho/toggleterm.nvim",
       tag = '*',
@@ -121,18 +108,18 @@ return packer.startup {
     }
     use {
       "romgrk/barbar.nvim",
-      event = "VimEnter",
+      event = "BufRead",
       config = function()
         require("plugins.configs.barbar")
       end
     }
-    use {
-      "nvim-lualine/lualine.nvim",
-      event = "VimEnter",
-      config = function()
-        require("plugins.configs.lualine")
-      end
-    }
+    -- use {
+    --   "nvim-lualine/lualine.nvim",
+    --   event = "BufRead",
+    --   config = function()
+    --     require("plugins.configs.lualine")
+    --   end
+    -- }
     use {
       "j-hui/fidget.nvim",
       config = function()
@@ -273,12 +260,12 @@ return packer.startup {
       "hrsh7th/cmp-nvim-lsp",
       after = "nvim-cmp"
     }
-    use {"folke/lua-dev.nvim",
-      -- opt = true,
-      config = function()
-        require("lua-dev").setup()
-      end,
-    }
+    -- use {"folke/lua-dev.nvim",
+    --   -- opt = true,
+    --   config = function()
+    --     require("lua-dev").setup()
+    --   end,
+    -- }
     use {
       "hrsh7th/cmp-buffer",
       after = "nvim-cmp"
@@ -304,12 +291,15 @@ return packer.startup {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       after = "nvim-cmp"
     }
-    use  "brymer-meneses/grammar-guard.nvim"
+    use "brymer-meneses/grammar-guard.nvim"
 
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
 
-    -- use "tjdevries/nlua.nvim"
+    use {
+      "jupyter-vim/jupyter-vim",
+      ft = "python"
+    }
 
     -- colorschemes --
 
@@ -322,14 +312,14 @@ return packer.startup {
     use "catppuccin/nvim"
     use "rebelot/kanagawa.nvim"
 
-    -- use "folke/tokyonight.nvim"
-    local_use "../tokyonight.nvim"
+    -- use "aymenhafeez/tokyonight.nvim"
+    local_use "tokyonight.nvim"
 
     -- use "aymenhafeez/neodark.nvim"
     local_use "neodark.nvim"
 
-    -- use "aymenhafeez/OxfDictionary.nvim"
-    local_use "OxfDictionary.nvim"
+    use "aymenhafeez/OxfDictionary.nvim"
+    -- local_use "OxfDictionary.nvim"
 
     -- use {
     --   "aymenhafeez/scratch.vim",

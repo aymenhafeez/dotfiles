@@ -11,7 +11,7 @@ telescope.setup {
     layout_strategy = "horizontal",
     layout_config = {
       width = 0.9,
-      height = 0.75,
+      height = 0.9,
     },
 
     sorting_strategy = "ascending",

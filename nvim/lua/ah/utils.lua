@@ -8,6 +8,7 @@ function M.reload_config()
   end
 
   dofile(vim.env.MYVIMRC)
+  vim.api.nvim_exec("source ~/.config/nvim/after/ftplugin/lua.lua", false)
   vim.notify("Reloaded configuration", vim.log.levels.INFO, { title = "init.lua" })
 end
 

@@ -20,9 +20,10 @@ opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
 opt.signcolumn = "yes"
-opt.linebreak = true
+-- opt.linebreak = true
+opt.wrap = false
 
-vim.opt.foldmethod = "expr" -- TreeSitter folding
+vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
 vim.opt.foldlevel = 6
 vim.opt.fillchars = {
@@ -33,14 +34,14 @@ vim.opt.fillchars = {
 }
 vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))"
 
--- cmdheight = 0 is a little buggy atm
-if vim.fn.has("nvim-0.9") ~= 0 then
-  vim.opt.cmdheight = 0
-end
+-- -- cmdheight = 0 is a little buggy atm
+-- if vim.fn.has("nvim-0.9") ~= 0 then
+--   vim.o.cmdheight = 0
+-- end
 
 opt.formatoptions = vim.opt.formatoptions - "c"
 opt.spelllang = "en_gb"
-opt.shortmess:append "sI"
+opt.shortmess:append "s"
 
 opt.hlsearch = true
 opt.ignorecase = true
@@ -93,10 +94,7 @@ g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 g.scratch_filetype = "lua"
 
-g.floaterm_wintype = "split"
-g.floaterm_height = 13
-g.floaterm_position = "rightbelow"
-g.floaterm_borderchars = "─│─│╭╮╯╰"
+g.tex_flavor = "latex"
 
 -- use proper syntax highlighting in code blocks
 local fences = {
@@ -154,12 +152,12 @@ local colorscheme = "tokyonight-night"
 
 if colorscheme == "onedark" then
   require("onedark").setup({
-    style = "deep"
+    style = "darker"
   })
 end
 
 if colorscheme == "catppuccin" then
-  vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+  vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
 end
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)

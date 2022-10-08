@@ -152,22 +152,22 @@ function M.on_attach(client, bufnr)
 end
 
 function M.get_lua_runtime()
-    local result = {};
-    for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-        local lua_path = path .. "/lua/";
-        if vim.fn.isdirectory(lua_path) then
-            result[lua_path] = true
-        end
+  local result = {};
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua/";
+    if vim.fn.isdirectory(lua_path) then
+      result[lua_path] = true
     end
+  end
 
-    -- This loads the `lua` files from nvim into the runtime.
-    result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+  -- This loads the `lua` files from nvim into the runtime.
+  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
 
-    -- TODO: Figure out how to get these to work...
-    --  Maybe we need to ship these instead of putting them in `src`?...
-    result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+  -- TODO: Figure out how to get these to work...
+  --  Maybe we need to ship these instead of putting them in `src`?...
+  result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
 
-    return result;
+  return result;
 end
 
 M.lsp_capabilities = vim.lsp.protocol.make_client_capabilities()

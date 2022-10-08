@@ -17,7 +17,7 @@ map("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 
 bufferline.setup {
   options = {
-    offsets = { { filetype = "NvimTree", text = "", padding = 0 } },
+    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
     numbers = "none",
     show_buffer_close_icons = false,
     show_tab_indicators = true,
@@ -38,33 +38,56 @@ bufferline.setup {
       style = "icon"
     },
   },
-  -- highlights = {
-  --   background = {
-  --     fg = colors.grey_fg,
-  --     bg = colors.deep_bg,
-  --   },
-  --   buffer_visible = {
-  --     fg = colors.light_grey,
-  --     bg = colors.deep_bg,
-  --   },
-  -- },
-  -- highlights = {
-  --   background = {
-  --     bg = colors.black4,
-  --   },
-  --   buffer_visible = {
-  --     bg = colors.black4,
-  --   },
-  -- },
   highlights = {
     fill = {
-      bg = "#202230"
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
     },
     background = {
-      bg = "#202230"
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
     },
-    -- buffer_visible = {
-    --   bg = colors.black4,
-    -- },
+    tab = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    tab_close = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    close_button = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+    },
+    close_button_visible = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+    },
+    close_button_selected = {
+      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+    },
+    buffer_visible = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    modified = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    modified_visible = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    duplicate = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    duplicate_visible = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    separator = {
+      fg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
+    separator_selected = {
+      fg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'Normal' }
+    },
+    separator_visible = {
+      fg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+    },
   },
 }

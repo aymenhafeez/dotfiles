@@ -43,8 +43,10 @@ local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
   callback = function()
-    vim.api.nvim_exec("wincmd L | vertical resize -9", false)
+    vim.api.nvim_exec("wincmd L | vertical resize -7", false)
     vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
   end,
   group = helpFiles
 })

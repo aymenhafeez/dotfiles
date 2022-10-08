@@ -10,6 +10,8 @@ vim.g.maplocalleader = " "
 
 -- normal mode
 
+map("n", "<leader>ls", "<cmd>LspStart<CR>", opts)
+
 map("n", "<leader>lg", function()
   utils.float_terminal("lazygit")
 end, opts)
@@ -78,7 +80,9 @@ map("c", "<M-f>", "<S-Right>", nopts)
 map("c", "<C-p>", "<Up>", nopts)
 map("c", "<C-n>", "<Down>", nopts)
 
-vim.cmd("cnoreabbrev bd Bw")
+-- vim.cmd("cnoreabbrev bd Bw")
+-- vim.api.nvim_cmd({ cmd = "cnoreabbrev", args = { "bd Bw" } }, {})
+vim.cmd.cnoreabbrev("bd Bw")
 
 -- visual mode
 
@@ -108,11 +112,6 @@ map("n", "<S-h>", "<cmd>BufferPrevious<CR>", opts)
 -- kyazdani42/nvim-tree.lua
 map("n", "<leader>-", "<cmd>NvimTreeToggle<CR>", opts)
 map("n", "<leader>f-", "<cmd>NvimTreeFindFile<CR>", opts)
-
---[[ -- voldikss/vim-floaterm
-map("n", "<leader>tt", "<cmd>FloatermToggle<CR>", opts)
-map("t", "<leader>tt", "<C-\\><C-n><cmd>FloatermToggle<CR>", opts)
-]]
 
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)

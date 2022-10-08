@@ -7,18 +7,15 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
-vim.opt_local.makeprg = "pylint\\ --output-format=parseable"
 vim.cmd [[
-    command! -nargs=0 Lint :make %
+command! -nargs=0 Lint :make %
 ]]
 
 vim.cmd [[
-    function! GetFilePath()
-        let @" = '%run ' . expand("%:p")
-    endfunction
+function! GetFilePath()
+  let @" = '%run ' . expand("%:p")
+endfunction
 ]]
-
-vim.g.floaterm_height = 13
 
 map("n", "<leader>py", ":%w !python3<CR>", nopts)
 map("n", "<leader>px", "mxVgg:%w !python3<CR>`x", nopts)
@@ -30,3 +27,9 @@ map("x", "<leader>py", ":%w !python3<CR>", nopts)
 
 map("n", "<leader>pi", "<cmd>TermExec direction=vertical size=60 cmd=ipython<CR>", opts)
 map("n", "<leader>pr", "<cmd>call GetFilePath()<CR><cmd>wincmd w<CR><C-\\><C-n>\"\"pA<CR><C-\\><C-n><C-w>k", opts)
+
+map("n", "<leader>jc", "<cmd>JupyterConnect<CR>", opts)
+map("n", "<leader>jr", "<cmd>JupyterRunFile<CR>", opts)
+map("n", "<leader>js", "<cmd>JupyterSendRange<CR>", opts)
+map("v", "<leader>jr", "<cmd>JupyterRunVisual<CR>", opts)
+map("x", "<leader>jr", "<cmd>JupyterSendCell<CR>", opts)

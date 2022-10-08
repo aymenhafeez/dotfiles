@@ -205,6 +205,16 @@ ins_right {
 }
 
 ins_right {
+  "location",
+  color = { fg = colors.blue_1 }
+}
+
+ins_right {
+  "progress",
+  color = { fg = colors.blue_1 }
+}
+
+ins_right {
   function()
     local current_line = vim.fn.line "."
     local total_lines = vim.fn.line "$"

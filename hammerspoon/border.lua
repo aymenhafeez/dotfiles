@@ -40,7 +40,7 @@ module.update = function()
     local radius = 10
     local border = 1
     local offset = 0
-    local alpha = 0.35
+    local alpha = 0.6
 
     module.widget
       :replaceElements({

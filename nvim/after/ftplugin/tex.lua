@@ -23,8 +23,8 @@ g.tex_flavor = "latex"
 
 map("i", "<C-c><C-j>", "<Esc>o\\item ", opts)
 map("i", "<C-c><C-k>", "<Esc>O\\item ", opts)
-map("n", "<leader>ij", "<Esc>o\\item ", opts)
-map("n", "<leader>ik", "<Esc>O\\item ", opts)
+map("n", "<C-c><C-j>", "<Esc>o\\item ", opts)
+map("n", "<C-c><C-k>", "<Esc>O\\item ", opts)
 map("n", "<C-c><C-l>", "i\\left<Esc>l%i\\right<Esc>", opts)
 
 local function tex_toggle_term()

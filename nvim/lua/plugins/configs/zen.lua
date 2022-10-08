@@ -10,7 +10,7 @@ zen.setup {
         width = 100,
         height = 100
       },
-      padding = { -- padding windows
+      padding = {
         left = 52,
         right = 52,
         top = 0,
@@ -23,12 +23,12 @@ zen.setup {
         signcolumn = "yes",
         cmdheight = 0,
         winbar = false,
-        cursorline = false
+        cursorline = false,
       },
     },
   },
   integrations = {
-    lualine = true,
+    -- lualine = true,
     tmux = true
   }
 }
