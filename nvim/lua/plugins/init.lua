@@ -78,13 +78,6 @@ return packer.startup {
 
     use  "moll/vim-bbye"
 
-    -- use {
-    --   "karb94/neoscroll.nvim",
-    --   keys = {"<C-d>", "<C-u>", "<C-e>", "<C-y>", "zz", "zt", "zb" },
-    --   config = function()
-    --     require("plugins.configs.neoscroll")
-    --   end
-    -- }
     use {
       "akinsho/toggleterm.nvim",
       tag = '*',
@@ -113,13 +106,6 @@ return packer.startup {
         require("plugins.configs.barbar")
       end
     }
-    -- use {
-    --   "nvim-lualine/lualine.nvim",
-    --   event = "BufRead",
-    --   config = function()
-    --     require("plugins.configs.lualine")
-    --   end
-    -- }
     use {
       "j-hui/fidget.nvim",
       config = function()
@@ -260,12 +246,6 @@ return packer.startup {
       "hrsh7th/cmp-nvim-lsp",
       after = "nvim-cmp"
     }
-    -- use {"folke/lua-dev.nvim",
-    --   -- opt = true,
-    --   config = function()
-    --     require("lua-dev").setup()
-    --   end,
-    -- }
     use {
       "hrsh7th/cmp-buffer",
       after = "nvim-cmp"

@@ -34,10 +34,10 @@ vim.opt.fillchars = {
 }
 vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))"
 
--- -- cmdheight = 0 is a little buggy atm
--- if vim.fn.has("nvim-0.9") ~= 0 then
---   vim.o.cmdheight = 0
--- end
+-- cmdheight = 0 is a little buggy atm
+if vim.fn.has("nvim-0.9") ~= 0 then
+  vim.o.cmdheight = 0
+end
 
 opt.formatoptions = vim.opt.formatoptions - "c"
 opt.spelllang = "en_gb"
@@ -73,6 +73,7 @@ opt.clipboard = "unnamedplus"
 opt.path:append { "**" }
 
 opt.splitright = true
+opt.splitbelow = true
 
 opt.termguicolors = true
 

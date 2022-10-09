@@ -1,17 +1,3 @@
-vim.cmd("hi StatusLineAccent guifg=#1a1b26 guibg=#7aa2f7")
-vim.cmd("hi StatusLineInsertAccent guifg=#7aa2f7 guibg=bg")
-vim.cmd("hi StatusLineVisualAccent guifg=bg guibg=#9d7cd8")
-vim.cmd("hi StatusLineReplaceAccent guifg=bg guibg=#db4b4b")
-vim.cmd("hi StatusLineCmdLineAccent guifg=bg guibg=#e0af68")
-vim.cmd("hi StatuslineTerminalAccent guifg=bg guibg=#ff9e64")
-vim.cmd("hi StatusLineExtra guifg=#565f89")
-vim.cmd("hi StatusLineNC guibg=NONE")
-vim.cmd("hi LspError guifg=#db4b4b")
-vim.cmd("hi LspWarning guifg=#ffc777")
-vim.cmd("hi LspHint guifg=#1abc9c")
-vim.cmd("hi LspInfo guifg=#0db9d7")
-vim.cmd("hi ProgressBar guifg=#ffc777")
-
 local modes = {
   ["n"] = "",
   ["no"] = "",
@@ -46,21 +32,21 @@ local function update_mode_colors()
   if current_mode == "n" then
       mode_color = "%#StatuslineAccent#"
   elseif current_mode == "i" or current_mode == "ic" then
-      mode_color = "%#StatuslineInsertAccent#"
+      mode_color = "%#StatuslineInsert#"
   elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
-      mode_color = "%#StatuslineVisualAccent#"
+      mode_color = "%#StatuslineVisual#"
   elseif current_mode == "R" then
-      mode_color = "%#StatuslineReplaceAccent#"
+      mode_color = "%#StatuslineReplace#"
   elseif current_mode == "c" then
-      mode_color = "%#StatuslineCmdLineAccent#"
+      mode_color = "%#StatuslineCmdLine#"
   elseif current_mode == "t" then
-      mode_color = "%#StatuslineTerminalAccent#"
+      mode_color = "%#StatuslineTerminal#"
   end
   return mode_color
 end
 
 local function filename()
-  local fname = vim.fn.expand "%:t"
+  local fname = vim.fn.expand "%:t" .. " %M "
   if fname == "" then
       return ""
   end
@@ -70,10 +56,10 @@ local function filename()
   local filetype = vim.bo.filetype
 
   if filetype == '' then return '' end
-  return string.format(' %s %s  ', icon, fname)
+  return string.format('  %s %s', icon, fname)
 end
 
-local function lsp()
+local function lsp_diagnostics()
   local count = {}
   local levels = {
     errors = "Error",
@@ -92,45 +78,69 @@ local function lsp()
   local info = ""
 
   if count["errors"] ~= 0 then
-    errors = "%#LspError# " .. count["errors"] .. " "
+    errors = "%#StatusLineLspError# " .. count["errors"] .. " "
   end
   if count["warnings"] ~= 0 then
-    warnings = "%#LspWarning# " .. count["warnings"] .. " "
+    warnings = "%#StatusLineLspWarning# " .. count["warnings"] .. " "
   end
   if count["hints"] ~= 0 then
-    hints = "%#LspHint# " .. count["hints"] .. " "
+    hints = "%#StatusLineLspHint# " .. count["hints"] .. " "
   end
   if count["info"] ~= 0 then
-    info = "%#LspInfo# " .. count["info"] .. " "
+    info = "%#StatusLineLspInfo# " .. count["info"] .. " "
   end
 
   return errors .. warnings .. hints .. info .. "%#Normal#"
+end
+
+local function lsp_client()
+  local msg = " LS Inactive"
+  local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+  local clients = vim.lsp.get_active_clients()
+  if next(clients) == nil then
+    return msg
+  end
+  for _, client in ipairs(clients) do
+    local filetypes = client.config.filetypes
+    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+      return " " .. client.name
+    end
+  end
+  return msg
 end
 
 local function lineinfo()
   if vim.bo.filetype == "alpha" then
     return ""
   end
-  return "  %l:%c  %P "
+  return "  %l:%c  "
 end
 
 local function progress_bar()
   local current_line = vim.fn.line "."
   local total_lines = vim.fn.line "$"
-  local chars = { "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+  local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
   local line_ratio = current_line / total_lines
   local index = math.ceil(line_ratio * #chars)
   return chars[index]
 end
 
-local vcs = function()
+-- local function treesitter_tree()
+--   local bufnr = vim.api.nvim_get_current_buf()
+--   if next(vim.treesitter.highlighter.active[bufnr]) then
+--     return "   "
+--   end
+--   return ""
+-- end
+
+local function git_signs()
   local git_info = vim.b.gitsigns_status_dict
   if not git_info or git_info.head == "" then
     return ""
   end
-  local added = git_info.added and (" %#GitSignsAdd# " .. git_info.added .. " ") or ""
-  local changed = git_info.changed and ("%#GitSignsChange# " .. git_info.changed .. " ") or ""
-  local removed = git_info.removed and ("%#GitSignsDelete# " .. git_info.removed .. " ") or ""
+  local added = git_info.added and (" %#StatusLineGitSignsAdd# " .. git_info.added .. " ") or ""
+  local changed = git_info.changed and ("%#StatusLineGitSignsChange# " .. git_info.changed .. " ") or ""
+  local removed = git_info.removed and ("%#StatusLineGitSignsDelete# " .. git_info.removed .. " ") or ""
   if git_info.added == 0 then
     added = ""
   end
@@ -141,33 +151,33 @@ local vcs = function()
     removed = ""
   end
   return table.concat {
-     "  %#GitSignsAdd# ",
+     "  %#StatusLineGitSignsAdd# ",
      git_info.head,
      " ",
      added,
      changed,
      removed,
-     "%#Normal# ",
   }
 end
 
 Statusline = {}
 
-Statusline.active = function()
+function Statusline.active()
   return table.concat {
     "%#Statusline#",
     update_mode_colors(),
     mode(),
-    "%#Normal#",
-    vcs(),
-    " ",
-    lsp(),
+    "%#Statusline#",
+    filename(),
+    git_signs(),
+    "  ",
+    lsp_diagnostics(),
     "%#Statusline#",
     "%=%#StatusLine#",
-    filename(),
-    "%=%#StatusLine#",
+    lsp_client(),
+    " ",
     lineinfo(),
-    "%#ProgressBar#",
+    "%#StatusLineProgressBar#",
     progress_bar(),
   }
 end

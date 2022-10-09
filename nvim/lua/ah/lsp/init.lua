@@ -39,7 +39,6 @@ local servers = {
         diagnostics = {
           globals = { "vim", "hs" }
         },
-        --[[ -- folke/lua-dev.nvim takes care of this
         workspace = {
           library = {
             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
@@ -47,7 +46,7 @@ local servers = {
           },
           maxPreload = 1000,
           preloadFileSize = 1000,
-        }, ]]
+        },
         telemetry = {
           enable = false,
         },

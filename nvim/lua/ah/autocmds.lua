@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
   end,
 })
 
-local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
+local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = false })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
   callback = function()
