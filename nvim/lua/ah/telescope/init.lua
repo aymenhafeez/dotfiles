@@ -15,10 +15,7 @@ telescope.setup {
     },
 
     sorting_strategy = "ascending",
-    -- prompt_prefix = "   ",
-    prompt_prefix = "   ",
-    prompt_title = "",
-    preview_title = "",
+    prompt_prefix = "   ",
     selection_caret = " ",
     multi_icon = "",
     winblend = 10,

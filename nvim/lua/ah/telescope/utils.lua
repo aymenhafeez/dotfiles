@@ -74,7 +74,8 @@ end
 
 function M.find_files()
   telescope.find_files {
-    results_title = "Find files",
+    -- results_title = "Find files",
+    results_title = "",
     prompt_title = "",
     preview_title = "",
     path_display = { "truncate" },

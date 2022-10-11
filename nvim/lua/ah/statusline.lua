@@ -1,3 +1,7 @@
+local api = vim.api
+local fn = vim.fn
+local bo = vim.bo
+
 local modes = {
   ["n"] = "",
   ["no"] = "",
@@ -22,41 +26,56 @@ local modes = {
 }
 
 local function mode()
-  local current_mode = vim.api.nvim_get_mode().mode
+  local current_mode = api.nvim_get_mode().mode
   return string.format(" %s ", modes[current_mode])
 end
 
 local function update_mode_colors()
-  local current_mode = vim.api.nvim_get_mode().mode
+  local current_mode = api.nvim_get_mode().mode
   local mode_color = "%#StatusLineAccent#"
   if current_mode == "n" then
-      mode_color = "%#StatuslineAccent#"
+    mode_color = "%#StatuslineAccent#"
   elseif current_mode == "i" or current_mode == "ic" then
-      mode_color = "%#StatuslineInsert#"
+    mode_color = "%#StatuslineInsert#"
   elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
-      mode_color = "%#StatuslineVisual#"
+    mode_color = "%#StatuslineVisual#"
   elseif current_mode == "R" then
-      mode_color = "%#StatuslineReplace#"
+    mode_color = "%#StatuslineReplace#"
   elseif current_mode == "c" then
-      mode_color = "%#StatuslineCmdLine#"
+    mode_color = "%#StatuslineCmdLine#"
   elseif current_mode == "t" then
-      mode_color = "%#StatuslineTerminal#"
+    mode_color = "%#StatuslineTerminal#"
   end
   return mode_color
 end
 
 local function filename()
-  local fname = vim.fn.expand "%:t" .. " %M "
-  if fname == "" then
-      return ""
+  local fname
+  local modified = " "
+  local readonly = " "
+
+  if bo.modified then
+    fname = fn.expand "%:t" .. modified
+  elseif bo.readonly then
+    fname = fn.expand "%:t" .. readonly
+  else
+    fname = fn.expand "%:t"
   end
 
-  local file_name, file_ext = vim.fn.expand("%:t"), vim.fn.expand("%:e")
-  local icon = require'nvim-web-devicons'.get_icon(file_name, file_ext, { default = true })
-  local filetype = vim.bo.filetype
+  if fname == "" then
+    return ""
+  end
 
-  if filetype == '' then return '' end
-  return string.format('  %s %s', icon, fname)
+  local file_name, file_ext = fn.expand("%:t"), vim.fn.expand("%:e")
+  local icon = require"nvim-web-devicons".get_icon(file_name, file_ext, { default = true })
+  -- local icon_str, icon_color = require("nvim-web-devicons").get_icon_color(fn.expand("%:t"), nil, { default = true })
+  local filetype = bo.filetype
+
+  -- local icon = { str = icon_str }
+  -- icon.hl = { fg = icon_color }
+
+  if filetype == "" then return "" end
+  return string.format("  %s %s", icon, fname)
 end
 
 local function lsp_diagnostics()
@@ -95,14 +114,14 @@ end
 
 local function lsp_client()
   local msg = " LS Inactive"
-  local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+  local buf_ft = api.nvim_buf_get_option(0, "filetype")
   local clients = vim.lsp.get_active_clients()
   if next(clients) == nil then
     return msg
   end
   for _, client in ipairs(clients) do
     local filetypes = client.config.filetypes
-    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+    if filetypes and fn.index(filetypes, buf_ft) ~= -1 then
       return " " .. client.name
     end
   end
@@ -110,35 +129,41 @@ local function lsp_client()
 end
 
 local function lineinfo()
-  if vim.bo.filetype == "alpha" then
+  if bo.filetype == "alpha" then
     return ""
   end
   return "  %l:%c  "
 end
 
 local function progress_bar()
-  local current_line = vim.fn.line "."
-  local total_lines = vim.fn.line "$"
+  local current_line = fn.line "."
+  local total_lines = fn.line "$"
   local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
   local line_ratio = current_line / total_lines
   local index = math.ceil(line_ratio * #chars)
   return chars[index]
 end
 
--- local function treesitter_tree()
---   local bufnr = vim.api.nvim_get_current_buf()
---   if next(vim.treesitter.highlighter.active[bufnr]) then
---     return "   "
---   end
---   return ""
--- end
+local function treesitter_tree()
+  local bufnr = api.nvim_get_current_buf()
+  if bo.filetype == "TelescopePrompt" then
+    return ""
+  elseif bo.filetype == "packer" then
+    return ""
+  elseif bo.filetype == "" then
+    return ""
+  elseif next(vim.treesitter.highlighter.active[bufnr]) then
+    return "%#StatusLineTreesitterTree#      "
+  end
+  return ""
+end
 
 local function git_signs()
   local git_info = vim.b.gitsigns_status_dict
   if not git_info or git_info.head == "" then
     return ""
   end
-  local added = git_info.added and (" %#StatusLineGitSignsAdd# " .. git_info.added .. " ") or ""
+  local added = git_info.added and ("%#StatusLineGitSignsAdd#  " .. git_info.added .. " ") or ""
   local changed = git_info.changed and ("%#StatusLineGitSignsChange# " .. git_info.changed .. " ") or ""
   local removed = git_info.removed and ("%#StatusLineGitSignsDelete# " .. git_info.removed .. " ") or ""
   if git_info.added == 0 then
@@ -151,12 +176,12 @@ local function git_signs()
     removed = ""
   end
   return table.concat {
-     "  %#StatusLineGitSignsAdd# ",
-     git_info.head,
-     " ",
-     added,
-     changed,
-     removed,
+    "%#StatusLineGitSignsAdd#  ",
+    git_info.head,
+    " ",
+    added,
+    changed,
+    removed,
   }
 end
 
@@ -169,6 +194,7 @@ function Statusline.active()
     mode(),
     "%#Statusline#",
     filename(),
+    treesitter_tree(),
     git_signs(),
     "  ",
     lsp_diagnostics(),
@@ -176,6 +202,7 @@ function Statusline.active()
     "%=%#StatusLine#",
     lsp_client(),
     " ",
+    "%#StatusLineLineInfo#",
     lineinfo(),
     "%#StatusLineProgressBar#",
     progress_bar(),
@@ -190,7 +217,7 @@ function Statusline.short()
   return "%#StatusLineNC#   NvimTree"
 end
 
-vim.api.nvim_exec([[
+api.nvim_exec([[
   augroup Statusline
   au!
   au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()

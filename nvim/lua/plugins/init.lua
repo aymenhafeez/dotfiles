@@ -281,6 +281,30 @@ return packer.startup {
       ft = "python"
     }
 
+    -- use {
+    --   "folke/noice.nvim",
+    --   event = "VimEnter",
+    --   config = function()
+    --     require("noice").setup {
+    --       cmdline = {
+    --         view = "cmdline"
+    --       },
+    --       popupmenu = {
+    --         enabled = false
+    --       },
+    --       nofity = {
+    --         enabled = true
+    --       }
+    --     }
+    --   end,
+    --   requires = {
+    --     {
+    --       "MunifTanjim/nui.nvim",
+    --       module = {"nui"}
+    --     }
+    --   }
+    -- }
+
     -- colorschemes --
 
     use {
