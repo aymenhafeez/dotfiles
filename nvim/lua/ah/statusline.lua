@@ -25,6 +25,15 @@ local modes = {
   ["t"] = "",
 }
 
+local ignore_ft = {
+  "",
+  "packer",
+  "toggleterm",
+  "TelescopePrompt",
+  "NvimTree",
+  "lspinfo"
+}
+
 local function mode()
   local current_mode = api.nvim_get_mode().mode
   return string.format(" %s ", modes[current_mode])
