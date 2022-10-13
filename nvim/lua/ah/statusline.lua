@@ -45,7 +45,7 @@ local function update_mode_colors()
   if current_mode == "n" then
     mode_color = "%#StatuslineAccent#"
   elseif current_mode == "i" or current_mode == "ic" then
-    mode_color = "%#StatuslineInsert#"
+    mode_color = "%#Statusline#"
   elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
     mode_color = "%#StatuslineVisual#"
   elseif current_mode == "R" then
@@ -138,9 +138,6 @@ local function lsp_client()
 end
 
 local function lineinfo()
-  if bo.filetype == "alpha" then
-    return ""
-  end
   return "  %l:%c  "
 end
 
@@ -153,18 +150,26 @@ local function progress_bar()
   return chars[index]
 end
 
-local function treesitter_tree()
-  local bufnr = api.nvim_get_current_buf()
-  if bo.filetype == "TelescopePrompt" then
-    return ""
-  elseif bo.filetype == "packer" then
-    return ""
-  elseif bo.filetype == "" then
-    return ""
-  elseif next(vim.treesitter.highlighter.active[bufnr]) then
-    return "%#StatusLineTreesitterTree#      "
+local function search_count()
+  if vim.api.nvim_get_vvar("hlsearch") == 1 then
+    local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
+    if res.total > 0 then
+      return string.format("%s/%d %s   ", res.current, res.total, vim.fn.getreg("/"))
+    end
   end
   return ""
+end
+
+local function treesitter_tree()
+  local bufnr = api.nvim_get_current_buf()
+  for ft in pairs(ignore_ft) do
+    if bo.filetype == ignore_ft[ft] then
+      return ""
+    end
+  end
+  if next(vim.treesitter.highlighter.active[bufnr]) then
+    return "%#StatusLineTreesitterTree#      "
+  end
 end
 
 local function git_signs()
@@ -209,6 +214,9 @@ function Statusline.active()
     lsp_diagnostics(),
     "%#Statusline#",
     "%=%#StatusLine#",
+    "%#StatusLineTreesitterTree#",
+    search_count(),
+    "%#Statusline#",
     lsp_client(),
     " ",
     "%#StatusLineLineInfo#",
@@ -218,19 +226,9 @@ function Statusline.active()
   }
 end
 
-function Statusline.inactive()
-  return " %F"
-end
-
-function Statusline.short()
-  return "%#StatusLineNC#   NvimTree"
-end
-
-api.nvim_exec([[
-  augroup Statusline
-  au!
-  au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
-  au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
-  au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline.short()
-  augroup END
-]], false)
+local statusLine = api.nvim_create_augroup("StatusLine", { clear = true })
+api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  pattern = "*",
+  command = "setlocal statusline=%!v:lua.Statusline.active()",
+  group = statusLine
+})
