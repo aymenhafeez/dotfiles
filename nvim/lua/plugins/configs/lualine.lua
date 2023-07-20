@@ -128,7 +128,7 @@ ins_left {
   function()
     local b = vim.api.nvim_get_current_buf()
     if next(vim.treesitter.highlighter.active[b]) then
-      return ""
+      return ""
     end
     return ""
   end,
@@ -139,8 +139,8 @@ ins_left {
 
 ins_left {
   "branch",
-  icon = "",
-  color = { fg = colors.orange, gui="bold" },
+  icon = "",
+  color = { fg = colors.orange },
   padding = { left = 2, right = 2 },
 }
 
@@ -204,15 +204,15 @@ ins_right {
   padding = { left = 2, right = 3 }
 }
 
-ins_right {
-  "location",
-  color = { fg = colors.blue_1 }
-}
+-- ins_right {
+--   "location",
+--   color = { fg = colors.blue_1 }
+-- }
 
-ins_right {
-  "progress",
-  color = { fg = colors.blue_1 }
-}
+-- ins_right {
+--   "progress",
+--   color = { fg = colors.blue_1 }
+-- }
 
 ins_right {
   function()
@@ -227,36 +227,36 @@ ins_right {
   padding = { right = 0, left = 0 }
 }
 
-ins_right {
-  function()
-    return "▊"
-  end,
-  color = function()
-    local mode_color = {
-      n = colors.blue,
-      i = colors.green,
-      v = colors.magenta,
-      [""] = colors.blue,
-      V = colors.magenta,
-      c = colors.yellow,
-      no = colors.red,
-      s = colors.orange,
-      S = colors.orange,
-      [""] = colors.orange,
-      ic = colors.yellow,
-      R = colors.red,
-      Rv = colors.red,
-      cv = colors.violet,
-      ce = colors.violet,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ["r?"] = colors.cyan,
-      ["!"] = colors.red,
-      t = colors.orange,
-    }
-    return { fg = mode_color[vim.fn.mode()] }
-  end,
-  padding = { left = 1, right = 0 },
-}
+-- ins_right {
+--   function()
+--     return "▊"
+--   end,
+--   color = function()
+--     local mode_color = {
+--       n = colors.blue,
+--       i = colors.green,
+--       v = colors.magenta,
+--       [""] = colors.blue,
+--       V = colors.magenta,
+--       c = colors.yellow,
+--       no = colors.red,
+--       s = colors.orange,
+--       S = colors.orange,
+--       [""] = colors.orange,
+--       ic = colors.yellow,
+--       R = colors.red,
+--       Rv = colors.red,
+--       cv = colors.violet,
+--       ce = colors.violet,
+--       r = colors.cyan,
+--       rm = colors.cyan,
+--       ["r?"] = colors.cyan,
+--       ["!"] = colors.red,
+--       t = colors.orange,
+--     }
+--     return { fg = mode_color[vim.fn.mode()] }
+--   end,
+--   padding = { left = 1, right = 0 },
+-- }
 
 lualine.setup(config)

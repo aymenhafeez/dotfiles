@@ -210,7 +210,7 @@ function M.spell_check()
       prompt_title = "",
       layout_config = {
         height = 0.2,
-        width = 0.3
+        width = 0.25
       }
     })
 end

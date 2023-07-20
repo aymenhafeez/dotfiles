@@ -99,19 +99,30 @@ return packer.startup {
         require("plugins.configs.nvim-tree")
       end
     }
+
     use {
-      "romgrk/barbar.nvim",
+      "nvim-lualine/lualine.nvim",
       event = "BufRead",
       config = function()
-        require("plugins.configs.barbar")
+        require("plugins.configs.lualine")
       end
     }
+
+    use {
+      "akinsho/bufferline.nvim",
+      opt = true,
+      event = "BufRead",
+      config = function()
+        require("plugins.configs.bufferline")
+      end
+    }
+
     use {
       "j-hui/fidget.nvim",
       config = function()
         require("fidget").setup {
           text = {
-            spinner = "arc",
+            spinner = "star",
             done = ""
           }
         }
@@ -228,7 +239,7 @@ return packer.startup {
             require("plugins.configs.navic")
           end,
           module = { "nvim-navic" },
-        }
+        },
       },
     }
 
@@ -261,7 +272,7 @@ return packer.startup {
     use {
       "quangnguyen30192/cmp-nvim-ultisnips",
       after = "nvim-cmp",
-      ft = { "tex", "md "}
+      ft = { "tex", "markdown "}
     }
     use {
       "SirVer/ultisnips",
@@ -271,7 +282,7 @@ return packer.startup {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       after = "nvim-cmp"
     }
-    use "brymer-meneses/grammar-guard.nvim"
+    use  "brymer-meneses/grammar-guard.nvim"
 
     use "nanotee/luv-vimdocs"
     use "milisims/nvim-luaref"
@@ -281,40 +292,13 @@ return packer.startup {
       ft = "python"
     }
 
-    -- use {
-    --   "folke/noice.nvim",
-    --   event = "VimEnter",
-    --   config = function()
-    --     require("noice").setup {
-    --       cmdline = {
-    --         view = "cmdline"
-    --       },
-    --       popupmenu = {
-    --         enabled = false
-    --       },
-    --       nofity = {
-    --         enabled = true
-    --       }
-    --     }
-    --   end,
-    --   requires = {
-    --     {
-    --       "MunifTanjim/nui.nvim",
-    --       module = {"nui"}
-    --     }
-    --   }
-    -- }
-
-    -- colorschemes --
-
-    use {
-      "uga-rosa/ccc.nvim",
-      cmd = "CccPick"
-    }
+    -- colourschemes --
 
     use "navarasu/onedark.nvim"
     use "catppuccin/nvim"
-    use "rebelot/kanagawa.nvim"
+    use "LunarVim/onedarker.nvim"
+    use "embark-theme/vim"
+    use 'AlexvZyl/nordic.nvim'
 
     -- use "aymenhafeez/tokyonight.nvim"
     local_use "tokyonight.nvim"

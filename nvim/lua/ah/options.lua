@@ -15,7 +15,7 @@ opt.showtabline = 2
 opt.cursorline = true
 opt.showmode = false
 opt.showcmd = false
-opt.cmdheight = 1
+opt.cmdheight = 0
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
@@ -23,7 +23,7 @@ opt.signcolumn = "yes"
 -- opt.linebreak = true
 opt.wrap = false
 
-vim.opt.foldmethod = "expr"
+--[[ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
 vim.opt.foldlevel = 6
 vim.opt.fillchars = {
@@ -32,16 +32,10 @@ vim.opt.fillchars = {
   foldsep = ' ',
   foldclose = '',
 }
-vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))"
+vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))" ]]
 
--- cmdheight = 0 is a little buggy atm
-if vim.fn.has("nvim-0.9") ~= 0 then
-  vim.o.cmdheight = 0
-end
-
-opt.formatoptions = vim.opt.formatoptions - "c"
+opt.formatoptions:remove { "c" }
 opt.spelllang = "en_gb"
-opt.shortmess:append "s"
 
 opt.hlsearch = true
 opt.ignorecase = true
@@ -67,7 +61,7 @@ opt.wildoptions = "pum"
 opt.autoread = true
 opt.hidden = true
 opt.ttimeoutlen = 0
-opt.lazyredraw = true
+-- opt.lazyredraw = true
 opt.mouse = "nvia"
 opt.clipboard = "unnamedplus"
 opt.path:append { "**" }
@@ -80,14 +74,14 @@ opt.termguicolors = true
 o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
 -- add `gf` functionality inside `.lua` files.
-vim.opt_local.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
-vim.opt_local.includeexpr = "substitute(v:fname,'\\.','/','g')"
+vim.opt.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
+vim.opt.includeexpr = "substitute(v:fname,'\\.','/','g')"
 
 for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-  vim.opt_local.path:append(path .. '/lua')
+  vim.opt.path:append(path .. '/lua')
 end
 
-vim.opt_local.suffixesadd:prepend('.lua')
+vim.opt.suffixesadd:prepend('.lua')
 
 g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
@@ -147,13 +141,13 @@ for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
 
-vim.cmd("au FocusGained * :checktime")
+-- vim.cmd("au FocusGained * :checktime")
 
-local colorscheme = "tokyonight-night"
+local colorscheme = "neodarker"
 
 if colorscheme == "onedark" then
   require("onedark").setup({
-    style = "darker"
+    style = "dark"
   })
 end
 

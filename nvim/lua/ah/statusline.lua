@@ -25,12 +25,13 @@ local modes = {
   ["t"] = "",
 }
 
-local ignore_ft = {
+local ts_ignore_ft = {
   "",
   "packer",
   "toggleterm",
   "TelescopePrompt",
   "NvimTree",
+  "neo-tree",
   "lspinfo"
 }
 
@@ -77,11 +78,7 @@ local function filename()
 
   local file_name, file_ext = fn.expand("%:t"), vim.fn.expand("%:e")
   local icon = require"nvim-web-devicons".get_icon(file_name, file_ext, { default = true })
-  -- local icon_str, icon_color = require("nvim-web-devicons").get_icon_color(fn.expand("%:t"), nil, { default = true })
   local filetype = bo.filetype
-
-  -- local icon = { str = icon_str }
-  -- icon.hl = { fg = icon_color }
 
   if filetype == "" then return "" end
   return string.format("  %s %s", icon, fname)
@@ -152,9 +149,9 @@ end
 
 local function search_count()
   if vim.api.nvim_get_vvar("hlsearch") == 1 then
-    local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
-    if res.total > 0 then
-      return string.format("%s/%d %s   ", res.current, res.total, vim.fn.getreg("/"))
+    local count = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
+    if count.total > 0 then
+      return string.format("%s/%d %s   ", count.current, count.total, vim.fn.getreg("/"))
     end
   end
   return ""
@@ -162,8 +159,8 @@ end
 
 local function treesitter_tree()
   local bufnr = api.nvim_get_current_buf()
-  for ft in pairs(ignore_ft) do
-    if bo.filetype == ignore_ft[ft] then
+  for ft in pairs(ts_ignore_ft) do
+    if bo.filetype == ts_ignore_ft[ft] then
       return ""
     end
   end
@@ -177,7 +174,7 @@ local function git_signs()
   if not git_info or git_info.head == "" then
     return ""
   end
-  local added = git_info.added and ("%#StatusLineGitSignsAdd#  " .. git_info.added .. " ") or ""
+  local added = git_info.added and ("%#StatusLineGitSignsAdd# " .. git_info.added .. " ") or ""
   local changed = git_info.changed and ("%#StatusLineGitSignsChange# " .. git_info.changed .. " ") or ""
   local removed = git_info.removed and ("%#StatusLineGitSignsDelete# " .. git_info.removed .. " ") or ""
   if git_info.added == 0 then
@@ -190,9 +187,8 @@ local function git_signs()
     removed = ""
   end
   return table.concat {
-    "%#StatusLineGitSignsAdd#  ",
-    git_info.head,
-    " ",
+    "%#StatusLineLspWarning#  ",
+    git_info.head .. "  ",
     added,
     changed,
     removed,

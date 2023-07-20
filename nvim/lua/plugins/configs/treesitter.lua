@@ -7,8 +7,7 @@ treesitter.setup {
   highlight = {
     enable = true,
     ensure_installed = "maintained",
-    additional_vim_regex_highlighting = true,
-    -- ignore_install = { "vim" },
+    additional_vim_regex_highlighting = { "latex" },
   },
   indent = { enable = true },
   incremental_selection = {

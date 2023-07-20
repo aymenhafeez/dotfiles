@@ -10,7 +10,10 @@ vim.g.maplocalleader = " "
 
 -- normal mode
 
-map("n", "<leader>ls", "<cmd>LspStart<CR>", opts)
+map("n", "<S-l>", vim.cmd.bnext, opts)
+map("n", "<S-h>", vim.cmd.bprev, opts)
+
+map("n", "<leader>ls", vim.cmd.LspStart, opts)
 
 map("n", "<leader>lg", function()
   utils.float_terminal("lazygit")
@@ -55,13 +58,16 @@ map("n", "<S-Right>", "<cmd>vertical resize +1<CR>", opts)
 
 map("n", "<C-s>", "mm[s1z=`m", opts)
 
-map("n", "<leader>cn", "<cmd>cnext<CR>", opts)
-map("n", "<leader>cp", "<cmd>cprev<CR>", opts)
-map("n", "<leader>cl", "<cmd>ccl<CR>", opts)
+map("n", "<leader>cn", vim.cmd.cnext, opts)
+map("n", "<leader>cp", vim.cmd.cprev, opts)
+map("n", "<leader>cl", vim.cmd.ccl, opts)
 
-map("n", "<leader>mm", "<cmd>Message<CR>", nopts)
+map("n", "<leader>mm", vim.cmd.Messages, nopts)
 
-map("n", "<leader>hl", "<cmd>nohlsearch<CR>", nopts)
+map("n", "<leader>hl", vim.cmd.nohlsearch, nopts)
+
+map("n", "n", "nzzzv", opts)
+map("n", "N", "Nzzzv", opts)
 
 -- insert mode
 
@@ -91,8 +97,8 @@ map("v", ">", ">gv", opts)
 
 map("v", "<leader>so", ":<C-w>exe join(getline(\"'<\",\"'>\"),'<Bar>')<CR>", opts)
 
-map("x", "J", "<cmd>move '>+1<CR>gv-gv", opts)
-map("x", "K", "<cmd>move '<-2<CR>gv-gv", opts)
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
 -- terminal
 
@@ -103,34 +109,27 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- plugin mappings
 
--- romgrk/barbar.nvim
-map("n", "<S-l>", "<cmd>BufferNext<CR>", opts)
-map("n", "<S-h>", "<cmd>BufferPrevious<CR>", opts)
--- map("n", "<S-l>", "<cmd>bnext<CR>", opts)
--- map("n", "<S-h>", "<cmd>bprev<CR>", opts)
-
 -- kyazdani42/nvim-tree.lua
-map("n", "<leader>-", "<cmd>NvimTreeToggle<CR>", opts)
-map("n", "<leader>f-", "<cmd>NvimTreeFindFile<CR>", opts)
+map("n", "<leader>-", vim.cmd.NvimTreeToggle, opts)
+map("n", "<leader>f-", vim.cmd.NvimTreeFindFile, opts)
 
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
--- map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
 
 -- aymenhafeez/scratch.vim
-map("n", "<leader>sc", "<cmd>Scratch<CR>", opts)
-map("n", "<leader>ss", "<cmd>Sscratch<CR>", opts)
+map("n", "<leader>sc", vim.cmd.Scratch, opts)
+map("n", "<leader>ss", vim.cmd.Sscratch, opts)
 
 -- Pocco81/true-zen.nvim
-map("n", "<leader>zz", "<cmd>TZMinimalist<CR>", opts)
-map("n", "<leader>zx", "<cmd>TZAtaraxis<CR>", opts)
+map("n", "<leader>zz", vim.cmd.TZMinimalist, opts)
+map("n", "<leader>zx", vim.cmd.TZAtaraxis, opts)
 
 -- nvim-treesitter/playground
-map("n", "<leader>hi", "<cmd>TSHighlightCapturesUnderCursor<CR>", opts)
+map("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, opts)
 
 -- aymenhafeez/OxfDictionary.nvim
-map("n", "<leader>dd", "<cmd>Definition<CR>", opts)
+map("n", "<leader>dd", vim.cmd.Definition, opts)
 
 -- wbthomason/packer.nvim
 map("n", "<leader>ps", function()

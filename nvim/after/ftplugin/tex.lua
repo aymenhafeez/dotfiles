@@ -27,13 +27,5 @@ map("n", "<C-c><C-j>", "<Esc>o\\item ", opts)
 map("n", "<C-c><C-k>", "<Esc>O\\item ", opts)
 map("n", "<C-c><C-l>", "i\\left<Esc>l%i\\right<Esc>", opts)
 
-local function tex_toggle_term()
-  vim.api.nvim_exec("TermExec cmd='pdflatex %'", false)
-  vim.schedule(function()
-    vim.notify("Compiling...", vim.log.levels.INFO, { title = "LaTeX" })
-  end)
-end
-
--- map("n", "<leader>cm", "<cmd>TermExec cmd='pdflatex %'<CR>", opts)
-map("n", "<leader>cm", tex_toggle_term, opts)
+map("n", "<leader>cm", "<cmd>TermExec cmd='pdflatex %'<CR>", opts)
 map("n", "<leader>pv", "<cmd>TermExec cmd='open %:t:r.pdf'<CR>")

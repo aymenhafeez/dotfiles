@@ -5,7 +5,7 @@ end
 
 local handlers = require("ah.lsp.handlers")
 local capabilities = handlers.lsp_capabilities
-local updated_capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+local updated_capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 local lspconfig_ui = require("lspconfig.ui.windows")
 
 handlers.setup()
@@ -30,7 +30,7 @@ local servers = {
   remark_ls = {},
   html = {},
   jsonls = {},
-  sumneko_lua = {
+  lua_ls = {
     settings = {
       Lua = {
         runtime = {
@@ -74,6 +74,9 @@ local servers = {
       },
     },
   },
+  rust_analyzer = {
+    cmd = { "rustup", "run", "stable", "rust-analyzer" }
+  }
 }
 
 lspinstaller.setup {

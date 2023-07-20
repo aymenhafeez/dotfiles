@@ -39,11 +39,11 @@ vim.api.nvim_create_autocmd("BufReadPre", {
   end,
 })
 
-local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = false })
+local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
   callback = function()
-    vim.api.nvim_exec("wincmd L | vertical resize -7", false)
+    vim.api.nvim_exec("wincmd L | vertical resize -8", false)
     vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
     vim.opt_local.wrap = true
     vim.opt_local.linebreak = true
@@ -66,4 +66,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   command = "if (winnr('$') == 1 && &filetype == 'nvimtree') | q | endif",
   group = closeNvimTree
+})
+
+local checkTime = vim.api.nvim_create_augroup("CheckTime", { clear = false })
+vim.api.nvim_create_autocmd("FocusGained", {
+  pattern = "*",
+  command = "checktime",
+  group = checkTime
 })

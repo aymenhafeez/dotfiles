@@ -2,7 +2,6 @@ local util = require("ah.utils")
 
 require "ah.options"
 require "ah.mappings"
-require "ah.statusline"
 
 vim.schedule(function()
   util.version()

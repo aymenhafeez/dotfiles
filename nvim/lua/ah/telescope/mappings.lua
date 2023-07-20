@@ -6,7 +6,6 @@ local utils = require("ah.telescope.utils")
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- nvim-telescope/telescope.nvim
 map("n", "<leader>sf", utils.find_files, opts)
 map("n", "<leader>sw", utils.grep_string, opts)
 map("n", "<leader>sr", utils.oldfiles, opts)

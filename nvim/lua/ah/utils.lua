@@ -25,6 +25,7 @@ function M.source_lua()
     vim.api.nvim_exec("luafile %", false)
   elseif vim.bo.filetype == "vim" then
     vim.api.nvim_exec("source %", false)
+  elseif vim.bo.filetype == "vim" then
   end
 end
 
@@ -76,7 +77,7 @@ function M.version()
     vim.notify(
       ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
       vim.log.levels.WARN,
-      { title = "Neovim: not running nightly!" }
+      { title = "Neovim: not running nightly" }
     )
   end
 end
@@ -188,5 +189,7 @@ M.tableCount = function(T)
   for _ in pairs(T) do count = count + 1 end
   return count
 end ]]
+
+
 
 return M

@@ -3,7 +3,6 @@ if not present then
   return
 end
 
-local colors = require("ah.colors")
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 
@@ -19,7 +18,7 @@ bufferline.setup {
   options = {
     offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
     numbers = "none",
-    show_buffer_close_icons = false,
+    show_buffer_close_icons = true,
     show_tab_indicators = true,
     enforce_regular_tabs = true,
     max_name_length = 30,
@@ -27,15 +26,15 @@ bufferline.setup {
     tab_size = 21,
     color_icons = true,
     separator_style = "thin",
-    buffer_close_icon = "",
+    buffer_close_icon = "",
     modified_icon = "●",
     close_icon = "",
     show_close_icon = false,
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      icon = "▎",
-      style = "icon"
+      -- icon = "▎",
+      style = "none"
     },
   },
   highlights = {
@@ -53,15 +52,15 @@ bufferline.setup {
     },
     close_button = {
       bg = { attribute = 'bg', highlight = 'StatusLine' },
-      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+      fg = { attribute = 'fg', highlight = 'NonText' },
     },
     close_button_visible = {
       bg = { attribute = 'bg', highlight = 'StatusLine' },
-      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+      fg = { attribute = 'fg', highlight = 'NonText' },
     },
-    close_button_selected = {
-      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
-    },
+    -- close_button_selected = {
+    --   fg = { attribute = 'fg', highlight = 'NonText' },
+    -- },
     buffer_visible = {
       bg = { attribute = 'bg', highlight = 'StatusLine' },
     },
