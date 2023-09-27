@@ -82,11 +82,7 @@ return packer.startup {
       "akinsho/toggleterm.nvim",
       tag = '*',
       config = function()
-        require("toggleterm").setup {
-          float_opts = {
-            border = "curved"
-          }
-        }
+        require('plugins.configs.toggleterm')
       end,
       cmd = { "ToggleTerm", "TermExec" }
     }
@@ -191,9 +187,16 @@ return packer.startup {
       end,
     }
 
+    -- use {
+    --   "Pocco81/true-zen.nvim",
+    --   cmd = { "TZAtaraxis", "TZMinimalist" },
+    --   config = function()
+    --     require("plugins.configs.zen")
+    --   end
+    -- }
+
     use {
-      "Pocco81/true-zen.nvim",
-      cmd = { "TZAtaraxis", "TZMinimalist" },
+      "folke/zen-mode.nvim",
       config = function()
         require("plugins.configs.zen")
       end
@@ -218,6 +221,13 @@ return packer.startup {
         "Verbose"
       }
     }
+
+    -- use {
+    --   "karb94/neoscroll.nvim",
+    --   config = function ()
+    --     require("plugins.configs.neoscroll")
+    --   end
+    -- }
 
     -- lsp stuff --
 
@@ -278,10 +288,6 @@ return packer.startup {
       "SirVer/ultisnips",
       after = "nvim-cmp",
     }
-    use {
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      after = "nvim-cmp"
-    }
     use  "brymer-meneses/grammar-guard.nvim"
 
     use "nanotee/luv-vimdocs"
@@ -294,11 +300,11 @@ return packer.startup {
 
     -- colourschemes --
 
-    use "navarasu/onedark.nvim"
     use "catppuccin/nvim"
-    use "LunarVim/onedarker.nvim"
     use "embark-theme/vim"
     use 'AlexvZyl/nordic.nvim'
+    use 'Mofiqul/vscode.nvim'
+    use 'navarasu/onedark.nvim'
 
     -- use "aymenhafeez/tokyonight.nvim"
     local_use "tokyonight.nvim"

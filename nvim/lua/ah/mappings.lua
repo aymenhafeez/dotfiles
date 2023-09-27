@@ -115,15 +115,20 @@ map("n", "<leader>f-", vim.cmd.NvimTreeFindFile, opts)
 
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
+map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", opts)
+map("n", "<leader>gt", "<cmd>ToggleTerm direction=tab<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
 
 -- aymenhafeez/scratch.vim
 map("n", "<leader>sc", vim.cmd.Scratch, opts)
 map("n", "<leader>ss", vim.cmd.Sscratch, opts)
 
--- Pocco81/true-zen.nvim
-map("n", "<leader>zz", vim.cmd.TZMinimalist, opts)
-map("n", "<leader>zx", vim.cmd.TZAtaraxis, opts)
+-- -- Pocco81/true-zen.nvim
+-- map("n", "<leader>zz", vim.cmd.TZMinimalist, opts)
+-- map("n", "<leader>zx", vim.cmd.TZAtaraxis, opts)
+
+-- "folke/zen-mode.nvim"
+map("n", "<leader>zz", vim.cmd.ZenMode, opts)
 
 -- nvim-treesitter/playground
 map("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, opts)

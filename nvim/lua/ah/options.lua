@@ -143,17 +143,7 @@ end
 
 -- vim.cmd("au FocusGained * :checktime")
 
-local colorscheme = "neodarker"
-
-if colorscheme == "onedark" then
-  require("onedark").setup({
-    style = "dark"
-  })
-end
-
-if colorscheme == "catppuccin" then
-  vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
-end
+local colorscheme = "neodark"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then

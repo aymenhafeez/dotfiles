@@ -77,7 +77,7 @@ function M.version()
     vim.notify(
       ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
       vim.log.levels.WARN,
-      { title = "Neovim: not running nightly" }
+      { title = "Neovim not running nightly" }
     )
   end
 end

@@ -45,11 +45,11 @@ function M.setup()
     signs = true,
     underline = true,
     update_in_insert = true,
-    severity_sort = false,
+    severity_sort = true,
   })
 
-  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
@@ -73,31 +73,31 @@ local function _notify(content, type, opts, force)
   vim.notify(content, type, opts)
 end
 
-local function _lsp_highlight_document(client)
-  if client.server_capabilities.documentHighlightProvider then
-    local lsp_document_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    vim.api.nvim_clear_autocmds({ group = "lsp_document_highlight" })
-    vim.api.nvim_create_autocmd("CursorHold", {
-      pattern = "<buffer>",
-      callback = vim.lsp.buf.document_highlight,
-      group = lsp_document_highlight,
-    })
-    vim.api.nvim_create_autocmd("CursorMoved", {
-      pattern = "<buffer>",
-      callback = vim.lsp.buf.clear_references,
-      group = lsp_document_highlight,
-    })
-  end
-
-  --[[ -- show diagnostic message on CursorHold
-  local floatDiagnostics = vim.api.nvim_create_augroup("FloatDiagnostics", { clear = true })
-  vim.api.nvim_create_autocmd("CursorHold", {
-    pattern = "*",
-    command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
-    group = floatDiagnostics
-  }) ]]
-
-end
+-- local function _lsp_highlight_document(client)
+--   if client.server_capabilities.documentHighlightProvider then
+--     local lsp_document_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+--     vim.api.nvim_clear_autocmds({ group = "lsp_document_highlight" })
+--     vim.api.nvim_create_autocmd("CursorHold", {
+--       pattern = "<buffer>",
+--       callback = vim.lsp.buf.document_highlight,
+--       group = lsp_document_highlight,
+--     })
+--     vim.api.nvim_create_autocmd("CursorMoved", {
+--       pattern = "<buffer>",
+--       callback = vim.lsp.buf.clear_references,
+--       group = lsp_document_highlight,
+--     })
+--   end
+--
+-- -- -- show diagnostic message on CursorHold
+-- --   local floatDiagnostics = vim.api.nvim_create_augroup("FloatDiagnostics", { clear = true })
+-- --   vim.api.nvim_create_autocmd("CursorHold", {
+-- --     pattern = "<buffer>",
+-- --     command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
+-- --     group = floatDiagnostics
+-- --   })
+--
+-- end
 
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -107,6 +107,8 @@ function M.on_attach(client, bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   map("n", "<leader>e", vim.diagnostic.open_float, opts)
+  map("n", "<leader>dh", vim.diagnostic.hide, opts)
+  map("n", "<leader>ds", vim.diagnostic.show, opts)
   map("n", "]d", vim.diagnostic.goto_next, opts)
   map("n", "[d", vim.diagnostic.goto_prev, opts)
   map("n", "<leader>q", vim.diagnostic.setloclist, opts)
@@ -118,6 +120,7 @@ function M.on_attach(client, bufnr)
   map("n", "K", vim.lsp.buf.hover, bufopts)
   map("n", "gi", vim.lsp.buf.implementation, bufopts)
   map("n", "<leader>k", vim.lsp.buf.signature_help, bufopts)
+  map("i", "<C-k>", vim.lsp.buf.signature_help, bufopts)
   map("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
   map("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
   map("n", "<leader>lr", "<cmd>:LspRestart<CR>", bufopts)
@@ -137,7 +140,35 @@ function M.on_attach(client, bufnr)
 
   _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
 
-  -- _lsp_highlight_document(client)
+  -- -- this works but doesn't
+  -- if client.server_capabilities.documentHighlightProvider then
+  --   local lsp_signature_help = vim.api.nvim_create_augroup("lsp_signature_help", { clear = true })
+  --   vim.api.nvim_clear_autocmds({ group = "lsp_signature_help" })
+  --   vim.api.nvim_create_autocmd("CursorHoldI", {
+  --     pattern = "<buffer>",
+  --     callback = function()
+  --       if vim.bo.filetype == { 'tex', 'markdown' } then
+  --         return
+  --       else
+  --         vim.lsp.buf.signature_help()
+  --       end
+  --     end,
+  --     group = lsp_signature_help,
+  --   })
+  --   vim.api.nvim_create_autocmd("CursorMovedI", {
+  --     pattern = "<buffer>",
+  --     callback = vim.lsp.buf.clear_references,
+  --     group = lsp_signature_help,
+  --   })
+  -- end
+
+-- -- show diagnostic message on CursorHold
+--   local floatDiagnostics = vim.api.nvim_create_augroup("FloatDiagnostics", { clear = true })
+--   vim.api.nvim_create_autocmd("CursorHold", {
+--     pattern = "<buffer>",
+--     command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
+--     group = floatDiagnostics
+--   })
 
   if client.server_capabilities.documentHighlightProvider then
     vim.cmd [[
@@ -160,11 +191,10 @@ function M.get_lua_runtime()
     end
   end
 
-  -- This loads the `lua` files from nvim into the runtime.
+  -- loads the `lua` files from nvim into the runtime
   result[vim.fn.expand("$VIMRUNTIME/lua")] = true
 
-  -- TODO: Figure out how to get these to work...
-  --  Maybe we need to ship these instead of putting them in `src`?...
+  -- TODO: figure out how to get these to work
   result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
 
   return result;

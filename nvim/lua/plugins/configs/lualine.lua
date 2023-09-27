@@ -24,9 +24,6 @@ local colors = {
   red            = "#ec5f67",
   light_grey     = "#343b46",
   light_grey_2   = "#282d39",
-
-  tokyo_night_bg = "#202230",
-  tokyo_night_fg = "#c0caf5",
 }
 
 local conditions = {
@@ -47,7 +44,6 @@ local config = {
   options = {
     component_separators = "",
     section_separators = "",
-    -- theme = "tokyonight"
   },
   sections = {
     lualine_a = {},
@@ -77,7 +73,8 @@ end
 
 ins_left {
   function()
-    return "▊"
+    return "█"
+    -- return "  ● "
   end,
   color = function()
     local mode_color = {
@@ -132,7 +129,7 @@ ins_left {
     end
     return ""
   end,
-  color = { fg = colors.blue_2 },
+  color = { fg = colors.blue_1 },
   padding = { left = 1, right = 3 },
   cond = conditions.hide_in_width,
 }

@@ -74,7 +74,6 @@ end
 
 function M.find_files()
   telescope.find_files {
-    -- results_title = "Find files",
     results_title = "",
     prompt_title = "",
     preview_title = "",
@@ -121,10 +120,11 @@ function M.search_notes()
     prompt_title = "",
     path_display = { "tail" },
     file_ignore_patterns = ignore_patterns,
+    layout_strategy = "flex",
     layout_config = {
       width = 0.85,
       height = 0.8,
-      preview_width = 0.55
+      -- preview_width = 0.55
     }
   }
 end
