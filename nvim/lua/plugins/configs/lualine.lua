@@ -104,7 +104,6 @@ ins_left {
   padding = { left = 0, right = 1 },
 }
 
-
 ins_left {
   "filetype",
   cond = conditions.buffer_not_empty,
@@ -198,13 +197,14 @@ ins_right {
   end,
   icon = "",
   color = { fg = colors.blue_1 },
-  padding = { left = 2, right = 3 }
+  padding = { left = 3, right = 3 }
 }
 
--- ins_right {
---   "location",
---   color = { fg = colors.blue_1 }
--- }
+ins_right {
+  "location",
+  color = { fg = colors.blue_1 },
+  padding = { right = 2 }
+}
 
 -- ins_right {
 --   "progress",

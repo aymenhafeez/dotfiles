@@ -51,15 +51,15 @@ vim.api.nvim_create_autocmd("FileType", {
   group = helpFiles
 })
 
-local packerHighlight = vim.api.nvim_create_augroup("PackerHiglight", { clear = true})
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "packer",
-  -- command = "lua vim.opt.winhighlight = 'Normal:NvimTreeNormal,SignColumn:NvimTreeNormal'",
-  callback = function()
-    vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
-  end,
-  group = packerHighlight
-})
+-- local packerHighlight = vim.api.nvim_create_augroup("PackerHiglight", { clear = true})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "packer",
+--   -- command = "lua vim.opt.winhighlight = 'Normal:NvimTreeNormal,SignColumn:NvimTreeNormal'",
+--   callback = function()
+--     vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
+--   end,
+--   group = packerHighlight
+-- })
 
 local closeNvimTree = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true })
 vim.api.nvim_create_autocmd("BufEnter", {

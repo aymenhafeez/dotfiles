@@ -109,9 +109,12 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- plugin mappings
 
--- kyazdani42/nvim-tree.lua
-map("n", "<leader>-", vim.cmd.NvimTreeToggle, opts)
-map("n", "<leader>f-", vim.cmd.NvimTreeFindFile, opts)
+-- -- kyazdani42/nvim-tree.lua
+-- map("n", "<leader>-", vim.cmd.NvimTreeToggle, opts)
+-- map("n", "<leader>f-", vim.cmd.NvimTreeFindFile, opts)
+
+-- nvim-neo-tree/neo-tree.nvim
+map("n", "<leader>-", "<cmd>Neotree toggle<CR>", opts)
 
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
@@ -136,7 +139,7 @@ map("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, opts)
 -- aymenhafeez/OxfDictionary.nvim
 map("n", "<leader>dd", vim.cmd.Definition, opts)
 
--- wbthomason/packer.nvim
-map("n", "<leader>ps", function()
-  vim.api.nvim_exec("source ~/.config/nvim/lua/plugins/init.lua | PackerSync", false)
-end, opts)
+-- -- wbthomason/packer.nvim
+-- map("n", "<leader>ps", function()
+--   vim.api.nvim_exec("source ~/.config/nvim/lua/plugins/init.lua | PackerSync", false)
+-- end, opts)

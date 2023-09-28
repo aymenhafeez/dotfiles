@@ -16,7 +16,7 @@ map("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 
 bufferline.setup {
   options = {
-    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    offsets = { { filetype = "NvimTree", text = "", padding = 1 }, { filetype = "neo-tree", text = "", padding = 0 } },
     numbers = "none",
     show_buffer_close_icons = true,
     show_tab_indicators = true,

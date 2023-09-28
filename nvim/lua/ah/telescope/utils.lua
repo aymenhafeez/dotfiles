@@ -1,6 +1,7 @@
 local M = {}
 
 local telescope = require("telescope.builtin")
+local extension = require "telescope".extensions
 local theme = require("telescope.themes")
 local util = require("ah.utils")
 
@@ -292,6 +293,16 @@ function M.search_projects_dir()
     preview_title = "",
     prompt_title = "",
     path_display = { "truncate" },
+    layout_config = {
+      height = 0.75,
+      width = 0.75,
+      preview_width = 0.6
+    }
+  }
+end
+
+function M.file_browser()
+  extension.file_browser.file_browser {
     layout_config = {
       height = 0.75,
       width = 0.75,

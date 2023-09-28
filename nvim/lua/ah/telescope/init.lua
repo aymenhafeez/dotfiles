@@ -5,6 +5,7 @@ end
 
 local action = require("telescope.actions")
 local action_layout = require "telescope.actions.layout"
+local fb_actions = require "telescope".extensions.file_browser.actions
 
 telescope.setup {
   defaults = {
@@ -50,6 +51,15 @@ telescope.setup {
       override_file_sorter = true,
       case_mode = "smart_case",
     },
+    file_browser = {
+      -- theme = "ivy",
+      hijack_netrw = true,
+      mappings = {
+        ["n"] = {
+          ["<C-a>"] = fb_actions.create
+        }
+      }
+    }
   --   heading = {
   --     theme = "ivy",
   --     layout_config = {
@@ -71,3 +81,4 @@ telescope.setup {
 -- pcall(telescope.load_extension, "zoxide")
 telescope.load_extension("fzf")
 telescope.load_extension("ui-select")
+telescope.load_extension("file_browser")

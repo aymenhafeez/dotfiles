@@ -87,17 +87,24 @@ return packer.startup {
       cmd = { "ToggleTerm", "TermExec" }
     }
 
+    -- use {
+    --   "kyazdani42/nvim-tree.lua",
+    --   cmd = { "NvimTreeToggle", "NvimTreeOpen" },
+    --   config = function()
+    --     require("plugins.configs.nvim-tree")
+    --   end
+    -- }
+
     use {
-      "kyazdani42/nvim-tree.lua",
-      requires = "kyazdani42/nvim-web-devicons",
-      cmd = { "NvimTreeToggle", "NvimTreeOpen" },
+      "nvim-neo-tree/neo-tree.nvim",
       config = function()
-        require("plugins.configs.nvim-tree")
+        require("plugins.configs.neotree")
       end
     }
 
     use {
       "nvim-lualine/lualine.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
       event = "BufRead",
       config = function()
         require("plugins.configs.lualine")
@@ -113,19 +120,19 @@ return packer.startup {
       end
     }
 
-    use {
-      "j-hui/fidget.nvim",
-      config = function()
-        require("fidget").setup {
-          text = {
-            spinner = "star",
-            done = ""
-          }
-        }
-        vim.api.nvim_create_autocmd("VimLeavePre", { command = [[silent! FidgetClose]] })
-      end,
-      after = "nvim-lspconfig"
-    }
+    -- use {
+    --   "j-hui/fidget.nvim",
+    --   config = function()
+    --     require("fidget").setup {
+    --       text = {
+    --         spinner = "star",
+    --         done = ""
+    --       }
+    --     }
+    --     vim.api.nvim_create_autocmd("VimLeavePre", { command = [[silent! FidgetClose]] })
+    --   end,
+    --   after = "nvim-lspconfig"
+    -- }
 
     use {
       "nvim-treesitter/nvim-treesitter",
@@ -181,6 +188,7 @@ return packer.startup {
       requires = {
         "nvim-telescope/telescope-ui-select.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+        "nvim-telescope/telescope-file-browser.nvim",
       },
       config = function()
         require("ah.telescope")
@@ -253,6 +261,10 @@ return packer.startup {
       },
     }
 
+    use {
+      "hrsh7th/cmp-nvim-lsp-signature-help"
+    }
+
     -- cmp --
 
     use {
@@ -296,6 +308,16 @@ return packer.startup {
     use {
       "jupyter-vim/jupyter-vim",
       ft = "python"
+    }
+
+    use {
+      "folke/noice.nvim",
+      config = function()
+        require("plugins.configs.noice")
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim"
+      }
     }
 
     -- colourschemes --

@@ -143,7 +143,7 @@ end
 
 -- vim.cmd("au FocusGained * :checktime")
 
-local colorscheme = "neodark"
+local colorscheme = 'neodark'
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then

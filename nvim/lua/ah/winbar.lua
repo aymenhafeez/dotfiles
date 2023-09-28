@@ -9,10 +9,12 @@ vim.api.nvim_set_hl(0, "WinBarContext", { fg = colors.blue })
 -- seeing if porting this and this whole winbar config to nvim navic will work
 vim.cmd [[
 hi link EmptyWinbar NvimTreeNormal
+hi link EmptyWinbar NeoTreeNormal
 ]]
 
 M.winbar_filetype_exclude = {
   "NvimTree",
+  "neo-tree",
   "help",
   "packer"
 }
