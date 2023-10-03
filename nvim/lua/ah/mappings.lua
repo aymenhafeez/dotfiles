@@ -31,7 +31,9 @@ map("n", "<leader><leader>t", function()
   utils.float_terminal("zsh")
 end, opts)
 
-map("n", "<leader>hh", "\"tyiw:help <C-r>t<CR>", opts)
+map("n", "<leader>hh", function()
+  return ":help " .. vim.fn.expand("<cword>") .. "<CR>"
+end, { expr = true })
 
 map("n", "<leader>so", utils.source_lua, nopts)
 map("n", "<leader><leader>x", utils.execute_line, nopts)
@@ -122,9 +124,8 @@ map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", opts)
 map("n", "<leader>gt", "<cmd>ToggleTerm direction=tab<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
 
--- aymenhafeez/scratch.vim
-map("n", "<leader>sc", vim.cmd.Scratch, opts)
-map("n", "<leader>ss", vim.cmd.Sscratch, opts)
+-- aymenhafeez/scratch.nvim
+map("n", "<leader>ss", vim.cmd.Scratch, opts)
 
 -- -- Pocco81/true-zen.nvim
 -- map("n", "<leader>zz", vim.cmd.TZMinimalist, opts)
@@ -138,6 +139,10 @@ map("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, opts)
 
 -- aymenhafeez/OxfDictionary.nvim
 map("n", "<leader>dd", vim.cmd.Definition, opts)
+
+-- map("n", "<leader>rn", function()
+--   return ":IncRename " .. vim.fn.expand("<cword>")
+-- end, { expr = true})
 
 -- -- wbthomason/packer.nvim
 -- map("n", "<leader>ps", function()

@@ -73,32 +73,6 @@ local function _notify(content, type, opts, force)
   vim.notify(content, type, opts)
 end
 
--- local function _lsp_highlight_document(client)
---   if client.server_capabilities.documentHighlightProvider then
---     local lsp_document_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
---     vim.api.nvim_clear_autocmds({ group = "lsp_document_highlight" })
---     vim.api.nvim_create_autocmd("CursorHold", {
---       pattern = "<buffer>",
---       callback = vim.lsp.buf.document_highlight,
---       group = lsp_document_highlight,
---     })
---     vim.api.nvim_create_autocmd("CursorMoved", {
---       pattern = "<buffer>",
---       callback = vim.lsp.buf.clear_references,
---       group = lsp_document_highlight,
---     })
---   end
---
--- -- -- show diagnostic message on CursorHold
--- --   local floatDiagnostics = vim.api.nvim_create_augroup("FloatDiagnostics", { clear = true })
--- --   vim.api.nvim_create_autocmd("CursorHold", {
--- --     pattern = "<buffer>",
--- --     command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
--- --     group = floatDiagnostics
--- --   })
---
--- end
-
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 

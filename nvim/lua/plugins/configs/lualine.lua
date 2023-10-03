@@ -137,7 +137,7 @@ ins_left {
   "branch",
   icon = "",
   color = { fg = colors.orange },
-  padding = { left = 2, right = 2 },
+  padding = { left = 2, right = 3 },
 }
 
 ins_left {

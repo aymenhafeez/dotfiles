@@ -305,8 +305,8 @@ function M.file_browser()
   extension.file_browser.file_browser {
     layout_config = {
       height = 0.75,
-      width = 0.75,
-      preview_width = 0.6
+      width = 0.8,
+      preview_width = 0.5
     }
   }
 end

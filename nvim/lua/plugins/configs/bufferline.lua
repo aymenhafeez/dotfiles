@@ -16,6 +16,7 @@ map("n", "<leader>7", ":BufferLineGoToBuffer 7<CR>", opts)
 
 bufferline.setup {
   options = {
+    always_show_bufferline = true,
     offsets = { { filetype = "NvimTree", text = "", padding = 1 }, { filetype = "neo-tree", text = "", padding = 0 } },
     numbers = "none",
     show_buffer_close_icons = true,
@@ -33,8 +34,8 @@ bufferline.setup {
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      -- icon = "▎",
-      style = "none"
+      icon = "▎",
+      style = "icon"
     },
   },
   highlights = {

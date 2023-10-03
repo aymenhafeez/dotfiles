@@ -87,16 +87,11 @@ return packer.startup {
       cmd = { "ToggleTerm", "TermExec" }
     }
 
-    -- use {
-    --   "kyazdani42/nvim-tree.lua",
-    --   cmd = { "NvimTreeToggle", "NvimTreeOpen" },
-    --   config = function()
-    --     require("plugins.configs.nvim-tree")
-    --   end
-    -- }
-
     use {
       "nvim-neo-tree/neo-tree.nvim",
+      requires = {
+        "MunifTanjim/nui.nvim",
+      },
       config = function()
         require("plugins.configs.neotree")
       end
@@ -261,9 +256,9 @@ return packer.startup {
       },
     }
 
-    use {
-      "hrsh7th/cmp-nvim-lsp-signature-help"
-    }
+    -- use {
+    --   "hrsh7th/cmp-nvim-lsp-signature-help"
+    -- }
 
     -- cmp --
 
@@ -310,14 +305,33 @@ return packer.startup {
       ft = "python"
     }
 
+    -- use {
+    --   "folke/noice.nvim",
+    --   config = function()
+    --     require("plugins.configs.noice")
+    --   end,
+    --   requires = {
+    --     "MunifTanjim/nui.nvim",
+    --     {
+    --       "smjonas/inc-rename.nvim",
+    --       config = function()
+    --         require("inc_rename").setup()
+    --       end
+    --     }
+    --   }
+    -- }
+
     use {
-      "folke/noice.nvim",
+      "echasnovski/mini.indentscope",
+      event = { "BufReadPre", "BufNewFile" },
+      -- config = function()
+      --   require("mini.indentscope").setup {
+      --     symbol = "│"
+      --   }
+      -- end
       config = function()
-        require("plugins.configs.noice")
-      end,
-      requires = {
-        "MunifTanjim/nui.nvim"
-      }
+        require("plugins.configs.indent_scope")
+      end
     }
 
     -- colourschemes --
@@ -341,7 +355,15 @@ return packer.startup {
     --   "aymenhafeez/scratch.vim",
     --   cmd = {"Scratch", "Sscratch" }
     -- }
-    local_use "scratch.vim"
+    -- local_use "scratch.vim"
+
+    use {
+      "aymenhafeez/scratch.nvim",
+      config = function()
+        require("plugins.configs.scratch")
+      end
+    }
+    -- local_use "scratch.lua"
 
     -- use "aymenhafeez/vim-line-motion"
     -- local_use "vim-line-motion"
@@ -349,5 +371,13 @@ return packer.startup {
     if PACKER_BOOTSTRAP then
       require("packer").sync()
     end
-  end
+  end,
+
+  config = {
+    display = {
+      open_fn = function()
+        return require('packer.util').float({ border = 'rounded' })
+      end
+    }
+  }
 }

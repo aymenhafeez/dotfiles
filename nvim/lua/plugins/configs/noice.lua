@@ -6,15 +6,24 @@ end
 local options = {
   cmdline = {
     enabled = true,
-    view = "cmdline"
+    -- view = "cmdline",
+    -- win_options = {
+    --   
+    -- },
+    format = {
+      search_down = { kind = "search", pattern = "^/", icon = "  ", lang = "regex" },
+      search_up = { kind = "search", pattern = "^%?", icon = "  ", lang = "regex" },
+    }
   },
-  messages = {
-    enabled = true,
-    view = "notify",
-    view_error = "notify",
-    view_warn = "notify",
-    view_history = "messages",
-    view_search = "virtualtext",
+  routes = {
+    {
+      filter = {
+        event = "msg_show",
+        kind = "",
+        find = "written",
+      },
+      opts = { skip = true },
+    }
   },
   lsp = {
     override = {
@@ -26,11 +35,21 @@ local options = {
       enabled = false
     },
     signature = {
-      enabled = false
-    }
+      enabled = false,
+    },
   },
   presets = {
-    lsp_doc_border = true
+    lsp_doc_border = true,
+    command_palette = {
+      views = {
+        cmdline_popup = {
+          position = {
+            row = -2,
+            col = "2.5%",
+          },
+        },
+      },
+    },
   }
 }
 

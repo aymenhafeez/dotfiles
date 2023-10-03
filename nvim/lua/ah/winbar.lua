@@ -16,7 +16,8 @@ M.winbar_filetype_exclude = {
   "NvimTree",
   "neo-tree",
   "help",
-  "packer"
+  "packer",
+  "terminal"
 }
 
 local excludes = function()

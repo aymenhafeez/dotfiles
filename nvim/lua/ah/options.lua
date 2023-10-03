@@ -63,6 +63,7 @@ opt.hidden = true
 opt.ttimeoutlen = 0
 -- opt.lazyredraw = true
 opt.mouse = "nvia"
+opt.mousemoveevent = true
 opt.clipboard = "unnamedplus"
 opt.path:append { "**" }
 
@@ -143,10 +144,10 @@ end
 
 -- vim.cmd("au FocusGained * :checktime")
 
-local colorscheme = 'neodark'
+local colorscheme = 'neodarker'
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
-  vim.notify("colorscheme " .. colorscheme .. " not found!")
+  vim.notify("colorscheme " .. colorscheme .. " not found")
   return
 end

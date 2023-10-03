@@ -1,7 +1,11 @@
 local termOpts = vim.api.nvim_create_augroup("TermOpts", { clear = true })
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
-  command = "setlocal nonumber norelativenumber nocursorline",
+  -- command = "setlocal nonumber norelativenumber nocursorline",
+  callback = function()
+    vim.api.nvim_exec2("setlocal nonumber norelativenumber nocursorline", {})
+    vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
+  end,
   group = termOpts
 })
 
@@ -43,23 +47,23 @@ local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
   callback = function()
-    vim.api.nvim_exec("wincmd L | vertical resize -8", false)
-    vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
-    vim.opt_local.wrap = true
-    vim.opt_local.linebreak = true
+    vim.api.nvim_exec2("wincmd L | vertical resize -8", {})
+    vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
+    vim.opt_local.wrap = false
+    vim.opt_local.linebreak = false
   end,
   group = helpFiles
 })
 
--- local packerHighlight = vim.api.nvim_create_augroup("PackerHiglight", { clear = true})
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "packer",
---   -- command = "lua vim.opt.winhighlight = 'Normal:NvimTreeNormal,SignColumn:NvimTreeNormal'",
---   callback = function()
---     vim.opt.winhighlight = "Normal:NvimTreeNormal,SignColumn:NvimTreeNormal"
---   end,
---   group = packerHighlight
--- })
+local packerHighlight = vim.api.nvim_create_augroup("PackerHiglight", { clear = true})
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "packer",
+  -- command = "lua vim.opt.winhighlight = 'Normal:NvimTreeNormal,SignColumn:NvimTreeNormal'",
+  callback = function()
+    vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
+  end,
+  group = packerHighlight
+})
 
 local closeNvimTree = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true })
 vim.api.nvim_create_autocmd("BufEnter", {
