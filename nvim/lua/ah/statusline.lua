@@ -27,7 +27,6 @@ local modes = {
 
 local ts_ignore_ft = {
   "",
-  "packer",
   "toggleterm",
   "TelescopePrompt",
   "NvimTree",

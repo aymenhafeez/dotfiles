@@ -40,7 +40,7 @@ cmp.setup {
   sources = {
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
-    -- { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lsp_signature_help' },
     { name = "ultisnips" },
     { name = "buffer" },
     { name = "path" },
@@ -51,12 +51,14 @@ cmp.setup {
   },
   window = {
     completion = {
-      border = border("FloatBorder"),
-      winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      border = border("CmpBorder"),
+      -- winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
     },
     documentation = {
-      border = border("FloatBorder"),
-      winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
+      border = border("CmpBorder"),
+      -- winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
+      winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
       max_width = 60,
       max_height = 15
     },

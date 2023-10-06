@@ -21,6 +21,7 @@ local colors = {
   blue           = "#61afef",
   blue_1         = "#8094b4",
   blue_2         = "#51afef",
+  blue_3         = "#06B6EF",
   red            = "#ec5f67",
   light_grey     = "#343b46",
   light_grey_2   = "#282d39",
@@ -74,11 +75,11 @@ end
 ins_left {
   function()
     return "█"
-    -- return "  ● "
+    -- return "   "
   end,
   color = function()
     local mode_color = {
-      n = colors.blue,
+      n = colors.blue_3,
       i = colors.green,
       v = colors.magenta,
       [""] = colors.blue,
@@ -220,6 +221,32 @@ ins_right {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
+
+  -- color = function()
+  --   local mode_color = {
+  --     n = colors.yellow,
+  --     i = colors.green,
+  --     v = colors.magenta,
+  --     [""] = colors.blue,
+  --     V = colors.magenta,
+  --     c = colors.yellow,
+  --     no = colors.red,
+  --     s = colors.orange,
+  --     S = colors.orange,
+  --     [""] = colors.orange,
+  --     ic = colors.yellow,
+  --     R = colors.red,
+  --     Rv = colors.red,
+  --     cv = colors.violet,
+  --     ce = colors.violet,
+  --     r = colors.cyan,
+  --     rm = colors.cyan,
+  --     ["r?"] = colors.cyan,
+  --     ["!"] = colors.red,
+  --     t = colors.orange,
+  --   }
+  --   return { fg = mode_color[vim.fn.mode()] }
+  -- end,
   color = { fg = colors.yellow, gui = "" },
   padding = { right = 0, left = 0 }
 }

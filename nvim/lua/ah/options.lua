@@ -49,9 +49,9 @@ opt.inccommand = "split"
 
 opt.completeopt = { "menu", "menuone" }
 opt.omnifunc = "syntaxcomplete#Complete"
-opt.pumheight = 10
-opt.pumblend = 10
-opt.winblend = 10
+opt.pumheight = 15
+-- opt.pumblend = 10
+-- opt.winblend = 10
 opt.scrolloff = 5
 
 opt.autochdir = true
@@ -72,7 +72,7 @@ opt.splitbelow = true
 
 opt.termguicolors = true
 
-o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
+-- o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
 
 -- add `gf` functionality inside `.lua` files.
 vim.opt.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
@@ -144,10 +144,11 @@ end
 
 -- vim.cmd("au FocusGained * :checktime")
 
-local colorscheme = 'neodarker'
-
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-  vim.notify("colorscheme " .. colorscheme .. " not found")
-  return
-end
+-- local colorscheme = 'neodarker'
+-- vim.cmd.colorscheme("tokyonight-night")
+--
+-- local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+-- if not status_ok then
+--   vim.notify("colorscheme " .. colorscheme .. " not found")
+--   return
+-- end

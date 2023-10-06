@@ -72,7 +72,6 @@ function M.float_terminal(cmd)
   vim.cmd([[startinsert]])
 end
 
--- doesn't quite work yet
 -- function M.create_centered_floating_window()
 --     local width = math.min(vim.api.nvim_get_option('columns') - 4, math.max(80, vim.api.nvim_get_option('columns') - 20))
 --     local height = math.min(vim.api.nvim_get_option('lines') - 4, math.max(20, vim.api.nvim_get_option('lines') - 10))
@@ -112,8 +111,7 @@ end
 --     vim.cmd('autocmd BufWipeout <buffer> exe "bw " .. ' .. buf)
 --     return text_buf
 -- end
-
--- doesn't quite work yet
+--
 -- function M.floating_window_help(query)
 --     local buf = M.create_centered_floating_window()
 --     vim.api.nvim_set_current_buf(buf)

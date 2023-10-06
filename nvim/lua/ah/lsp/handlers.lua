@@ -62,17 +62,6 @@ function M.setup()
 
 end
 
-local function _notify(content, type, opts, force)
-  if force then
-    if packer_plugins['nvim-notify'] ~= nil and packer_plugins['nvim-notify'].loaded then
-      require('notify')(content, type, opts)
-    end
-    return
-  end
-
-  vim.notify(content, type, opts)
-end
-
 function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -107,12 +96,23 @@ function M.on_attach(client, bufnr)
     end
   end, { desc = 'Format current buffer with LSP' })
 
-  if client.server_capabilities.documentSymbolProvider then
-    local navic = require "nvim-navic"
-    navic.attach(client, bufnr)
+  if client.server_capabilities.documentHighlightProvider then
+    vim.cmd [[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]
   end
 
-  _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
+
+  -- if client.server_capabilities.documentSymbolProvider then
+  --   local navic = require "nvim-navic"
+  --   navic.attach(client, bufnr)
+  -- end
+
+  -- _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
 
   -- -- this works but doesn't
   -- if client.server_capabilities.documentHighlightProvider then
@@ -143,16 +143,6 @@ function M.on_attach(client, bufnr)
 --     command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
 --     group = floatDiagnostics
 --   })
-
-  if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]]
-  end
 
 end
 

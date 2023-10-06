@@ -5,6 +5,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     vim.api.nvim_exec2("setlocal nonumber norelativenumber nocursorline", {})
     vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
+    vim.b.miniindentscope_disable = true
   end,
   group = termOpts
 })
@@ -51,18 +52,9 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
     vim.opt_local.wrap = false
     vim.opt_local.linebreak = false
+    vim.b.miniindentscope_disable = true
   end,
   group = helpFiles
-})
-
-local packerHighlight = vim.api.nvim_create_augroup("PackerHiglight", { clear = true})
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "packer",
-  -- command = "lua vim.opt.winhighlight = 'Normal:NvimTreeNormal,SignColumn:NvimTreeNormal'",
-  callback = function()
-    vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
-  end,
-  group = packerHighlight
 })
 
 local closeNvimTree = vim.api.nvim_create_augroup("NvimTreeClose", { clear = true })
@@ -78,3 +70,10 @@ vim.api.nvim_create_autocmd("FocusGained", {
   command = "checktime",
   group = checkTime
 })
+
+-- local disableIndentScope = vim.api.nvim_create_augroup("DisableIndentScope", { clear = true })
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = "help",
+--   command = "lua vim.b.miniindentscope_disable = true",
+--   group = disableIndentScope
+-- })

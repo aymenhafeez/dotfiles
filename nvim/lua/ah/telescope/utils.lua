@@ -82,7 +82,7 @@ function M.find_files()
     layout_config = {
       width = 0.85,
       height = 0.8,
-      -- preview_width = 0.6
+      preview_width = 0.55
     }
   }
 end
@@ -95,7 +95,8 @@ function M.buffer_fuzzy_search()
       results_title = "Buffer search",
       layout_config = {
         prompt_position = "bottom",
-        height = 0.35
+        height = 0.35,
+        preview_width = 0.55
       }
     })
 end

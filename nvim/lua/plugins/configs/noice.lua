@@ -15,6 +15,22 @@ local options = {
       search_up = { kind = "search", pattern = "^%?", icon = "  ", lang = "regex" },
     }
   },
+  views = {
+    cmdline_popup = {
+      border = {
+        style = "none",
+        padding = { 1, 2 }
+      },
+      filter_options = {},
+      win_options = {
+        winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+      },
+      position = {
+        row = 2,
+        col = "50%"
+      }
+    }
+  },
   routes = {
     {
       filter = {
@@ -40,16 +56,27 @@ local options = {
   },
   presets = {
     lsp_doc_border = true,
-    command_palette = {
-      views = {
-        cmdline_popup = {
-          position = {
-            row = -2,
-            col = "2.5%",
-          },
-        },
-      },
-    },
+    -- command_palette = {
+    --   views = {
+    --     cmdline_popup = {
+    --       border = {
+    --         style = "none",
+    --         padding = { 1, 2 }
+    --       },
+    --       -- filter_options = {},
+    --       win_options = {
+    --         winhighlight = {
+    --           Normal = "FloatBorder",
+    --           FloatBorder = "FloatBorder"
+    --         },
+    --       },
+    --       position = {
+    --         row = 2,
+    --         col = "50%",
+    --       },
+    --     },
+    --   },
+    -- },
   }
 }
 

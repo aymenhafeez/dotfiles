@@ -5,6 +5,9 @@ end
 
 zen.setup {
   window = {
+    backdrop = 1,
+    height = 0.95,
+    width = 90,
     options = {
       number = false,
       relativenumber = false

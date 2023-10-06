@@ -19,7 +19,7 @@ telescope.setup {
     prompt_prefix = "   ",
     selection_caret = " ",
     multi_icon = "",
-    winblend = 10,
+    winblend = 0,
     color_devicons = true,
     border = true,
 
@@ -67,17 +67,10 @@ telescope.setup {
   --     },
   --     treesitter = true,
   --   },
-  --   packer = {
-  --     theme = "ivy",
-  --     layout_config = {
-  --       height = 0.5
-  --     }
-  --   }
   }
 }
 
 -- pcall(telescope.load_extension, "heading")
--- pcall(telescope.load_extension, "packer")
 -- pcall(telescope.load_extension, "zoxide")
 telescope.load_extension("fzf")
 telescope.load_extension("ui-select")

@@ -19,7 +19,7 @@ bufferline.setup {
     always_show_bufferline = true,
     offsets = { { filetype = "NvimTree", text = "", padding = 1 }, { filetype = "neo-tree", text = "", padding = 0 } },
     numbers = "none",
-    show_buffer_close_icons = true,
+    show_buffer_close_icons = false,
     show_tab_indicators = true,
     enforce_regular_tabs = true,
     max_name_length = 30,
@@ -34,60 +34,76 @@ bufferline.setup {
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      icon = "▎",
-      style = "icon"
+      -- icon = "▎",
+      -- style = "icon"
+      style = "none"
     },
   },
   highlights = {
     fill = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     background = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     tab = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     tab_close = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     close_button = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
       fg = { attribute = 'fg', highlight = 'NonText' },
     },
     close_button_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
-      fg = { attribute = 'fg', highlight = 'NonText' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
+      fg = { attribute = 'fg', highlight = 'Comment' },
     },
     -- close_button_selected = {
     --   fg = { attribute = 'fg', highlight = 'NonText' },
     -- },
     buffer_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
+      fg = { attribute = 'fg', highlight = 'Comment' },
+      bold = true,
+      italic = false,
+    },
+    indicator_visible = {
+      bg = { attribute = 'bg', highlight = 'Normal' },
+    },
+    indicator_selected = {
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     modified = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     modified_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
+      -- fg = { attribute = 'fg', highlight = 'Identifier' },
+    },
+    modified_selected = {
+      bg = { attribute = 'bg', highlight = 'Normal' },
+      fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     duplicate = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     duplicate_visible = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     separator = {
-      fg = { attribute = 'bg', highlight = 'StatusLine' },
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      fg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
     separator_selected = {
-      fg = { attribute = 'bg', highlight = 'StatusLine' },
-      bg = { attribute = 'bg', highlight = 'Normal' }
+      fg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' }
     },
     separator_visible = {
-      fg = { attribute = 'bg', highlight = 'StatusLine' },
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      fg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'CursorLine' },
     },
   },
 }

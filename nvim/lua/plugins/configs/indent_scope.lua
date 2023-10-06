@@ -4,7 +4,15 @@ if not present then
 end
 
 local options = {
-  symbol = "│"
+  symbol = "│",
+  exclude_filetypes = {
+    "help",
+    "alpha",
+    "NeoTree",
+    "log",
+    "lspinfo",
+    "toggleterm",
+  }
 }
 
 vim.cmd("hi link MiniIndentscopeSymbol Comment")

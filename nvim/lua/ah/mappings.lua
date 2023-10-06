@@ -35,6 +35,10 @@ map("n", "<leader>hh", function()
   return ":help " .. vim.fn.expand("<cword>") .. "<CR>"
 end, { expr = true })
 
+-- map("n", "<leader>hs", function()
+--   utils.float_help()
+-- end, opts)
+
 map("n", "<leader>so", utils.source_lua, nopts)
 map("n", "<leader><leader>x", utils.execute_line, nopts)
 map("n", "<leader><leader>r", utils.reload_config, opts)
@@ -121,7 +125,7 @@ map("n", "<leader>-", "<cmd>Neotree toggle<CR>", opts)
 -- akinsho/toggleterm.nvim
 map("n", "<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", opts)
 map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", opts)
-map("n", "<leader>gt", "<cmd>ToggleTerm direction=tab<CR>", opts)
+map("n", "<leader>gt", "<cmd>terminal<CR>", opts)
 map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", opts)
 
 -- aymenhafeez/scratch.nvim
@@ -143,8 +147,3 @@ map("n", "<leader>dd", vim.cmd.Definition, opts)
 -- map("n", "<leader>rn", function()
 --   return ":IncRename " .. vim.fn.expand("<cword>")
 -- end, { expr = true})
-
--- -- wbthomason/packer.nvim
--- map("n", "<leader>ps", function()
---   vim.api.nvim_exec("source ~/.config/nvim/lua/plugins/init.lua | PackerSync", false)
--- end, opts)
