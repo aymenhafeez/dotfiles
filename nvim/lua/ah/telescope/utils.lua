@@ -81,7 +81,7 @@ function M.find_files()
     path_display = { "truncate" },
     layout_config = {
       width = 0.85,
-      height = 0.8,
+      height = 0.85,
       preview_width = 0.55
     }
   }
@@ -125,7 +125,7 @@ function M.search_notes()
     layout_strategy = "flex",
     layout_config = {
       width = 0.85,
-      height = 0.8,
+      height = 0.85,
       -- preview_width = 0.55
     }
   }
@@ -141,8 +141,8 @@ function M.grep_notes()
     path_display = { "tail" },
     file_ignore_patterns = ignore_patterns,
     layout_config = {
-      height = 0.85,
       width = 0.65,
+      height = 0.85,
       preview_height = 0.6
     }
   }
@@ -156,7 +156,7 @@ function M.search_dotfiles()
     preview_title = "",
     layout_config = {
       width = 0.85,
-      height = 0.8,
+      height = 0.85,
       preview_width = 0.55
     }
   }
@@ -171,8 +171,8 @@ function M.grep_dotfiles()
     layout_strategy = "vertical",
     path_display = { "tail" },
     layout_config = {
-      height = 0.85,
       width = 0.65,
+      height = 0.85,
       preview_height = 0.6
     }
   }
@@ -200,7 +200,7 @@ function M.search_help()
     layout_config = {
       prompt_position = "top",
       width = 0.85,
-      height = 0.8,
+      height = 0.85,
       preview_width = 0.55
     }
   }
@@ -295,8 +295,10 @@ function M.search_projects_dir()
     prompt_title = "",
     path_display = { "truncate" },
     layout_config = {
-      height = 0.75,
-      width = 0.75,
+      -- height = 0.75,
+      -- width = 0.75,
+      width = 0.85,
+      height = 0.85,
       preview_width = 0.6
     }
   }
@@ -305,8 +307,10 @@ end
 function M.file_browser()
   extension.file_browser.file_browser {
     layout_config = {
-      height = 0.75,
-      width = 0.8,
+      -- height = 0.75,
+      -- width = 0.8,
+      width = 0.85,
+      height = 0.85,
       preview_width = 0.5
     }
   }

@@ -260,6 +260,10 @@ lazy.setup({
     -- end
   },
 
+  {
+    "NvChad/base46"
+  },
+
   -- use "aymenhafeez/tokyonight.nvim"
   -- local_use "tokyonight.nvim"
   {
@@ -271,6 +275,8 @@ lazy.setup({
 
   {
     "aymenhafeez/neodark.nvim",
+    lazy = false,
+    priority = 1000,
     config = function ()
       vim.cmd.colorscheme("neodarker")
     end
@@ -285,4 +291,5 @@ lazy.setup({
 
   -- use "aymenhafeez/vim-line-motion"
   -- local_use "vim-line-motion"
+
 })
