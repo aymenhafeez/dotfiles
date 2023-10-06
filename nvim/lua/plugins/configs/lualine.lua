@@ -122,19 +122,6 @@ ins_left {
 -- }
 
 ins_left {
-  function()
-    local b = vim.api.nvim_get_current_buf()
-    if next(vim.treesitter.highlighter.active[b]) then
-      return ""
-    end
-    return ""
-  end,
-  color = { fg = colors.blue_1 },
-  padding = { left = 1, right = 3 },
-  cond = conditions.hide_in_width,
-}
-
-ins_left {
   "branch",
   icon = "",
   color = { fg = colors.orange },
@@ -202,11 +189,24 @@ ins_right {
 }
 
 ins_right {
-  "location",
-  color = { fg = colors.blue_1 },
-  padding = { right = 2 }
+  function()
+    local b = vim.api.nvim_get_current_buf()
+    if next(vim.treesitter.highlighter.active[b]) then
+      return " TS"
+    end
+    return ""
+  end,
+  color = { fg = colors.green },
+  padding = { left = 1, right = 4 },
+  cond = conditions.hide_in_width,
 }
 
+-- ins_right {
+--   "location",
+--   color = { fg = colors.blue_1 },
+--   padding = { right = 2 }
+-- }
+--
 -- ins_right {
 --   "progress",
 --   color = { fg = colors.blue_1 }
@@ -247,6 +247,7 @@ ins_right {
   --   }
   --   return { fg = mode_color[vim.fn.mode()] }
   -- end,
+
   color = { fg = colors.yellow, gui = "" },
   padding = { right = 0, left = 0 }
 }

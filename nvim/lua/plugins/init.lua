@@ -110,6 +110,14 @@ lazy.setup({
   },
 
   {
+    'echasnovski/mini.indentscope',
+    version = false,
+    config = function()
+      require("plugins.configs.indent_scope")
+    end
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
@@ -252,7 +260,18 @@ lazy.setup({
   { "embark-theme/vim" },
   { "AlexvZyl/nordic.nvim" },
   { "Mofiqul/vscode.nvim" },
-  { "navarasu/onedark.nvim" },
+  {
+    "aymenhafeez/onedark.nvim",
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   require("onedark").setup {
+    --     style = "dark"
+    --   }
+    --   require("onedark").load()
+    --   -- vim.cmd.colorscheme("onedark")
+    -- end
+  },
   {
     "rebelot/kanagawa.nvim",
     -- config = function()
@@ -261,11 +280,14 @@ lazy.setup({
   },
 
   {
+    "ntk148v/habamax.nvim",
+    dependencies={ "rktjmp/lush.nvim" }
+  },
+
+  {
     "NvChad/base46"
   },
 
-  -- use "aymenhafeez/tokyonight.nvim"
-  -- local_use "tokyonight.nvim"
   {
     "folke/tokyonight.nvim",
     -- config = function ()
@@ -278,7 +300,7 @@ lazy.setup({
     lazy = false,
     priority = 1000,
     config = function ()
-      vim.cmd.colorscheme("neodarker")
+      vim.cmd.colorscheme("neodark")
     end
   },
   -- local_use "neodark.nvim"
@@ -286,10 +308,16 @@ lazy.setup({
   -- {" aymenhafeez/OxfDictionary.nvim "},
   -- local_use "OxfDictionary.nvim"
 
-  { "aymenhafeez/scratch.nvim" },
-  -- local_use "scratch.vim"
+  {
+    "aymenhafeez/scratch.nvim",
+    config = function()
+      vim.cmd([[command! Scratch lua require'scratch'.ToggleScratch(config)]])
+    end
+  },
 
-  -- use "aymenhafeez/vim-line-motion"
+  -- local_use "scratch.nvim"
+
+  -- { "aymenhafeez/vim-line-motion" }
   -- local_use "vim-line-motion"
 
 })

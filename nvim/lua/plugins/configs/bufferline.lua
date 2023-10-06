@@ -28,7 +28,8 @@ bufferline.setup {
     color_icons = true,
     separator_style = "thin",
     buffer_close_icon = "",
-    modified_icon = "●",
+    -- modified_icon = "●",
+    modified_icon = "",
     close_icon = "",
     show_close_icon = false,
     left_trunc_marker = "",
@@ -41,19 +42,19 @@ bufferline.setup {
   },
   highlights = {
     fill = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     background = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     tab = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     tab_close = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     close_button = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
       fg = { attribute = 'fg', highlight = 'NonText' },
     },
     close_button_visible = {
@@ -76,8 +77,9 @@ bufferline.setup {
       bg = { attribute = 'bg', highlight = 'Normal' },
     },
     modified = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
       fg = { attribute = 'fg', highlight = 'Identifier' },
+
     },
     modified_visible = {
       bg = { attribute = 'bg', highlight = 'Normal' },
@@ -88,22 +90,22 @@ bufferline.setup {
       fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     duplicate = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     duplicate_visible = {
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     separator = {
-      fg = { attribute = 'bg', highlight = 'CursorLine' },
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
     separator_selected = {
-      fg = { attribute = 'bg', highlight = 'CursorLine' },
-      bg = { attribute = 'bg', highlight = 'CursorLine' }
+      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' }
     },
     separator_visible = {
-      fg = { attribute = 'bg', highlight = 'CursorLine' },
-      bg = { attribute = 'bg', highlight = 'CursorLine' },
+      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     },
   },
 }

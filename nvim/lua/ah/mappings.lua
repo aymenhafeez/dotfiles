@@ -10,6 +10,8 @@ vim.g.maplocalleader = " "
 
 -- normal mode
 
+map("n", "<leader>ll", vim.cmd.Lazy, opts)
+
 map("n", "<S-l>", vim.cmd.bnext, opts)
 map("n", "<S-h>", vim.cmd.bprev, opts)
 
