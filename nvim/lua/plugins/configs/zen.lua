@@ -10,7 +10,8 @@ zen.setup {
     width = 90,
     options = {
       number = false,
-      relativenumber = false
+      relativenumber = false,
+      laststatus = 0,
     }
   }
 }

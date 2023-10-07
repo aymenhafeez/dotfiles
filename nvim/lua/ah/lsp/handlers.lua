@@ -107,11 +107,6 @@ function M.on_attach(client, bufnr)
   end
 
 
-  -- if client.server_capabilities.documentSymbolProvider then
-  --   local navic = require "nvim-navic"
-  --   navic.attach(client, bufnr)
-  -- end
-
   -- _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
 
   -- -- this works but doesn't

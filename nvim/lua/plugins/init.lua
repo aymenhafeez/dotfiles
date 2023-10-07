@@ -125,6 +125,12 @@ lazy.setup({
     end,
     dependencies = {
       -- {"nvim-treesitter/nvim-treesitter-textobjects"},
+      -- {
+      --   "nvim-treesitter/nvim-treesitter-context",
+      --   config = function()
+      --     require("plugins.configs.context")
+      --   end
+      -- },
       {
         "nvim-treesitter/playground",
         cmd = { "TSPlayground", "TSHighlightCapturesUnderCursor" }
@@ -213,15 +219,31 @@ lazy.setup({
     config = function()
       require("ah.lsp")
     end,
-    dependencies = {
-      {
-        "SmiteshP/nvim-navic",
-        config = function()
-          require("plugins.configs.navic")
-        end,
-      },
-    },
+    -- dependencies = {
+    --   -- {
+    --   --   "SmiteshP/nvim-navic",
+    --   --   config = function()
+    --   --     require("plugins.configs.navic")
+    --   --   end,
+    --   --   module = { "nvim-navic" }
+    --   -- },
+    -- },
   },
+
+  -- {
+  --   "aymenhafeez/breadcrumb.nvim",
+  --   config = function()
+  --     require("plugins.configs.breadcrumbs")
+  --   end,
+  -- },
+
+{
+    'nvimdev/lspsaga.nvim',
+    event = "LspAttach",
+    config = function()
+        require("plugins.configs.saga")
+    end,
+    },
 
   -- cmp --
 

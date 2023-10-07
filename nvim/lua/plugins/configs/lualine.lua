@@ -22,9 +22,11 @@ local colors = {
   blue_1         = "#8094b4",
   blue_2         = "#51afef",
   blue_3         = "#06B6EF",
+  blue_4         = "#4d78cd",
   red            = "#ec5f67",
   light_grey     = "#343b46",
   light_grey_2   = "#282d39",
+  white          = "#f3f6fc"
 }
 
 local conditions = {
@@ -74,12 +76,13 @@ end
 
 ins_left {
   function()
-    return "█"
+    -- return "█"
     -- return "   "
+    return " "
   end,
   color = function()
     local mode_color = {
-      n = colors.blue_3,
+      n = colors.blue_4,
       i = colors.green,
       v = colors.magenta,
       [""] = colors.blue,
@@ -100,7 +103,7 @@ ins_left {
       ["!"] = colors.red,
       t = colors.orange,
     }
-    return { fg = mode_color[vim.fn.mode()] }
+    return { bg = mode_color[vim.fn.mode()], fg = colors.white }
   end,
   padding = { left = 0, right = 1 },
 }
@@ -109,7 +112,7 @@ ins_left {
   "filetype",
   cond = conditions.buffer_not_empty,
   icon_only = false,
-  padding = { left = 1, right = 3 },
+  padding = { left = 2, right = 3 },
 }
 
 -- ins_left {
@@ -201,12 +204,12 @@ ins_right {
   cond = conditions.hide_in_width,
 }
 
--- ins_right {
---   "location",
---   color = { fg = colors.blue_1 },
---   padding = { right = 2 }
--- }
---
+ins_right {
+  "location",
+  color = { fg = colors.blue_1 },
+  padding = { right = 3, left = 0 }
+}
+
 -- ins_right {
 --   "progress",
 --   color = { fg = colors.blue_1 }

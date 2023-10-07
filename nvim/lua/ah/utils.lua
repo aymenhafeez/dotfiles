@@ -8,7 +8,7 @@ function M.reload_config()
   end
 
   dofile(vim.env.MYVIMRC)
-  vim.api.nvim_exec("source ~/.config/nvim/after/ftplugin/lua.lua", false)
+  vim.api.nvim_exec2("source ~/.config/nvim/after/ftplugin/lua.lua", {})
   vim.notify("Reloaded configuration", vim.log.levels.INFO, { title = "init.lua" })
 end
 
@@ -21,12 +21,13 @@ function M.execute_line()
 end
 
 function M.source_lua()
+  local message = vim.fn.expand("%:t") .. " reloaded"
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec("luafile %", false)
-    vim.notify("Sourced file")
+    vim.notify(message)
   elseif vim.bo.filetype == "vim" then
     vim.api.nvim_exec("source %", false)
-    vim.notify("Sourced file")
+    vim.notify(message)
   end
 end
 

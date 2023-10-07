@@ -6,7 +6,7 @@ local navic = require("nvim-navic")
 vim.api.nvim_set_hl(0, "WinBarFilename", { fg = colors.blue })
 vim.api.nvim_set_hl(0, "WinBarContext", { fg = colors.blue })
 
--- seeing if porting this and this whole winbar config to nvim navic will work
+-- see if porting this and this whole winbar config to nvim navic will work
 vim.cmd [[
 hi link EmptyWinbar NvimTreeNormal
 hi link EmptyWinbar NeoTreeNormal

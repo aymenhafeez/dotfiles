@@ -19,7 +19,7 @@ bufferline.setup {
     always_show_bufferline = true,
     offsets = { { filetype = "NvimTree", text = "", padding = 1 }, { filetype = "neo-tree", text = "", padding = 0 } },
     numbers = "none",
-    show_buffer_close_icons = false,
+    show_buffer_close_icons = true,
     show_tab_indicators = true,
     enforce_regular_tabs = true,
     max_name_length = 30,
@@ -28,32 +28,32 @@ bufferline.setup {
     color_icons = true,
     separator_style = "thin",
     buffer_close_icon = "",
-    modified_icon = "",
+    modified_icon = "●",
     close_icon = "",
     show_close_icon = false,
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      icon = "▎",
-      style = "icon"
-      -- style = "none"
+      -- icon = "▎",
+      -- style = "icon"
+      style = "none"
     },
   },
   highlights = {
     fill = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     background = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     tab = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     tab_close = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     close_button = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
       fg = { attribute = 'fg', highlight = 'NonText' },
     },
     close_button_visible = {
@@ -74,12 +74,10 @@ bufferline.setup {
     },
     indicator_selected = {
       bg = { attribute = 'bg', highlight = 'Normal' },
-      fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     modified = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
       fg = { attribute = 'fg', highlight = 'Identifier' },
-
     },
     modified_visible = {
       bg = { attribute = 'bg', highlight = 'Normal' },
@@ -90,22 +88,22 @@ bufferline.setup {
       fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     duplicate = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     duplicate_visible = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     separator = {
-      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      fg = { attribute = 'bg', highlight = 'Normal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     separator_selected = {
-      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' }
+      fg = { attribute = 'bg', highlight = 'Normal' },
+      bg = { attribute = 'bg', highlight = 'Normal' }
     },
     separator_visible = {
-      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      fg = { attribute = 'bg', highlight = 'Normal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
   },
 }

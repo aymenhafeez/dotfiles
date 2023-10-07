@@ -4,10 +4,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# PROMPT='%{$fg[green]%}%B%n%b:%{$fg[blue]%}%~%{$reset_color%}%{$reset_color%}%(!.#.) '
-# RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
+PROMPT=' %F{243}%(!.#.) %{$fg[cyan]%}%1d%{$reset_color%}%{$fg[green]%} %(!.#.) '
+RPROMPT='$(vi_mode_prompt_info)%B${return_code}%b%{$fg[yellow]%}$(git_prompt_info)'
 
-ZSH_THEME="sorin"
+# ZSH_THEME="sorin"
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 DISABLE_MAGIC_FUNCTIONS=true

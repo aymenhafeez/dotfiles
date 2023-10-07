@@ -73,6 +73,7 @@ opt.splitbelow = true
 opt.termguicolors = true
 
 -- o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
+-- o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- add `gf` functionality inside `.lua` files.
 vim.opt.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
