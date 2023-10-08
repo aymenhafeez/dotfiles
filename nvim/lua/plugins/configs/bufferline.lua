@@ -34,26 +34,26 @@ bufferline.setup {
     left_trunc_marker = "",
     right_trunc_marker = "",
     indicator = {
-      icon = "▎",
-      style = "icon"
-      -- style = "none"
+      -- icon = "▎",
+      -- style = "icon"
+      style = "none"
     },
   },
   highlights = {
     fill = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     background = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     tab = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     tab_close = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     close_button = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
       fg = { attribute = 'fg', highlight = 'NonText' },
     },
     close_button_visible = {
@@ -77,7 +77,7 @@ bufferline.setup {
       fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     modified = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
       fg = { attribute = 'fg', highlight = 'Identifier' },
 
     },
@@ -90,22 +90,22 @@ bufferline.setup {
       fg = { attribute = 'fg', highlight = 'Identifier' },
     },
     duplicate = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     duplicate_visible = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     separator = {
-      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      fg = { attribute = 'bg', highlight = 'Normal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     separator_selected = {
-      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' }
+      fg = { attribute = 'bg', highlight = 'Normal' },
+      bg = { attribute = 'bg', highlight = 'Normal' }
     },
     separator_visible = {
-      fg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      fg = { attribute = 'bg', highlight = 'Normal' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
   },
 }

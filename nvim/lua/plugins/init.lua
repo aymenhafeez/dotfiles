@@ -230,13 +230,6 @@ lazy.setup({
     -- },
   },
 
-  -- {
-  --   "aymenhafeez/breadcrumb.nvim",
-  --   config = function()
-  --     require("plugins.configs.breadcrumbs")
-  --   end,
-  -- },
-
 {
     'nvimdev/lspsaga.nvim',
     event = "LspAttach",
@@ -279,21 +272,7 @@ lazy.setup({
   -- colourschemes --
 
   { "catppuccin/nvim" },
-  { "embark-theme/vim" },
-  { "AlexvZyl/nordic.nvim" },
   { "Mofiqul/vscode.nvim" },
-  {
-    "aymenhafeez/onedark.nvim",
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function()
-    --   require("onedark").setup {
-    --     style = "dark"
-    --   }
-    --   require("onedark").load()
-    --   -- vim.cmd.colorscheme("onedark")
-    -- end
-  },
   {
     "rebelot/kanagawa.nvim",
     -- config = function()
@@ -304,10 +283,6 @@ lazy.setup({
   {
     "ntk148v/habamax.nvim",
     dependencies={ "rktjmp/lush.nvim" }
-  },
-
-  {
-    "NvChad/base46"
   },
 
   {

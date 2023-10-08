@@ -21,7 +21,7 @@ function M.execute_line()
 end
 
 function M.source_lua()
-  local message = vim.fn.expand("%:t") .. " reloaded"
+  local message = vim.fn.expand("%:t") .. " sourced"
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec("luafile %", false)
     vim.notify(message)

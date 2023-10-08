@@ -117,10 +117,6 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- plugin mappings
 
--- -- kyazdani42/nvim-tree.lua
--- map("n", "<leader>-", vim.cmd.NvimTreeToggle, opts)
--- map("n", "<leader>f-", vim.cmd.NvimTreeFindFile, opts)
-
 -- nvim-neo-tree/neo-tree.nvim
 map("n", "<leader>-", "<cmd>Neotree toggle<CR>", opts)
 

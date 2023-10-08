@@ -3,6 +3,8 @@ if not present then
   return
 end
 
+local utils = require("ah.utils")
+
 local colors = {
   bg             = "#191d25",
   bg1            = "#21283b",
@@ -26,6 +28,8 @@ local colors = {
   red            = "#ec5f67",
   light_grey     = "#343b46",
   light_grey_2   = "#282d39",
+  light_grey_3   = "#686b71",
+  light_grey_4   = "#9ea5b5",
   white          = "#f3f6fc"
 }
 
@@ -80,6 +84,9 @@ ins_left {
     -- return "   "
     return " "
   end,
+  on_click = function()
+    return vim.api.nvim_exec2("lua", {})
+  end,
   color = function()
     local mode_color = {
       n = colors.blue_4,
@@ -109,12 +116,60 @@ ins_left {
 }
 
 ins_left {
-  "filetype",
-  cond = conditions.buffer_not_empty,
-  icon_only = false,
-  padding = { left = 2, right = 3 },
+  function()
+    return ""
+  end,
+  on_click = function()
+    return vim.cmd("Neotree toggle")
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 2, right = 3}
 }
 
+ins_left {
+  function()
+    return ""
+  end,
+  on_click = function()
+    return require("telescope.builtin").find_files()
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 0, right = 2}
+}
+
+ins_left {
+  function()
+    return ""
+  end,
+  on_click = function()
+    utils.float_terminal("lazygit")
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 1, right = 2}
+}
+
+ins_left {
+  function()
+    return ""
+  end,
+  on_click = function()
+    return vim.cmd.Lazy()
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 1, right = 2}
+}
+
+-- ins_left {
+--   "filetype",
+--   cond = conditions.buffer_not_empty,
+--   icon_only = false,
+--   padding = { left = 2, right = 3 },
+-- }
+--
 -- ins_left {
 --   "filename",
 --   symbols = {
@@ -127,7 +182,7 @@ ins_left {
 ins_left {
   "branch",
   icon = "",
-  color = { fg = colors.orange },
+  color = { fg = colors.blue_1 },
   padding = { left = 2, right = 3 },
 }
 
@@ -144,6 +199,8 @@ ins_left {
 }
 
 -- right
+
+
 
 ins_right {
   function()
@@ -167,7 +224,10 @@ ins_right {
     color_warn = { fg = colors.yellow },
     color_info = { fg = colors.cyan },
   },
-  padding = { left = 2, right = 1 }
+  on_click = function()
+    return require("telescope.builtin").diagnostics({0})
+  end,
+  padding = { left = 3, right = 0 }
 }
 
 ins_right {
@@ -186,34 +246,43 @@ ins_right {
     end
     return msg
   end,
-  icon = "",
+  on_click = function()
+    return vim.cmd("LspInstallInfo")
+  end,
+  icon = " ",
   color = { fg = colors.blue_1 },
-  padding = { left = 3, right = 3 }
+  padding = { left = 1, right = 3 }
 }
 
 ins_right {
   function()
-    local b = vim.api.nvim_get_current_buf()
-    if next(vim.treesitter.highlighter.active[b]) then
-      return " TS"
-    end
-    return ""
+    return " TS"
   end,
-  color = { fg = colors.green },
+  on_click = function()
+    local b = vim.api.nvim_get_current_buf()
+    vim.cmd("TSToggle highlight")
+    vim.notify("TSToggle highlight")
+    -- if next(vim.treesitter.highlighter.active[b]) then
+    --   return vim.notify("Treesitter highlight enabled")
+    -- else
+    --   return vim.notify("Treesitter highlight disabled")
+    -- end
+  end,
+  color = { fg = colors.blue_1 },
   padding = { left = 1, right = 4 },
   cond = conditions.hide_in_width,
 }
 
-ins_right {
-  "location",
+ins_right  {
+  function()
+    return ""
+  end,
+  on_click = function()
+    return vim.cmd("Telescope notify")
+  end,
   color = { fg = colors.blue_1 },
-  padding = { right = 3, left = 0 }
+  padding = { left = 0, right = 2 }
 }
-
--- ins_right {
---   "progress",
---   color = { fg = colors.blue_1 }
--- }
 
 ins_right {
   function()
@@ -224,33 +293,6 @@ ins_right {
     local index = math.ceil(line_ratio * #chars)
     return chars[index]
   end,
-
-  -- color = function()
-  --   local mode_color = {
-  --     n = colors.yellow,
-  --     i = colors.green,
-  --     v = colors.magenta,
-  --     [""] = colors.blue,
-  --     V = colors.magenta,
-  --     c = colors.yellow,
-  --     no = colors.red,
-  --     s = colors.orange,
-  --     S = colors.orange,
-  --     [""] = colors.orange,
-  --     ic = colors.yellow,
-  --     R = colors.red,
-  --     Rv = colors.red,
-  --     cv = colors.violet,
-  --     ce = colors.violet,
-  --     r = colors.cyan,
-  --     rm = colors.cyan,
-  --     ["r?"] = colors.cyan,
-  --     ["!"] = colors.red,
-  --     t = colors.orange,
-  --   }
-  --   return { fg = mode_color[vim.fn.mode()] }
-  -- end,
-
   color = { fg = colors.yellow, gui = "" },
   padding = { right = 0, left = 0 }
 }

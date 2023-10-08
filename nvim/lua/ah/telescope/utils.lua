@@ -186,8 +186,7 @@ function M.search_buffers()
       results_title = "",
       previewer = false,
       layout_config = {
-        prompt_position = "top",
-        width = 0.4
+        height = 0.4
       }
     })
 end
