@@ -52,14 +52,14 @@ cmp.setup {
   window = {
     completion = {
       border = border("CmpBorder"),
-      -- winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-      winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
+      winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      -- winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
     },
     documentation = {
       border = border("CmpBorder"),
-      -- winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
-      winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
-      max_width = 60,
+      winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
+      -- winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
+      max_width = 70,
       max_height = 15
     },
   },

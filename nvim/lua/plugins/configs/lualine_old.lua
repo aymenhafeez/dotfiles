@@ -4,7 +4,6 @@ if not present then
 end
 
 local utils = require("ah.utils")
-local telescope_utils = require("ah.telescope.utils")
 
 local colors = {
   bg             = "#191d25",
@@ -26,13 +25,11 @@ local colors = {
   blue_2         = "#51afef",
   blue_3         = "#06B6EF",
   blue_4         = "#4d78cd",
-  blue_5         = "#2ac3de",
   red            = "#ec5f67",
   light_grey     = "#343b46",
   light_grey_2   = "#282d39",
   light_grey_3   = "#686b71",
   light_grey_4   = "#9ea5b5",
-  light_grey_5   = "#5c6370",
   white          = "#f3f6fc"
 }
 
@@ -81,11 +78,12 @@ local function ins_right(component)
   table.insert(config.sections.lualine_x, component)
 end
 
--- left
-
 ins_left {
   function()
-    return "▎"
+    return "█"
+    -- return "   "
+    -- return " "
+    -- return "▎"
   end,
   on_click = function()
     return vim.api.nvim_exec2("lua", {})
@@ -113,37 +111,80 @@ ins_left {
       ["!"] = colors.red,
       t = colors.orange,
     }
+    -- return { bg = mode_color[vim.fn.mode()], fg = colors.white }
     return { fg = mode_color[vim.fn.mode()] }
   end,
-  padding = { left = 0, right = 0 },
+  padding = { left = 0, right = 1 },
 }
 
 ins_left {
   function()
-    if vim.api.nvim_get_vvar("hlsearch") == 1 then
-      local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
-      if res.total > 0 then
-        return string.format("%s/%d %s", res.current, res.total, vim.fn.getreg("/"))
-      end
-    end
-    return ""
+    return ""
   end,
-  color = { bg = colors.blue, fg = colors.bg }
+  on_click = function()
+    return vim.cmd("Neotree toggle")
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 0, right = 3}
 }
 
 ins_left {
-  "filetype",
-  cond = conditions.buffer_not_empty,
-  icon_only = false,
-  padding = { left = 0, right = 1 },
-  color = { fg = colors.light_grey_5 }
+  function()
+    return ""
+  end,
+  on_click = function()
+    return require("telescope.builtin").find_files()
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 0, right = 2}
 }
+
+ins_left {
+  function()
+    return ""
+  end,
+  on_click = function()
+    utils.float_terminal("lazygit")
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 1, right = 2}
+}
+
+ins_left {
+  function()
+    return ""
+  end,
+  on_click = function()
+    return vim.cmd.Lazy()
+  end,
+  -- color = { fg = colors.blue_1 },
+  color = { fg = colors.light_grey_3 },
+  padding = { left = 1, right = 2}
+}
+
+-- ins_left {
+--   "filetype",
+--   cond = conditions.buffer_not_empty,
+--   icon_only = false,
+--   padding = { left = 2, right = 3 },
+-- }
+--
+-- ins_left {
+--   "filename",
+--   symbols = {
+--     modified = ""
+--   },
+--   color = { gui = "bold" },
+--   padding = { left = 1, right = 3 },
+-- }
 
 ins_left {
   "branch",
   icon = "",
-  cond = conditions.hide_in_width,
-  color = { fg = colors.light_grey_5 },
+  color = { fg = colors.blue_1 },
   padding = { left = 2, right = 3 },
 }
 
@@ -161,6 +202,21 @@ ins_left {
 
 -- right
 
+
+
+ins_right {
+  function()
+    if vim.api.nvim_get_vvar("hlsearch") == 1 then
+      local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
+      if res.total > 0 then
+        return string.format("%s/%d %s", res.current, res.total, vim.fn.getreg("/"))
+      end
+    end
+    return ""
+  end,
+  color = { fg = colors.blue }
+}
+
 ins_right {
   "diagnostics",
   sources = { "nvim_diagnostic" },
@@ -170,28 +226,17 @@ ins_right {
     color_warn = { fg = colors.yellow },
     color_info = { fg = colors.cyan },
   },
-  always_visible = true,
   on_click = function()
-    -- return require("telescope.builtin").diagnostics({{0}})
-    require("telescope.builtin").diagnostics(
-      require("telescope.themes").get_ivy {
-        results_title = "Diagnostics",
-        prompt_title = "",
-        preview_title = "",
-        layout_config = {
-          prompt_position = "bottom",
-          height = 0.35
-        }
-      })
+    return require("telescope.builtin").diagnostics({0})
   end,
-  padding = { left = 1, right = 0 }
+  padding = { left = 3, right = 0 }
 }
 
 ins_right {
   function()
     local msg = "LS Inactive"
     local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-    local clients = vim.lsp.get_clients()
+    local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
       return msg
     end
@@ -208,38 +253,37 @@ ins_right {
   end,
   icon = " ",
   color = { fg = colors.blue_1 },
-  padding = { left = 1, right = 2 }
+  padding = { left = 1, right = 3 }
 }
 
 ins_right {
-  "location",
-  color = { fg = colors.light_grey_5 },
-  padding = { left = 1, right = 2 }
+  function()
+    return " TS"
+  end,
+  on_click = function()
+    local b = vim.api.nvim_get_current_buf()
+    vim.cmd("TSToggle highlight")
+    vim.notify("TSToggle highlight")
+    -- if next(vim.treesitter.highlighter.active[b]) then
+    --   return vim.notify("Treesitter highlight enabled")
+    -- else
+    --   return vim.notify("Treesitter highlight disabled")
+    -- end
+  end,
+  color = { fg = colors.blue_1 },
+  padding = { left = 1, right = 4 },
+  cond = conditions.hide_in_width,
 }
-
--- ins_right {
---   function()
---     return " TS"
---   end,
---   on_click = function()
---     local b = vim.api.nvim_get_current_buf()
---     vim.cmd("TSToggle highlight")
---     vim.notify("TSToggle highlight")
---   end,
---   color = { fg = colors.light_grey_5 },
---   padding = { left = 1, right = 2 },
---   cond = conditions.hide_in_width,
--- }
 
 ins_right  {
   function()
     return ""
   end,
   on_click = function()
-    return vim.cmd("Telescope notify theme=ivy")
+    return vim.cmd("Telescope notify")
   end,
   color = { fg = colors.blue_1 },
-  padding = { left = 1, right = 2 }
+  padding = { left = 0, right = 2 }
 }
 
 ins_right {
@@ -255,4 +299,37 @@ ins_right {
   padding = { right = 0, left = 0 }
 }
 
+-- ins_right {
+--   function()
+--     return "▊"
+--   end,
+--   color = function()
+--     local mode_color = {
+--       n = colors.blue,
+--       i = colors.green,
+--       v = colors.magenta,
+--       [""] = colors.blue,
+--       V = colors.magenta,
+--       c = colors.yellow,
+--       no = colors.red,
+--       s = colors.orange,
+--       S = colors.orange,
+--       [""] = colors.orange,
+--       ic = colors.yellow,
+--       R = colors.red,
+--       Rv = colors.red,
+--       cv = colors.violet,
+--       ce = colors.violet,
+--       r = colors.cyan,
+--       rm = colors.cyan,
+--       ["r?"] = colors.cyan,
+--       ["!"] = colors.red,
+--       t = colors.orange,
+--     }
+--     return { fg = mode_color[vim.fn.mode()] }
+--   end,
+--   padding = { left = 1, right = 0 },
+-- }
+
 lualine.setup(config)
+

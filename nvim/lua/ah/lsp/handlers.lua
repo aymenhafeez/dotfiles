@@ -4,9 +4,9 @@ local border = require("ah.utils").border
 
 function M.setup()
   local signs = {
-    Error = "",
-    Warn = "",
-    Hint = "",
+    Error = "",
+    Warn = "",
+    Hint = "",
     Info = ""
   }
   for type, icon in pairs(signs) do
@@ -27,16 +27,16 @@ function M.setup()
       prefix = function(diagnostic)
         local icon, highlight
         if diagnostic.severity == 1 then
-          icon = " "
+          icon = " "
           highlight = "DiagnosticError"
         elseif diagnostic.severity == 2 then
-          icon = " "
+          icon = " "
           highlight = "DiagnosticWarn"
         elseif diagnostic.severity == 3 then
           icon = " "
           highlight = "DiagnosticInfo"
         elseif diagnostic.severity == 4 then
-          icon = " "
+          icon = " "
           highlight = "DiagnosticHint"
         end
         return icon .. " ", highlight

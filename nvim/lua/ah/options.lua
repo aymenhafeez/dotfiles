@@ -49,9 +49,9 @@ opt.inccommand = "split"
 
 opt.completeopt = { "menu", "menuone" }
 opt.omnifunc = "syntaxcomplete#Complete"
-opt.pumheight = 15
--- opt.pumblend = 10
--- opt.winblend = 10
+opt.pumheight = 12
+opt.pumblend = 10
+opt.winblend = 10
 opt.scrolloff = 5
 
 opt.autochdir = true

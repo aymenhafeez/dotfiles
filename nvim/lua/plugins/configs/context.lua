@@ -18,4 +18,6 @@ local options = {
   on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 }
 
+vim.cmd("hi TreeSitterContext guibg=#292e42")
+
 context.setup(options)

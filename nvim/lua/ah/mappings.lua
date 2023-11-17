@@ -12,8 +12,10 @@ vim.g.maplocalleader = " "
 
 map("n", "<leader>ll", vim.cmd.Lazy, opts)
 
-map("n", "<S-l>", vim.cmd.bnext, opts)
-map("n", "<S-h>", vim.cmd.bprev, opts)
+-- map("n", "<S-l>", vim.cmd.bnext, opts)
+-- map("n", "<S-h>", vim.cmd.bprev, opts)
+map("n", "<S-l>", vim.cmd.BufferLineCycleNext, opts)
+map("n", "<S-h>", vim.cmd.BufferLineCyclePrev, opts)
 
 map("n", "<leader>ls", vim.cmd.LspStart, opts)
 
@@ -116,6 +118,19 @@ map("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- plugin mappings
+
+-- jbyuki/nabla.nvim
+map("n", "<leader>pp", "<cmd>lua require('nabla').popup()<CR>", opts)
+
+-- akinsho/bufferline.nvim
+
+map("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", opts)
+map("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", opts)
+map("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", opts)
+map("n", "<leader>4", "<cmd>BufferLineGoToBuffer 4<CR>", opts)
+map("n", "<leader>5", "<cmd>BufferLineGoToBuffer 5<CR>", opts)
+map("n", "<leader>6", "<cmd>BufferLineGoToBuffer 6<CR>", opts)
+map("n", "<leader>7", "<cmd>BufferLineGoToBuffer 7<CR>", opts)
 
 -- nvim-neo-tree/neo-tree.nvim
 map("n", "<leader>-", "<cmd>Neotree toggle<CR>", opts)

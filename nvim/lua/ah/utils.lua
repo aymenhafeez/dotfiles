@@ -14,19 +14,19 @@ end
 
 function M.execute_line()
   if vim.bo.filetype == "lua" then
-    vim.api.nvim_exec("execute(printf(\":lua %s\", getline(\".\")))", false)
+    vim.api.nvim_exec2("execute(printf(\":lua %s\", getline(\".\")))", {})
   elseif vim.bo.filetype == "vim" then
-    vim.api.nvim_exec("execute getline('>')", false)
+    vim.api.nvim_exec2("execute getline('>')", {})
   end
 end
 
 function M.source_lua()
   local message = vim.fn.expand("%:t") .. " sourced"
   if vim.bo.filetype == "lua" then
-    vim.api.nvim_exec("luafile %", false)
+    vim.api.nvim_exec2("luafile %", {})
     vim.notify(message)
   elseif vim.bo.filetype == "vim" then
-    vim.api.nvim_exec("source %", false)
+    vim.api.nvim_exec2("source %", {})
     vim.notify(message)
   end
 end
@@ -48,6 +48,45 @@ function M.try(fn, ...)
     M.error(table.concat(lines, "\n"))
     return err
   end)
+end
+
+local function hexToRgb(hex_str)
+  local hex = "[abcdef0-9][abcdef0-9]"
+  local pat = "^#(" .. hex .. ")(" .. hex .. ")(" .. hex .. ")$"
+  hex_str = string.lower(hex_str)
+
+  assert(string.find(hex_str, pat) ~= nil,
+    "hex_to_rgb: invalid hex_str: " .. tostring(hex_str))
+
+  local r, g, b = string.match(hex_str, pat)
+  return { tonumber(r, 16), tonumber(g, 16), tonumber(b, 16) }
+end
+
+local function blend(fg, bg, alpha)
+  bg = hexToRgb(bg)
+  fg = hexToRgb(fg)
+
+  local blendChannel = function(i)
+    local ret = (alpha * fg[i] + ((1 - alpha) * bg[i]))
+    return math.floor(math.min(math.max(0, ret), 255) + 0.5)
+  end
+
+  return string.format("#%02X%02X%02X", blendChannel(1), blendChannel(2), blendChannel(3))
+end
+
+function M.darken(hex, amount, bg)
+  return blend(hex, bg or M.bg, math.abs(amount))
+end
+
+function M.lighten(hex, amount, fg)
+  return blend(hex, fg or M.fg, math.abs(amount))
+end
+
+function M.hl_str(str, hl_cur, hl_after)
+  if hl_after == nil then
+    return "%#" .. hl_cur .. "#" .. str .. "%*"
+  end
+  return "%#" .. hl_cur .. "#" .. str .. "%*" .. "%#" .. hl_after .. "#"
 end
 
 function M.float_terminal(cmd)
@@ -72,6 +111,91 @@ function M.float_terminal(cmd)
   vim.cmd(table.concat(autocmd, " "))
   vim.cmd([[startinsert]])
 end
+
+function M.version()
+  local v = vim.version()
+  if not v.prerelease then
+    vim.notify(
+      ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
+      vim.log.levels.WARN,
+      { title = "Neovim not running nightly" }
+    )
+  end
+end
+
+function M.warn(msg, name)
+  vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
+end
+
+function M.error(msg, name)
+  vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
+end
+
+function M.info(msg, name)
+  vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
+end
+
+M.treesitter_cmds = {
+  "TSInstall",
+  "TSBufEnable",
+  "TSBufDisable",
+  "TSEnable",
+  "TSDisable",
+  "TSModuleInfo",
+}
+
+function M.border(hl_name)
+  return {
+    { "╭", hl_name },
+    { "─", hl_name },
+    { "╮", hl_name },
+    { "│", hl_name },
+    { "╯", hl_name },
+    { "─", hl_name },
+    { "╰", hl_name },
+    { "│", hl_name },
+  }
+end
+
+M.icons = {
+  Namespace = "",
+  Text = " ",
+  Method = " ",
+  Function = " ",
+  Constructor = " ",
+  Field = "",
+  Variable = " ",
+  Class = " ",
+  Interface = " ",
+  Module = " ",
+  Property = " ",
+  Unit = " ",
+  Value = "󰉻 ",
+  Enum = " ",
+  Keyword = " ",
+  Snippet = " ",
+  Color = " ",
+  File = " ",
+  Reference = " ",
+  Folder = " ",
+  EnumMember = " ",
+  Constant = " ",
+  Struct = " ",
+  Event = " ",
+  Operator = " ",
+  TypeParameter = " ",
+  Table = "",
+  Object = "  ",
+  Tag = "",
+  Array = "[]",
+  Boolean = " ",
+  Number = " ",
+  Null = "ﳠ",
+  String = " ",
+  Calendar = "",
+  Watch = " ",
+  Package = " ",
+}
 
 -- doesn't quite work yet
 -- function M.create_centered_floating_window()
@@ -170,90 +294,5 @@ end
 --   }
 --   vim.cmd(table.concat(autocmd, " "))
 -- end
-
-function M.version()
-  local v = vim.version()
-  if not v.prerelease then
-    vim.notify(
-      ("Neovim v%d.%d.%d"):format(v.major, v.minor, v.patch),
-      vim.log.levels.WARN,
-      { title = "Neovim not running nightly" }
-    )
-  end
-end
-
-function M.warn(msg, name)
-  vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
-end
-
-function M.error(msg, name)
-  vim.notify(msg, vim.log.levels.ERROR, { title = name or "init.lua" })
-end
-
-function M.info(msg, name)
-  vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
-end
-
-M.treesitter_cmds = {
-  "TSInstall",
-  "TSBufEnable",
-  "TSBufDisable",
-  "TSEnable",
-  "TSDisable",
-  "TSModuleInfo",
-}
-
-function M.border(hl_name)
-  return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
-  }
-end
-
-M.icons = {
-  Namespace = "",
-  Text = "﬍ ",
-  Method = " ",
-  Function = " ",
-  Constructor = " ",
-  Field = "",
-  Variable = " ",
-  Class = " ",
-  Interface = " ",
-  Module = " ",
-  Property = " ",
-  Unit = " ",
-  Value = " ",
-  Enum = " ",
-  Keyword = " ",
-  Snippet = " ",
-  Color = " ",
-  File = " ",
-  Reference = " ",
-  Folder = " ",
-  EnumMember = " ",
-  Constant = " ",
-  Struct = " ",
-  Event = " ",
-  Operator = " ",
-  TypeParameter = " ",
-  Table = "",
-  Object = "  ",
-  Tag = "",
-  Array = "[]",
-  Boolean = " ",
-  Number = " ",
-  Null = "ﳠ",
-  String = " ",
-  Calendar = "",
-  Watch = " ",
-  Package = " ",
-}
 
 return M

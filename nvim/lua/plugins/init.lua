@@ -16,6 +16,13 @@ if not present then
   return
 end
 
+local options = {
+  ui = {
+    border = "rounded",
+    size = { width = 0.85, height = 0.85 },
+  }
+}
+
 lazy.setup({
   -- -- need to work out how to get this to work with Lazy.nvim
   -- local local_use = function(first, second, opts)
@@ -36,10 +43,12 @@ lazy.setup({
   --     opts[1] = string.format("%s/%s", home, plug_path)
   --   end
   --
-  --   use(opts)
+  --   opts
   -- end
 
-  { "nvim-lua/plenary.nvim" },
+  {
+    "nvim-lua/plenary.nvim"
+  },
 
   {
     "lewis6991/impatient.nvim",
@@ -48,7 +57,9 @@ lazy.setup({
     end
   },
 
-  { "nvim-lua/popup.nvim" },
+  {
+    "nvim-lua/popup.nvim"
+  },
 
   {
     "folke/noice.nvim",
@@ -68,13 +79,8 @@ lazy.setup({
   },
 
   {
-    "rcarriga/nvim-notify",
-    config = function()
-      require("plugins.configs.notify")
-    end
+    "moll/vim-bbye"
   },
-
-  { "moll/vim-bbye" },
 
   {
     "akinsho/toggleterm.nvim",
@@ -124,7 +130,7 @@ lazy.setup({
       require("plugins.configs.treesitter")
     end,
     dependencies = {
-      -- {"nvim-treesitter/nvim-treesitter-textobjects"},
+      {"nvim-treesitter/nvim-treesitter-textobjects"},
       -- {
       --   "nvim-treesitter/nvim-treesitter-context",
       --   config = function()
@@ -210,35 +216,56 @@ lazy.setup({
     }
   },
 
-  -- lsp stuff --
+  -- {
+  --   'Bekaboo/dropbar.nvim',
+  -- },
 
-  { "williamboman/nvim-lsp-installer" },
+  {
+    "jbyuki/nabla.nvim"
+  },
+
+  {
+    "aymenhafeez/OxfDictionary.nvim"
+  },
+
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+
+  -- lsp
 
   {
     "neovim/nvim-lspconfig",
     config = function()
       require("ah.lsp")
     end,
-    -- dependencies = {
-    --   -- {
-    --   --   "SmiteshP/nvim-navic",
-    --   --   config = function()
-    --   --     require("plugins.configs.navic")
-    --   --   end,
-    --   --   module = { "nvim-navic" }
-    --   -- },
-    -- },
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+    },
   },
 
-{
+  { "folke/neodev.nvim", opts = {} },
+
+  {
     'nvimdev/lspsaga.nvim',
     event = "LspAttach",
     config = function()
-        require("plugins.configs.saga")
+      require("plugins.configs.saga")
     end,
-    },
+  },
 
-  -- cmp --
+  -- cmp
 
   {
     "hrsh7th/nvim-cmp",
@@ -256,20 +283,33 @@ lazy.setup({
     }
   },
 
-  { "SirVer/ultisnips" },
+  {
+    "SirVer/ultisnips"
+  },
 
-  { "brymer-meneses/grammar-guard.nvim" },
+  -- { "brymer-meneses/grammar-guard.nvim" },
 
-  { "nanotee/luv-vimdocs" },
+  {
+    "nanotee/luv-vimdocs"
+  },
 
-  { "milisims/nvim-luaref" },
+  {
+    "milisims/nvim-luaref"
+  },
 
   {
     "jupyter-vim/jupyter-vim",
     ft = "python"
   },
 
-  -- colourschemes --
+  {
+    "goolord/alpha-nvim",
+    config = function()
+      require("plugins.configs.alpha")
+    end
+  },
+
+  -- colourschemes
 
   { "catppuccin/nvim" },
   { "Mofiqul/vscode.nvim" },
@@ -281,29 +321,52 @@ lazy.setup({
   },
 
   {
-    "ntk148v/habamax.nvim",
-    dependencies={ "rktjmp/lush.nvim" }
+    "aymenhafeez/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("tokyonight").setup({
+        styles = {
+          comments = { italic = true },
+          keywords = { italic = true },
+          floats = "normal",
+          statusline = "dark"
+        },
+        sidebars = { "qf" }
+      })
+      vim.cmd.colorscheme("tokyonight-night")
+    end
   },
 
   {
-    "folke/tokyonight.nvim",
-    -- config = function ()
-    --   vim.cmd.colorscheme("tokyonight-night")
-    -- end
+    "oxfist/night-owl.nvim",
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   vim.cmd.colorscheme("night-owl")
+    -- end,
   },
 
   {
     "aymenhafeez/neodark.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function ()
-      vim.cmd.colorscheme("neodark")
-    end
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function ()
+    --   vim.cmd.colorscheme("neodark")
+    -- end
   },
   -- local_use "neodark.nvim"
 
-  -- {" aymenhafeez/OxfDictionary.nvim "},
-  -- local_use "OxfDictionary.nvim"
+  {
+    'RRethy/nvim-base16',
+    config = function()
+      require("base16-colorscheme").with_config({
+        telescope = false,
+        cmp = false,
+      })
+      -- vim.cmd.colorscheme("base16-")
+    end
+  },
 
   {
     "aymenhafeez/scratch.nvim",
@@ -317,4 +380,4 @@ lazy.setup({
   -- { "aymenhafeez/vim-line-motion" }
   -- local_use "vim-line-motion"
 
-})
+}, options)

@@ -29,10 +29,35 @@ local options = {
   default_component_configs = {
     indent = {
       padding = 2
-    }
+    },
+    symbols = {
+      added     = "✚",
+      deleted   = "✖",
+      modified  = "",
+      renamed   = "󰁕",
+      untracked = "",
+      ignored   = "",
+      unstaged  = "󰄱",
+      staged    = "",
+      conflict  = "",
+    },
+    diagnostics = {
+      symbols = {
+        hint = "",
+        info = "",
+        warn = "",
+        error = "",
+      },
+      highlights = {
+        hint = "DiagnosticSignHint",
+        info = "DiagnosticSignInfo",
+        warn = "DiagnosticSignWarn",
+        error = "DiagnosticSignError",
+      },
+    },
   },
   window = {
-    width = 36,
+    width = 32,
     mappings = {
       ["<C-s>"] = "open_split",
       ["<C-v>"] = "open_vsplit",

@@ -4,10 +4,19 @@ vim.api.nvim_create_autocmd("TermOpen", {
   -- command = "setlocal nonumber norelativenumber nocursorline",
   callback = function()
     vim.api.nvim_exec2("setlocal nonumber norelativenumber nocursorline", {})
-    vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
+    -- vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
     vim.b.miniindentscope_disable = true
   end,
   group = termOpts
+})
+
+local masonOpts = vim.api.nvim_create_augroup("MasonOpts", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "mason",
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
+  group = masonOpts
 })
 
 local quickFix = vim.api.nvim_create_augroup("QuickFix", { clear = true })
@@ -22,7 +31,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank({
       higroup = "Visual",
-      timeout = 75
+      timeout = 100
     })
   end,
   pattern = '*',
@@ -48,8 +57,8 @@ local helpFiles = vim.api.nvim_create_augroup("HelpHelp", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
   callback = function()
-    vim.api.nvim_exec2("wincmd L | vertical resize -8", {})
-    vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
+    vim.api.nvim_exec2("wincmd L | vertical resize -4", {})
+    -- vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
     vim.opt_local.wrap = false
     vim.opt_local.linebreak = false
     vim.b.miniindentscope_disable = true
@@ -70,10 +79,3 @@ vim.api.nvim_create_autocmd("FocusGained", {
   command = "checktime",
   group = checkTime
 })
-
--- local disableIndentScope = vim.api.nvim_create_augroup("DisableIndentScope", { clear = true })
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = "help",
---   command = "lua vim.b.miniindentscope_disable = true",
---   group = disableIndentScope
--- })

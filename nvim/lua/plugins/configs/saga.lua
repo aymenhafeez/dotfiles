@@ -5,7 +5,7 @@ end
 
 local options = {
   ui = {
-    code_action = '💡'
+    code_action = '💡',
   },
   lightbulb = {
     sign = false
@@ -13,7 +13,7 @@ local options = {
   symbol_in_winbar = {
     separator = "  ",
     folder_level = 0,
-    color_mode = false
+    color_mode = true
   },
   outline = {
     win_width = 35

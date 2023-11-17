@@ -3,7 +3,7 @@ local M = {}
 local telescope = require("telescope.builtin")
 local extension = require "telescope".extensions
 local theme = require("telescope.themes")
-local util = require("ah.utils")
+local utils = require("ah.utils")
 
 local ignore_patterns = {
   "%.pdf",
@@ -63,7 +63,7 @@ function M.reload_module()
         local name = get_module_name(entry.value)
 
         R(name)
-        util.info(name .. " Reloaded")
+        utils.info(name .. " Reloaded")
       end)
 
       return true
@@ -81,7 +81,7 @@ function M.find_files()
     path_display = { "truncate" },
     layout_config = {
       width = 0.85,
-      height = 0.85,
+      height = 0.9,
       preview_width = 0.55
     }
   }
@@ -125,7 +125,7 @@ function M.search_notes()
     layout_strategy = "flex",
     layout_config = {
       width = 0.85,
-      height = 0.85,
+      height = 0.9,
       -- preview_width = 0.55
     }
   }
@@ -142,7 +142,7 @@ function M.grep_notes()
     file_ignore_patterns = ignore_patterns,
     layout_config = {
       width = 0.65,
-      height = 0.85,
+      height = 0.9,
       preview_height = 0.6
     }
   }
@@ -156,7 +156,7 @@ function M.search_dotfiles()
     preview_title = "",
     layout_config = {
       width = 0.85,
-      height = 0.85,
+      height = 0.9,
       preview_width = 0.55
     }
   }
@@ -172,7 +172,7 @@ function M.grep_dotfiles()
     path_display = { "tail" },
     layout_config = {
       width = 0.65,
-      height = 0.85,
+      height = 0.9,
       preview_height = 0.6
     }
   }
@@ -199,7 +199,7 @@ function M.search_help()
     layout_config = {
       prompt_position = "top",
       width = 0.85,
-      height = 0.85,
+      height = 0.9,
       preview_width = 0.55
     }
   }
@@ -256,6 +256,7 @@ function M.oldfiles()
     path_display = { "truncate" },
     layout_config = {
       width = 0.85,
+      preview_width = 0.5
     }
   }
 end
@@ -268,7 +269,7 @@ function M.live_grep()
     layout_strategy = "vertical",
     layout_config = {
       height = 0.85,
-      width = 0.65,
+      -- width = 0.65,
       preview_height = 0.6
     }
   }
@@ -305,13 +306,25 @@ end
 
 function M.file_browser()
   extension.file_browser.file_browser {
-    layout_config = {
-      -- height = 0.75,
-      -- width = 0.8,
-      width = 0.85,
-      height = 0.85,
-      preview_width = 0.5
-    }
+    -- layout_config = {
+    --   -- height = 0.75,
+    --   -- width = 0.8,
+    --   width = 0.85,
+    --   height = 0.85,
+    --   preview_width = 0.5
+    -- }
+  }
+end
+
+function M.notify()
+  telescope.notify {
+    results_title = "Notifications",
+    preview_title = "",
+    prompt_title = "",
+    -- layout_config = {
+    --   width = 0.85,
+    --   height = 0.85
+    -- }
   }
 end
 
