@@ -95,7 +95,7 @@ function M.buffer_fuzzy_search()
       results_title = "Buffer search",
       layout_config = {
         prompt_position = "bottom",
-        height = 0.35,
+        height = 0.45,
         preview_width = 0.55
       }
     })
@@ -289,7 +289,7 @@ end
 
 function M.search_projects_dir()
   telescope.find_files {
-    cwd = "~/Documents/git/projects/",
+    cwd = "~/Documents/git/",
     results_title = "Projects",
     preview_title = "",
     prompt_title = "",

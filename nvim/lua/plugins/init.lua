@@ -216,10 +216,6 @@ lazy.setup({
     }
   },
 
-  -- {
-  --   'Bekaboo/dropbar.nvim',
-  -- },
-
   {
     "jbyuki/nabla.nvim"
   },
@@ -236,9 +232,9 @@ lazy.setup({
       vim.o.timeoutlen = 300
     end,
     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
+      window = {
+        border = "single",
+      },
     }
   },
 
@@ -255,14 +251,16 @@ lazy.setup({
     },
   },
 
-  { "folke/neodev.nvim", opts = {} },
-
   {
-    'nvimdev/lspsaga.nvim',
-    event = "LspAttach",
-    config = function()
-      require("plugins.configs.saga")
-    end,
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+    },
+    opts = {
+      -- configurations go here
+    },
   },
 
   -- cmp
@@ -332,14 +330,14 @@ lazy.setup({
           floats = "normal",
           statusline = "dark"
         },
-        sidebars = { "qf" }
+        sidebars = { "help", "qf" }
       })
       vim.cmd.colorscheme("tokyonight-night")
     end
   },
 
   {
-    "oxfist/night-owl.nvim",
+    "loctvl842/monokai-pro.nvim",
     -- lazy = false,
     -- priority = 1000,
     -- config = function()

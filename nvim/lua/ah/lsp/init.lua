@@ -1,5 +1,3 @@
-require('neodev').setup()
-
 local lsp_status_ok, lspconfig = pcall(require, "lspconfig")
 if not lsp_status_ok then
   return

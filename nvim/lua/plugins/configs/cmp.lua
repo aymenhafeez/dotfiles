@@ -59,7 +59,7 @@ cmp.setup {
       border = border("CmpBorder"),
       winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
       -- winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
-      max_width = 70,
+      max_width = 60,
       max_height = 15
     },
   },

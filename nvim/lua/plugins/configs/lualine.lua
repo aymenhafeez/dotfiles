@@ -9,6 +9,7 @@ local telescope_utils = require("ah.telescope.utils")
 local colors = {
   bg             = "#191d25",
   bg1            = "#21283b",
+  bg2            = "#181821",
   bg_d           = "#141b24",
   fg             = "#a0a8b7",
   yellow         = "#e5c07b",
@@ -35,6 +36,9 @@ local colors = {
   light_grey_5   = "#5c6370",
   white          = "#f3f6fc"
 }
+
+vim.api.nvim_set_hl(0, "LualineBranchIcon", { bg = colors.bg2, fg = colors.blue_1 })
+vim.api.nvim_set_hl(0, "LualineBranchName", { bg = colors.bg2, fg = colors.yellow })
 
 local conditions = {
   buffer_not_empty = function()
@@ -118,18 +122,18 @@ ins_left {
   padding = { left = 0, right = 0 },
 }
 
-ins_left {
-  function()
-    if vim.api.nvim_get_vvar("hlsearch") == 1 then
-      local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
-      if res.total > 0 then
-        return string.format("%s/%d %s", res.current, res.total, vim.fn.getreg("/"))
-      end
-    end
-    return ""
-  end,
-  color = { bg = colors.blue, fg = colors.bg }
-}
+-- ins_left {
+--   function()
+--     if vim.api.nvim_get_vvar("hlsearch") == 1 then
+--       local res = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
+--       if res.total > 0 then
+--         return string.format("%s/%d %s", res.current, res.total, vim.fn.getreg("/"))
+--       end
+--     end
+--     return ""
+--   end,
+--   color = { bg = colors.blue, fg = colors.bg }
+-- }
 
 ins_left {
   "filetype",
@@ -141,7 +145,8 @@ ins_left {
 
 ins_left {
   "branch",
-  icon = "",
+  -- icon = "",
+  icon = utils.hl_str("", "LualineBranchName", "LualineBranchIcon"),
   cond = conditions.hide_in_width,
   color = { fg = colors.light_grey_5 },
   padding = { left = 2, right = 3 },
@@ -149,6 +154,7 @@ ins_left {
 
 ins_left {
   "diff",
+  colored = true,
   symbols = { added = " ", modified = " ", removed = " " },
   diff_color = {
     added = { fg = colors.green },
@@ -236,7 +242,7 @@ ins_right  {
     return ""
   end,
   on_click = function()
-    return vim.cmd("Telescope notify theme=ivy")
+    return vim.cmd("Telescope notify theme=ivy layout_config={height=0.45}")
   end,
   color = { fg = colors.blue_1 },
   padding = { left = 1, right = 2 }
