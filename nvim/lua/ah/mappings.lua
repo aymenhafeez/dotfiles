@@ -124,6 +124,9 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", { silent = true })
 
 -- plugin mappings
 
+-- folke/which-key
+map("n", "<leader>ww", vim.cmd.WhichKey, { noremap = true, silent = true, desc = "Open WhichKey"})
+
 -- jbyuki/nabla.nvim
 map("n", "<leader>pp", "<cmd>lua require('nabla').popup()<CR>", { noremap = true, silent = true, desc = "Show LaTeX popup" })
 

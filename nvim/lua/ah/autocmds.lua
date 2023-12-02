@@ -1,10 +1,8 @@
 local termOpts = vim.api.nvim_create_augroup("TermOpts", { clear = true })
 vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
-  -- command = "setlocal nonumber norelativenumber nocursorline",
   callback = function()
     vim.api.nvim_exec2("setlocal nonumber norelativenumber nocursorline", {})
-    -- vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
     vim.b.miniindentscope_disable = true
   end,
   group = termOpts
@@ -31,7 +29,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank({
       higroup = "Visual",
-      timeout = 100
+      timeout = 150
     })
   end,
   pattern = '*',
@@ -58,7 +56,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "help",
   callback = function()
     vim.api.nvim_exec2("wincmd L | vertical resize -4", {})
-    -- vim.opt.winhighlight = "Normal:NeoTreeNormal,SignColumn:NeoTreeNormal"
     vim.opt_local.wrap = false
     vim.opt_local.linebreak = false
     vim.b.miniindentscope_disable = true

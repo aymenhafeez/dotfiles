@@ -12,7 +12,10 @@ local options = {
     "log",
     "lspinfo",
     "toggleterm",
+    "notify"
   }
 }
+
+vim.cmd("hi link MiniIndentscopeSymbol NonText")
 
 return indent.setup(options)

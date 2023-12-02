@@ -1,229 +1,266 @@
+local M = {}
+
 local api = vim.api
-local fn = vim.fn
-local bo = vim.bo
 
-local modes = {
-  ["n"] = "",
-  ["no"] = "",
-  ["v"] = "",
-  ["V"] = "",
-  [""] = "",
-  ["s"] = "",
-  ["S"] = "",
-  [""] = "",
-  ["i"] = "",
-  ["ic"] = "",
-  ["R"] = "",
-  ["Rv"] = "",
-  ["c"] = "",
-  ["cv"] = "",
-  ["ce"] = "",
-  ["r"] = "",
-  ["rm"] = "",
-  ["r?"] = "",
-  ["!"] = "",
-  ["t"] = "",
+--- @param name string
+--- @return table<string,any>
+local function get_hl(name)
+  return api.nvim_get_hl(0, { name = name })
+end
+
+local function highlight(num, active)
+  if active == 1 then
+    if num == 1 then
+      return '%#PmenuSel#'
+    end
+    return '%#StatusLine#'
+  end
+  return '%#StatusLineNC#'
+end
+
+local DIAG_ATTRS = {
+  { 'Error', '', 'DiagnosticErrorStatus' },
+  { 'Warn', '', 'DiagnosticWarnStatus' },
+  { 'Hint', '', 'DiagnosticHintStatus' },
+  { 'Info', '', 'DiagnosticInfoStatus' },
 }
 
-local ts_ignore_ft = {
-  "",
-  "toggleterm",
-  "TelescopePrompt",
-  "NvimTree",
-  "neo-tree",
-  "lspinfo"
-}
+local function hldefs()
+  local bg = get_hl('StatusLine').bg
+  for _, attrs in ipairs(DIAG_ATTRS) do
+    local fg = get_hl('Diagnostic'..attrs[1]).fg
+    api.nvim_set_hl(0, attrs[3], { fg = fg, bg = bg})
+  end
 
-local function mode()
-  local current_mode = api.nvim_get_mode().mode
-  return string.format(" %s ", modes[current_mode])
+  local dhl = get_hl('Debug')
+  api.nvim_set_hl(0, 'LspName', { fg = dhl.fg, bg = bg})
+
+  local fg = get_hl('MoreMsg').fg
+  api.nvim_set_hl(0, 'StatusTS', { fg = fg, bg = bg })
 end
 
-local function update_mode_colors()
-  local current_mode = api.nvim_get_mode().mode
-  local mode_color = "%#StatusLineAccent#"
-  if current_mode == "n" then
-    mode_color = "%#StatuslineAccent#"
-  elseif current_mode == "i" or current_mode == "ic" then
-    mode_color = "%#Statusline#"
-  elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
-    mode_color = "%#StatuslineVisual#"
-  elseif current_mode == "R" then
-    mode_color = "%#StatuslineReplace#"
-  elseif current_mode == "c" then
-    mode_color = "%#StatuslineCmdLine#"
-  elseif current_mode == "t" then
-    mode_color = "%#StatuslineTerminal#"
+local function hl(name, active)
+  if active == 0 then
+    return ''
   end
-  return mode_color
+  return '%#'..name..'#'
 end
 
-local function filename()
-  local fname
-  local modified = " "
-  local readonly = " "
+function M.lsp_status(active)
+  local status = {} ---@type string[]
 
-  if bo.modified then
-    fname = fn.expand "%:t" .. modified
-  elseif bo.readonly then
-    fname = fn.expand "%:t" .. readonly
-  else
-    fname = fn.expand "%:t"
-  end
-
-  if fname == "" then
-    return ""
-  end
-
-  local file_name, file_ext = fn.expand("%:t"), vim.fn.expand("%:e")
-  local icon = require"nvim-web-devicons".get_icon(file_name, file_ext, { default = true })
-  local filetype = bo.filetype
-
-  if filetype == "" then return "" end
-  return string.format("  %s %s", icon, fname)
-end
-
-local function lsp_diagnostics()
-  local count = {}
-  local levels = {
-    errors = "Error",
-    warnings = "Warn",
-    info = "Info",
-    hints = "Hint",
-  }
-
-  for k, level in pairs(levels) do
-    count[k] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
-  end
-
-  local errors = ""
-  local warnings = ""
-  local hints = ""
-  local info = ""
-
-  if count["errors"] ~= 0 then
-    errors = "%#StatusLineLspError# " .. count["errors"] .. " "
-  end
-  if count["warnings"] ~= 0 then
-    warnings = "%#StatusLineLspWarning# " .. count["warnings"] .. " "
-  end
-  if count["hints"] ~= 0 then
-    hints = "%#StatusLineLspHint# " .. count["hints"] .. " "
-  end
-  if count["info"] ~= 0 then
-    info = "%#StatusLineLspInfo# " .. count["info"] .. " "
-  end
-
-  return errors .. warnings .. hints .. info .. "%#Normal#"
-end
-
-local function lsp_client()
-  local msg = " LS Inactive"
-  local buf_ft = api.nvim_buf_get_option(0, "filetype")
-  local clients = vim.lsp.get_active_clients()
-  if next(clients) == nil then
-    return msg
-  end
-  for _, client in ipairs(clients) do
-    local filetypes = client.config.filetypes
-    if filetypes and fn.index(filetypes, buf_ft) ~= -1 then
-      return " " .. client.name
+  for _, attrs in ipairs(DIAG_ATTRS) do
+    local n = vim.diagnostic.get(0, {severity=attrs[1]})
+    if #n > 0 then
+      table.insert(status, ('%s %s %d'):format(
+        hl(attrs[3], active),
+        attrs[2],
+        #n
+      ))
     end
   end
-  return msg
-end
 
-local function lineinfo()
-  return "  %l:%c  "
-end
-
-local function progress_bar()
-  local current_line = fn.line "."
-  local total_lines = fn.line "$"
-  local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-  local line_ratio = current_line / total_lines
-  local index = math.ceil(line_ratio * #chars)
-  return chars[index]
-end
-
-local function search_count()
-  if vim.api.nvim_get_vvar("hlsearch") == 1 then
-    local count = vim.fn.searchcount({ maxcount = 999, timeout = 500 })
-    if count.total > 0 then
-      return string.format("%s/%d %s   ", count.current, count.total, vim.fn.getreg("/"))
-    end
+  if vim.g.metals_status then
+    status[#status+1] = vim.g.metals_status:gsub('%%', '%%%%')
   end
-  return ""
+
+  local names = {} ---@type string[]
+  local attached = vim.lsp.get_active_clients({bufnr=0})
+  for _, c in ipairs(attached) do
+    names[#names+1] = c.name
+  end
+
+  local name = ''
+  if #names > 0 then
+    name = hl('LspName', active)..table.concat(names, ',')
+  end
+
+  return name ..' '.. table.concat(status, ' ')
 end
 
-local function treesitter_tree()
+function M.hunks()
+  if vim.b.gitsigns_status then
+    local status = vim.b.gitsigns_head
+    if vim.b.gitsigns_status ~= '' then
+      status = status ..' '..vim.b.gitsigns_status
+    end
+    return status
+  end
+
+  if vim.g.gitsigns_head then
+    return vim.g.gitsigns_head
+  end
+
+  return ''
+end
+
+--- @param active 0|1
+--- @return string
+local function filetype_symbol(active)
+  local ok, devicons = pcall(require, 'nvim-web-devicons')
+  if not ok then
+    return ''
+  end
+
+  local name = api.nvim_buf_get_name(0)
+  local icon, iconhl = devicons.get_icon_color(name, vim.bo.filetype, {default = true})
+
+  local hlname = iconhl:gsub('#', 'Status')
+  api.nvim_set_hl(0, hlname, { fg = iconhl, bg = get_hl('StatusLine').bg })
+
+  return hl(hlname, active)..icon
+end
+
+local function is_treesitter()
   local bufnr = api.nvim_get_current_buf()
-  for ft in pairs(ts_ignore_ft) do
-    if bo.filetype == ts_ignore_ft[ft] then
-      return ""
+  return vim.treesitter.highlighter.active[bufnr] ~= nil
+end
+
+function M.filetype(active)
+  local r = {
+    filetype_symbol(active),
+    vim.bo.filetype
+  }
+
+  if is_treesitter() then
+    r[#r+1] = hl('StatusTS', active)..'  '
+  end
+
+  return table.concat(r, ' ')
+end
+
+function M.encodingAndFormat()
+  local e = vim.bo.fileencoding and vim.bo.fileencoding or vim.o.encoding
+
+  local r = {} ---@type string[]
+  if e ~= 'utf-8' then
+    r[#r+1] = e
+  end
+
+  local f = vim.bo.fileformat
+  if f ~= 'unix' then
+    r[#r+1] = '['..f..']'
+    local ok, res = pcall(api.nvim_call_function, 'WebDevIconsGetFileFormatSymbol')
+    if ok then
+      r[#r+1] = res
     end
   end
-  if next(vim.treesitter.highlighter.active[bufnr]) then
-    return "%#StatusLineTreesitterTree#      "
+
+  return table.concat(r, ' ')
+end
+
+local function recording()
+  local reg = vim.fn.reg_recording()
+  if reg ~= '' then
+    return '%#ModeMsg#  RECORDING['..reg..']  '
+  else
+    return ''
   end
 end
 
-local function git_signs()
-  local git_info = vim.b.gitsigns_status_dict
-  if not git_info or git_info.head == "" then
-    return ""
+function M.bufname()
+  local name = vim.api.nvim_eval_statusline('%f', {}).str
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  if vim.startswith(buf_name, 'fugitive://') then
+    local _, _, commit, relpath = buf_name:find([[^fugitive://.*/%.git.*/(%x-)/(.*)]])
+    name = relpath..'@'..commit:sub(1, 7)
   end
-  local added = git_info.added and ("%#StatusLineGitSignsAdd# " .. git_info.added .. " ") or ""
-  local changed = git_info.changed and ("%#StatusLineGitSignsChange# " .. git_info.changed .. " ") or ""
-  local removed = git_info.removed and ("%#StatusLineGitSignsDelete# " .. git_info.removed .. " ") or ""
-  if git_info.added == 0 then
-    added = ""
+  if vim.startswith(buf_name, 'gitsigns://') then
+    local _, _, revision, relpath = buf_name:find([[^gitsigns://.*/%.git.*/(.*):(.*)]])
+    name = relpath..'@'..revision:sub(1, 7)
   end
-  if git_info.changed == 0 then
-    changed = ""
-  end
-  if git_info.removed == 0 then
-    removed = ""
-  end
-  return table.concat {
-    "%#StatusLineLspWarning#  ",
-    git_info.head .. "  ",
-    added,
-    changed,
-    removed,
-  }
+
+  return name
 end
 
-Statusline = {}
-
-function Statusline.active()
-  return table.concat {
-    "%#Statusline#",
-    update_mode_colors(),
-    mode(),
-    "%#Statusline#",
-    filename(),
-    treesitter_tree(),
-    git_signs(),
-    "  ",
-    lsp_diagnostics(),
-    "%#Statusline#",
-    "%=%#StatusLine#",
-    "%#StatusLineTreesitterTree#",
-    search_count(),
-    "%#Statusline#",
-    lsp_client(),
-    " ",
-    "%#StatusLineLineInfo#",
-    lineinfo(),
-    "%#StatusLineProgressBar#",
-    progress_bar(),
-  }
+local function pad(x)
+  return '%( '..x..' %)'
 end
 
-local statusLine = api.nvim_create_augroup("StatusLine", { clear = true })
-api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-  pattern = "*",
-  command = "setlocal statusline=%!v:lua.Statusline.active()",
-  group = statusLine
+local F = setmetatable({}, {
+  __index = function(_, name)
+    return function(active, mods)
+      active = active or 1
+      mods = mods or ''
+      return '%'..mods..'{%v:lua.statusline.'..name..'('..tostring(active)..')%}'
+    end
+  end
 })
+
+---@param sections string[][]
+---@return string
+local function parse_sections(sections)
+  local result = {} ---@type string[]
+  for _, s in ipairs(sections) do
+    local sub_result = {} ---@type string[]
+    for _, part in ipairs(s) do
+      sub_result[#sub_result+1] = part
+    end
+    result[#result+1] = table.concat(sub_result)
+  end
+  -- Leading '%=' reeded for first highlight to work
+  return '%=' .. table.concat(result, '%=')
+end
+
+local function set(active, global)
+  local scope = global and 'o' or 'wo'
+  vim[scope].statusline = parse_sections{
+    {
+      highlight(1, active),
+      recording(),
+      pad(F.hunks()),
+      highlight(2, active),
+      pad(F.lsp_status(active)),
+      highlight(2, active),
+    },
+    {
+      '%<',
+      pad(F.bufname(nil, '0.60')..'%m%r%h%q'),
+    },
+    {
+      pad(F.filetype(active)),
+      pad(F.encodingAndFormat()),
+      highlight(1, active),
+      ' %3p%% %2l(%02c)/%-3L ', -- 80% 65[12]/120
+    }
+  }
+end
+
+-- Only set up WinEnter autocmd when the WinLeave autocmd runs
+local group = api.nvim_create_augroup('statusline', {})
+api.nvim_create_autocmd({'WinLeave', 'FocusLost'}, {
+  group = group,
+  once = true,
+  callback = function()
+    api.nvim_create_autocmd({'BufWinEnter', 'WinEnter', 'FocusGained'}, {
+      group = group,
+      callback = function()
+        set(1)
+      end
+    })
+  end
+})
+
+api.nvim_create_autocmd({'WinLeave', 'FocusLost'}, {
+  group = group,
+  callback = function()
+    set(0)
+  end
+})
+
+api.nvim_create_autocmd('VimEnter', {
+  group = group,
+  callback = function()
+    set(1, true)
+  end
+})
+
+api.nvim_create_autocmd('ColorScheme', {
+  group = group,
+  callback = hldefs
+})
+hldefs()
+
+_G.statusline = M
+
+return M

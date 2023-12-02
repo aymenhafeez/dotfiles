@@ -54,30 +54,34 @@ bufferline.setup {
   --   -- close_button_selected = {
   --   --   fg = { attribute = 'fg', highlight = 'NonText' },
   --   -- },
+    -- buffer_selected = {
+    --   bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+    --   fg = { attribute = 'fg', highlight = 'Normal' },
+    -- },
   --   buffer_visible = {
   --     bg = { attribute = 'bg', highlight = 'Normal' },
   --     fg = { attribute = 'fg', highlight = 'Comment' },
   --     bold = true,
   --     italic = false,
   --   },
-  --   indicator_visible = {
-  --     bg = { attribute = 'bg', highlight = 'Normal' },
-  --   },
-  --   indicator_selected = {
-  --     bg = { attribute = 'bg', highlight = 'Normal' },
-  --     fg = { attribute = 'fg', highlight = 'Special' },
-  --   },
+    -- indicator_visible = {
+    --   bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+    -- },
+    -- indicator_selected = {
+    --   bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+    --   fg = { attribute = 'fg', highlight = 'Special' },
+    -- },
     modified = {
-      -- bg = { attribute = 'bg', highlight = 'Normal' },
+      -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
       fg = { attribute = 'fg', highlight = 'Special' },
 
     },
     modified_visible = {
-      -- bg = { attribute = 'bg', highlight = 'Normal' },
+      -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
       fg = { attribute = 'fg', highlight = 'Special' },
     },
     modified_selected = {
-      -- bg = { attribute = 'bg', highlight = 'Normal' },
+      -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
       fg = { attribute = 'fg', highlight = 'Special' },
     },
   --   duplicate = {
@@ -91,8 +95,7 @@ bufferline.setup {
     --   bg = { attribute = 'bg', highlight = 'BufferLineBufferVisible' },
     -- },
     -- separator_selected = {
-    --   fg = { attribute = 'bg', highlight = 'Normal' },
-    --   bg = { attribute = 'bg', highlight = 'Normal' }
+    --   bg = { attribute = 'bg', highlight = 'NeoTreeNormal' }
     -- },
     -- separator_visible = {
     --   fg = { attribute = 'bg', highlight = 'Normal' },

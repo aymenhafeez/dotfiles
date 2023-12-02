@@ -1,14 +1,9 @@
 local M = {}
 
-local border = require("ah.utils").border
+local utils = require("ah.utils")
 
 function M.setup()
-  local signs = {
-    Error = "",
-    Warn = "",
-    Hint = "",
-    Info = ""
-  }
+  local signs = utils.diagnostic_signs
   for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
@@ -42,7 +37,7 @@ function M.setup()
         return icon .. " ", highlight
       end,
     },
-    signs = true,
+    signs = false,
     underline = true,
     update_in_insert = true,
     severity_sort = true,
@@ -54,7 +49,7 @@ function M.setup()
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
     util_opts = util_opts or {}
-    util_opts.border = util_opts.border or border("FloatBorder")
+    util_opts.border = util_opts.border or utils.border("FloatBorder")
     util_opts.max_width = 60
     util_opts.max_height = 15
     return orig_util_open_floating_preview(contents, syntax, util_opts, ...)
@@ -66,8 +61,6 @@ function M.on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   local map = vim.keymap.set
-  local opts = { noremap = true, silent = true }
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
   map("n", "<leader>e", vim.diagnostic.open_float, { noremap = true, silent = true, desc = "Show diagnostic" })
   map("n", "<leader>dh", vim.diagnostic.hide, { noremap = true, silent = true, desc = "Hide diagnostics" })
@@ -109,35 +102,21 @@ function M.on_attach(client, bufnr)
 
   -- _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
 
-  -- -- this works but doesn't
-  -- if client.server_capabilities.documentHighlightProvider then
-  --   local lsp_signature_help = vim.api.nvim_create_augroup("lsp_signature_help", { clear = true })
-  --   vim.api.nvim_clear_autocmds({ group = "lsp_signature_help" })
-  --   vim.api.nvim_create_autocmd("CursorHoldI", {
-  --     pattern = "<buffer>",
-  --     callback = function()
-  --       if vim.bo.filetype == { 'tex', 'markdown' } then
-  --         return
-  --       else
-  --         vim.lsp.buf.signature_help()
-  --       end
-  --     end,
-  --     group = lsp_signature_help,
-  --   })
-  --   vim.api.nvim_create_autocmd("CursorMovedI", {
-  --     pattern = "<buffer>",
-  --     callback = vim.lsp.buf.clear_references,
-  --     group = lsp_signature_help,
-  --   })
-  -- end
-
--- -- show diagnostic message on CursorHold
---   local floatDiagnostics = vim.api.nvim_create_augroup("FloatDiagnostics", { clear = true })
---   vim.api.nvim_create_autocmd("CursorHold", {
---     pattern = "<buffer>",
---     command = "lua vim.diagnostic.open_float(nil, {focus=false, scope='cursor'})",
---     group = floatDiagnostics
---   })
+  vim.o.updatetime = 150
+  -- vim.api.nvim_create_autocmd("CursorHold", {
+  --   buffer = bufnr,
+  --   callback = function()
+  --     local opts = {
+  --       focusable = false,
+  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+  --       border = 'rounded',
+  --       source = 'always',
+  --       prefix = ' ',
+  --       scope = 'cursor',
+  --     }
+  --     vim.diagnostic.open_float(nil, opts)
+  --   end
+  -- })
 
 end
 
@@ -150,10 +129,8 @@ function M.get_lua_runtime()
     end
   end
 
-  -- loads the `lua` files from nvim into the runtime
   result[vim.fn.expand("$VIMRUNTIME/lua")] = true
 
-  -- TODO: figure out how to get these to work
   result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
 
   return result;

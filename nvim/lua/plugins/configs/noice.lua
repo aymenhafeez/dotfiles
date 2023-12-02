@@ -22,7 +22,7 @@ local options = {
         winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
       },
       position = {
-        row = 4,
+        row = 3,
         col = "50%"
       }
     }

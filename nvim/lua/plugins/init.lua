@@ -19,7 +19,10 @@ end
 local options = {
   ui = {
     border = "rounded",
-    size = { width = 0.85, height = 0.85 },
+    size = {
+      width = 0.8,
+      height = 0.8
+    },
   }
 }
 
@@ -98,15 +101,17 @@ lazy.setup({
     end
   },
 
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = {
-      "kyazdani42/nvim-web-devicons"
-    },
-    config = function()
-      require("plugins.configs.lualine")
-    end
-  },
+  { "kyazdani42/nvim-web-devicons" },
+
+  -- {
+  --   "nvim-lualine/lualine.nvim",
+  --   dependencies = {
+  --     "kyazdani42/nvim-web-devicons"
+  --   },
+  --   config = function()
+  --     require("plugins.configs.lualine")
+  --   end
+  -- },
 
   {
   "akinsho/bufferline.nvim",
@@ -145,9 +150,17 @@ lazy.setup({
   },
 
   {
+    "petertriho/nvim-scrollbar",
+    config = function()
+      require("plugins.configs.scrollbar")
+    end
+  },
+
+  {
     "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup()
+      -- require("scrollbar.handlers.gitsigns").setup()
     end
   },
 
@@ -233,7 +246,8 @@ lazy.setup({
     end,
     opts = {
       window = {
-        border = "single",
+        border = "rounded",
+        winblend = 0
       },
     }
   },
@@ -252,15 +266,10 @@ lazy.setup({
   },
 
   {
-    "utilyre/barbecue.nvim",
-    name = "barbecue",
-    version = "*",
-    dependencies = {
-      "SmiteshP/nvim-navic",
-    },
-    opts = {
-      -- configurations go here
-    },
+    'Bekaboo/dropbar.nvim',
+    config = function()
+      require("plugins.configs.dropbar")
+    end,
   },
 
   -- cmp
@@ -285,8 +294,6 @@ lazy.setup({
     "SirVer/ultisnips"
   },
 
-  -- { "brymer-meneses/grammar-guard.nvim" },
-
   {
     "nanotee/luv-vimdocs"
   },
@@ -295,10 +302,10 @@ lazy.setup({
     "milisims/nvim-luaref"
   },
 
-  {
-    "jupyter-vim/jupyter-vim",
-    ft = "python"
-  },
+  -- {
+  --   "jupyter-vim/jupyter-vim",
+  --   ft = "python"
+  -- },
 
   {
     "goolord/alpha-nvim",
@@ -310,7 +317,16 @@ lazy.setup({
   -- colourschemes
 
   { "catppuccin/nvim" },
-  { "Mofiqul/vscode.nvim" },
+
+  {
+    "Mofiqul/vscode.nvim",
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   vim.cmd.colorscheme("vscode")
+    -- end,
+  },
+
   {
     "rebelot/kanagawa.nvim",
     -- config = function()
@@ -328,9 +344,10 @@ lazy.setup({
           comments = { italic = true },
           keywords = { italic = true },
           floats = "normal",
-          statusline = "dark"
+          statusline = "dark",
+          sidebars = "dark"
         },
-        sidebars = { "help", "qf" }
+        sidebars = { "help", "qf", "toggleterm" },
       })
       vim.cmd.colorscheme("tokyonight-night")
     end
@@ -341,8 +358,30 @@ lazy.setup({
     -- lazy = false,
     -- priority = 1000,
     -- config = function()
-    --   vim.cmd.colorscheme("night-owl")
+    --   require("monokai-pro").setup({
+    --     filter = "spectrum",
+    --     background_clear = {
+    --       "lazy",
+    --       "mason",
+    --       "telescope",
+    --       -- "float_win"
+    --     },
+    --     plugins = {
+    --       bufferline = {
+    --         underline_selected = true
+    --       }
+    --     }
+    --   })
+    --   vim.cmd.colorscheme("monokai-pro")
     -- end,
+  },
+
+
+  {
+    "norcalli/nvim-colorizer.lua",
+    -- config = function()
+    --   require("colorizer").setup()
+    -- end
   },
 
   {
@@ -350,21 +389,10 @@ lazy.setup({
     -- lazy = false,
     -- priority = 1000,
     -- config = function ()
-    --   vim.cmd.colorscheme("neodark")
+    --   vim.cmd.colorscheme("neodarker")
     -- end
   },
   -- local_use "neodark.nvim"
-
-  {
-    'RRethy/nvim-base16',
-    config = function()
-      require("base16-colorscheme").with_config({
-        telescope = false,
-        cmp = false,
-      })
-      -- vim.cmd.colorscheme("base16-")
-    end
-  },
 
   {
     "aymenhafeez/scratch.nvim",
@@ -375,7 +403,7 @@ lazy.setup({
 
   -- local_use "scratch.nvim"
 
-  -- { "aymenhafeez/vim-line-motion" }
+  { "aymenhafeez/vim-line-motion" }
   -- local_use "vim-line-motion"
 
 }, options)

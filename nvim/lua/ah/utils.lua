@@ -163,8 +163,8 @@ M.icons = {
   Method = " ",
   Function = " ",
   Constructor = " ",
-  Field = "",
-  Variable = " ",
+  Field = " ",
+  Variable = "",
   Class = " ",
   Interface = " ",
   Module = " ",
@@ -195,6 +195,44 @@ M.icons = {
   Calendar = "",
   Watch = " ",
   Package = " ",
+}
+
+M.diagnostic_signs = {
+    Error = ' ',
+    Warn = ' ',
+    Info = ' ',
+    Hint = ' ',
+}
+
+M.kind_icons = {
+    Text = ' ',
+    Method = ' ',
+    Function = '󰊕 ',
+    Constructor = ' ',
+    Field = ' ',
+    Variable = ' ',
+    Class = '󰠱 ',
+    Interface = ' ',
+    Module = '󰏓 ',
+    Property = ' ',
+    Unit = ' ',
+    Value = ' ',
+    Enum = ' ',
+    EnumMember = ' ',
+    Keyword = '󰌋 ',
+    Snippet = '󰲋 ',
+    Color = ' ',
+    File = ' ',
+    Reference = ' ',
+    Folder = ' ',
+    Constant = '󰏿 ',
+    Struct = '󰠱 ',
+    Event = ' ',
+    Operator = ' ',
+    TypeParameter = '󰘦 ',
+    TabNine = '󰚩 ',
+    Copilot = ' ',
+    Unknown = ' ',
 }
 
 -- doesn't quite work yet

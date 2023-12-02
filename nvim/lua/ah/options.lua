@@ -15,7 +15,7 @@ opt.showtabline = 2
 opt.cursorline = true
 opt.showmode = false
 opt.showcmd = false
-opt.cmdheight = 0
+opt.cmdheight = 1
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
@@ -50,8 +50,8 @@ opt.inccommand = "split"
 opt.completeopt = { "menu", "menuone" }
 opt.omnifunc = "syntaxcomplete#Complete"
 opt.pumheight = 12
-opt.pumblend = 10
-opt.winblend = 10
+opt.pumblend = 7
+opt.winblend = 7
 opt.scrolloff = 5
 
 opt.autochdir = true
@@ -106,8 +106,8 @@ local fences = {
 vim.g.markdown_fenced_languages = fences
 
 vim.cmd [[
-let g:OxfDictionary#app_id="ed82927e"
-let g:OxfDictionary#app_key="97ed8b2daccd553e7f62a3aebdbdc492"
+let g:OxfDictionary#app_id='ed82927e'
+let g:OxfDictionary#app_key='97ed8b2daccd553e7f62a3aebdbdc492'
 ]]
 
 local builtin_plugins = {

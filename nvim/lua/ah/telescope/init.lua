@@ -19,7 +19,7 @@ telescope.setup {
     prompt_prefix = "   ",
     selection_caret = " ",
     multi_icon = "",
-    winblend = 10,
+    winblend = 7,
     color_devicons = true,
     border = true,
 

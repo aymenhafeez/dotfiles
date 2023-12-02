@@ -95,8 +95,8 @@ function M.buffer_fuzzy_search()
       results_title = "Buffer search",
       layout_config = {
         prompt_position = "bottom",
-        height = 0.45,
-        preview_width = 0.55
+        height = 0.5,
+        preview_width = 0.5
       }
     })
 end
@@ -108,8 +108,8 @@ function M.search_diagnostics()
       prompt_title = "",
       preview_title = "",
       layout_config = {
-        prompt_position = "bottom",
-        height = 0.35
+        prompt_position = "top",
+        height = 0.45
       }
     })
 end
@@ -306,13 +306,13 @@ end
 
 function M.file_browser()
   extension.file_browser.file_browser {
-    -- layout_config = {
-    --   -- height = 0.75,
-    --   -- width = 0.8,
-    --   width = 0.85,
-    --   height = 0.85,
-    --   preview_width = 0.5
-    -- }
+    layout_config = {
+      -- height = 0.75,
+      -- width = 0.8,
+      width = 0.85,
+      height = 0.85,
+      preview_width = 0.5
+    }
   }
 end
 

@@ -6,8 +6,8 @@ end
 require('mason').setup({
   ui = {
     border = "rounded",
-    width = 0.85,
-    height = 0.85
+    width = 0.8,
+    height = 0.8
   }
 })
 require('mason-lspconfig').setup()
@@ -18,9 +18,6 @@ local updated_capabilities = require("cmp_nvim_lsp").default_capabilities(capabi
 local lspconfig_ui = require("lspconfig.ui.windows")
 
 handlers.setup()
-vim.o.updatetime = 100
-
--- require("grammar-guard").init()
 
 local servers = {
   pyright = {},
@@ -53,27 +50,6 @@ local servers = {
       telemetry = { enable = false },
     },
   },
-  -- grammar_guard = {
-  --   cmd = { "/home/aymen/.config/ltex-ls/ltex-ls-16.0.0/bin/ltex-ls" },
-  --   settings = {
-  --     ltex = {
-  --       enabled = { "latex", "tex", "bib", "markdown" },
-  --       language = "en-GB",
-  --       diagnosticSeverity = "info",
-  --       checkFrequency = "save",
-  --       setenceCacheSize = 2000,
-  --       additionalRules = {
-  --         enablePickyRules = false,
-  --       },
-  --       trace = { server = "verbose" },
-  --       dictionary = {},
-  --       disabledRules = {
-  --         ["en-GB"] = { "MORFOLOGIK_RULE_EN_GB" },
-  --       },
-  --       hiddenFalsePositives = {},
-  --     },
-  --   },
-  -- },
   rust_analyzer = {
     cmd = { "rustup", "run", "stable", "rust-analyzer" }
   }

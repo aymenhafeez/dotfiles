@@ -26,7 +26,7 @@ local function footer()
     .. "   "
     .. total_plugins
     .. " plugins loaded in " .. ms .. "ms"
-    .. "  " .. datetime
+    -- .. "  " .. datetime
 end
 
 local group = vim.api.nvim_create_augroup("CleanDashboard", {})

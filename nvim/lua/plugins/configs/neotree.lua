@@ -9,25 +9,27 @@ local options = {
   hide_root_node = true,
   open_files_do_not_replace_types = { "terminal", "trouble", "qf", "help" },
   add_blank_line_at_top = false,
-  -- source_selector = {
-  --   winbar = true,
-  --   sources = {
-  --     {
-  --       source = "filesystem",
-  --       display_name = "  Files "
-  --     },
-  --     {
-  --       source = "buffers",
-  --       display_name = "  Buffers "
-  --     },
-  --     {
-  --       source = "git_status",
-  --       display_name = "  Git "
-  --     },
-  --   },
-  -- },
+  source_selector = {
+    winbar = true,
+    sources = {
+      {
+        source = "filesystem",
+        display_name = "  Files "
+      },
+      {
+        source = "buffers",
+        display_name = "  Buffers "
+      },
+      {
+        source = "git_status",
+        display_name = "  Git "
+      },
+    },
+  },
   default_component_configs = {
     indent = {
+      with_markers = true,
+      last_indent_marker = "╰",
       padding = 2
     },
     symbols = {
@@ -57,7 +59,7 @@ local options = {
     },
   },
   window = {
-    width = 32,
+    width = 33,
     mappings = {
       ["<C-s>"] = "open_split",
       ["<C-v>"] = "open_vsplit",
