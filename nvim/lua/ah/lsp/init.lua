@@ -72,4 +72,4 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
-lspconfig_ui.default_options.border = "rounded"
+lspconfig_ui.default_options.border = "none"

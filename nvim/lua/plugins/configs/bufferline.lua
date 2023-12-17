@@ -6,6 +6,10 @@ end
 bufferline.setup {
   options = {
     always_show_bufferline = true,
+    -- style_preset = {
+    --   bufferline.style_preset.no_italic,
+    --   bufferline.style_preset.no_bold
+    -- },
     offsets = {
       { filetype = "NvimTree", text = "", padding = 1 },
       { filetype = "neo-tree", text = "", padding = 0 },
@@ -26,8 +30,8 @@ bufferline.setup {
     indicator = {
       -- icon = "▎",
       -- style = "icon"
-      style = "underline"
-      -- style = "none"
+      -- style = "underline"
+      style = "none"
     },
   },
   highlights = {

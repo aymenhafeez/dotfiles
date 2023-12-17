@@ -43,15 +43,13 @@ function M.setup()
     severity_sort = true,
   })
 
-  -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-  -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "none" })
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "none" })
 
   local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
   function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
     util_opts = util_opts or {}
-    util_opts.border = util_opts.border or utils.border("FloatBorder")
+    util_opts.border = util_opts.border or utils.border("CmpBorder")
     util_opts.max_width = 60
     util_opts.max_height = 15
     return orig_util_open_floating_preview(contents, syntax, util_opts, ...)
@@ -101,25 +99,7 @@ function M.on_attach(client, bufnr)
     ]]
   end
 
-
-  -- _notify(string.format("[LSP] %s", client.name, ""), "info", { title = "[LSP] Active" }, true)
-
   vim.o.updatetime = 150
-  -- vim.api.nvim_create_autocmd("CursorHold", {
-  --   buffer = bufnr,
-  --   callback = function()
-  --     local opts = {
-  --       focusable = false,
-  --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-  --       border = 'rounded',
-  --       source = 'always',
-  --       prefix = ' ',
-  --       scope = 'cursor',
-  --     }
-  --     vim.diagnostic.open_float(nil, opts)
-  --   end
-  -- })
-
 end
 
 function M.get_lua_runtime()

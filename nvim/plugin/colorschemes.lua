@@ -1,3 +1,0 @@
--- if vim.cmd.colorscheme ~= "tokyonight" or "neodarker" then
---   vim.cmd("hl link NormalFloat Comment")
--- end

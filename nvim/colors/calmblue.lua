@@ -1,4 +1,4 @@
--- Name:         cockatoo
+-- Name:         calmblue
 -- Description:  Soft but colorful colorscheme with light and dark variants
 -- Author:       Bekaboo <kankefengjing@gmail.com>
 -- Maintainer:   Bekaboo <kankefengjing@gmail.com>
@@ -7,7 +7,7 @@
 
 -- Clear hlgroups and set colors_name {{{
 vim.cmd.hi('clear')
-vim.g.colors_name = 'cockatoo'
+vim.g.colors_name = 'calmblue'
 -- }}}
 
 -- Palette {{{
@@ -50,7 +50,8 @@ local c_scarlet_blend
 local c_wine_blend
 local c_earth_blend
 local c_smoke_blend
-
+local c_smoke_dark
+--
 if vim.go.bg == 'dark' then
   c_yellow         = '#e6bb86'
   c_earth          = '#c1a575'
@@ -90,6 +91,7 @@ if vim.go.bg == 'dark' then
   c_wine_blend     = '#35262d'
   c_earth_blend    = '#303032'
   c_smoke_blend    = '#272d3a'
+  c_smoke_dark     = '#1c232e'
 else
   c_yellow         = '#c88500'
   c_earth          = '#b48327'
@@ -129,6 +131,7 @@ else
   c_wine_blend     = '#e6c9c3'
   c_earth_blend    = '#ebe0ce'
   c_smoke_blend    = '#e4e4e2'
+  c_smoke_dark     = '#1c232e'
 end
 -- stylua: ignore end
 -- }}}
@@ -200,7 +203,7 @@ local hlgroups = {
   ErrorMsg = { fg = c_scarlet },
   FoldColumn = { fg = c_steel },
   Folded = { fg = c_steel, bg = c_ocean },
-  FloatBorder = { fg = c_smoke, bg = c_ocean },
+  FloatBorder = { fg = c_ocean, bg = c_ocean },
   FloatShadow = { bg = c_shadow, blend = 70 },
   FloatShadowThrough = { link = 'None' },
   HealthSuccess = { fg = c_tea },
@@ -226,7 +229,7 @@ local hlgroups = {
   SpellCap = { link = 'SpellBad' },
   SpellLocal = { link = 'SpellBad' },
   SpellRare = { link = 'SpellBad' },
-  StatusLine = { fg = c_smoke, bg = c_deepsea },
+  StatusLine = { fg = c_steel, bg = c_smoke_dark },
   StatusLineNC = { fg = c_steel, bg = c_ocean },
   Substitute = { link = 'Search' },
   TabLine = { link = 'StatusLine' },
@@ -244,7 +247,7 @@ local hlgroups = {
   -- }}}2
 
   -- Syntax {{{2
-  Comment = { fg = c_steel },
+  Comment = { fg = c_steel, italic = true },
   Constant = { fg = c_ochre },
   String = { fg = c_turquoise },
   DocumentKeyword = { fg = c_tea },
@@ -262,11 +265,11 @@ local hlgroups = {
   Statement = { fg = c_lavender },
   Specifier = { fg = c_lavender },
   Object = { fg = c_lavender },
-  Conditional = { fg = c_magenta },
+  Conditional = { fg = c_ochre },
   Repeat = { fg = c_magenta },
   Label = { fg = c_magenta },
-  Operator = { fg = c_orange },
-  Keyword = { fg = c_cerulean },
+  Operator = { fg = c_skyblue },
+  Keyword = { fg = c_cerulean, italic = true },
   Exception = { fg = c_magenta },
   PreProc = { fg = c_turquoise },
   PreCondit = { link = 'PreProc' },
@@ -504,7 +507,14 @@ local hlgroups = {
   netrwClassify = { link = 'Directory' },
 
   -- bufferline
-  BufferLineFill = { link = "StatusLine" },
+  BufferLineFill = { link = "BufferLineBuffer" },
+  BufferLineBufferSelected = {
+    fg = c_steel,
+    sp = c_steel,
+    italic = true,
+    bold = true,
+    italic = true,
+  },
 
   -- nvim-cmp
   CmpItemAbbr = { fg = c_smoke },
@@ -574,6 +584,28 @@ local hlgroups = {
   fugitiveStagedHeading = { fg = c_aqua, bold = true },
   fugitiveUnstagedHeading = { fg = c_ochre, bold = true },
   fugitiveUntrackedHeading = { fg = c_lavender, bold = true },
+
+  -- mini indentscope
+  MiniIndentscopeSymbol = { link = "NonText" },
+
+  -- neotree
+  NeoTreeNormal = { bg = c_smoke_dark },
+  NeoTreeNormalNC = { link =  "NeoTreeNormal" },
+  NeoTreeDimText = { fg = c_steel },
+  NeoTreeWinSeparator = { fg = c_jeans, bg = c_jeans },
+  NeoTreeCursorLine = { bg = c_ocean },
+
+  -- notify
+  NotifyERRORBody = { bg = c_ocean },
+  NotifyWARNBody = { link = "NotifyERRORBody" },
+  NotifyINFOBody = { link = "NotifyERRORBody" },
+  NotifyTRACEBody = { link = "NotifyERRORBody" },
+  NotifyDEBUGBody = { link = "NotifyERRORBody" },
+  NotifyERRORBorder = { fg = c_ocean, bg = c_ocean },
+  NotifyWARNBorder = { link = "NotifyERRORBorder" },
+  NotifyINFOBorder = { link = "NotifyERRORBorder" },
+  NotifyTRACEBorder = { link = "NotifyERRORBorder" },
+  NotifyDEBUGBorder = { link = "NotifyERRORBorder" },
 
   -- telescope
   TelescopeNormal = { link = 'NormalFloat' },
@@ -739,13 +771,13 @@ local hlgroups = {
   CopilotAnnotation = { fg = c_steel, italic = true },
 
   -- statusline plugin
-  StatusLineDiagnosticError = { fg = c_wine, bg = c_deepsea },
-  StatusLineDiagnosticHint = { fg = c_pigeon, bg = c_deepsea },
-  StatusLineDiagnosticInfo = { fg = c_smoke, bg = c_deepsea },
-  StatusLineDiagnosticWarn = { fg = c_earth, bg = c_deepsea },
-  StatusLineGitAdded = { fg = c_tea, bg = c_deepsea },
-  StatusLineGitChanged = { fg = c_lavender, bg = c_deepsea },
-  StatusLineGitRemoved = { fg = c_scarlet, bg = c_deepsea },
+  StatusLineDiagnosticError = { fg = c_wine, bg = c_smoke_dark },
+  StatusLineDiagnosticHint = { fg = c_pigeon, bg = c_smoke_dark },
+  StatusLineDiagnosticInfo = { fg = c_smoke, bg = c_smoke_dark },
+  StatusLineDiagnosticWarn = { fg = c_earth, bg = c_smoke_dark },
+  StatusLineGitAdded = { fg = c_tea, bg = c_smoke_dark },
+  StatusLineGitChanged = { fg = c_lavender, bg = c_smoke_dark },
+  StatusLineGitRemoved = { fg = c_scarlet, bg = c_smoke_dark },
   StatusLineHeader = { fg = c_jeans, bg = c_pigeon },
   StatusLineHeaderModified = { fg = c_jeans, bg = c_ochre },
 

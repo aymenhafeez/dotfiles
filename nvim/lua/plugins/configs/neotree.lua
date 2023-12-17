@@ -92,3 +92,4 @@ local options = {
 }
 
 return tree.setup(options)
+

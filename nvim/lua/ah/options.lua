@@ -1,7 +1,5 @@
 local opt = vim.opt
-local o = vim.o
 local g = vim.g
-local b = vim.b
 
 opt.autoindent = true
 opt.smartindent = true
@@ -10,7 +8,6 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 
 opt.conceallevel = 2
--- opt.concealcursor = "nc"
 opt.laststatus = 3
 opt.showtabline = 2
 opt.cursorline = true
@@ -21,19 +18,7 @@ opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
 opt.signcolumn = "yes"
--- opt.linebreak = true
 opt.wrap = false
-
---[[ vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- TreeSitter folding
-vim.opt.foldlevel = 6
-vim.opt.fillchars = {
-  fold = ' ',
-  foldopen = '',
-  foldsep = ' ',
-  foldclose = '',
-}
-vim.opt.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))" ]]
 
 opt.formatoptions:remove { "c" }
 opt.spelllang = "en_gb"
@@ -62,7 +47,6 @@ opt.wildoptions = "pum"
 opt.autoread = true
 opt.hidden = true
 opt.ttimeoutlen = 0
--- opt.lazyredraw = true
 opt.mouse = "nvia"
 opt.mousemoveevent = true
 opt.clipboard = "unnamedplus"
@@ -72,9 +56,6 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.termguicolors = true
-
--- o.winbar = "%{%v:lua.require'ah.winbar'.get_winbar()%}"
--- o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- add `gf` functionality inside `.lua` files.
 vim.opt.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
@@ -144,9 +125,7 @@ for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
 
--- vim.cmd("au FocusGained * :checktime")
-
-local colorscheme = "cockatoo"
+local colorscheme = "calmblue"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then

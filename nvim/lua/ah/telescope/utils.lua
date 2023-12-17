@@ -122,7 +122,6 @@ function M.search_notes()
     prompt_title = "",
     path_display = { "tail" },
     file_ignore_patterns = ignore_patterns,
-    -- layout_strategy = "flex",
     layout_config = {
       width = 0.85,
       height = 0.85,
@@ -306,29 +305,18 @@ function M.search_projects_dir()
 end
 
 function M.file_browser()
-  extension.file_browser.file_browser {
-    preview_title = "",
-    prompt_title = "",
-    layout_config = {
-      -- height = 0.75,
-      -- width = 0.8,
-      width = 0.85,
-      height = 0.85,
-      preview_width = 0.5
+  extension.file_browser.file_browser (
+    theme.get_ivy {
+      preview_title = "",
+      prompt_title = "",
+      layout_config = {
+        -- width = 0.85,
+        height = 0.5,
+        preview_width = 0.5,
+        prompt_position = "bottom"
+      }
     }
-  }
-end
-
-function M.notify()
-  telescope.notify {
-    results_title = "Notifications",
-    preview_title = "",
-    prompt_title = "",
-    -- layout_config = {
-    --   width = 0.85,
-    --   height = 0.85
-    -- }
-  }
+  )
 end
 
 return M

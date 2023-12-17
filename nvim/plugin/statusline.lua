@@ -291,6 +291,25 @@ function statusline.lsp_progress()
   )
 end
 
+local function get_hl(name)
+  return vim.api.nvim_get_hl(0, { name = name })
+end
+
+function statusline.ft_icon()
+  local present, devicons = pcall(require, "nvim-web-devicons")
+  if not present then
+    return
+  end
+
+  local name = vim.api.nvim_buf_get_name(0)
+  local icon, iconhl = devicons.get_icon_color(name, vim.bo.filetype, { default = true })
+
+  local hlname = iconhl:gsub("#", "Status")
+  vim.api.nvim_set_hl(0, hlname, { fg = iconhl, bg = get_hl("StatusLine").bg })
+
+  return icon
+end
+
 -- stylua: ignore start
 ---Statusline components
 ---@type table<string, string>
@@ -298,6 +317,7 @@ local components = {
   align        = '%=',
   diag         = '%{%v:lua.statusline.diag()%}',
   fname        = ' %{%&bt==#""?"%t":"%F"%} ',
+  ft_icon      = '%{%v:lua.statusline.ft_icon()%}',
   info         = '%{%v:lua.statusline.info()%}',
   lsp_progress = '%{%v:lua.statusline.lsp_progress()%}',
   mode         = '%{%v:lua.statusline.mode()%}',
@@ -309,12 +329,16 @@ local components = {
 
 local stl = table.concat({
   components.mode,
+  ' ',
+  components.ft_icon,
   components.fname,
+  '󰇙 ',
   components.info,
   components.align,
   components.truncate,
   components.lsp_progress,
   components.diag,
+  '  ',
   components.pos,
 })
 

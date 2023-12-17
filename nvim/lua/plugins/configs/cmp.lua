@@ -11,18 +11,13 @@ local function format(_, item)
     return (''):rep(max - len - 3)
   end
 
-  -- Limit content width.
   local content = item.abbr
   if #content > max_width then
     item.abbr = vim.fn.strcharpart(content, 0, max_width) .. '…'
   else
     item.abbr = content .. whitespace(max_width, #content)
   end
-
-  -- Replace kind with icons.
   item.kind = string.format("%s %s", utils.icons[item.kind], item.kind)
-
-  -- Remove gibberish.
   item.menu = nil
   return item
 end
@@ -50,10 +45,6 @@ cmp.setup {
       select = false},
   }),
   formatting = {
-    -- format = function(_, item)
-    --   item.kind = string.format("%s %s", utils.icons[item.kind], item.kind)
-    --   return item
-    -- end,
     format = format
   },
   view = {
@@ -74,17 +65,13 @@ cmp.setup {
   window = {
     completion = {
       border = utils.border("CmpBorder"),
-      -- border = utils.border("FloatBorder"),
       winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
-      -- winhighlight = "Normal:TelescopePromptNormal,CursorLine:PmenuSel,Search:None",
       scrollbar = false,
       col_offset = 2,
     },
     documentation = {
       border = utils.border("CmpDocBorder"),
-      -- border = utils.border("FloatBorder"),
       winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
-      -- winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
       max_width = 70,
       max_height = 15
     },

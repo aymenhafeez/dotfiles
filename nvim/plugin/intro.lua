@@ -19,15 +19,16 @@ end
 
 ---Lines of text and highlight groups to display as intro message
 ---@type intro_line_t[]
+local version = vim.version().major .. '.' .. vim.version().minor .. '.' .. vim.version().patch
 local lines = {
   {
     chunks = {
       {
-        text = 'Neovim :: M Λ C R O',
+        text = 'Neovim ',
         hl = 'Normal',
       },
       {
-        text = ' - Editing made simple',
+        text = ' ::  ' .. version,
         hl = 'Comment',
       },
     },
@@ -35,7 +36,23 @@ local lines = {
   {
     chunks = {
       {
-        text = 'Copyright (c) 2023 - M Λ C R O developers',
+        text = '',
+        hl = 'Comment',
+      },
+    },
+  },
+  {
+    chunks = {
+      {
+        text = '<Space>sf Find file  ▎ <Space>fb File browser  ▎ <Space>s. Config',
+        hl = 'Comment',
+      },
+    },
+  },
+  {
+    chunks = {
+      {
+        text = '<Space>ll Recent files  ▎ <Space>sh Search help  ▎ :q Quit',
         hl = 'Comment',
       },
     },

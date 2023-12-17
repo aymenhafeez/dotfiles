@@ -1,8 +1,5 @@
-local utils = require("ah.utils")
 local map = vim.keymap.set
-local otps = { noremap = true, silent = true }
-local nopts = { noremap = true, silent = false }
-local term_opts = { silent = true }
+local utils = require("ah.utils")
 
 map("", "<Space>", "<Nop>", { noremap = true, silent = true })
 vim.g.mapleader = " "
@@ -17,8 +14,6 @@ map("n", "<leader>ll", vim.cmd.Lazy,
     desc = "Manage Lazy"
   })
 
--- map("n", "<S-l>", vim.cmd.bnext, { noremap = true, silent = true })
--- map("n", "<S-h>", vim.cmd.bprev, { noremap = true, silent = true })
 map("n", "<S-l>", vim.cmd.BufferLineCycleNext, { noremap = true, silent = true, desc = "Cycle to next buffer" })
 map("n", "<S-h>", vim.cmd.BufferLineCyclePrev, { noremap = true, silent = true, desc = "Cycle to previous buffer" })
 
@@ -43,10 +38,6 @@ end, { noremap = true, silent = true, desc = "Floating terminal" })
 map("n", "<leader>hh", function()
   return ":help " .. vim.fn.expand("<cword>") .. "<CR>"
 end, { expr = true, desc = "Help for current word" })
-
--- map("n", "<leader>hs", function()
---   utils.float_help()
--- end, { noremap = true, silent = true })
 
 map("n", "<leader>so", utils.source_lua, { noremap = true, silent = false, desc = "Source file" })
 map("n", "<leader><leader>x", utils.execute_line, { noremap = true, silent = false, desc = "Execute current line" })
@@ -101,8 +92,6 @@ map("c", "<M-f>", "<S-Right>", { noremap = true, silent = false })
 map("c", "<C-p>", "<Up>", { noremap = true, silent = false })
 map("c", "<C-n>", "<Down>", { noremap = true, silent = false })
 
--- vim.cmd("cnoreabbrev bd Bw")
--- vim.api.nvim_cmd({ cmd = "cnoreabbrev", args = { "bd Bw" } }, {})
 vim.cmd.cnoreabbrev("bd Bw")
 
 -- visual mode
@@ -152,10 +141,6 @@ map("t", "<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", { noremap = true, silen
 -- aymenhafeez/scratch.nvim
 map("n", "<leader>ss", vim.cmd.Scratch, { noremap = true, silent = true, desc = "Toggle scratch window" })
 
--- -- Pocco81/true-zen.nvim
--- map("n", "<leader>zz", vim.cmd.TZMinimalist, { noremap = true, silent = true })
--- map("n", "<leader>zx", vim.cmd.TZAtaraxis, { noremap = true, silent = true })
-
 -- "folke/zen-mode.nvim"
 map("n", "<leader>zz", vim.cmd.ZenMode, { noremap = true, silent = true, desc = "Zen mode" })
 
@@ -164,7 +149,3 @@ map("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, { noremap = true,
 
 -- aymenhafeez/OxfDictionary.nvim
 map("n", "<leader>dd", vim.cmd.Definition, { noremap = true, silent = true, desc = "Show defintion" })
-
--- map("n", "<leader>rn", function()
---   return ":IncRename " .. vim.fn.expand("<cword>")
--- end, { expr = true})

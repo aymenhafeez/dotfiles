@@ -18,7 +18,6 @@ end
 
 local options = {
   ui = {
-    -- border = "rounded",
     border = "none",
     size = {
       width = 0.8,
@@ -26,28 +25,6 @@ local options = {
     },
   }
 }
-
--- -- loading local plugins with packer - not needed with lazy.nvim
--- local local_use = function(first, second, opts)
---   opts = opts or {}
---
---   local plug_path, home
---   if second == nil then
---     plug_path = first
---     home = "aymen"
---   else
---     plug_path = second
---     home = first
---   end
---
---   if vim.fn.isdirectory(vim.fn.expand("~/Documents/git/projects/" .. plug_path)) == 1 then
---     opts[1] = "~/Documents/git/projects/" .. plug_path
---   else
---     opts[1] = string.format("%s/%s", home, plug_path)
---   end
---
---   opts
--- end
 
 lazy.setup({
   {
@@ -103,16 +80,6 @@ lazy.setup({
   },
 
   { "kyazdani42/nvim-web-devicons" },
-
-  -- {
-  --   "nvim-lualine/lualine.nvim",
-  --   dependencies = {
-  --     "kyazdani42/nvim-web-devicons"
-  --   },
-  --   config = function()
-  --     require("plugins.configs.lualine_3")
-  --   end
-  -- },
 
   {
   "akinsho/bufferline.nvim",
@@ -247,7 +214,6 @@ lazy.setup({
     end,
     opts = {
       window = {
-        -- border = "rounded",
         border = "none",
         winblend = 0
       },
@@ -305,11 +271,6 @@ lazy.setup({
   },
 
   -- {
-  --   "jupyter-vim/jupyter-vim",
-  --   ft = "python"
-  -- },
-
-  -- {
   --   "goolord/alpha-nvim",
   --   config = function()
   --     require("plugins.configs.alpha")
@@ -319,96 +280,10 @@ lazy.setup({
   -- colourschemes
 
   {
-    "sainnhe/everforest",
-    -- config = function()
-    --   vim.g.everforest_better_performance = true
-    --   vim.g.everforest_background = "hard"
-    --   vim.o.termguicolors = true
-    --   vim.cmd.colorscheme("everforest")
-    -- end
-  },
-
-  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup()
     end
-  },
-
-  {
-    "loctvl842/monokai-pro.nvim",
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function()
-    --   require("plugins.configs.monokai")
-    --   vim.cmd.colorscheme("monokai-pro-spectrum")
-    -- end
-  },
-
-  {
-    'aymenhafeez/nvim-base16',
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function()
-    --   require("base16-colorscheme").with_config({
-    --     telescope = false,
-    --     cmp = false,
-    --   })
-    --   vim.cmd.colorscheme("base16-tomorrow-night")
-    -- end
-  },
-
-  {
-    "rose-pine/neovim",
-    -- config = function()
-    --   require("rose-pine").setup({
-    --     disable_italics = true
-    --   })
-    --   vim.cmd.colorscheme("rose-pine-moon")
-    -- end
-  },
-
-  {
-    "Mofiqul/vscode.nvim",
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function()
-    --   local c = require('vscode.colors').get_colors()
-    --   require('vscode').setup({
-    --     -- Alternatively set style in setup
-    --     -- style = 'light'
-    --
-    --     -- Enable italic comment
-    --     italic_comments = true,
-    --
-    --     -- Disable nvim-tree background color
-    --     disable_nvimtree_bg = true,
-    --
-    --     -- Override colors (see ./lua/vscode/colors.lua)
-    --     color_overrides = {
-    --       vscLineNumber = '#FFFFFF',
-    --     },
-    --
-    --     -- Override highlight groups (see ./lua/vscode/theme.lua)
-    --     group_overrides = {
-    --       -- this supports the same val table as vim.api.nvim_set_hl
-    --       -- use colors from this colorscheme by requiring vscode.colors!
-    --       Cursor = { fg=c.vscDarkBlue, bg=c.vscLightGreen, bold=true },
-    --     }
-    --   })
-    --   require('vscode').load()
-    --   vim.cmd.colorscheme("vscode")
-    -- end,
-  },
-
-  {
-    "rebelot/kanagawa.nvim",
-    -- lazy = false,
-    -- priority = 1000,
-    -- config = function()
-    --   require("plugins.configs.kanagawa")
-    --   vim.cmd.colorscheme("kanagawa-dragon")
-    -- end
   },
 
   {
@@ -430,7 +305,6 @@ lazy.setup({
     --   vim.cmd.colorscheme("tokyonight")
     -- end
   },
-
 
   {
     -- "aymenhafeez/neodark.nvim",

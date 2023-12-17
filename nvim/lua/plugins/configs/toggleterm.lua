@@ -18,17 +18,6 @@ local options = {
   float_opts = {
     border = 'curved'
   },
-  -- highlights = {
-  --   Normal = {
-  --     guibg = "#181821",
-  --   },
-  --   FloatBorder = {
-  --     guifg = "#181821",
-  --     guibg = "#181821",
-  --   },
-  -- },
 }
-
--- vim.cmd('hi ToggleTerm1Normal guibg=#23272e')
 
 toggle.setup(options)
