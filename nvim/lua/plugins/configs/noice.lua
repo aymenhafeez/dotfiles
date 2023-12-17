@@ -14,15 +14,18 @@ local options = {
   views = {
     cmdline_popup = {
       border = {
-        -- style = "none",
+        style = "none",
         padding = { 1, 2 }
       },
       filter_options = {},
       win_options = {
-        winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+        winhighlight = {
+          Normal = "NormalFloat",
+          FloatBorder = "FloatBorder"
+        },
       },
       position = {
-        row = 3,
+        row = -2,
         col = "50%"
       }
     }

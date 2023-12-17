@@ -57,7 +57,8 @@ local options = {
     "noice",
     "TelescopePrompt",
     "lazy",
-    "mason"
+    "mason",
+    "neo-tree",
   }
 }
 

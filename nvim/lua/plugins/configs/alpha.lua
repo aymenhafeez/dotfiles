@@ -7,26 +7,37 @@ local dashboard = require("alpha.themes.dashboard")
 
 local function button(sc, txt, keybind, keybind_opts)
   local b = dashboard.button(sc, txt, keybind, keybind_opts)
-  b.opts.hl = "Keyword"
+  -- b.opts.hl = "Keyword"
+  b.opts.hl = "Comment"
   b.opts.hl_shortcut = "Constant"
   return b
 end
 
+-- local function footer()
+--   local stats = require("lazy").stats()
+--   local total_plugins = stats.count
+--   local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+--   local datetime = os.date(" %d-%m-%Y")
+--   return "  ⚡v"
+--     .. vim.version().major
+--     .. "."
+--     .. vim.version().minor
+--     .. "."
+--     .. vim.version().patch
+--     .. "   "
+--     .. total_plugins
+--     .. " plugins loaded in " .. ms .. "ms"
+--     -- .. "  " .. datetime
+-- end
+
 local function footer()
-  local stats = require("lazy").stats()
-  local total_plugins = stats.count
-  local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-  local datetime = os.date(" %d-%m-%Y")
-  return "  ⚡v"
-    .. vim.version().major
-    .. "."
-    .. vim.version().minor
-    .. "."
-    .. vim.version().patch
-    .. "   "
-    .. total_plugins
-    .. " plugins loaded in " .. ms .. "ms"
-    -- .. "  " .. datetime
+  return "----------------------------------------------"
+    .. "\n"
+    .. " <space>sf Find files "
+    .. "<space> sr Recent files"
+    .. "\n"
+    .. "    <space> s. Config"
+    .. "<space> sh Search help"
 end
 
 local group = vim.api.nvim_create_augroup("CleanDashboard", {})
@@ -54,6 +65,19 @@ vim.api.nvim_create_autocmd("BufUnload", {
   pattern = "<buffer>",
 })
 
+dashboard.section.header.val = {
+  [[                                                ]],
+  [[                                                ]],
+  [[                                                ]],
+  [[                                                ]],
+  [[                    NeoVim                      ]],
+  [[                                                ]],
+  [[                                                ]],
+  [[                                                ]],
+  [[                                                ]],
+  [[                                                ]],
+}
+
 -- dashboard.section.header.val = {
 --   [[                                          _.oo. ]],
 --   [[                  _-u[[/;:,.         .odMMMMMM' ]],
@@ -73,26 +97,28 @@ vim.api.nvim_create_autocmd("BufUnload", {
 --   [[                                                ]],
 -- }
 
-dashboard.section.header.val = {
-  [[                                                     ]],
-  [[                                                     ]],
-  [[                                                     ]],
-  [[                                                     ]],
-  [[  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ]],
-  [[  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ]],
-  [[  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ]],
-  [[  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ]],
-  [[  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ]],
-  [[  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ]],
-  [[                                                     ]],
-  [[                                                     ]],
-  [[                                                     ]],
-}
+-- dashboard.section.header.val = {
+--   [[                                                     ]],
+--   [[                                                     ]],
+--   [[                                                     ]],
+--   [[                                                     ]],
+--   [[  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ]],
+--   [[  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ]],
+--   [[  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ]],
+--   [[  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ]],
+--   [[  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ]],
+--   [[  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ]],
+--   [[                                                     ]],
+--   [[                                                     ]],
+--   [[                                                     ]],
+-- }
 
 dashboard.section.header.opts.hl = "Type"
 
 dashboard.section.footer.val = footer()
-dashboard.section.footer.opts.hl = "Repeat"
+-- dashboard.section.footer.opts.hl = "Repeat"
+-- dashboard.section.footer.opts.hl = "String"
+dashboard.section.footer.opts.hl = "Comment"
 
 dashboard.section.buttons.val = {
   button("SPC s f", "  Find file"),

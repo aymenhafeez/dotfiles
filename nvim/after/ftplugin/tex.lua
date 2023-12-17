@@ -1,4 +1,3 @@
-local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
 local opt = vim.opt
 local opt_local = vim.opt_local
@@ -21,11 +20,11 @@ opt_local.complete:append { "kspell" }
 g.tex_conceal = "abdmgs"
 g.tex_flavor = "latex"
 
-map("i", "<C-c><C-j>", "<Esc>o\\item ", opts)
-map("i", "<C-c><C-k>", "<Esc>O\\item ", opts)
-map("n", "<C-c><C-j>", "<Esc>o\\item ", opts)
-map("n", "<C-c><C-k>", "<Esc>O\\item ", opts)
-map("n", "<C-c><C-l>", "i\\left<Esc>l%i\\right<Esc>", opts)
+map("i", "<C-c><C-j>", "<Esc>o\\item ", { noremap = true, silent = true, desc = "New item below"})
+map("i", "<C-c><C-k>", "<Esc>O\\item ", { noremap = true, silent = true, desc = "New item above" })
+map("n", "<C-c><C-j>", "<Esc>o\\item ", { noremap = true, silent = true, desc = "New item below" })
+map("n", "<C-c><C-k>", "<Esc>O\\item ", { noremap = true, silent = true, desc = "New item above" })
+map("n", "<C-c><C-l>", "i\\left<Esc>l%i\\right<Esc>", { noremap = true, silent = true })
 
-map("n", "<leader>cm", "<cmd>TermExec cmd='pdflatex %'<CR>", opts)
-map("n", "<leader>pv", "<cmd>TermExec cmd='open %:t:r.pdf'<CR>")
+map("n", "<leader>cm", "<cmd>TermExec cmd='pdflatex %'<CR>", { noremap = true, silent = true, desc = "Compile to PDF" })
+map("n", "<leader>pv", "<cmd>TermExec cmd='open %:t:r.pdf'<CR>", { desc = "Open PDF preview" })

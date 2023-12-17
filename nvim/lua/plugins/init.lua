@@ -18,7 +18,8 @@ end
 
 local options = {
   ui = {
-    border = "rounded",
+    -- border = "rounded",
+    border = "none",
     size = {
       width = 0.8,
       height = 0.8
@@ -26,29 +27,29 @@ local options = {
   }
 }
 
-lazy.setup({
-  -- -- need to work out how to get this to work with Lazy.nvim
-  -- local local_use = function(first, second, opts)
-  --   opts = opts or {}
-  --
-  --   local plug_path, home
-  --   if second == nil then
-  --     plug_path = first
-  --     home = "aymen"
-  --   else
-  --     plug_path = second
-  --     home = first
-  --   end
-  --
-  --   if vim.fn.isdirectory(vim.fn.expand("~/Documents/git/projects/" .. plug_path)) == 1 then
-  --     opts[1] = "~/Documents/git/projects/" .. plug_path
-  --   else
-  --     opts[1] = string.format("%s/%s", home, plug_path)
-  --   end
-  --
-  --   opts
-  -- end
+-- -- loading local plugins with packer - not needed with lazy.nvim
+-- local local_use = function(first, second, opts)
+--   opts = opts or {}
+--
+--   local plug_path, home
+--   if second == nil then
+--     plug_path = first
+--     home = "aymen"
+--   else
+--     plug_path = second
+--     home = first
+--   end
+--
+--   if vim.fn.isdirectory(vim.fn.expand("~/Documents/git/projects/" .. plug_path)) == 1 then
+--     opts[1] = "~/Documents/git/projects/" .. plug_path
+--   else
+--     opts[1] = string.format("%s/%s", home, plug_path)
+--   end
+--
+--   opts
+-- end
 
+lazy.setup({
   {
     "nvim-lua/plenary.nvim"
   },
@@ -109,7 +110,7 @@ lazy.setup({
   --     "kyazdani42/nvim-web-devicons"
   --   },
   --   config = function()
-  --     require("plugins.configs.lualine")
+  --     require("plugins.configs.lualine_3")
   --   end
   -- },
 
@@ -246,7 +247,8 @@ lazy.setup({
     end,
     opts = {
       window = {
-        border = "rounded",
+        -- border = "rounded",
+        border = "none",
         winblend = 0
       },
     }
@@ -307,49 +309,29 @@ lazy.setup({
   --   ft = "python"
   -- },
 
-  {
-    "goolord/alpha-nvim",
-    config = function()
-      require("plugins.configs.alpha")
-    end
-  },
+  -- {
+  --   "goolord/alpha-nvim",
+  --   config = function()
+  --     require("plugins.configs.alpha")
+  --   end
+  -- },
 
   -- colourschemes
 
-  { "catppuccin/nvim" },
-
   {
-    "Mofiqul/vscode.nvim",
-    -- lazy = false,
-    -- priority = 1000,
+    "sainnhe/everforest",
     -- config = function()
-    --   vim.cmd.colorscheme("vscode")
-    -- end,
-  },
-
-  {
-    "rebelot/kanagawa.nvim",
-    -- config = function()
-    --   vim.cmd.colorscheme("kanagawa-dragon")
+    --   vim.g.everforest_better_performance = true
+    --   vim.g.everforest_background = "hard"
+    --   vim.o.termguicolors = true
+    --   vim.cmd.colorscheme("everforest")
     -- end
   },
 
   {
-    "aymenhafeez/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
+    "norcalli/nvim-colorizer.lua",
     config = function()
-      require("tokyonight").setup({
-        styles = {
-          comments = { italic = true },
-          keywords = { italic = true },
-          floats = "normal",
-          statusline = "dark",
-          sidebars = "dark"
-        },
-        sidebars = { "help", "qf", "toggleterm" },
-      })
-      vim.cmd.colorscheme("tokyonight-night")
+      require("colorizer").setup()
     end
   },
 
@@ -358,52 +340,116 @@ lazy.setup({
     -- lazy = false,
     -- priority = 1000,
     -- config = function()
-    --   require("monokai-pro").setup({
-    --     filter = "spectrum",
-    --     background_clear = {
-    --       "lazy",
-    --       "mason",
-    --       "telescope",
-    --       -- "float_win"
-    --     },
-    --     plugins = {
-    --       bufferline = {
-    --         underline_selected = true
-    --       }
-    --     }
-    --   })
-    --   vim.cmd.colorscheme("monokai-pro")
-    -- end,
-  },
-
-
-  {
-    "norcalli/nvim-colorizer.lua",
-    -- config = function()
-    --   require("colorizer").setup()
+    --   require("plugins.configs.monokai")
+    --   vim.cmd.colorscheme("monokai-pro-spectrum")
     -- end
   },
 
   {
-    "aymenhafeez/neodark.nvim",
+    'aymenhafeez/nvim-base16',
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   require("base16-colorscheme").with_config({
+    --     telescope = false,
+    --     cmp = false,
+    --   })
+    --   vim.cmd.colorscheme("base16-tomorrow-night")
+    -- end
+  },
+
+  {
+    "rose-pine/neovim",
+    -- config = function()
+    --   require("rose-pine").setup({
+    --     disable_italics = true
+    --   })
+    --   vim.cmd.colorscheme("rose-pine-moon")
+    -- end
+  },
+
+  {
+    "Mofiqul/vscode.nvim",
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   local c = require('vscode.colors').get_colors()
+    --   require('vscode').setup({
+    --     -- Alternatively set style in setup
+    --     -- style = 'light'
+    --
+    --     -- Enable italic comment
+    --     italic_comments = true,
+    --
+    --     -- Disable nvim-tree background color
+    --     disable_nvimtree_bg = true,
+    --
+    --     -- Override colors (see ./lua/vscode/colors.lua)
+    --     color_overrides = {
+    --       vscLineNumber = '#FFFFFF',
+    --     },
+    --
+    --     -- Override highlight groups (see ./lua/vscode/theme.lua)
+    --     group_overrides = {
+    --       -- this supports the same val table as vim.api.nvim_set_hl
+    --       -- use colors from this colorscheme by requiring vscode.colors!
+    --       Cursor = { fg=c.vscDarkBlue, bg=c.vscLightGreen, bold=true },
+    --     }
+    --   })
+    --   require('vscode').load()
+    --   vim.cmd.colorscheme("vscode")
+    -- end,
+  },
+
+  {
+    "rebelot/kanagawa.nvim",
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   require("plugins.configs.kanagawa")
+    --   vim.cmd.colorscheme("kanagawa-dragon")
+    -- end
+  },
+
+  {
+    "aymenhafeez/tokyonight.nvim",
+    -- dir = "~/Documents/git/tokyonight.nvim/",
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   require("tokyonight").setup({
+    --     styles = {
+    --       comments = { italic = true },
+    --       keywords = { italic = true },
+    --       floats = "normal",
+    --       statusline = "dark",
+    --       sidebars = "dark"
+    --     },
+    --     sidebars = { "help", "qf", "toggleterm" },
+    --   })
+    --   vim.cmd.colorscheme("tokyonight")
+    -- end
+  },
+
+
+  {
+    -- "aymenhafeez/neodark.nvim",
+    dir = "~/Documents/git/neodark.nvim/",
     -- lazy = false,
     -- priority = 1000,
     -- config = function ()
     --   vim.cmd.colorscheme("neodarker")
     -- end
   },
-  -- local_use "neodark.nvim"
 
   {
-    "aymenhafeez/scratch.nvim",
+    -- "aymenhafeez/scratch.nvim",
+    dir = "~/Documents/git/scratch.nvim/",
     config = function()
       vim.cmd([[command! Scratch lua require'scratch'.ToggleScratch(config)]])
     end
   },
 
-  -- local_use "scratch.nvim"
-
-  { "aymenhafeez/vim-line-motion" }
-  -- local_use "vim-line-motion"
+  -- { "aymenhafeez/vim-line-motion" }
 
 }, options)

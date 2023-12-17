@@ -4,9 +4,8 @@ end
 
 require("ah.utils").version()
 
-require "plugins"
-require "ah.statusline"
 require "ah.options"
+require "plugins"
 require "ah.mappings"
 require "ah.autocmds"
 require "ah.globals"

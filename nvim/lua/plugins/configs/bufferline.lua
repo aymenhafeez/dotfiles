@@ -32,7 +32,7 @@ bufferline.setup {
   },
   highlights = {
     fill = {
-      bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
     },
     -- background = {
     --   bg = { attribute = 'bg', highlight = 'Normal' },

@@ -12,7 +12,7 @@ local options = {
     end
   end,
   shade_filetypes = { "help" },
-  shade_terminals = false,
+  shade_terminals = true,
   persistent_size = false,
   autochdir = true,
   float_opts = {

@@ -1,6 +1,7 @@
 local opt = vim.opt
 local o = vim.o
 local g = vim.g
+local b = vim.b
 
 opt.autoindent = true
 opt.smartindent = true
@@ -50,8 +51,8 @@ opt.inccommand = "split"
 opt.completeopt = { "menu", "menuone" }
 opt.omnifunc = "syntaxcomplete#Complete"
 opt.pumheight = 12
-opt.pumblend = 7
-opt.winblend = 7
+opt.pumblend = 0
+opt.winblend = 0
 opt.scrolloff = 5
 
 opt.autochdir = true
@@ -145,10 +146,10 @@ end
 
 -- vim.cmd("au FocusGained * :checktime")
 
--- local colorscheme = 'neodarker'
---
--- local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
--- if not status_ok then
---   vim.notify("colorscheme " .. colorscheme .. " not found")
---   return
--- end
+local colorscheme = "cockatoo"
+
+local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+if not status_ok then
+  vim.notify("colorscheme " .. colorscheme .. " not found")
+  return
+end

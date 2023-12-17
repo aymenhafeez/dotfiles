@@ -74,13 +74,15 @@ cmp.setup {
   window = {
     completion = {
       border = utils.border("CmpBorder"),
+      -- border = utils.border("FloatBorder"),
       winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
       -- winhighlight = "Normal:TelescopePromptNormal,CursorLine:PmenuSel,Search:None",
       scrollbar = false,
       col_offset = 2,
     },
     documentation = {
-      border = utils.border("CmpBorder"),
+      border = utils.border("CmpDocBorder"),
+      -- border = utils.border("FloatBorder"),
       winhighlight = "Normal:CmpDocPmenu,CursorLine:PmenuSel,Search:None",
       -- winhighlight = "Normal:NeoTreeNormal,CursorLine:PmenuSel,Search:None",
       max_width = 70,

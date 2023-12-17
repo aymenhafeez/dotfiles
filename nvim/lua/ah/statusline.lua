@@ -12,6 +12,7 @@ local function highlight(num, active)
   if active == 1 then
     if num == 1 then
       return '%#PmenuSel#'
+      -- return '%#StatusLine#'
     end
     return '%#StatusLine#'
   end
@@ -78,17 +79,52 @@ function M.lsp_status(active)
   return name ..' '.. table.concat(status, ' ')
 end
 
+function M.get_mode()
+  local ok, devicons = pcall(require, "nvim-web-devicons")
+  if not ok then
+    return ""
+  end
+
+  local name = vim.api.nvim_eval_statusline('%f', {}).str
+
+  local iconhl = devicons.get_icon_color(name, vim.bo.filetype, {default = true})
+  local hlname = iconhl:gsub('#', 'Status')
+
+  local current_mode = vim.api.nvim_get_mode().mode
+  if current_mode == "n" then
+    return ("NORMAL")
+  elseif current_mode == "i" then
+    return "INSERT"
+  elseif current_mode == "v" then
+    return "VISUAL"
+  elseif current_mode == "vl" then
+    return "V-LINE"
+  elseif current_mode == "V" then
+    return "VISUAL"
+  elseif current_mode == "c" then
+    return "COMMAND"
+  elseif current_mode == "R" then
+    return "REPLACE"
+  elseif current_mode == "t" then
+    return "TERMINAL"
+  elseif current_mode == "nt" then
+    return "NORMAL"
+  else
+    return "      "
+  end
+end
+
 function M.hunks()
   if vim.b.gitsigns_status then
     local status = vim.b.gitsigns_head
     if vim.b.gitsigns_status ~= '' then
-      status = status ..' '..vim.b.gitsigns_status
+      status = " " .. status ..' '..vim.b.gitsigns_status
     end
     return status
   end
 
   if vim.g.gitsigns_head then
-    return vim.g.gitsigns_head
+    return " " .. vim.g.gitsigns_head
   end
 
   return ''
@@ -159,6 +195,11 @@ local function recording()
 end
 
 function M.bufname()
+  local ok, devicons = pcall(require, 'nvim-web-devicons')
+  if not ok then
+    return ''
+  end
+
   local name = vim.api.nvim_eval_statusline('%f', {}).str
   local buf_name = vim.api.nvim_buf_get_name(0)
   if vim.startswith(buf_name, 'fugitive://') then
@@ -170,7 +211,10 @@ function M.bufname()
     name = relpath..'@'..revision:sub(1, 7)
   end
 
-  return name
+  local icon, iconhl = devicons.get_icon_color(name, vim.bo.filetype, {default = true})
+  local hlname = iconhl:gsub('#', 'Status')
+
+  return hl(hlname) .. icon .. " " .. name
 end
 
 local function pad(x)
@@ -207,7 +251,9 @@ local function set(active, global)
   vim[scope].statusline = parse_sections{
     {
       highlight(1, active),
+      pad(F.get_mode()),
       recording(),
+      highlight(2, active),
       pad(F.hunks()),
       highlight(2, active),
       pad(F.lsp_status(active)),

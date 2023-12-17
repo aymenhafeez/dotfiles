@@ -5,7 +5,7 @@ end
 
 require('mason').setup({
   ui = {
-    border = "rounded",
+    border = "none",
     width = 0.8,
     height = 0.8
   }

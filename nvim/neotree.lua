@@ -59,7 +59,7 @@ local options = {
     },
   },
   window = {
-    width = 34,
+    width = 33,
     mappings = {
       ["<C-s>"] = "open_split",
       ["<C-v>"] = "open_vsplit",
