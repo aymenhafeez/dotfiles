@@ -138,3 +138,4 @@ M.lsp_capabilities.textDocument.completion.completionItem = {
 }
 
 return M
+

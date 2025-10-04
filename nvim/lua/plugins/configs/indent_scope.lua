@@ -16,6 +16,6 @@ local options = {
   }
 }
 
-vim.cmd("hi link MiniIndentscopeSymbol NonText")
+vim.cmd("hi link MiniIndentscopeSymbol Comment")
 
 return indent.setup(options)

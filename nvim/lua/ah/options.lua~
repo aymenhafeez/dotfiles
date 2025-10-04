@@ -13,16 +13,14 @@ opt.laststatus = 3
 opt.showtabline = 2
 opt.cursorline = true
 opt.showmode = false
-opt.showcmd = true
-opt.showcmdloc = "statusline"
-opt.cmdheight = 0
+opt.showcmd = false
+opt.cmdheight = 1
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
-opt.signcolumn = "yes:1"
+opt.signcolumn = "yes"
 opt.wrap = false
 opt.guicursor = {"i-ci:ver30,n:Cursor-blinkwait700-blinkon250-blinkoff400"}
--- opt.foldmethod = 'expr'
 
 opt.formatoptions:remove { "c" }
 opt.spelllang = "en_gb"
@@ -78,7 +76,8 @@ vim.opt.suffixesadd:prepend('.lua')
 g.UltiSnipsExpandTrigger = "<tab>"
 g.UltiSnipsJumpForwardTrigger = "<tab>"
 g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
-g.UltiSnipsNoPythonWarning = 1
+
+g.netrw_banner = 0
 
 g.scratch_filetype = "lua"
 
@@ -107,10 +106,10 @@ local builtin_plugins = {
   "getscriptPlugin",
   "gzip",
   "logipat",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
+  -- "netrw",
+  -- "netrwPlugin",
+  -- "netrwSettings",
+  -- "netrwFileHandlers",
   "matchit",
   "tar",
   "tarPlugin",
@@ -134,14 +133,14 @@ for _, plugin in pairs(builtin_plugins) do
   g["loaded_" .. plugin] = 1
 end
 
-local colorscheme = "calmblue"
-
-if colorscheme == 'habamax' then
-  return vim.cmd('hi link WinSeparator NonText')
-end
-
-local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not status_ok then
-  vim.notify("colorscheme " .. colorscheme .. " not found")
-  return
-end
+-- local colorscheme = "calmblue"
+--
+-- if colorscheme == 'habamax' then
+--   return vim.cmd('hi link WinSeparator NonText')
+-- end
+--
+-- local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+-- if not status_ok then
+--   vim.notify("colorscheme " .. colorscheme .. " not found")
+--   return
+-- end

@@ -123,6 +123,21 @@ function M.version()
   end
 end
 
+local colorschemes = { "vague", "ef-eagle" }
+local current = 1
+function M.toggle_colourschemes()
+  current = current % #colorschemes + 1
+  vim.cmd("colorscheme " .. colorschemes[current])
+  print("Colorscheme set to " .. colorschemes[current])
+end
+
+local background = { 'dark', 'light' }
+local current_background = 1
+function M.toggle_light_and_dark_background()
+  current_background = current_background % #background + 1
+  vim.cmd("set background=" .. background[current_background])
+end
+
 function M.warn(msg, name)
   vim.notify(msg, vim.log.levels.WARN, { title = name or "init.lua" })
 end
@@ -134,6 +149,35 @@ end
 function M.info(msg, name)
   vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
+
+local sections = {
+    { section = "header" },
+    {
+      pane = 2,
+      section = "terminal",
+      cmd = "colorscript -e square",
+      height = 5,
+      padding = 1,
+    },
+    { section = "keys", gap = 1, padding = 1 },
+    { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+    { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+    {
+      pane = 2,
+      icon = " ",
+      title = "Git Status",
+      section = "terminal",
+      enabled = function()
+        return Snacks.git.get_root() ~= nil
+      end,
+      cmd = "git status --short --branch --renames",
+      height = 5,
+      padding = 1,
+      ttl = 5 * 60,
+      indent = 3,
+    },
+    { section = "startup" },
+  }
 
 M.treesitter_cmds = {
   "TSInstall",
@@ -235,102 +279,6 @@ M.kind_icons = {
     Unknown = ' ',
 }
 
--- doesn't quite work yet
--- function M.create_centered_floating_window()
---     local width = math.min(vim.api.nvim_get_option('columns') - 4, math.max(80, vim.api.nvim_get_option('columns') - 20))
---     local height = math.min(vim.api.nvim_get_option('lines') - 4, math.max(20, vim.api.nvim_get_option('lines') - 10))
---     local top = math.floor((vim.api.nvim_get_option('lines') - height) / 2) - 1
---     local left = math.floor((vim.api.nvim_get_option('columns') - width) / 2)
---     local opts = {
---         relative = 'editor',
---         row = top,
---         col = left,
---         width = width,
---         height = height,
---         style = 'minimal',
---     }
---
---     local top_border = '╭' .. string.rep('─', width - 2) .. '╮'
---     local mid_border = '│' .. string.rep(' ', width - 2) .. '│'
---     local bot_border = '╰' .. string.rep('─', width - 2) .. '╯'
---     local lines = {top_border}
---     for _ = 1, height - 2 do
---         table.insert(lines, mid_border)
---     end
---     table.insert(lines, bot_border)
---
---     local buf = vim.api.nvim_create_buf(false, true)
---     vim.api.nvim_buf_set_lines(buf, 0, -1, true, lines)
---     vim.api.nvim_open_win(buf, true, opts)
---     vim.cmd('set winhl=Normal:Floating')
---
---     opts.row = opts.row + 1
---     opts.height = opts.height - 2
---     opts.col = opts.col + 2
---     opts.width = opts.width - 4
---
---     local text_buf = vim.api.nvim_create_buf(false, true)
---     vim.api.nvim_open_win(text_buf, true, opts)
---
---     vim.cmd('autocmd BufWipeout <buffer> exe "bw " .. ' .. buf)
---     return text_buf
--- end
-
--- doesn't quite work yet
--- function M.floating_window_help(query)
---     local buf = M.create_centered_floating_window()
---     vim.api.nvim_set_current_buf(buf)
---     vim.api.nvim_buf_set_option(buf, 'filetype', 'help')
---     vim.api.nvim_buf_set_option(buf, 'buftype', 'help')
---     vim.cmd('execute "help " .. a:query')
--- end
-
--- function M.float_help()
---   -- Create a new buffer for the floating window
---   local buf = vim.api.nvim_create_buf(false, true)
---
---   -- Set padding for the floating window
---   local vpad = 4
---   local hpad = 10
---
---   -- Calculate the width and height of the floating window
---   local win_width = vim.o.columns - hpad * 2
---   local win_height = vim.o.lines - vpad * 2
---
---   -- Calculate the row and column positions for centering the window
---   local win_row = math.floor((vim.o.lines - win_height) / 2)
---   local win_col = math.floor((vim.o.columns - win_width) / 2)
---
---   -- Create the floating window with minimal styling and custom borders
---   local win = vim.api.nvim_open_win(buf, true, {
---     relative = "editor",
---     width = win_width,
---     height = win_height,
---     row = win_row,
---     col = win_col,
---     style = "minimal",
---     border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
---   })
---
---   -- Get the word under the cursor and display its help
---   local word_under_cursor = vim.fn.expand("<cword>")
---
---   -- Open the help in a new window
---   vim.cmd("help " .. word_under_cursor .. " new")
---
---   -- Move the newly opened help window to the floating window
---   local help_win = vim.fn.bufwinnr("^hlp")
---   if help_win ~= -1 then
---     vim.fn.win_gotoid(win)
---   end
---
---   -- Set up an autocmd to close the window and delete the buffer when it's no longer needed
---   local autocmd = {
---     "autocmd! BufWinLeave <buffer> lua",
---     string.format("vim.api.nvim_win_close(%d, {force = true});", win),
---     string.format("vim.api.nvim_buf_delete(%d, {force = true});", buf),
---   }
---   vim.cmd(table.concat(autocmd, " "))
--- end
 
 return M
+

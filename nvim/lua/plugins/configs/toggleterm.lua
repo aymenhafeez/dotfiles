@@ -21,3 +21,4 @@ local options = {
 }
 
 toggle.setup(options)
+

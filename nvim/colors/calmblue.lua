@@ -203,11 +203,12 @@ local hlgroups = {
   ErrorMsg = { fg = c_scarlet },
   FoldColumn = { fg = c_steel },
   Folded = { fg = c_steel, bg = c_ocean },
-  FloatBorder = { fg = c_ocean, bg = c_ocean },
+  -- FloatBorder = { fg = c_ocean, bg = c_ocean },
+  FloatBorder = { fg = c_flashlight, bg = c_jeans },
   FloatShadow = { bg = c_shadow, blend = 70 },
   FloatShadowThrough = { link = 'None' },
   HealthSuccess = { fg = c_tea },
-  Search = { bg = c_thunder },
+  Search = { fg = c_orange, bg = c_thunder },
   IncSearch = { fg = c_black, bg = c_orange, bold = true },
   CurSearch = { link = 'IncSearch' },
   LineNr = { fg = c_steel },
@@ -225,7 +226,7 @@ local hlgroups = {
   QuickFixLine = { link = 'Visual' },
   SignColumn = { fg = c_smoke },
   SpecialKey = { fg = c_orange },
-  SpellBad = { underdashed = true },
+  SpellBad = { undercurl = true },
   SpellCap = { link = 'SpellBad' },
   SpellLocal = { link = 'SpellBad' },
   SpellRare = { link = 'SpellBad' },
@@ -304,7 +305,8 @@ local hlgroups = {
   ['@operator'] = { link = 'Operator' },
   ['@punctuation.delimiter'] = { link = 'Delimiter' },
   ['@punctuation.bracket'] = { link = 'Bracket' },
-  ['@punctuation.special'] = { link = 'Delimiter' },
+  -- ['@punctuation.special'] = { link = 'Delimiter' },
+  ['@punctuation.special'] = { fg = c_ochre },
   ['@string'] = { link = 'String' },
   ['@string.regex'] = { link = 'String' },
   ['@string.escape'] = { link = 'SpecialChar' },
@@ -380,6 +382,9 @@ local hlgroups = {
   ['@text.emphasis'] = { fg = c_beige, bold = true, italic = true, },
   ['@text.underline'] = { underline = true },
   ['@keyword.operator'] = { link = 'Operator' },
+
+  TreesitterContext = { bg = c_ocean },
+
   -- }}}2
 
   -- LSP semantic {{{2
@@ -423,7 +428,7 @@ local hlgroups = {
   DiagnosticVirtualTextOk = { fg = c_tea, bg = c_tea_blend },
   DiagnosticVirtualTextError = { fg = c_wine, bg = c_wine_blend },
   DiagnosticVirtualTextWarn = { fg = c_earth, bg = c_earth_blend },
-  DiagnosticVirtualTextInfo = { fg = c_smoke, bg = c_smoke_blend },
+  DiagnosticVirtualTextInfo = { fg = c_tea, bg = c_ocean },
   DiagnosticVirtualTextHint = { fg = c_pigeon, bg = c_deepsea },
   DiagnosticUnderlineOk = { underline = true, sp = c_tea },
   DiagnosticUnderlineError = { undercurl = true, sp = c_wine },
@@ -506,15 +511,15 @@ local hlgroups = {
   -- netrw
   netrwClassify = { link = 'Directory' },
 
-  -- bufferline
-  BufferLineFill = { link = "BufferLineBuffer" },
-  BufferLineBufferSelected = {
-    fg = c_steel,
-    sp = c_steel,
-    italic = true,
-    bold = true,
-    italic = true,
-  },
+  -- -- bufferline
+  -- BufferLineFill = { link = "BufferLineBuffer" },
+  -- BufferLineBufferSelected = {
+  --   fg = c_steel,
+  --   sp = c_steel,
+  --   italic = true,
+  --   bold = true,
+  --   italic = true,
+  -- },
 
   -- nvim-cmp
   CmpItemAbbr = { fg = c_smoke },
@@ -549,10 +554,12 @@ local hlgroups = {
   CmpItemKind = { fg = c_smoke },
   CmpItemMenu = { link = 'Pmenu' },
   CmpVirtualText = { fg = c_steel, italic = true },
-  CmpBorder = { link = "TelescopeResultsBorder" },
-  CmpPmenu = { link = "TelescopeResultsNormal" },
-  CmpDocBorder = { link = "TelescopePreviewBorder" },
-  CmpDocPmenu = { link = "TelescopePreviewNormal" },
+  -- CmpPmenu = { fg = c_smoke, bg = c_deepsea },
+  -- CmpBorder = { fg = c_deepsea, bg = c_deepsea },
+  -- CmpDocBorder = { link = "TelescopeResultsBorder" },
+  -- CmpDocPmenu = { bg = c_smoke_dark},
+  CmpBorder = { link = 'FloatBorder' },
+  CmpDocBorder = { fg = c_yellow },
 
   -- gitsigns
   GitSignsAdd = { fg = c_tea_blend },
@@ -586,7 +593,7 @@ local hlgroups = {
   fugitiveUntrackedHeading = { fg = c_lavender, bold = true },
 
   -- mini indentscope
-  MiniIndentscopeSymbol = { link = "NonText" },
+  MiniIndentscopeSymbol = { fg = c_deepsea },
 
   -- neotree
   NeoTreeNormal = { bg = c_smoke_dark },
@@ -596,37 +603,62 @@ local hlgroups = {
   NeoTreeCursorLine = { bg = c_ocean },
 
   -- notify
-  NotifyERRORBody = { bg = c_ocean },
-  NotifyWARNBody = { link = "NotifyERRORBody" },
-  NotifyINFOBody = { link = "NotifyERRORBody" },
-  NotifyTRACEBody = { link = "NotifyERRORBody" },
-  NotifyDEBUGBody = { link = "NotifyERRORBody" },
-  NotifyERRORBorder = { fg = c_ocean, bg = c_ocean },
-  NotifyWARNBorder = { link = "NotifyERRORBorder" },
-  NotifyINFOBorder = { link = "NotifyERRORBorder" },
-  NotifyTRACEBorder = { link = "NotifyERRORBorder" },
-  NotifyDEBUGBorder = { link = "NotifyERRORBorder" },
+  -- NotifyERRORBody = { bg = c_ocean },
+  -- NotifyWARNBody = { link = "NotifyERRORBody" },
+  -- NotifyINFOBody = { link = "NotifyERRORBody" },
+  -- NotifyTRACEBody = { link = "NotifyERRORBody" },
+  -- NotifyDEBUGBody = { link = "NotifyERRORBody" },
+  --
+  -- NotifyERRORTitle = { fg = c_scarlet, bg = c_ocean },
+  -- NotifyWARNTitle = { fg = c_yellow, bg = c_ocean },
+  -- NotifyINFOTitle = { fg = c_tea, bg = c_ocean },
+  -- NotifyTRACETitle = { fg = c_purple, bg = c_ocean },
+  -- NotifyDEBUGTitle = { fg = c_orange, bg = c_ocean },
+  --
+  -- NotifyERRORIcon = { link = "NotifyERRORTitle" },
+  -- NotifyWARNIcon = { link = "NotifyWARNTitle" },
+  -- NotifyINFOIcon = { link = "NotifyINFOTitle" },
+  -- NotifyTRACEIcon = { link = "NotifyTRACETitle" },
+  -- NotifyDEBUGIcon = { link = "NotifyDEBUGTitle" },
+  --
+  -- NotifyERRORBorder = { fg = c_ocean, bg = c_ocean },
+  -- NotifyWARNBorder = { link = "NotifyERRORBorder" },
+  -- NotifyINFOBorder = { link = "NotifyERRORBorder" },
+  -- NotifyTRACEBorder = { link = "NotifyERRORBorder" },
+  -- NotifyDEBUGBorder = { link = "NotifyERRORBorder" },
 
   -- telescope
-  TelescopeNormal = { link = 'NormalFloat' },
-  TelescopePromptNormal = { bg = c_deepsea },
-  TelescopeTitle = { fg = c_space, bg = c_turquoise, bold = true },
-  TelescopePromptTitle = { fg = c_space, bg = c_yellow, bold = true, },
-  -- TelescopeBorder = { fg = c_smoke, bg = c_ocean },
-  -- TelescopePromptBorder = { fg = c_smoke, bg = c_deepsea },
-  TelescopeBorder = { fg = c_ocean, bg = c_ocean },
-  TelescopePromptBorder = { fg = c_deepsea, bg = c_deepsea },
-  TelescopeResultsBorder = { link = 'TelescopeBorder' },
-  TelescopeResultsNormal = { link = 'TelescopeNormal' },
+
+  -- TelescopeNormal = { link = 'NormalFloat' },
+
+  TelescopeNormal = { fg = c_smoke_dark,  bg = c_smoke_dark },
+  -- TelescopeTitle = { fg = c_space, bg = c_turquoise, bold = true },
+  TelescopeBorder = { fg = c_smoke_dark, bg = c_smoke_dark },
+
+  TelescopeResultsNormal = { fg = c_smoke, bg = c_smoke_dark },
+  TelescopeResultsBorder = { link = 'TelescopeNormal' },
+
   TelescopePreviewBorder = { fg = c_smoke_blend, bg = c_smoke_blend },
   TelescopePreviewNormal = { fg = c_smoke, bg = c_smoke_blend },
+  TelescopePreviewLine = { bg = c_thunder },
+
+  -- TelescopePromptNormal = { link = 'TelescopeResultsNormal' },
+  -- TelescopePromptBorder = { link = 'TelescopeBorder' },
+  -- TelescopePromptTitle = { fg = c_space, bg = c_yellow, bold = true, },
+  -- TelescopePromptCounter = { link = 'Comment' },
+  -- TelescopePromptPrefix = { fg = c_orange },
+
+  TelescopePromptNormal = { bg = c_deepsea },
+  TelescopePromptBorder = { fg = c_deepsea, bg = c_deepsea },
+  -- TelescopePromptTitle = { link = 'TelescopePromptNormal' },
+  TelescopePromptTitle = { fg = c_space, bg = c_yellow, bold = true, },
+  TelescopePromptCounter = { link = 'Comment' },
+  TelescopePromptPrefix = { fg = c_orange },
+
   TelescopeSelection = { fg = c_smoke, bg = c_thunder },
   TelescopeMultiIcon = { fg = c_pigeon, bold = true },
   TelescopeMultiSelection = { bg = c_thunder, bold = true },
-  TelescopePreviewLine = { bg = c_thunder },
   TelescopeMatching = { link = 'Search' },
-  TelescopePromptCounter = { link = 'Comment' },
-  TelescopePromptPrefix = { fg = c_orange },
   TelescopeSelectionCaret = { fg = c_orange, bg = c_thunder },
 
   -- nvim-dap-ui
@@ -724,13 +756,13 @@ local hlgroups = {
   texMathError = { link = 'Error' },
   texMathGroup = { fg = c_pigeon },
   texMathSuper = { fg = c_pigeon },
-  texMathSymbol = { fg = c_yellow },
-  texMathZoneLD = { fg = c_pigeon },
+  texMathSymbol = { fg = c_tea },
+  texMathZoneLD = { fg = c_tea },
   texMathZoneLI = { fg = c_pigeon },
   texMathZoneTD = { fg = c_pigeon },
   texMathZoneTI = { fg = c_pigeon },
   texMathCmdText = { link = 'texCmd' },
-  texMathZoneEnv = { fg = c_pigeon },
+  texMathZoneEnv = { fg = c_tea },
   texMathArrayArg = { fg = c_yellow },
   texMathCmdStyle = { link = 'texCmd' },
   texMathDelimMod = { fg = c_smoke },
@@ -738,7 +770,7 @@ local hlgroups = {
   texMathDelimZone = { fg = c_pigeon },
   texMathStyleBold = { fg = c_smoke, bold = true },
   texMathStyleItal = { fg = c_smoke, italic = true },
-  texMathEnvArgName = { fg = c_lavender },
+  texMathEnvArgName = { fg = c_ochre },
   texMathErrorDelim = { link = 'Error' },
   texMathDelimZoneLD = { fg = c_steel },
   texMathDelimZoneLI = { fg = c_steel },
@@ -835,3 +867,4 @@ end
 -- }}}1
 
 -- vim:ts=2:sw=2:sts=2:fdm=marker:fdl=0
+

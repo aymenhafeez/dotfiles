@@ -36,7 +36,7 @@ bufferline.setup {
   },
   highlights = {
     fill = {
-      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      bg = { attribute = 'bg', highlight = 'Normal' },
     },
     -- background = {
     --   bg = { attribute = 'bg', highlight = 'Normal' },
@@ -75,19 +75,19 @@ bufferline.setup {
     --   bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
     --   fg = { attribute = 'fg', highlight = 'Special' },
     -- },
-    modified = {
-      -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      fg = { attribute = 'fg', highlight = 'Special' },
-
-    },
-    modified_visible = {
-      -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      fg = { attribute = 'fg', highlight = 'Special' },
-    },
-    modified_selected = {
-      -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
-      fg = { attribute = 'fg', highlight = 'Special' },
-    },
+    -- modified = {
+    --   -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+    --   fg = { attribute = 'fg', highlight = 'Special' },
+    --
+    -- },
+    -- modified_visible = {
+    --   -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+    --   fg = { attribute = 'fg', highlight = 'Special' },
+    -- },
+    -- modified_selected = {
+    --   -- bg = { attribute = 'bg', highlight = 'NeoTreeNormal' },
+    --   fg = { attribute = 'fg', highlight = 'Special' },
+    -- },
   --   duplicate = {
   --     bg = { attribute = 'bg', highlight = 'Normal' },
   --   },
@@ -107,3 +107,4 @@ bufferline.setup {
     -- },
   },
 }
+

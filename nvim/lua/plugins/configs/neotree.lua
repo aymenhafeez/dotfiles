@@ -5,7 +5,7 @@ end
 
 local options = {
   close_if_last_window = true,
-  enable_normal_mode_for_inputs = true,
+  -- enable_normal_mode_for_inputs = true,
   hide_root_node = true,
   open_files_do_not_replace_types = { "terminal", "trouble", "qf", "help" },
   add_blank_line_at_top = false,
@@ -59,7 +59,7 @@ local options = {
     },
   },
   window = {
-    width = 34,
+    width = 37,
     mappings = {
       ["<C-s>"] = "open_split",
       ["<C-v>"] = "open_vsplit",
@@ -92,4 +92,5 @@ local options = {
 }
 
 return tree.setup(options)
+
 

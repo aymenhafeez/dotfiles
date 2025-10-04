@@ -23,11 +23,11 @@ local function format(_, item)
 end
 
 cmp.setup {
-  snippet = {
-    expand = function(args)
-      vim.fn["UltiSnips#Anon"](args.body)
-    end,
-  },
+ snippet = {
+   expand = function(args)
+     vim.fn["UltiSnips#Anon"](args.body)
+   end,
+ },
   mapping = cmp.mapping.preset.insert({
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -51,10 +51,11 @@ cmp.setup {
     entries = { name = "custom", selection_order = "near_cursor" }
   },
   sources = {
+    { name = "lazydev" },
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
     { name = 'nvim_lsp_signature_help' },
-    { name = "ultisnips" },
+   { name = "ultisnips" },
     { name = "buffer" },
     { name = "path" },
   },
@@ -102,3 +103,4 @@ cmp.setup.cmdline(":", {
     { { name = "cmdline" } }
   )
 })
+

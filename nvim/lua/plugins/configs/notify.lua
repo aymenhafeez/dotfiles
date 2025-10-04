@@ -3,7 +3,10 @@ if not present then
   return
 end
 
-notify.setup({
+local options = {
   timeout = 2000,
-  stages = "fade"
-})
+  stages = "fade",
+  render = 'wrapped-compact'
+}
+
+return notify.setup(options)

@@ -4,7 +4,7 @@ if not present then
 end
 
 local options = {
-  general = {
+  bar = {
     enable = function(buf, win, _)
       return not vim.api.nvim_win_get_config(win).zindex
         and (vim.bo.buftype == '' or vim.bo[buf].buftype == 'toggleterm'
@@ -16,7 +16,6 @@ local options = {
   icons = {
     enable = true,
     kinds = {
-      use_devicons = true,
       symbols = {
         Function = " ",
         Method = " ",
