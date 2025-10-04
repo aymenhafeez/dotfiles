@@ -1,5 +1,3 @@
--- require("ah.utils").version()
-
 require "ah.options"
 require "ah.mappings"
 require "ah.autocmds"

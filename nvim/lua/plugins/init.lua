@@ -13,18 +13,6 @@ rtp:prepend(lazypath)
 
 require('lazy').setup({
 
-  -- {
-  --   "folke/snacks.nvim",
-  --   priority = 1000,
-  --   lazy = false,
-  --   dependencies = { 'rcarriga/nvim-notify' },
-  --   config = function()
-  --     require("plugins.configs.snacks")
-  --   end,
-  -- },
-
-  -- lazy.nvim
-
   { 'NMAC427/guess-indent.nvim' },
 
   {
@@ -191,9 +179,6 @@ require('lazy').setup({
         right_pad = 7,
         border = "thick"
       },
-      callout = {
-        custom  = { raw = '[!CUSTOM]',  rendered = '󰨸 Custom callout',  highlight = 'RenderMarkdownInfo',    category = 'obsidian' },
-      },
       indent = {
         enabled = true,
         icon = ""
@@ -283,7 +268,7 @@ require('lazy').setup({
       require("plugins.configs.treesitter")
     end,
     dependencies = {
-      {"nvim-treesitter/nvim-treesitter-textobjects"},
+      { "nvim-treesitter/nvim-treesitter-textobjects" },
       {
         "nvim-treesitter/nvim-treesitter-context",
         config = function()
@@ -370,7 +355,7 @@ require('lazy').setup({
 
   {
     'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+    priority = 1000,
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
@@ -396,10 +381,9 @@ require('lazy').setup({
 
   {
     'vague2k/vague.nvim',
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other plugins
+    lazy = false,
+    priority = 1000,
     config = function()
-      -- NOTE: you do not need to call setup if you don't want to.
       require("vague").setup({
         style = {
           strings = 'none'
