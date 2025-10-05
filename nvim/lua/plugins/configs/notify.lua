@@ -6,7 +6,8 @@ end
 local options = {
   timeout = 2000,
   stages = "fade",
-  render = 'wrapped-compact'
+  render = 'wrapped-compact',
+  top_down = false,
 }
 
 return notify.setup(options)

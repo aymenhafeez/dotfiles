@@ -21,7 +21,7 @@ telescope.setup {
     multi_icon = "",
     winblend = 0,
     color_devicons = true,
-    border = false,
+    border = true,
 
     mappings = {
       i = {

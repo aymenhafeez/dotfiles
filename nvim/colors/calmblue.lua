@@ -179,7 +179,7 @@ end
 local hlgroups = {
   -- Common {{{2
   Normal = { fg = c_smoke, bg = c_jeans },
-  NormalFloat = { fg = c_smoke, bg = c_ocean },
+  NormalFloat = { fg = c_smoke, bg = c_jeans },
   NormalNC = { link = 'Normal' },
   ColorColumn = { bg = c_deepsea },
   Conceal = { fg = c_smoke },
@@ -258,7 +258,7 @@ local hlgroups = {
   Array = { fg = c_orange },
   Float = { link = 'Number' },
   Identifier = { fg = c_smoke },
-  Builtin = { fg = c_pink },
+  Builtin = { fg = c_ochre },
   Field = { fg = c_pigeon },
   Enum = { fg = c_ochre },
   Namespace = { fg = c_ochre },
@@ -511,16 +511,6 @@ local hlgroups = {
   -- netrw
   netrwClassify = { link = 'Directory' },
 
-  -- -- bufferline
-  -- BufferLineFill = { link = "BufferLineBuffer" },
-  -- BufferLineBufferSelected = {
-  --   fg = c_steel,
-  --   sp = c_steel,
-  --   italic = true,
-  --   bold = true,
-  --   italic = true,
-  -- },
-
   -- nvim-cmp
   CmpItemAbbr = { fg = c_smoke },
   CmpItemAbbrDeprecated = { strikethrough = true },
@@ -554,10 +544,6 @@ local hlgroups = {
   CmpItemKind = { fg = c_smoke },
   CmpItemMenu = { link = 'Pmenu' },
   CmpVirtualText = { fg = c_steel, italic = true },
-  -- CmpPmenu = { fg = c_smoke, bg = c_deepsea },
-  -- CmpBorder = { fg = c_deepsea, bg = c_deepsea },
-  -- CmpDocBorder = { link = "TelescopeResultsBorder" },
-  -- CmpDocPmenu = { bg = c_smoke_dark},
   CmpBorder = { link = 'FloatBorder' },
   CmpDocBorder = { fg = c_yellow },
 
@@ -602,64 +588,11 @@ local hlgroups = {
   NeoTreeWinSeparator = { fg = c_jeans, bg = c_jeans },
   NeoTreeCursorLine = { bg = c_ocean },
 
-  -- notify
-  -- NotifyERRORBody = { bg = c_ocean },
-  -- NotifyWARNBody = { link = "NotifyERRORBody" },
-  -- NotifyINFOBody = { link = "NotifyERRORBody" },
-  -- NotifyTRACEBody = { link = "NotifyERRORBody" },
-  -- NotifyDEBUGBody = { link = "NotifyERRORBody" },
-  --
-  -- NotifyERRORTitle = { fg = c_scarlet, bg = c_ocean },
-  -- NotifyWARNTitle = { fg = c_yellow, bg = c_ocean },
-  -- NotifyINFOTitle = { fg = c_tea, bg = c_ocean },
-  -- NotifyTRACETitle = { fg = c_purple, bg = c_ocean },
-  -- NotifyDEBUGTitle = { fg = c_orange, bg = c_ocean },
-  --
-  -- NotifyERRORIcon = { link = "NotifyERRORTitle" },
-  -- NotifyWARNIcon = { link = "NotifyWARNTitle" },
-  -- NotifyINFOIcon = { link = "NotifyINFOTitle" },
-  -- NotifyTRACEIcon = { link = "NotifyTRACETitle" },
-  -- NotifyDEBUGIcon = { link = "NotifyDEBUGTitle" },
-  --
-  -- NotifyERRORBorder = { fg = c_ocean, bg = c_ocean },
-  -- NotifyWARNBorder = { link = "NotifyERRORBorder" },
-  -- NotifyINFOBorder = { link = "NotifyERRORBorder" },
-  -- NotifyTRACEBorder = { link = "NotifyERRORBorder" },
-  -- NotifyDEBUGBorder = { link = "NotifyERRORBorder" },
-
   -- telescope
 
-  -- TelescopeNormal = { link = 'NormalFloat' },
-
-  TelescopeNormal = { fg = c_smoke_dark,  bg = c_smoke_dark },
-  -- TelescopeTitle = { fg = c_space, bg = c_turquoise, bold = true },
-  TelescopeBorder = { fg = c_smoke_dark, bg = c_smoke_dark },
-
-  TelescopeResultsNormal = { fg = c_smoke, bg = c_smoke_dark },
-  TelescopeResultsBorder = { link = 'TelescopeNormal' },
-
-  TelescopePreviewBorder = { fg = c_smoke_blend, bg = c_smoke_blend },
-  TelescopePreviewNormal = { fg = c_smoke, bg = c_smoke_blend },
-  TelescopePreviewLine = { bg = c_thunder },
-
-  -- TelescopePromptNormal = { link = 'TelescopeResultsNormal' },
-  -- TelescopePromptBorder = { link = 'TelescopeBorder' },
-  -- TelescopePromptTitle = { fg = c_space, bg = c_yellow, bold = true, },
-  -- TelescopePromptCounter = { link = 'Comment' },
-  -- TelescopePromptPrefix = { fg = c_orange },
-
-  TelescopePromptNormal = { bg = c_deepsea },
-  TelescopePromptBorder = { fg = c_deepsea, bg = c_deepsea },
-  -- TelescopePromptTitle = { link = 'TelescopePromptNormal' },
-  TelescopePromptTitle = { fg = c_space, bg = c_yellow, bold = true, },
-  TelescopePromptCounter = { link = 'Comment' },
-  TelescopePromptPrefix = { fg = c_orange },
-
-  TelescopeSelection = { fg = c_smoke, bg = c_thunder },
-  TelescopeMultiIcon = { fg = c_pigeon, bold = true },
-  TelescopeMultiSelection = { bg = c_thunder, bold = true },
-  TelescopeMatching = { link = 'Search' },
-  TelescopeSelectionCaret = { fg = c_orange, bg = c_thunder },
+  TelescopeBorder = { fg = c_cerulean, bg = c_jeans },
+  TelescopePromptBorder = { fg = c_orange, bg = c_jeans },
+  TelescopeSelectionCaret = { fg = c_ochre, bg = c_jeans },
 
   -- nvim-dap-ui
   DapUIBreakpointsCurrentLine = { link = 'CursorLineNr' },

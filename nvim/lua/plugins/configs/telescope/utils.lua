@@ -1,3 +1,5 @@
+-- util functions with get_ivy picker layout
+
 local M = {}
 
 local telescope = require("telescope.builtin")
@@ -78,10 +80,9 @@ function M.find_files()
       preview_title = "",
       path_display = { "truncate" },
       layout_config = {
-        -- width = 0.85,
+        prompt_position = "bottom",
         height = 0.4,
         preview_width = 0.55,
-        prompt_position = "bottom",
       }
     }
   )

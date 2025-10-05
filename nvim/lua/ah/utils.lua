@@ -1,5 +1,19 @@
 local M = {}
 
+function M.map(keys, func, desc, mode_or_opts, opts)
+  local mode = 'n'
+  if type(mode_or_opts) == 'string' then
+    mode = mode_or_opts
+  elseif type(mode_or_opts) == 'table' then
+    opts = mode_or_opts
+  end
+  opts = opts or {}
+  opts.desc = desc
+  opts.noremap = opts.noremap ~= false
+  opts.silent = opts.silent ~= false
+  vim.keymap.set(mode, keys, func, opts)
+end
+
 function M.reload_config()
   for name, _ in pairs(package.loaded) do
     if name:match("ah") then

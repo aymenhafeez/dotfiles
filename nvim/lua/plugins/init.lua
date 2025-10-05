@@ -47,19 +47,6 @@ require('lazy').setup({
   },
 
   {
-    "nvim-neo-tree/neo-tree.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-    lazy = false,
-    config = function()
-      require("plugins.configs.neotree")
-    end
-  },
-
-  {
     "petertriho/nvim-scrollbar",
     config = function()
       require("plugins.configs.scrollbar")
@@ -216,6 +203,15 @@ require('lazy').setup({
     init = function()
       vim.g.copilot_no_tab_map = true
     end
+  },
+
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", branch = "master" },
+    },
+    build = "make tiktoken",
+    opts = {},
   },
 
   {

@@ -14,24 +14,18 @@ local options = {
   messages = {
     enabled = true,
     view = "notify",
-    view_error = "notify", -- view for errors
-    view_warn = "notify", -- view for warnings
-    view_history = "messages", -- view for :messages
-    view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+    view_error = "notify",
+    view_warn = "notify",
+    view_history = "messages",
+    view_search = "virtualtext",
   },
   views = {
     cmdline_popup = {
       border = {
-        style = "none",
-        padding = { 1, 2 }
+        style = "rounded",
+        padding = { 0, 2 }
       },
       filter_options = {},
-      win_options = {
-        -- winhighlight = {
-        --   Normal = "StatusLine",
-        --   FloatBorder = "StatusLine"
-        -- },
-      },
       position = {
         row = -2,
         col = "0%"
@@ -46,7 +40,6 @@ local options = {
       },
       view = "notify",
     },
-    -- merge undo/redo messages
     {
       filter = { event = "msg_show", find = "change" },
       view = "notify",
@@ -55,6 +48,14 @@ local options = {
         merge = true,
       }
     },
+    {
+      view = "split",
+      filter = { event = "msg_show", min_height = 20 },
+    },
+    {
+      view = "notify",
+      filter = { event = "msg_showmode" },
+    }
   },
   lsp = {
     override = {
