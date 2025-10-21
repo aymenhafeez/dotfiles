@@ -6,6 +6,7 @@ end
 treesitter.setup {
   highlight = {
     enable = true,
+    disable = { "latex" },
     ensure_installed = "maintained",
     additional_vim_regex_highlighting = { "latex" },
   },
@@ -13,8 +14,8 @@ treesitter.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<c-space>",
-      node_incremental = "<c-space>",
+      init_selection = "<c-m-space>",
+      node_incremental = "<c-m space>",
     },
   },
   textobjects = {
@@ -72,3 +73,4 @@ treesitter.setup {
     },
   },
 }
+

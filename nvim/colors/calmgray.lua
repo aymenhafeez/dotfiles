@@ -1,14 +1,14 @@
 vim.cmd.hi('clear')
-vim.g.colors_name = 'calmblue'
+vim.g.colors_name = 'calmgray'
 
 local palettes = {
-  calmblue = {
+  calmgray = {
     dark = {
       yellow         = '#e6bb86',
       popyellow      = '#FBB86C',
-      earth          = '#c1a575',
-      orange         = '#f0a16c',
-      pink           = '#f49ba7',
+      earth          = '#bfa97a',
+      orange         = '#e0a86c',
+      pink           = '#e49ba7',
       ochre          = '#e87c69',
       scarlet        = '#d85959',
       wine           = '#a52929',
@@ -24,28 +24,28 @@ local palettes = {
       magenta        = '#dc8ed3',
       pigeon         = '#8f9fbc',
       cumulonimbus   = '#557396',
-      thunder        = '#425974',
+      thunder        = '#23242a',   -- slightly lighter than bg
       white          = '#e5e5eb',
-      smoke          = '#D6D6DE',
+      smoke          = '#C6C6CE',   -- lighter for contrast
       beige          = '#b1aca7',
-      steel          = '#606d86',
-      iron           = '#313742',
-      deepsea        = '#334154',
-      ocean          = '#303846',
-      jeans          = '#262f3e',
-      space          = '#13161f',
-      black          = '#09080b',
-      shadow         = '#09080b',
-      tea_blend      = '#425858',
-      aqua_blend     = '#2f3f48',
-      purple_blend   = '#33374b',
-      lavender_blend = '#4b4b6e',
-      scarlet_blend  = '#4b323c',
-      wine_blend     = '#35262d',
-      earth_blend    = '#303032',
-      smoke_blend    = '#272d3a',
-      smoke_dark     = '#1c232e',
-      statusline     = '#606d86',
+      steel          = '#767884',   -- lighter for contrast
+      iron           = '#23242a',   -- matches thunder
+      deepsea        = '#23242a',   -- matches thunder
+      ocean          = '#1a1a1c',   -- slightly lighter than bg
+      jeans          = '#141415',   -- main background
+      space          = '#141415',   -- main background
+      black          = '#0c0c0d',
+      shadow         = '#0c0c0d',
+      tea_blend      = '#2a2c2a',
+      aqua_blend     = '#1c2324',
+      purple_blend   = '#23242a',
+      lavender_blend = '#2a2a3e',
+      scarlet_blend  = '#2a1a1e',
+      wine_blend     = '#1a1317',
+      earth_blend    = '#23241a',
+      smoke_blend    = '#1a1a1c',
+      smoke_dark     = '#19191a',
+      statusline     = '#23242a',
     },
     light = {
       yellow         = '#c88500',
@@ -92,7 +92,7 @@ local palettes = {
       statusline     = '#404553',
     }
   },
-  darkerblue = {
+  darkergray = {
     dark = {
       yellow         = '#e9a04e',
       popyellow      = '#FBB86C',
@@ -184,7 +184,7 @@ local palettes = {
   }
 }
 
-local variant = vim.g.calmblue_variant or "calmblue"
+local variant = vim.g.calmgray_variant or "calmgray"
 local bg = vim.go.bg == "light" and "light" or "dark"
 local c = palettes[variant][bg]
 
@@ -848,3 +848,4 @@ for hlgroup_name, hlgroup_attr in pairs(hlgroups) do
 end
 
 -- vim:ts=2:sw=2:sts=2:fdm=marker:fdl=0
+

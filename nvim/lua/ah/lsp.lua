@@ -1,3 +1,7 @@
+-- ============================================================================
+-- LSP CONFIGURATION AND KEYBINDINGS
+-- ============================================================================
+
 local present, lsp = pcall(require, 'mason-lspconfig')
 if not present then
   return
@@ -81,6 +85,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
       })
     end
 
+    callback = function()
+      local bufnr = args.buf
+      local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+      if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlineCompletion, bufnr) then
+
+        vim.keymap.set(
+          'i',
+          '<C-l>',
+          vim.lsp.inline_completion.get,
+          { desc = 'LSP: accept inline completion', buffer = bufnr }
+        )
+        vim.keymap.set(
+          'i',
+          '<C-j>',
+          vim.lsp.inline_completion.selects,
+          { desc = 'LSP: swtich inline completion', buffer = bufnr }
+        )
+      end
+    end
+
     vim.api.nvim_create_augroup("lsp_diagnostics_hold", { clear = true })
     vim.api.nvim_create_autocmd({ "CursorHold" }, {
       pattern = "*",
@@ -128,9 +153,28 @@ vim.diagnostic.config {
   },
 }
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
+  util_opts = util_opts or {}
+  util_opts.max_width = 75
+  util_opts.max_height = 15
+  return orig_util_open_floating_preview(contents, syntax, util_opts, ...)
+end
+
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 local servers = {
-  pyright = {},
+  pylsp = {
+    settings = {
+      pylsp = {
+        plugins = {
+          pycodestyle = {
+            ignore = { 'E501' },
+            maxLineLength = 100,
+          },
+        },
+      },
+    },
+  },
   remark_ls = {
     cmd = { "remark-langauge-server","--stdio" },
     settings = {

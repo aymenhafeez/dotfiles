@@ -1,113 +1,142 @@
+-- ============================================================================
+-- KEYMAP CONFIGURATION
+-- ============================================================================
+
 vim.keymap.set("", "<Space>", "<Nop>", { noremap = true, silent = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 local utils = require("ah.utils")
-local map = utils.map
+local map = vim.keymap.set
 
--- Normal mode
-map('<leader>ll', vim.cmd.Lazy, 'Manage Lazy')
+-- ============================================================================
+-- NORMAL MODE MAPPINGS
+-- ============================================================================
 
-map("<leader>tc", utils.toggle_colourschemes, "Toggle colourscheme")
-map("<leader>tb", utils.toggle_light_and_dark_background, "Toggle light and dark mode")
+map("n", '<leader>ll', vim.cmd.Lazy, { desc = 'Manage Lazy' })
 
-map("<leader>ls", vim.cmd.LspStart, "Start language server")
-map("<leader>lr", "<cmd>LspRestart lua_ls<CR>", "Restart lua_ls")
+map("n", "<leader>tc", utils.toggle_colourschemes, { desc = "Toggle colourscheme" })
+map("n", "<leader>tb", utils.toggle_light_and_dark_background, { desc = "Toggle light and dark mode" })
+map("n", "<leader>zz", vim.cmd.ZenMode, { desc = "Toggle Zen mode" })
 
-map("<leader>lg", function() utils.float_terminal("lazygit") end, "Open LazyGit")
-map("<leader>ht", function() utils.float_terminal("htop") end, "Open htop")
-map("<leader>bt", function() utils.float_terminal("btm") end, "Open btm")
-map("<leader><leader>t", function() utils.float_terminal("zsh") end, "Floating terminal")
+map("n", "<leader>ls", vim.cmd.LspStart, { desc = "Start language server" })
+map("n", "<leader>lr", "<cmd>LspRestart lua_ls<CR>", { desc = "Restart lua_ls" })
 
-map("<leader>hh", function()
+map({ "n", "t" }, "<leader>tt", vim.cmd.TermTog, { desc = "Toggle terminal" })
+
+map("n", "<leader>ft", function() utils.float_terminal() end, { desc = "Floating terminal" })
+map("n", "<leader>lg", function() utils.float_terminal("lazygit") end, { desc = "Open LazyGit" })
+map("n", "<leader>ht", function() utils.float_terminal("htop") end, { desc = "Open htop" })
+map("n", "<leader>bt", function() utils.float_terminal("btm") end, { desc = "Open btm" })
+
+map("n", "<leader>hh", function()
   vim.cmd("help " .. vim.fn.expand("<cword>"))
-end, "Help for current word", { silent = false })
+end, { desc = "Help for current word", silent = false })
 
-map("<leader>so", utils.source_lua, "Source file")
-map("<leader><leader>x", utils.execute_line, "Execute current line")
-map("<leader><leader>r", utils.reload_config, "Reload config")
+map("n", "<leader>so", utils.source_lua, { desc = "Source file" })
+map("x", "<leader><leader>x", utils.execute_line, { desc = "Execute current line" })
+map("n", "<leader><leader>r", utils.reload_config, { desc = "Reload config" })
+map("x", "<leader><leaderv", utils.run_visual_selection, { desc = "Reload config" })
 
-map("<leader><leader>c", ":<up>", "Show previous cmdline command")
+map("n", "<leader><leader>c", ":<up>", { desc = "Show previous cmdline command" })
 
--- Tmux navigation
-map("<C-h>", "<cmd>TmuxNavigateLeft<cr>", "Move left")
-map("<C-j>", "<cmd>TmuxNavigateDown<cr>", "Move down")
-map("<C-k>", "<cmd>TmuxNavigateUp<cr>", "Move up")
-map("<C-l>", "<cmd>TmuxNavigateRight<cr>", "Move right")
+local tmux_nav = {
+  { key = "<C-h>", cmd = "<cmd>TmuxNavigateLeft<CR>", desc = "Move left" },
+  { key = "<C-j>", cmd = "<cmd>TmuxNavigateDown<CR>", desc = "Move down" },
+  { key = "<C-k>", cmd = "<cmd>TmuxNavigateUp<CR>", desc = "Move up" },
+  { key = "<C-l>", cmd = "<cmd>TmuxNavigateRight<CR>", desc = "Move right" },
+}
 
-map("<leader><leader>s", "<cmd>setlocal spell!<CR>", "Toggle spell check")
-map("<C-s>", "mm[s1z=`m", "Correct previous spelling error")
+for _, nav in ipairs(tmux_nav) do
+  map({ "n", "t" }, nav.key, nav.cmd, { desc = nav.desc })
+end
 
-map("<S-Up>", "<cmd>resize +1<CR>", "Increase window size")
-map("<S-Down>", "<cmd>resize -1<CR>", "Decrease window size")
-map("<S-Left>", "<cmd>vertical resize -1<CR>", "Vertical decrease window size")
-map("<S-Right>", "<cmd>vertical resize +1<CR>", "Vertical increase window size")
+map("n", "<leader><leader>s", "<cmd>setlocal spell!<CR>", { desc = "Toggle spell check" })
+map("n", "<C-s>", "mm[s1z=`m", { desc = "Correct previous spelling error" })
 
-map("<leader>cn", vim.cmd.cnext, "Next item in QuickFix list")
-map("<leader>cp", vim.cmd.cprev, "Previous item in QuickFix list")
-map("<leader>cl", vim.cmd.ccl, "Close QuickFix window")
+map("n", "<M-k>", "<cmd>resize +1<CR>", { desc = "Increase window height" })
+map("n", "<M-j>", "<cmd>resize -1<CR>", { desc = "Decrease window height" })
+map("n", "<M-h>", "<cmd>vertical resize -1<CR>", { desc = "Decrease window width" })
+map("n", "<M-l>", "<cmd>vertical resize +1<CR>", { desc = "Increase window width" })
+map("n", "<S-M-k>", "<cmd>resize +5<CR>", { desc = "Increase window height by 5" })
+map("n", "<S-M-j>", "<cmd>resize -5<CR>", { desc = "Decrease window height by 5" })
+map("n", "<S-M-h>", "<cmd>vertical resize -5<CR>", { desc = "Decrease window width by 5" })
+map("n", "<S-M-l>", "<cmd>vertical resize +5<CR>", { desc = "Increase window width by 5" })
 
-map("<leader>mm", vim.cmd.Messages, "Messages")
+map("n", "<leader>cn", vim.cmd.cnext, { desc = "Next item in QuickFix list" })
+map("n", "<leader>cp", vim.cmd.cprev, { desc = "Previous item in QuickFix list" })
+map("n", "<leader>cl", vim.cmd.ccl, { desc = "Close QuickFix window" })
 
-map("<leader>hl", vim.cmd.nohlsearch, "Toggle hlsearch")
+map("n", "<leader>mm", vim.cmd.Messages, { desc = "Messages" })
+map("n", "<leader>hl", vim.cmd.nohlsearch, { desc = "Clear search highlight" })
 
--- Insert mode
-map("<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", "Correct previous spelling error", "i")
-map("<Space>", "<Space><C-g>u", nil, "i")
-map("<CR>", "<CR><C-g>u", nil, "i")
+-- ============================================================================
+-- INSERT MODE MAPPINGS
+-- ============================================================================
 
--- Readline style insert mode
-map("<C-b>", "<Left>", "Left", "i")
-map("<C-f>", "<Right>", "Right", "i")
-map("<C-a>", "<C-o>^", "Move to first character of line", "i")
-map("<C-e>", "<C-o>$", "Move to last character of line", "i")
-map("<M-b>", "<S-Left>", nil, "i")
-map("<M-f>", "<S-Right>", nil, "i")
+map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { desc = "Correct previous spelling error" })
 
--- Command-line mode
-map("<C-a>", "<Home>", nil, "c")
-map("<C-b>", "<Left>", nil, "c")
-map("<C-f>", "<Right>", nil, "c")
-map("<M-b>", "<S-Left>", nil, "c")
-map("<M-f>", "<S-Right>", nil, "c")
-map("<C-p>", "<Up>", nil, "c")
-map("<C-n>", "<Down>", nil, "c")
+-- Undo break points
+map("i", "<Space>", "<Space><C-g>u")
+map("i", "<CR>", "<CR><C-g>u")
+
+local readline_maps = {
+  { key = "<C-b>", cmd = "<Left>", desc = "Move left" },
+  { key = "<C-f>", cmd = "<Right>", desc = "Move right" },
+  { key = "<C-a>", cmd = "<C-o>^", desc = "Move to first character" },
+  { key = "<C-e>", cmd = "<C-o>$", desc = "Move to last character" },
+  { key = "<M-b>", cmd = "<S-Left>", desc = "Move word backward" },
+  { key = "<M-f>", cmd = "<S-Right>", desc = "Move word forward" },
+}
+
+for _, readline in ipairs(readline_maps) do
+  map("i", readline.key, readline.cmd, { desc = readline.desc })
+end
+
+-- ============================================================================
+-- COMMAND-LINE MODE MAPPINGS
+-- ============================================================================
+
+local cmdline_maps = {
+  { key = "<C-a>", cmd = "<Home>", desc = "Move to beginning" },
+  { key = "<C-b>", cmd = "<Left>", desc = "Move left" },
+  { key = "<C-f>", cmd = "<Right>", desc = "Move right" },
+  { key = "<M-b>", cmd = "<S-Left>", desc = "Move word backward" },
+  { key = "<M-f>", cmd = "<S-Right>", desc = "Move word forward" },
+  { key = "<C-p>", cmd = "<Up>", desc = "Previous command" },
+  { key = "<C-n>", cmd = "<Down>", desc = "Next command" },
+}
+
+for _, cmdline in ipairs(cmdline_maps) do
+  map("c", cmdline.key, cmdline.cmd, { desc = cmdline.desc })
+end
 
 vim.cmd.cnoreabbrev("bd Bw")
 
--- Visual mode
-map("<", "<gv", nil, "v")
-map(">", ">gv", nil, "v")
-map("<leader>so", ":<C-w>exe join(getline(\"'<\",\"'>\"),'<Bar>')<CR>", "Execute selected line", "v")
-map("J", ":m '>+1<CR>gv=gv", nil, "v")
-map("K", ":m '<-2<CR>gv=gv", nil, "v")
+-- ============================================================================
+-- VISUAL MODE MAPPINGS
+-- ============================================================================
 
--- Terminal mode
-map("<C-h>", "<C-\\><C-N><cmd>TmuxNavigateLeft<cr>", nil, "t")
-map("<C-j>", "<C-\\><C-N><cmd>TmuxNavigateDown<cr>", nil, "t")
-map("<C-k>", "<C-\\><C-N><cmd>TmuxNavigateUp<cr>", nil, "t")
-map("<C-l>", "<C-\\><C-N><cmd>TmuxNavigateRight<cr>", nil, "t")
-map("<Esc><Esc>", "<C-\\><C-n>", "Exit terminal mode", "t")
+map("v", "<", "<gv", { desc = "Indent left and reselect" })
+map("v", ">", ">gv", { desc = "Indent right and reselect" })
+map("v", "<leader>so", ":<C-w>exe join(getline(\"'<\",\"'>\"),'<Bar>')<CR>", { desc = "Execute selected lines" })
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
 
--- Plugins
--- Copilot
-map("<C-j>", 'copilot#Accept("\\<CR>")', nil, "i", { expr = true, replace_keycodes = false })
+-- ============================================================================
+-- TERMINAL MODE MAPPINGS
+-- ============================================================================
 
--- Bufferline
-for i = 1, 7 do
-  map("<leader>" .. i, string.format("<cmd>BufferLineGoToBuffer %d<CR>", i), "Go to buffer " .. i)
-end
-map("<S-l>", vim.cmd.BufferLineCycleNext, "Cycle to next buffer")
-map("<S-h>", vim.cmd.BufferLineCyclePrev, "Cycle to previous buffer")
+map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
--- ToggleTerm
-map("<leader>tt", "<cmd>ToggleTerm direction=horizontal<CR>", "Toggle terminal")
-map("<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", "Toggle vertical terminal")
-map("<leader>gt", "<cmd>terminal<CR>", "Open terminal in new tab")
-map("<leader>tt", "<C-\\><C-n><cmd>ToggleTerm<CR>", "Open floating terminal", "t")
+-- ============================================================================
+-- PLUGIN MAPPINGS
+-- ============================================================================
 
--- Zen Mode
-map("<leader>zz", vim.cmd.ZenMode, "Toggle Zen mode")
+-- CodeCompanion
+map("n", "<Leader>cc", vim.cmd.CodeCompanionChat, { desc = "Open CodeCompanionChat" })
 
--- Treesitter highlight inspection
-map("<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, "Show current highlight group")
+map("n", "<S-l>", vim.cmd.bnext, { desc = "Next buffer" })
+map("n", "<S-h>", vim.cmd.bprev, { desc = "Previous buffer" })
+
+map("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor, { desc = "Show highlight group under cursor" })

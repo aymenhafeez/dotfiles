@@ -244,6 +244,10 @@ snippet it "italic text"
 \textit{$1${VISUAL}}$0
 endsnippet
 
+snippet ttt "inline code"
+\texttt{$1${VISUAL}}$0
+endsnippet
+
 snippet itbf "bold, italic text"
 \textit{\textbf{$1${VISUAL}}}$0
 endsnippet
@@ -410,6 +414,10 @@ snippet begindoc "create basic template"
 \usepackage{chngcntr}
 \usepackage{hyperref}
 \usepackage{subcaption}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[most]{tcolorbox}
 \setlength{\parindent}{0pt}
 
 \newcommand{\dd}{\mathrm{d}}
@@ -422,6 +430,17 @@ snippet begindoc "create basic template"
 \newcommand*\mean[1]{\bar{#1}}
 
 \DeclareMathOperator*{\minimize}{minimize}
+
+% Define a custom environment for codeblocks
+\newtcblisting{codeblock}{
+  colback=gray!10,     % background color
+  colframe=gray!40,    % border color
+  listing only,
+  listing options={basicstyle=\ttfamily\small, mathescape},
+  left=4pt, right=4pt, top=4pt, bottom=4pt,
+  arc=2mm,             % rounded corners
+  boxrule=0pt,         % no visible border
+}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]

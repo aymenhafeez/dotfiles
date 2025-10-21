@@ -1,18 +1,8 @@
-local M = {}
+-- ============================================================================
+-- HELPER FUNCTIONS
+-- ============================================================================
 
-function M.map(keys, func, desc, mode_or_opts, opts)
-  local mode = 'n'
-  if type(mode_or_opts) == 'string' then
-    mode = mode_or_opts
-  elseif type(mode_or_opts) == 'table' then
-    opts = mode_or_opts
-  end
-  opts = opts or {}
-  opts.desc = desc
-  opts.noremap = opts.noremap ~= false
-  opts.silent = opts.silent ~= false
-  vim.keymap.set(mode, keys, func, opts)
-end
+local M = {}
 
 function M.reload_config()
   for name, _ in pairs(package.loaded) do
@@ -30,8 +20,25 @@ function M.execute_line()
   if vim.bo.filetype == "lua" then
     vim.api.nvim_exec2("execute(printf(\":lua %s\", getline(\".\")))", {})
   elseif vim.bo.filetype == "vim" then
-    vim.api.nvim_exec2("execute getline('>')", {})
+    vim.api.nvim_exec2("execute getline('.')", {})
   end
+end
+
+function M.run_visual_selection()
+  -- Get the range of the visual selection
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+  local start_line, end_line = start_pos[2], end_pos[2]
+
+  -- Get selected lines
+  local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+  if #lines == 0 then return end
+
+  -- Join into a single command string
+  local cmd = table.concat(lines, "\n")
+
+  -- Run the command(s)
+  vim.cmd(cmd)
 end
 
 function M.source_lua()
@@ -103,27 +110,58 @@ function M.hl_str(str, hl_cur, hl_after)
   return "%#" .. hl_cur .. "#" .. str .. "%*" .. "%#" .. hl_after .. "#"
 end
 
-function M.float_terminal(cmd)
-  local buf = vim.api.nvim_create_buf(false, true)
-  local vpad = 4
-  local hpad = 10
-  local win = vim.api.nvim_open_win(buf, true, {
-    relative = "editor",
-    width = vim.o.columns - hpad * 2,
-    height = vim.o.lines - vpad * 2,
-    row = vpad,
-    col = hpad,
-    style = "minimal",
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  })
-  vim.fn.termopen(cmd)
-  local autocmd = {
-    "autocmd! TermClose <buffer> lua",
-    string.format("vim.api.nvim_win_close(%d, {force = true});", win),
-    string.format("vim.api.nvim_buf_delete(%d, {force = true});", buf),
+local state = {
+  floating = {
+    buf = -1,
+    win = -1
   }
-  vim.cmd(table.concat(autocmd, " "))
-  vim.cmd([[startinsert]])
+}
+
+local function create_floating_window(opts)
+  opts = opts or {}
+  local width = opts.width or math.floor(vim.o.columns * 0.8)
+  local height = opts.height or math.floor(vim.o.lines * 0.75)
+
+  -- calculate the position to center the window
+  local col = math.floor((vim.o.columns - width) / 2)
+  local row = math.floor((vim.o.lines - height) / 2)
+
+  local buf = nil
+  -- if the buffer exists then set it to buf
+  if vim.api.nvim_buf_is_valid(opts.buf) then
+    buf = opts.buf
+  else
+    -- if the buffer doesnt't exist create a new one
+    buf = vim.api.nvim_create_buf(false, true)
+  end
+
+  -- configure window
+  local win_config = {
+    relative = "win",
+    width = width,
+    height = height,
+    col = col,
+    row = row,
+    style = "minimal",
+  }
+
+  -- create the floating window
+  local win = vim.api.nvim_open_win(buf, true, win_config)
+
+  return { buf = buf, win = win }
+end
+
+function M.float_terminal(cmd)
+  cmd = cmd or ""
+  if not vim.api.nvim_win_is_valid(state.floating.win) then
+    state.floating = create_floating_window { buf = state.floating.buf}
+    if vim.bo[state.floating.buf].buftype ~= "terminal" then
+      vim.cmd("terminal " .. cmd)
+      vim.cmd.startinsert()
+    end
+  else
+    vim.api.nvim_win_hide(state.floating.win)
+  end
 end
 
 function M.version()
@@ -137,12 +175,13 @@ function M.version()
   end
 end
 
-local colorschemes = { "vague", "ef-eagle" }
+local variant = { "calmblue", "darkerblue" }
 local current = 1
 function M.toggle_colourschemes()
-  current = current % #colorschemes + 1
-  vim.cmd("colorscheme " .. colorschemes[current])
-  print("Colorscheme set to " .. colorschemes[current])
+  current = current % #variant + 1
+  -- vim.cmd("colorscheme " .. variant[current])
+  vim.g.calmblue_variant = variant[current]
+  print("Variant set to " .. variant[current])
 end
 
 local background = { 'dark', 'light' }
@@ -163,35 +202,6 @@ end
 function M.info(msg, name)
   vim.notify(msg, vim.log.levels.INFO, { title = name or "init.lua" })
 end
-
-local sections = {
-    { section = "header" },
-    {
-      pane = 2,
-      section = "terminal",
-      cmd = "colorscript -e square",
-      height = 5,
-      padding = 1,
-    },
-    { section = "keys", gap = 1, padding = 1 },
-    { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-    { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-    {
-      pane = 2,
-      icon = " ",
-      title = "Git Status",
-      section = "terminal",
-      enabled = function()
-        return Snacks.git.get_root() ~= nil
-      end,
-      cmd = "git status --short --branch --renames",
-      height = 5,
-      padding = 1,
-      ttl = 5 * 60,
-      indent = 3,
-    },
-    { section = "startup" },
-  }
 
 M.treesitter_cmds = {
   "TSInstall",
@@ -295,4 +305,3 @@ M.kind_icons = {
 
 
 return M
-
