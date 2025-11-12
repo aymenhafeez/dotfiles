@@ -1,36 +1,45 @@
-local action = require("telescope.actions")
-local action_layout = require "telescope.actions.layout"
+local present, telescope = pcall(require, "telescope")
+if not present then
+  return
+end
 
-require("telescope").setup ({
+local action = require "telescope.actions"
+local action_layout = require "telescope.actions.layout"
+local builtin = require "telescope.builtin"
+local extensions = require("telescope").extensions
+local theme = require "telescope.themes"
+
+local options = {
   defaults = {
+    layout_strategy = "flex",
     dynamic_preview_title = true,
-    sorting_strategy = "descending",
-    prompt_prefix = "   ",
-    -- prompt_prefix = "  ",
-    selection_caret = " ",
-    multi_icon = "",
-    winblend = 0,
-    border = true,
     mappings = {
       i = {
-        ["<C-e>"] = action.results_scrolling_down,
-        ["<C-y>"] = action.results_scrolling_up,
         ["<C-n>"] = action.move_selection_previous,
         ["<C-p>"] = action.move_selection_next,
+        ["<C-e>"] = action.results_scrolling_down,
+        ["<C-y>"] = action.results_scrolling_up,
         ["<C-s>"] = action.select_horizontal,
         ["<M-p>"] = action_layout.toggle_preview,
-        ["<M-m>"] = action_layout.toggle_mirror,
-      }
+      },
     },
-    file_sorter = require("telescope.sorters").get_fuzzy_file,
-    file_ignore_patterns = {},
-    generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-    set_env = { ["COLORTERM"] = "truecolor" },
+  },
+  pickers = {
+    spell_suggest = {
+      mappings = {
+        i = {
+          ["<C-n>"] = action.move_selection_next,
+          ["<C-p>"] = action.move_selection_previous,
+        },
+      },
+    },
   },
   extensions = {
+    file_browser = {
+      hijack_netrw = true,
+    },
     ["ui-select"] = {
-      require("telescope.themes").get_dropdown {
-      },
+      theme.get_dropdown(),
     },
     fzf = {
       fuzzy = true,
@@ -38,40 +47,86 @@ require("telescope").setup ({
       override_file_sorter = true,
       case_mode = "smart_case",
     },
-    file_browser = {
-      hijack_netrw = true,
-    }
-  }
-})
+  },
+}
+
+telescope.setup(options)
 
 pcall(require("telescope").load_extension, "fzf")
 pcall(require("telescope").load_extension, "ui-select")
 pcall(require("telescope").load_extension, "file_browser")
 pcall(require("telescope").load_extension, "notify")
 
-local utils = require("ah.telescope.utils")
+local ignore_patterns = {
+  "%.pdf",
+  "%.py",
+  "%.ipynb",
+  "%.gif",
+  "%.GIF",
+  "%.log",
+  "%.aux",
+  "%.out",
+  "%.png",
+  "%.fdb_latexmk",
+  "%.fls",
+  "%.tex~",
+  "%.texl1#",
+  "%.dvi",
+  "%.jpg",
+  "%.jpeg",
+  "%.json",
+  "%_region_",
+  "%.mat",
+  "%.listing",
+}
 
-vim.keymap.set("n", "<leader>sf", utils.find_files)
-vim.keymap.set("n", "<leader>sw", utils.grep_string)
-vim.keymap.set("n", "<leader>sr", utils.oldfiles)
-vim.keymap.set("n", "<leader>sg", utils.live_grep)
-vim.keymap.set("n", "<leader>tl", utils.search_builtins)
-vim.keymap.set("n", "<leader>s=", utils.spell_check)
-vim.keymap.set("n", "<leader>sb", utils.search_buffers)
-vim.keymap.set("n", "<leader>sd", utils.current_buffer_diagnostics)
-vim.keymap.set("n", "<leader>sD", utils.all_diagnostics)
-vim.keymap.set("n", "<leader>sh", utils.search_help)
-vim.keymap.set("n", "<leader>sH", utils.search_highlights)
-vim.keymap.set("n", "<leader>sn", utils.search_notes)
-vim.keymap.set("n", "<leader>s/", utils.search_open_buffers)
-vim.keymap.set("n", "<leader>gn", utils.grep_notes)
-vim.keymap.set("n", "<leader>s.", utils.search_config)
-vim.keymap.set("n", "<leader>g.", utils.grep_config)
-vim.keymap.set("n", "<leader>vo", utils.vim_options)
-vim.keymap.set("n", "<leader>/", utils.buffer_fuzzy_search)
-vim.keymap.set("n", "<leader>:", utils.search_history)
-vim.keymap.set("n", "<leader>sp", utils.search_projects_dir)
-vim.keymap.set("n", "<leader>fb", utils.file_browser)
-vim.keymap.set("n", "<leader>cs", utils.change_colourscheme)
-vim.keymap.set("n", "<leader>sk", utils.keymaps)
-vim.keymap.set("n", "<leader>tn", utils.notifications)
+vim.keymap.set("n", "<leader>sf", builtin.find_files)
+vim.keymap.set("n", "<leader>sw", builtin.grep_string)
+vim.keymap.set("n", "<leader>sr", builtin.oldfiles)
+vim.keymap.set("n", "<leader>sb", builtin.buffers)
+vim.keymap.set("n", "<leader>sh", builtin.help_tags)
+vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
+vim.keymap.set("n", "<leader>sD", builtin.diagnostics)
+vim.keymap.set("n", "<leader>sd", function()
+  builtin.diagnostics { bufnr = 0 }
+end)
+
+vim.keymap.set("n", "<leader>gn", function()
+  builtin.live_grep {
+    cwd = "~/Documents/DataSci/",
+    file_ignore_patterns = ignore_patterns,
+  }
+end)
+
+vim.keymap.set("n", "<leader>s.", function()
+  builtin.find_files {
+    cwd = vim.fn.stdpath "config",
+    file_ignore_patterns = ignore_patterns,
+  }
+end)
+
+vim.keymap.set("n", "<leader>g.", function()
+  builtin.live_grep {
+    cwd = vim.fn.stdpath "config",
+    file_ignore_patterns = ignore_patterns,
+  }
+end)
+
+vim.keymap.set("n", "<leader>fb", function()
+  extensions.file_browser.file_browser()
+end)
+
+vim.keymap.set("n", "<leader>tn", function()
+  extensions.notify.notify()
+end)
+
+vim.keymap.set("n", "<leader>fn", function()
+  extensions.file_browser.file_browser {
+    cwd = "~/Documents/DataSci/",
+    file_ignore_patterns = ignore_patterns,
+  }
+end)
+
+vim.keymap.set("n", "<leader>s=", function()
+  builtin.spell_suggest(theme.get_cursor())
+end)
