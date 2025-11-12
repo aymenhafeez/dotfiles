@@ -55,4 +55,4 @@ vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 local fences = { "lua", "vim", "json", "shell=sh", "python", "sh", "console=sh" }
 vim.g.markdown_fenced_languages = fences
 
-vim.cmd "colorscheme colourscheme_2"
+vim.cmd "colorscheme gruvbuddy"
