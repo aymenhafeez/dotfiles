@@ -1,8 +1,0 @@
-.DS_Store
-.*.swp
-*nvim.log
-*log
-package.json
-package-lock.json
-nvim/scratch/
-.gitignore
