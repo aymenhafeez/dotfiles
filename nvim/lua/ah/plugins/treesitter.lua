@@ -2,9 +2,6 @@ return {
   "nvim-treesitter/nvim-treesitter",
   event = { "BufReadPost", "BufNewFile" },
   build = ":TSUpdate",
-  keys = {
-    vim.keymap.set("n", "<leader>hi", vim.cmd.TSHighlightCapturesUnderCursor),
-  },
   dependencies = {
     { "nvim-treesitter/nvim-treesitter-textobjects" },
     {

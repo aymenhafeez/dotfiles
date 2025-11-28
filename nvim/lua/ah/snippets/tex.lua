@@ -232,7 +232,7 @@ return {
 
   s({ trig = "\\oo", dscr = "infinity", wordTrig = false }, t "\\infty"),
 
-  s({ trig = "->t", dscr = "to", wordTrig = false }, t "(\\to)"),
+  s({ trig = "to", dscr = "to", wordTrig = false }, t "\\(\\to\\)"),
 
   s({ trig = "=>i", dscr = "implies", wordTrig = false }, t "\\implies"),
 

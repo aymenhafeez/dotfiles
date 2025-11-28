@@ -4,6 +4,7 @@ return {
     event = "InsertEnter",
     version = "1.*",
     dependencies = {
+      { "onsails/lspkind.nvim" },
       {
         "folke/lazydev.nvim",
         ft = "lua",

@@ -1,8 +1,3 @@
-local present, lsp = pcall(require, "mason-lspconfig")
-if not present then
-  return
-end
-
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
   callback = function(event)
@@ -17,7 +12,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration (all declarations)" })
     map("n", "gO", telescope.lsp_document_symbols)
     map("n", "gW", telescope.lsp_dynamic_workspace_symbols)
-    map("n", "gtt", telescope.lsp_type_definitions, { desc = "Go to type definition" })
+    map("n", "td", telescope.lsp_type_definitions, { desc = "Go to type definition" })
     map("n", "<leader>dh", vim.diagnostic.hide, { desc = "Hide diagnostics" })
     map("n", "<leader>ds", vim.diagnostic.show, { desc = "Unhide diagnostics" })
     map("n", "K", vim.lsp.buf.hover)
@@ -28,15 +23,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.diagnostic.jump { count = -1, float = true }
     end)
 
-    -- resolve a difference between neovim nightly (version 0.11) and stable (version 0.10)
     ---@param client vim.lsp.Client
     ---@param method vim.lsp.protocol.Method
     ---@param bufnr? integer some lsp support methods only in specific files
     ---@return boolean
     local function client_supports_method(client, method, bufnr)
       if vim.fn.has "nvim-0.11" == 1 then
+        ---@diagnostic disable-next-line: param-type-mismatch
         return client:supports_method(method, bufnr)
       else
+        ---@diagnostic disable-next-line: param-type-mismatch
         return client.supports_method(method, { bufnr = bufnr })
       end
     end
@@ -73,7 +69,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end, { desc = "Toggle Inlay Hints" })
     end
 
-    vim.o.updatetime = 300
+    vim.opt.updatetime = 300
   end,
 })
 
@@ -93,6 +89,7 @@ vim.diagnostic.config {
 }
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
 function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
   util_opts = util_opts or {}
   util_opts.max_width = 75
@@ -105,55 +102,64 @@ if pcall(require, "blink.cmp") then
   capabilities = require("blink.cmp").get_lsp_capabilities()
 end
 
-local servers = {
-  pylsp = {
-    settings = {
-      pylsp = {
-        plugins = {
-          pycodestyle = {
-            ignore = { "E501" },
-            maxLineLength = 88,
-          },
-        },
-      },
-    },
-  },
-  remark_ls = {
-    cmd = { "remark-langauge-server", "--stdio" },
-    settings = {
-      remark = {
-        requireConfig = false,
-      },
-    },
-  },
-  lua_ls = {
-    settings = {
-      Lua = {
-        completion = {
-          callSnippet = "Replace",
-        },
-        diagnostics = { disable = { "missing-fields" } },
+vim.lsp.config.pylsp = {
+  cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/pylsp" },
+  filetypes = { "python" },
+  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+  capabilities = capabilities,
+  settings = {
+    pylsp = {
+      plugins = {
+        -- let ruff handle linting
+        pycodestyle = { enabled = true },
+        pyflakes = { enabled = false },
+        mccabe = { enabled = false },
+        autopep8 = { enabled = true },
       },
     },
   },
 }
 
-local ensure_installed = vim.tbl_keys(servers or {})
-vim.list_extend(ensure_installed, {
-  "stylua", -- Used to format Lua code
-})
+vim.lsp.config.ruff = {
+  cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/ruff", "server" },
+  filetypes = { "python" },
+  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+  capabilities = capabilities,
+}
+
+vim.lsp.config.remark_ls = {
+  cmd = { "remark-language-server", "--stdio" },
+  filetypes = { "markdown" },
+  root_markers = { ".remarkrc", ".remarkrc.json", ".remarkrc.js", "package.json", ".git" },
+  capabilities = capabilities,
+  settings = {
+    remark = {
+      requireConfig = false,
+    },
+  },
+}
+
+vim.lsp.config.lua_ls = {
+  cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/lua-language-server" },
+  filetypes = { "lua" },
+  root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", ".git" },
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace",
+      },
+    },
+  },
+}
+
+vim.lsp.enable { "pylsp", "ruff", "remark_ls", "lua_ls" }
+
+local ensure_installed = {
+  "python-lsp-server",
+  "ruff",
+  "lua-language-server",
+  "stylua",
+}
+
 require("mason-tool-installer").setup { ensure_installed = ensure_installed }
-
-local options = {
-  ensure_installed = ensure_installed,
-  automatic_installation = false,
-  handlers = {
-    function(server_name)
-      local server = servers[server_name] or {}
-      server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-      require("lspconfig")[server_name].setup(server)
-    end,
-  },
-}
-
-return lsp.setup(options)

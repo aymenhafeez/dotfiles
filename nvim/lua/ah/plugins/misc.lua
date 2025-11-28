@@ -3,7 +3,27 @@ return {
   { "kylechui/nvim-surround", event = "InsertEnter", opts = {} },
   { "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
   { "lewis6991/gitsigns.nvim", opts = {} },
-  { "tjdevries/colorbuddy.nvim" },
+  { "tpope/vim-scriptease" },
+  -- {
+  --   "luukvbaal/statuscol.nvim",
+  --   config = function()
+  --     require("statuscol").setup {
+  --       setopt = true,
+  --     }
+  --   end,
+  -- },
+
+  -- i think there's a treesitter parser for comments -> @comment.todo
+  -- {
+  --   "folke/todo-comments.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  --   opts = {
+  --     -- your configuration comes here
+  --     -- or leave it empty to use the default settings
+  --     -- refer to the configuration section below
+  --   },
+  -- },
+
   {
     "moll/vim-bbye",
     cmd = { "Bdelete", "Bwipeout" },
@@ -11,18 +31,6 @@ return {
       vim.cmd.cnoreabbrev "bd Bw"
     end,
   },
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      require("notify").setup {
-        top_down = false,
-        max_width = 50,
-        render = "wrapped-compact",
-      }
-      vim.notify = require "notify"
-    end,
-  },
-
   {
     "rmagatti/auto-session",
     lazy = false,

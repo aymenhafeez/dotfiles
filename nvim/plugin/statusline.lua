@@ -1,52 +1,55 @@
 _G.statusline = {}
 
+local function hl(group, str)
+  return string.format("%%#%s#%s%%*", group or "", str or "")
+end
+
 local modes = {
-  n = "NO",
-  no = "OP",
-  nov = "OC",
-  noV = "OL",
-  ["no\x16"] = "OB",
-  ["\x16"] = "VB",
-  niI = "IN",
-  niR = "RE",
-  niV = "RV",
-  nt = "NT",
-  ntT = "TM",
-  v = "VI",
-  vs = "VI",
-  V = "VL",
-  Vs = "VL",
-  ["\x16s"] = "VB",
-  s = "SE",
-  S = "SL",
-  ["\x13"] = "SB",
-  i = "IN",
-  ic = "IC",
-  ix = "IX",
-  R = "RE",
-  Rc = "RC",
-  Rx = "RX",
-  Rv = "RV",
-  Rvc = "RC",
-  Rvx = "RX",
-  c = "CO",
-  cv = "CV",
-  r = "PR",
-  rm = "PM",
-  ["r?"] = "P?",
-  ["!"] = "SH",
-  t = "TE",
+  ["n"] = "Normal",
+  ["no"] = "N·op",
+  ["v"] = "Visual",
+  ["V"] = "V·line",
+  [""] = "V·block",
+  ["s"] = "Select",
+  ["S"] = "S·line",
+  [""] = "S·block",
+  ["i"] = "Insert",
+  ["ic"] = "I·comp",
+  ["ix"] = "I·comp",
+  ["R"] = "Replace",
+  ["Rv"] = "V·replace",
+  ["c"] = "Command",
+  ["cv"] = "Vim·ex",
+  ["ce"] = "Ex",
+  ["r"] = "Prompt",
+  ["rm"] = "More",
+  ["r?"] = "Confirm",
+  ["!"] = "Shell",
+  ["t"] = "Terminal",
 }
 
 function statusline.mode()
-  local mode = modes[vim.fn.mode()] or "  "
-  return " " .. mode
+  local mode = modes[vim.fn.mode()] or " "
+  if mode == "Normal" then
+    return hl("StatusLineHeaderNorm", " " .. mode .. " ")
+  elseif mode == "Command" then
+    return hl("StatusLineHeaderCmd", " " .. mode .. " ")
+  elseif mode == "Terminal" then
+    return hl("StatusLineHeaderTerm", " " .. mode .. " ")
+  else
+    return hl("StatusLineHeader", " " .. mode .. " ")
+  end
+end
+
+function statusline.mode_nc()
+  local mode = modes[vim.fn.mode()] or " "
+  return hl("StatusLineNc", " " .. mode .. " ")
 end
 
 function statusline.git_branch()
   local gitsigns = vim.b.gitsigns_status_dict
   if gitsigns and gitsigns.head and gitsigns.head ~= "" then
-    return "#" .. gitsigns.head
+    return " " .. gitsigns.head
   end
   return ""
 end
@@ -125,7 +128,7 @@ function statusline.info()
 end
 
 function statusline.diag()
-  return vim.diagnostic.status(0)
+  return vim.diagnostic.status(0) .. "  "
 end
 
 function statusline.lsp_status()
@@ -154,34 +157,25 @@ local function get_buffer_icon(buf, filetype)
   return icon ~= "" and icon .. " " or ""
 end
 
-function statusline.buffer()
+function statusline.centered_buffer()
   local buf = vim.api.nvim_buf_get_name(0)
-  local icon = buf ~= "" and get_buffer_icon(buf, vim.bo.filetype) or ""
+  local bufname = buf ~= "" and vim.fn.fnamemodify(buf, ":~:.") or "[No Name]"
+  local icon = buf ~= "" and get_buffer_icon(vim.fn.fnamemodify(buf, ":e"), vim.bo.filetype) or ""
+  local modified = vim.bo.modified and "[+]" or ""
+  local buffer_text = icon .. bufname .. modified
 
-  return icon .. "%f" .. "%m"
+  local mode = modes[vim.fn.mode()] or "  "
+  local info = statusline.info()
+  local left_len = vim.fn.strdisplaywidth(" " .. mode .. " " .. info)
+
+  local win_width = vim.api.nvim_win_get_width(0)
+  local buffer_len = vim.fn.strdisplaywidth(buffer_text)
+  local padding = math.max(1, math.floor((win_width - buffer_len) / 2) - left_len)
+
+  return string.rep(" ", padding) .. buffer_text
 end
 
-function statusline.open_buffers()
-  local buffer_list = {}
-  local current_buffer = vim.api.nvim_get_current_buf()
-
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    if buf ~= current_buffer and vim.api.nvim_get_option_value("buflisted", { buf = buf }) then
-      local buf_path = vim.api.nvim_buf_get_name(buf)
-      local buf_name = vim.fn.fnamemodify(buf_path, ":t")
-
-      if buf_name ~= "" then
-        local ft = vim.api.nvim_get_option_value("filetype", { buf = buf })
-        local icon = get_buffer_icon(buf_path, ft)
-        table.insert(buffer_list, icon .. buf_name)
-      end
-    end
-  end
-
-  return #buffer_list > 0 and table.concat(buffer_list, "  ") or ""
-end
-
--- optional, shows in ruler with cmdheight=1
+-- useful for cmdheight=0, shows in ruler with cmdheight=1
 function statusline.search_count()
   if vim.v.hlsearch == 0 then
     return ""
@@ -201,37 +195,40 @@ local components = {
   align = "%=",
   diag = "%{%v:lua.statusline.diag()%}",
   info = "%{%v:lua.statusline.info()%}",
-  mode = " %{%v:lua.statusline.mode()%}",
-  open_bufs = "%#NonText#%{%v:lua.statusline.open_buffers()%}%*",
-  pos = "%{%&ru?'  %l:%c  %P ':''%} ",
-  -- pos = "%{%&ru?'  %l:%c  %P ':''%}",
+  mode = "%{%v:lua.statusline.mode()%}",
+  mode_nc = "%{%v:lua.statusline.mode_nc()%}",
+  pos = "%#StatusLinePos#%{%&ru?'  %l:%c  %P ':''%}",
+  pos_nc = "%{%&ru?'  %l:%c  %P ':''%}",
   truncate = "%<",
-  buffer = "%{%v:lua.statusline.buffer()%}",
+  centered_buffer = "%{%v:lua.statusline.centered_buffer()%}",
   lsp_status = "%{%v:lua.statusline.lsp_status()%}",
   search_count = "%{%v:lua.statusline.search_count()%}",
 }
 
 local status = table.concat {
-  -- components.mode,
-  "  ",
-  components.buffer,
+  components.mode,
   " ",
   components.info,
-  components.align,
-  -- components.open_bufs,
-  components.align,
   components.truncate,
+  components.centered_buffer,
+  components.align,
   components.diag,
-  "   ",
   components.lsp_status,
   " ",
   components.pos,
 }
 
 local status_nc = table.concat {
+  components.mode_nc,
+  " ",
+  components.info,
+  components.centered_buffer,
   components.align,
   components.truncate,
-  components.pos,
+  components.diag,
+  components.lsp_status,
+  " ",
+  components.pos_nc,
 }
 
 function statusline.get()

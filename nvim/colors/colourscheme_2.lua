@@ -1,240 +1,253 @@
--- ~/.config/nvim/colors/dracula-soft.lua
--- Exact Grok code block colors + FULL Tree-sitter support
--- Converted to colorbuddy
-
 vim.cmd "highlight clear"
+
 if vim.fn.exists "syntax_on" then
   vim.cmd "syntax reset"
 end
+
 vim.opt.background = "dark"
 vim.opt.termguicolors = true
 vim.g.colors_name = "colourscheme_2"
 
-local colorbuddy = require "colorbuddy"
-local Color = colorbuddy.Color
-local Group = colorbuddy.Group
-local c = colorbuddy.colors
-local g = colorbuddy.groups
-local s = colorbuddy.styles
+local function hi(group, opts)
+  local cmd = "highlight " .. group
+  if opts.fg then
+    cmd = cmd .. " guifg=" .. opts.fg
+  end
+  if opts.bg then
+    cmd = cmd .. " guibg=" .. opts.bg
+  end
+  if opts.sp then
+    cmd = cmd .. " guisp=" .. opts.sp
+  end
+  if opts.style then
+    cmd = cmd .. " gui=" .. opts.style
+  end
+  vim.cmd(cmd)
+end
 
--- === EXACT GROK CODE BLOCK COLORS ===
--- Color.new("bg", "#050505") -- TRUE background
-Color.new("bg", "#0a0a0a") -- TRUE background
-Color.new("fg", "#d4d4d4") -- Default text
-Color.new("line", "#3e3e3e") -- Line numbers
-Color.new("selection", "#38556e") -- Visual
-Color.new("comment", "#808080")
-Color.new("keyword", "#c586c0") -- if, def, return
-Color.new("violet", "#b294bb")
-Color.new("string", "#ce9178") -- "strings"
-Color.new("number", "#b5cea8") -- 123
-Color.new("func", "#dcdcaa") -- function names
--- Color.new("func", "#e5c07b")
-Color.new("operator", "#d4d4d4") -- () + -
-Color.new("constant", "#9cdcfe") -- True, None
-Color.new("type", "#4ec9b0") -- int, str
-Color.new("special", "#d16969") -- self
-Color.new("pmenu", "#0a0a0a")
-Color.new("pmenu_sel", "#404040")
-Color.new("pmenu_sbar", "#1a1a1a")
-Color.new("pmenu_thumb", "#5a5a5a")
-Color.new("field", "#b5cea8")
-Color.new("property", "#4ec9b0")
-Color.new("blue", "#569CD6")
-Color.new("tabline", "#242424")
-Color.new("popblue", "#46ACB8")
-Color.new("cursorline_bg", "#0f0f0f")
-Color.new("colorcolumn_bg", "#0a0a0a")
-Color.new("statusline_bg", "#81a2be")
+local c = {
+  bg = "#0e0e0e",
+  fg = "#d4d4d4",
+  line = "#3e3e3e",
+  line_light = "#565656",
+  selection = "#507799",
+  selection_dark = "#3A5670",
+  comment = "#808080",
+  keyword = "#c586c0",
+  violet = "#b294bb",
+  number = "#D79275",
+  string = "#A9CF95",
+  func = "#dcdcaa",
+  operator = "#d4d4d4",
+  constant = "#9cdcfe",
+  type = "#4ec9b0",
+  type_light = "#6BD9C4",
+  special = "#d16969",
+  pmenu = "#0a0a0a",
+  pmenu_sel = "#404040",
+  pmenu_sbar = "#1a1a1a",
+  pmenu_thumb = "#5a5a5a",
+  border = "#5a5a5a",
+  field = "#A9CF95",
+  property = "#4ec9b0",
+  blue = "#569CD6",
+  lightblue = "#7592B3",
+  tabline = "#242424",
+  popblue = "#46ACB8",
+  cursorline_bg = "#212327",
+  statusline_bg = "#66809E",
+  black = "#000000",
 
--- LaTeX colors
-Color.new("tex_command", "#c586c0")
-Color.new("tex_env", "#4ec9b0")
-Color.new("tex_arg", "#9cdcfe")
-Color.new("tex_math", "#b5cea8")
-Color.new("tex_label", "#dcdcaa")
-Color.new("tex_comment", "#6a9955")
-Color.new("tex_special", "#d16969")
+  tex_command = "#c586c0",
+  tex_env = "#4ec9b0",
+  tex_arg = "#9cdcfe",
+  tex_math = "#b5cea8",
+  tex_label = "#dcdcaa",
+  tex_comment = "#6a9955",
+  tex_special = "#d16969",
 
--- Diagnostic colors
-Color.new("diag_error", "#f48771")
-Color.new("diag_warn", "#d7ba7d")
-Color.new("diag_info", "#75beff")
-Color.new("diag_hint", "#c5c5c5")
+  -- Diagnostic colors
+  diag_error = "#f48771",
+  diag_warn = "#d7ba7d",
+  diag_info = "#75beff",
+  diag_hint = "#b294bb",
+}
 
--- === EDITOR UI ===
-Group.new("Normal", c.fg, c.bg)
-Group.new("Visual", c.none, c.selection)
-Group.new("Cursor", c.bg, c.fg)
-Group.new("CursorLine", c.none, c.cursorline_bg)
-Group.new("CursorLineNr", c.func, c.none, s.bold)
-Group.new("LineNr", c.line, c.none)
-Group.new("SignColumn", c.none, c.bg)
-Group.new("ColorColumn", c.none, c.colorcolumn_bg)
-Group.new("VertSplit", c.line, c.none)
-Group.new("NonText", c.line, c.none)
-Group.new("EndOfBuffer", c.line, c.none)
+hi("Normal", { fg = c.fg, bg = c.bg })
+hi("Visual", { bg = c.selection })
+hi("CursorLine", { bg = c.cursorline_bg })
+hi("CursorLineNr", { fg = c.func, style = "bold" })
+hi("LineNr", { fg = c.line })
+hi("Winseparator", { fg = c.line })
+hi("NonText", { fg = c.line })
+hi("EndOfBuffer", { fg = c.line })
+hi("MatchParen", { fg = c.func, bg = c.border, style = "bold" })
 
--- === POPUP MENU ===
-Group.new("Pmenu", c.fg, c.pmenu)
-Group.new("PmenuSel", c.fg, c.selection)
-Group.new("PmenuSbar", c.none, c.pmenu_sbar)
-Group.new("PmenuThumb", c.none, c.pmenu_thumb)
-Group.new("TelescopeSelection", c.none, c.selection)
-Group.new("TelescopeMatching", c.string, c.none, s.bold)
+hi("Pmenu", { fg = c.fg, bg = c.cursorline_bg })
+hi("PmenuSel", { fg = c.fg, bg = c.selection, style = "none" })
+hi("PmenuSbar", { bg = c.pmenu_sbar })
+hi("PmenuThumb", { bg = c.pmenu_thumb })
+hi("NormalFloat", { fg = c.fg, bg = c.bg })
+hi("FloatBorder", { fg = c.line, bg = c.bg })
+hi("TelescopeBorder", { fg = c.line })
+hi("TelescopeSelection", { fg = c.bg, bg = c.lightblue })
+hi("TelescopeMatching", { fg = c.func, style = "bold" })
 
--- === STATUSLINE / TABLINE ===
-Group.new("StatusLine", c.line, c.statusline_bg)
-Group.new("StatusLineNC", c.line, c.statusline_bg)
-Group.new("TabLine", c.comment, c.bg)
-Group.new("TabLineSel", c.line, c.statusline_bg)
-Group.new("TabLineFill", c.none, c.bg)
+hi("BlinkCmpMenu", { bg = c.bg })
+hi("BlinkCmpMenuBorder", { fg = c.line, bg = c.bg })
+hi("BlinkCmpDoc", { bg = c.bg })
+hi("BlinkCmpDocBorder", { fg = c.line, bg = c.bg })
+hi("BlinkCmpSignatureHelp", { bg = c.bg })
+hi("BlinkCmpSignatureHelpBorder", { fg = c.line, bg = c.bg })
+hi("BlinkCmpSignatureHelpActiveParameter", { bg = c.selection })
+hi("BlinkCmpDocSeparator", { bg = c.bg })
+hi("BlinkCmpKind", { fg = c.fg, bg = c.bg })
+hi("BlinkCmpSource", { fg = c.fg, bg = c.bg })
 
--- === TRADITIONAL SYNTAX (fallback) ===
-Group.new("Comment", c.comment, c.none, s.italic)
-Group.new("Constant", c.constant, c.none)
-Group.new("String", c.string, c.none)
-Group.new("Number", c.number, c.none)
-Group.new("Boolean", c.property, c.none)
-Group.new("Identifier", c.fg, c.none)
-Group.new("Function", c.func, c.none)
-Group.new("Statement", c.keyword, c.none)
-Group.new("Keyword", c.keyword, c.none)
-Group.new("Operator", c.operator, c.none)
-Group.new("Type", c.type, c.none)
-Group.new("Special", c.special, c.none)
-Group.new("Field", c.field, c.none)
+-- hi("BlinkCmpMenu", { bg = c.cursorline_bg })
+-- hi("BlinkCmpMenuBorder", { bg = c.cursorline_bg })
+-- hi("BlinkCmpSource", { fg = c.fg, bg = c.cursorline_bg })
+-- hi("BlinkCmpKind", { fg = c.fg, bg = c.cursorline_bg })
+-- hi("BlinkCmpDoc", { bg = c.black })
+-- hi("BlinkCmpDocBorder", { fg = c.black, bg = c.tabcursorline_bg })
+-- hi("BlinkCmpSignatureHelp", { bg = c.black })
+-- hi("BlinkCmpSignatureHelpBorder", { fg = c.black, bg = c.tabcursorline_bg })
+-- hi("BlinkCmpSignatureHelpActiveParameter", { bg = c.selection })
+-- hi("BlinkCmpDocSeparator", { bg = c.black })
 
--- === FULL TREE-SITTER SUPPORT ===
--- Variables
-Group.new("@variable", c.fg, c.none)
-Group.new("@variable.builtin", c.special, c.none) -- self, this
-Group.new("@variable.parameter", c.constant, c.none)
-Group.new("@variable.member", c.field, c.none)
+hi("StatusLine", { fg = c.comment, bg = c.cursorline_bg })
+hi("StatusLineNC", { fg = c.line, bg = c.statusline_bg })
+hi("TabLine", { fg = c.line, bg = c.bg })
+hi("TabLineSel", { fg = c.bg, bg = c.lightblue })
+hi("TabLineFill", { bg = c.bg })
+hi("StatusLineHeader", { fg = c.comment, bg = c.cursorline_bg })
+hi("StatusLineHeaderNorm", { fg = c.fg, bg = c.pmenu_sel })
+hi("StatusLinePos", { fg = c.bg, bg = c.statusline_bg })
 
--- Functions
-Group.new("@function", c.func, c.none)
-Group.new("@function.builtin", c.constant, c.none)
-Group.new("@function.call", c.type, c.none)
-Group.new("@function.method", c.func, c.none)
-Group.new("@function.method.call", c.func, c.none)
-Group.new("@function.macro", c.func, c.none)
+hi("Comment", { fg = c.comment, style = "italic" })
+hi("Constant", { fg = c.constant })
+hi("String", { fg = c.number })
+hi("Number", { fg = c.special })
+hi("Boolean", { fg = c.property })
+hi("Identifier", { fg = c.fg })
+hi("Function", { fg = c.func })
+hi("Statement", { fg = c.keyword })
+hi("Keyword", { fg = c.keyword })
+hi("Operator", { fg = c.operator })
+hi("Type", { fg = c.type })
+hi("Special", { fg = c.special })
+hi("Field", { fg = c.field })
 
--- Modules
-Group.new("@module", c.func, nil)
-Group.new("@module.builtin", c.type, c.none)
-Group.new("@module.builtin.lua", c.type, c.none)
+hi("LspReferenceText", { bg = c.selection_dark })
 
--- Keywords
-Group.new("@keyword", c.violet, c.none)
-Group.new("@keyword.function", c.constant, c.none)
-Group.new("@keyword.operator", c.keyword, c.none)
-Group.new("@keyword.return", c.keyword, c.none)
-Group.new("@keyword.conditional", c.field, c.none)
-Group.new("@keyword.repeat", c.constant, c.none)
-Group.new("@keyword.exception", c.keyword, c.none)
+hi("@variable", { fg = c.fg })
+hi("@variable.builtin", { fg = c.special })
+hi("@variable.parameter", { fg = c.constant })
+hi("@variable.member", { fg = c.type })
 
--- Constants
-Group.new("@constant", c.constant, c.none)
-Group.new("@constant.builtin", c.constant, c.none)
-Group.new("@constant.macro", c.constant, c.none)
+hi("@function", { fg = c.func })
+hi("@function.builtin", { fg = c.constant })
+hi("@function.call", { fg = c.type })
+hi("@function.method", { fg = c.func })
+hi("@function.method.call", { fg = c.func })
+hi("@function.macro", { fg = c.func })
 
--- Strings
-Group.new("@string", c.string, c.none)
-Group.new("@string.escape", c.special, c.none, s.italic)
-Group.new("@string.regex", c.string, c.none, s.italic)
-Group.new("@string.special", c.string, c.none, s.italic)
+hi("@module", { fg = c.func })
+hi("@module.builtin", { fg = c.type })
+hi("@module.builtin.lua", { fg = c.type })
 
--- Numbers & Booleans
-Group.new("@number", c.number, c.none)
-Group.new("@boolean", c.property, c.none)
+hi("@keyword", { fg = c.lightblue })
+hi("@keyword.function", { fg = c.constant })
+hi("@keyword.operator", { fg = c.keyword })
+hi("@keyword.return", { fg = c.violet })
+hi("@keyword.conditional", { fg = c.violet })
+hi("@keyword.repeat", { fg = c.constant })
+hi("@keyword.exception", { fg = c.keyword })
+hi("@keyword.import", { fg = c.constant })
 
--- Types
-Group.new("@type", c.type, c.none)
-Group.new("@type.builtin", c.type, c.none, s.bold)
-Group.new("@type.definition", c.type, c.none)
+hi("@constant", { fg = c.constant })
+hi("@constant.builtin", { fg = c.constant })
+hi("@constant.macro", { fg = c.constant })
 
--- Properties & Fields
-Group.new("@property", c.constant, c.none)
-Group.new("@field", c.field, c.none)
-Group.new("@constructor", c.func, c.none) -- Class()
+hi("@string", { fg = c.number })
+hi("@string.escape", { fg = c.special, style = "italic" })
+hi("@string.regex", { fg = c.number, style = "italic" })
+hi("@string.special", { fg = c.number, style = "italic" })
 
--- Punctuation
-Group.new("@punctuation", c.operator, c.none)
-Group.new("@punctuation.bracket", c.operator, c.none)
-Group.new("@punctuation.delimiter", c.operator, c.none)
-Group.new("@punctuation.special", c.operator, c.none)
+hi("@number", { fg = c.special })
+hi("@boolean", { fg = c.property })
 
--- Comments
-Group.new("@comment", c.comment, c.none, s.italic)
-Group.new("@comment.documentation", c.comment, c.none, s.italic)
+hi("@type", { fg = c.type })
+hi("@type.builtin", { fg = c.type, style = "bold" })
+hi("@type.definition", { fg = c.type })
 
--- Operators
-Group.new("@operator", c.operator, c.none)
+hi("@property", { fg = c.constant })
+hi("@field", { fg = c.field })
+hi("@constructor", { fg = c.func })
 
--- Labels
-Group.new("@label", c.keyword, c.none)
+hi("@punctuation", { fg = c.operator })
+hi("@punctuation.bracket", { fg = c.operator })
+hi("@punctuation.delimiter", { fg = c.operator })
+hi("@punctuation.special", { fg = c.operator })
 
--- Tags (HTML, etc.)
-Group.new("@tag", c.keyword, c.none)
-Group.new("@tag.attribute", c.fg, c.none)
-Group.new("@tag.delimiter", c.operator, c.none)
+hi("@comment", { fg = c.comment, style = "italic" })
+hi("@comment.documentation", { fg = c.comment, style = "italic" })
 
--- LSP / Diagnostics
-Group.new("@lsp.type.class", c.type, c.none)
-Group.new("@lsp.type.function", c.func, c.none)
-Group.new("@lsp.type.variable", c.fg, c.none)
-Group.new("@lsp.type.keyword", c.keyword, c.none)
-Group.new("@lsp.type.property", c.statusline_bg:light(), c.none)
-Group.new("@lsp.type.namespace", c.type, c.none)
-Group.new("@lsp.type.parameter", c.fg, c.none)
-Group.new("@lsp.type.comment", g.Comment, g.Comment, g.Comment)
-Group.new("@lsp.mod.defaultLibrary.lua", c.type, c.none)
+hi("@operator", { fg = c.operator })
 
--- === DIAGNOSTICS ===
-Group.new("DiagnosticError", c.diag_error, c.none)
-Group.new("DiagnosticWarn", c.diag_warn, c.none)
-Group.new("DiagnosticInfo", c.diag_info, c.none)
-Group.new("DiagnosticHint", c.diag_hint, c.none)
-Group.new("DiagnosticUnderlineError", c.none, c.none, s.undercurl, c.diag_error)
-Group.new("DiagnosticUnderlineWarn", c.none, c.none, s.undercurl, c.diag_warn)
+hi("@label", { fg = c.keyword })
 
---------------------------------------------------------------------
---  LaTeX HIGHLIGHTING (Tree-sitter + classic groups)
---------------------------------------------------------------------
+hi("@tag", { fg = c.keyword })
+hi("@tag.attribute", { fg = c.fg })
+hi("@tag.delimiter", { fg = c.operator })
 
-----------------------------------------------------------------
--- 1. Tree-sitter groups (nvim-treesitter)
-----------------------------------------------------------------
-Group.new("@function.macro.tex", c.tex_command, c.none) -- \command
-Group.new("@punctuation.delimiter.tex", c.tex_special, c.none) -- \{, \}, \&
-Group.new("@comment.tex", c.tex_comment, c.none, s.italic)
-Group.new("@string.tex", c.tex_arg, c.none) -- text inside {…}
-Group.new("@variable.parameter.tex", c.tex_arg, c.none) -- optional args
-Group.new("@constant.builtin.tex", c.tex_env, c.none) -- \begin, \end
-Group.new("@label.tex", c.tex_label, c.none) -- \label, \ref
-Group.new("@math.tex", c.tex_math, c.none) -- $…$
+hi("@lsp.type.class", { fg = c.type })
+hi("@lsp.type.function", { fg = c.func })
+hi("@lsp.type.variable", { fg = c.fg })
+hi("@lsp.type.keyword", { fg = c.keyword })
+hi("@lsp.type.property", { fg = c.type_light })
+hi("@lsp.type.namespace", { fg = c.type })
+hi("@lsp.type.parameter", { fg = c.fg })
+hi("@lsp.type.comment", { fg = c.comment, style = "italic" })
+hi("@lsp.mod.defaultLibrary.lua", { fg = c.type })
 
-----------------------------------------------------------------
--- 2. Classic Vim-LaTeX groups (fallback for non-TS buffers)
-----------------------------------------------------------------
-Group.new("texCmd", c.tex_command, c.none)
-Group.new("texBeginEnd", c.tex_env, c.none)
-Group.new("texArg", c.tex_arg, c.none)
-Group.new("texMath", c.tex_math, c.none)
-Group.new("texRefZone", c.tex_label, c.none)
-Group.new("texComment", c.tex_comment, c.none, s.italic)
-Group.new("texDelim", c.tex_special, c.none)
-Group.new("texSection", c.tex_command, c.none, s.bold)
-Group.new("texStatement", c.tex_command, c.none)
+hi("DiagnosticError", { fg = c.diag_error })
+hi("DiagnosticWarn", { fg = c.diag_warn })
+hi("DiagnosticInfo", { fg = c.diag_info })
+hi("DiagnosticHint", { fg = c.diag_hint })
+hi("DiagnosticUnderlineError", { sp = c.diag_error, style = "undercurl" })
+hi("DiagnosticUnderlineWarn", { sp = c.diag_warn, style = "undercurl" })
+hi("DiagnosticUnderlineInfo", { sp = c.diag_info, style = "undercurl" })
+hi("DiagnosticUnderlineHint", { sp = c.diag_hint, style = "undercurl" })
 
-----------------------------------------------------------------
--- 3. LSP semantic tokens (if you use texlab, ltex-ls, etc.)
-----------------------------------------------------------------
-Group.new("@lsp.type.namespace.tex", g["@module.builtin"], g["@module.builtin"], g["@module.builtin"])
-Group.new("@lsp.type.macro.tex", c.tex_command, c.none)
-Group.new("@lsp.type.function.tex", c.tex_command, c.none)
-Group.new("@lsp.type.comment.tex", c.tex_comment, c.none, s.italic)
-Group.new("@lsp.type.string.tex", c.tex_arg, c.none)
-Group.new("@lsp.type.variable.tex", c.tex_arg, c.none)
-Group.new("@lsp.type.keyword.tex", c.tex_env, c.none)
+hi("TreesitterContext", { bg = c.cursorline_bg })
+hi("TreesitterContextLineNumber", { fg = c.line_light, bg = c.cursorline_bg })
+
+hi("@function.macro.tex", { fg = c.tex_command })
+hi("@punctuation.delimiter.tex", { fg = c.tex_special })
+hi("@comment.tex", { fg = c.tex_comment, style = "italic" })
+hi("@string.tex", { fg = c.tex_arg })
+hi("@variable.parameter.tex", { fg = c.tex_arg })
+hi("@constant.builtin.tex", { fg = c.tex_env })
+hi("@label.tex", { fg = c.tex_label })
+hi("@math.tex", { fg = c.tex_math })
+
+hi("texCmd", { fg = c.tex_command })
+hi("texBeginEnd", { fg = c.tex_env })
+hi("texArg", { fg = c.tex_arg })
+hi("texMath", { fg = c.tex_math })
+hi("texRefZone", { fg = c.tex_label })
+hi("texComment", { fg = c.tex_comment, style = "italic" })
+hi("texDelim", { fg = c.tex_special })
+hi("texSection", { fg = c.tex_command, style = "bold" })
+hi("texStatement", { fg = c.tex_command })
+
+hi("@lsp.type.namespace.tex", { fg = c.type })
+hi("@lsp.type.macro.tex", { fg = c.tex_command })
+hi("@lsp.type.function.tex", { fg = c.tex_command })
+hi("@lsp.type.comment.tex", { fg = c.tex_comment, style = "italic" })
+hi("@lsp.type.string.tex", { fg = c.tex_arg })
+hi("@lsp.type.variable.tex", { fg = c.tex_arg })
+hi("@lsp.type.keyword.tex", { fg = c.tex_env })
+
+vim.opt.winborder = "rounded"
