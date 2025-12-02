@@ -16,7 +16,7 @@ local win = vim.api.nvim_open_win(bufnr, true, {
 vim.api.nvim_set_option_value("winblend", 1, { win = win })
 local ns_id = vim.api.nvim_create_namespace "blend"
 
-local start_blend = 10
+local start_blend = 5
 local offset = 1
 
 local timer = vim.uv.new_timer()
@@ -38,7 +38,6 @@ timer:start(
       return
     end
 
-    -- vim.cmd([[highlight NormalFloat blend=]] .. tostring(start_blend))
     vim.api.nvim_set_hl(ns_id, "NormalFloat", { blend = start_blend })
     vim.api.nvim_win_set_hl_ns(win, ns_id)
   end)
