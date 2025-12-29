@@ -1,6 +1,6 @@
 local opts = { noremap = true, silent = true }
 local nopts = { noremap = true, silent = false }
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 vim.opt.autoindent = true
 vim.opt.expandtab = true
@@ -13,17 +13,15 @@ function! GetFilePath()
 endfunction
 ]]
 
--- map("n", "<leader>py", ":%w !QT_QPA_PLATFORM=wayland python3<CR>", nopts)
--- map("n", "<leader>px", "mxVgg:%w !python<CR>`x", nopts)
--- map("x", "<leader>py", ":%w !python<CR>", nopts)
+vim.api.nvim_create_user_command("PY", function()
+	local output = vim.fn.execute ":%w !QT_QPA_PLATFORM=wayland python3"
+	local split_lines = vim.split(output, "\n")
+	vim.fn.setqflist({}, "a", {
+		title = "PYTHON",
+		lines = split_lines,
+	})
+	vim.cmd "copen"
+	vim.cmd "normal G"
+end, {})
 
--- map("n", "<leader>jc", "<cmd>JupyterConnect<CR>", opts)
--- map("n", "<leader>jr", "<cmd>JupyterRunFile<CR>", opts)
--- map("n", "<leader>js", "<cmd>JupyterSendRange<CR>", opts)
--- map("v", "<leader>jr", "<cmd>JupyterRunVisual<CR>", opts)
--- map("x", "<leader>jr", "<cmd>JupyterSendCell<CR>", opts)
-
--- vim.keymap.set("n", "<leader>me", "<cmd>MoltenEvaluateLine<CR>", {})
-
--- insert python environment for ipynb files
-map("n", "<leader>ip", "i```python<CR>```<Esc>O", { silent = true })
+map("n", "<leader>po", "<cmd>PY<CR>")

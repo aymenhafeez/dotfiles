@@ -3,12 +3,12 @@ local opt = vim.opt
 local opt_local = vim.opt_local
 local g = vim.g
 
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.expandtab = true
-opt.textwidth = 80
-opt.formatoptions:append { "tcqj" }
 opt.conceallevel = 2
+opt_local.tabstop = 4
+opt_local.shiftwidth = 4
+opt_local.expandtab = true
+opt_local.textwidth = 80
+opt_local.formatoptions:append { "tcqj" }
 opt_local.spell = true
 opt_local.complete:append { "kspell" }
 g.tex_conceal = "abdmgs"
