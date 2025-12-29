@@ -1,8 +1,9 @@
-local ls = require("luasnip")
+local ls = require "luasnip"
 local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
+local fmta = require("luasnip.extras.fmt").fmta
 
 return {
 	-- Section
@@ -11,10 +12,10 @@ return {
 		dscr = "Section",
 		wordTrig = true,
 	}, {
-		t("# "),
+		t "# ",
 		i(1, "Section Name"),
-		t(" #"),
-		t({ "", "" }),
+		t " #",
+		t { "", "" },
 		i(0),
 	}),
 
@@ -24,10 +25,10 @@ return {
 		dscr = "Sub Section",
 		wordTrig = true,
 	}, {
-		t("## "),
+		t "## ",
 		i(1, "Section Name"),
-		t(" ##"),
-		t({ "", "" }),
+		t " ##",
+		t { "", "" },
 		i(0),
 	}),
 
@@ -37,10 +38,10 @@ return {
 		dscr = "SubSub Section",
 		wordTrig = true,
 	}, {
-		t("### "),
+		t "### ",
 		i(1, "Section Name"),
-		t(" ###"),
-		t({ "", "" }),
+		t " ###",
+		t { "", "" },
 		i(0),
 	}),
 
@@ -50,10 +51,10 @@ return {
 		dscr = "Paragraph",
 		wordTrig = true,
 	}, {
-		t("#### "),
+		t "#### ",
 		i(1, "Paragraph Name"),
-		t(" ####"),
-		t({ "", "" }),
+		t " ####",
+		t { "", "" },
 		i(0),
 	}),
 
@@ -63,10 +64,10 @@ return {
 		dscr = "Sub Paragraph",
 		wordTrig = true,
 	}, {
-		t("##### "),
+		t "##### ",
 		i(1, "Paragraph Name"),
-		t(" #####"),
-		t({ "", "" }),
+		t " #####",
+		t { "", "" },
 		i(0),
 	}),
 
@@ -76,11 +77,11 @@ return {
 		dscr = "Link to something",
 		wordTrig = true,
 	}, {
-		t("["),
+		t "[",
 		i(1, "Text"),
-		t("]("),
+		t "](",
 		i(2),
-		t(")"),
+		t ")",
 		i(0),
 	}),
 
@@ -90,9 +91,9 @@ return {
 		dscr = "Image",
 		wordTrig = true,
 	}, {
-		t("!["),
+		t "![",
 		i(1, "pic alt"),
-		t("]("),
+		t "](",
 		i(2, "path"),
 		f(function(args)
 			return args[1][1] ~= "" and ' "' or ""
@@ -101,7 +102,10 @@ return {
 		f(function(args)
 			return args[1][1] ~= "" and '"' or ""
 		end, { 3 }),
-		t(")"),
+		t ")",
 		i(0),
 	}),
+
+	s({ trig = "bf", dscr = "bold text", wordTrig = true }, fmta([[**<>**<>]], { i(1), i(0) })),
+	s({ trig = "it", dscr = "italic text", wordTrig = true }, fmta([[*<>*<>]], { i(1), i(0) })),
 }

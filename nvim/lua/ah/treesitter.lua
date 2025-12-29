@@ -1,88 +1,80 @@
 local M = {}
 
 function M.setup()
-  local present, treesitter = pcall(require, "nvim-treesitter.configs")
-  if not present then
-    return
-  end
+	local present, treesitter = pcall(require, "nvim-treesitter.configs")
+	if not present then
+		return
+	end
 
-  ---@diagnostic disable-next-line: missing-fields
-  treesitter.setup {
-    highlight = {
-      enable = true,
-      disable = function(lang, buf)
-        local max_filesize = 100 * 1024
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-          return true
-        end
-      end,
-      -- disable = { "latex" },
-      additional_vim_regex_highlighting = { "latex" },
-    },
-    indent = { enable = true },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<c-m-space>",
-        node_incremental = "<c-m space>",
-      },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true,
-        keymaps = {
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-        },
-        selection_modes = {
-          ["@parameter.outer"] = "v",
-          ["@function.outer"] = "V",
-          ["@class.outer"] = "<c-v>",
-        },
-      },
-      lsp_interop = {
-        enable = true,
-        border = "rounded",
-        peek_definition_code = {
-          ["<leader>df"] = "@function.outer",
-          ["<leader>dF"] = "@class.outer",
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true,
-        goto_next_start = {
-          ["]f"] = "@function.outer",
-          ["]]"] = "@class.outer",
-        },
-        goto_next_end = {
-          ["]F"] = "@function.outer",
-          ["]["] = "@class.outer",
-        },
-        goto_previous_start = {
-          ["[f"] = "@function.outer",
-          ["[["] = "@class.outer",
-        },
-        goto_previous_end = {
-          ["[F"] = "@function.outer",
-          ["[]"] = "@class.outer",
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ["<leader>a"] = "@parameter.inner",
-        },
-        swap_previous = {
-          ["<leader>A"] = "@parameter.inner",
-        },
-      },
-    },
-  }
+	---@diagnostic disable-next-line: missing-fields
+	treesitter.setup {
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = { "latex" },
+		},
+		indent = { enable = true },
+		incremental_selection = {
+			enable = true,
+			keymaps = {
+				init_selection = "<c-m-space>",
+				node_incremental = "<c-m space>",
+			},
+		},
+		textobjects = {
+			select = {
+				enable = true,
+				lookahead = true,
+				keymaps = {
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+				},
+				selection_modes = {
+					["@parameter.outer"] = "v",
+					["@function.outer"] = "V",
+					["@class.outer"] = "<c-v>",
+				},
+			},
+			lsp_interop = {
+				enable = true,
+				border = "rounded",
+				peek_definition_code = {
+					["<leader>df"] = "@function.outer",
+					["<leader>dF"] = "@class.outer",
+				},
+			},
+			move = {
+				enable = true,
+				set_jumps = true,
+				goto_next_start = {
+					["]f"] = "@function.outer",
+					["]]"] = "@class.outer",
+				},
+				goto_next_end = {
+					["]F"] = "@function.outer",
+					["]["] = "@class.outer",
+				},
+				goto_previous_start = {
+					["[f"] = "@function.outer",
+					["[["] = "@class.outer",
+				},
+				goto_previous_end = {
+					["[F"] = "@function.outer",
+					["[]"] = "@class.outer",
+				},
+			},
+			swap = {
+				enable = true,
+				swap_next = {
+					["<leader>a"] = "@parameter.inner",
+				},
+				swap_previous = {
+					["<leader>A"] = "@parameter.inner",
+				},
+			},
+		},
+	}
 end
 
 return M
