@@ -49,7 +49,7 @@ opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "no"
 opt.wrap = false
-opt.showmode = false
+-- opt.showmode = false
 opt.showmatch = true
 opt.equalalways = false
 opt.foldmethod = "expr"
@@ -57,6 +57,7 @@ vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldmethod = "marker"
 opt.completeopt = { "menu", "menuone", "noselect" }
 opt.scrolloff = 8
+opt.sidescroll = 0
 
 opt.ignorecase = true
 opt.smartcase = true
@@ -67,15 +68,18 @@ opt.inccommand = "split"
 
 opt.formatoptions:append { "tcqj" }
 opt.spelllang = "en_gb"
-opt.clipboard = "unnamedplus"
 opt.splitright = true
 opt.splitbelow = true
 opt.termguicolors = true
-opt.winblend = 15
+opt.winblend = 10
 opt.confirm = true
 opt.autochdir = false
 opt.mouse = "nvc"
 opt.cedit = "^C"
+
+vim.schedule(function()
+	vim.opt.clipboard = "unnamedplus"
+end)
 
 -- simplified lua implementation of cyclist.vim
 opt.list = true
@@ -119,4 +123,4 @@ vim.g.markdown_fenced_languages = fences
 -- 	opt.winbar = ""
 -- end
 
-vim.cmd "colorscheme colourscheme"
+vim.cmd "colorscheme colourscheme_dark"

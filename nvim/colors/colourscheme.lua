@@ -1,248 +1,253 @@
-vim.cmd "highlight clear"
-if vim.fn.exists "syntax_on" then
-	vim.cmd "syntax reset"
-end
+local nvim_set_hl = vim.api.nvim_set_hl
 
-vim.opt.background = "dark"
-vim.opt.termguicolors = true
-vim.g.colors_name = "colourscheme"
+local mod = require("ah.utils").modify_colour
+local lighter = require("ah.utils").lighter
+local darker = require("ah.utils").darker
 
--- disable semantic tokens
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client then
-			client.server_capabilities.semanticTokensProvider = nil
-		end
-	end,
-})
+local white = "#f2e5bc"
+local superwhite = "#f0f0f0"
+local gray1 = "#3f4349"
+local red = "#cc6666"
+local green = "#94c794"
+local yellow = "#f7fc9b"
+local light_yellow = "#f9fcb3"
+local dark_yellow = "#ebcb8b"
+local blue = "#81a2be"
+local blue_dark = "#486F82"
+local blue_dark_dark = "#3E5366"
+local teal = "#88c0d0"
+local aqua = "#8bb88a"
+local cyan = "#8bb3ad"
+local purple = "#9177b5"
+local violet = "#BBA3C1"
+local orange = "#db956a"
+local ochre = "#e2847a"
+local statusline_bg = "#81a2be"
+local fg = "#D3D9DF"
+local fg_dark = "#9a9a9a"
+local bg = "#282c34"
+local bg_dark = "#27292B"
+local bg_darker = "#141518"
+local border = "#393E47"
+local comment = "#797B80"
+local comment_dark = "#4F535B"
+local NvimLightGrey3 = "#C4C6CD"
+local term_bg = "#23262B"
+local tex_command = "#c586c0"
+local tex_env = "#93E4E2"
+local tex_arg = "#9cdcfe"
+local tex_math = "#b5cea8"
+local tex_label = "#dcdcaa"
+local tex_comment = "#6a9955"
+local tex_special = "#d16969"
 
-local function hi(group, opts)
-	if opts.link then
-		vim.api.nvim_set_hl(0, group, { link = opts.link })
-		return
-	end
+local bg_lighter = lighter(lighter(bg))
+local cyan_lighter = lighter(cyan)
+local bg_statusline_lighter = lighter(bg)
+local bg_tabline = lighter(lighter(bg))
+local red_mod = mod(red, 70)
 
-	local hl_opts = {}
+-- statusline_bg = darkblue
 
-	if opts.fg then
-		hl_opts.fg = opts.fg
-	end
-	if opts.bg then
-		hl_opts.bg = opts.bg
-	end
-	if opts.sp then
-		hl_opts.sp = opts.sp
-	end
+vim.g.terminal_color_0 = bg
+vim.g.terminal_color_1 = red
+vim.g.terminal_color_2 = green
+vim.g.terminal_color_3 = yellow
+vim.g.terminal_color_4 = blue
+vim.g.terminal_color_5 = purple
+vim.g.terminal_color_6 = cyan
+vim.g.terminal_color_7 = fg
+vim.g.terminal_color_8 = gray1
+vim.g.terminal_color_9 = red
+vim.g.terminal_color_10 = green
+vim.g.terminal_color_11 = yellow
+vim.g.terminal_color_12 = blue
+vim.g.terminal_color_13 = purple
+vim.g.terminal_color_14 = cyan
+vim.g.terminal_color_15 = superwhite
 
-	if opts.style then
-		if opts.style:match "bold" then
-			hl_opts.bold = true
-		end
-		if opts.style:match "italic" then
-			hl_opts.italic = true
-		end
-		if opts.style:match "underline" then
-			hl_opts.underline = true
-		end
-		if opts.style:match "undercurl" then
-			hl_opts.undercurl = true
-		end
-		if opts.style:match "strikethrough" then
-			hl_opts.strikethrough = true
-		end
-		if opts.style:match "underdotted" then
-			hl_opts.underdotted = true
-		end
-		if opts.style == "none" then
-			hl_opts.bold = false
-			hl_opts.italic = false
-			hl_opts.underline = false
-			hl_opts.undercurl = false
-		end
-	end
+local highlights = {
+	Normal = { fg = fg, bg = bg },
+	TerminalNormal = { fg = NvimLightGrey3, bg = term_bg },
+	LineNr = { fg = fg_dark, bg = bg_dark },
+	CursorLine = { bg = bg_lighter },
+	CursorLineNr = { fg = superwhite, bg = bg_dark, bold = true },
+	Conceal = { fg = ochre, bg = bg },
+	Comment = { fg = comment, italic = true },
+	WinSeparator = { fg = NvimLightGrey3 },
+	MatchParen = { fg = yellow, bg = gray1, bold = true },
+	EndOfBuffer = { fg = bg },
+	ModeMsg = { fg = teal },
+	Bold = { fg = superwhite, bold = true },
+	Visual = { bg = blue_dark },
+	VisualNonText = { bg = blue_dark, fg = fg_dark },
+	Title = { fg = green, bold = true },
 
-	if opts.nocombine ~= nil then
-		hl_opts.nocombine = opts.nocombine
-	end
+	Pmenu = { bg = gray1 },
+	PmenuSel = { bg = blue_dark },
+	PmenuThumb = { bg = comment_dark },
+	NormalFloat = { bg = bg_darker },
+	FloatBorder = { bg = bg_darker, fg = bg_darker },
+	FloatTitle = { bg = bg_darker, fg = green },
 
-	vim.api.nvim_set_hl(0, group, hl_opts)
-end
+	Tabline = { fg = blue, bg = bg_tabline },
+	TablineFill = { bg = fg_dark },
+	TablineSel = { fg = fg, bg = bg, bold = true },
 
-local c = {
-	white = "#f2e5bc",
-	superwhite = "#f0f0f0",
-	lightergray = "#4a4a4a",
-	gray1 = "#3f4349",
-	red = "#cc6666",
-	lightred = "#E8ACAC",
-	pink = "#f4f54d",
-	green = "#94c794",
-	yellow_bright = "#f5fc7f",
-	yellow = "#f7fc9b",
-	yellow_light = "#f9fcb3",
-	blue = "#81a2be",
-	blue_dark = "#486F82",
-	blue_dark_dark = "#3E5366",
-	teal = "#93E4E2",
-	popblue = "#51a7b0",
-	pigeon = "#93AEDD",
-	aqua = "#8bb88a",
-	cyan = "#8bb3ad",
-	purple = "#9177b5",
-	violet = "#C3A3D1",
-	orange = "#db956a",
-	ochre = "#e2847a",
-	brown = "#a3685a",
-	seagreen = "#698b69",
-	turquoise = "#698b69",
-	statusline_bg = "#81a2be",
-	fg = "#e0e0e0",
-	fg_dark = "#9a9a9a",
-	bg = "#282c34",
-	bg_light = "#333842",
-	border = "#393E47",
-	comment = "#797B80",
-	comment_dark = "#4F535B",
-	NvimLightGrey3 = "#C4C6CD",
-	bg_dark = "#26292E",
-	bg_darker = "#141518",
-	term_bg = "#23262B",
-	tex_command = "#c586c0",
-	tex_env = "#93E4E2",
-	tex_arg = "#9cdcfe",
-	tex_math = "#b5cea8",
-	tex_label = "#dcdcaa",
-	tex_comment = "#6a9955",
-	tex_special = "#d16969",
+	Winbar = { fg = NvimLightGrey3, bg = bg },
+	WinbarNC = { fg = comment_dark, bg = bg },
+
+	StatusLine = { fg = bg_statusline_lighter, bg = statusline_bg },
+	StatusLineNc = { fg = lighter(fg_dark), bg = gray1 },
+	StatusLineHeader = { fg = bg_statusline_lighter, bg = statusline_bg },
+	StatusLineHeaderNC = { fg = comment, bg = bg },
+	StatusLineTerm = { fg = bg_statusline_lighter, bg = statusline_bg },
+	StatusLineHeaderNorm = { fg = yellow, bg = bg, bold = true },
+	StatusLineHeaderCmd = { fg = orange, bg = bg, bold = true },
+	StatusLineHeaderTerm = { fg = bg_statusline_lighter, bg = statusline_bg },
+	StatusLineLsp = { fg = bg, bg = statusline_bg },
+	StatusLinePos = { link = "StatusLine" },
+	StatusLineBufName = { fg = superwhite, bold = true },
+	StatusLineDiag = { bg = statusline_bg, bold = true },
+
+	DiagnosticError = { fg = red, undercurl = true },
+	DiagnosticWarn = { sp = yellow, undercurl = true },
+	DiagnosticInfo = { sp = blue, undercurl = true },
+	DiagnosticeHint = { sp = aqua, undercurl = true },
+	DiagnosticeOk = { sp = green, undercurl = true },
+
+	DiagnosticSignError = { fg = red },
+	DiagnosticSignWarn = { fg = yellow },
+	DiagnosticSignInfo = { fg = blue },
+	DiagnosticSignHint = { fg = teal },
+	DiagnosticSigneOk = { fg = green },
+
+	DiagnosticVirtualTextError = { fg = red },
+	DiagnosticVirtualTextWarn = { fg = yellow },
+	DiagnosticVirtualTextInfo = { fg = blue },
+	DiagnosticVirtualTexteHint = { fg = aqua },
+	DiagnosticVirtualTexteOk = { fg = green },
+
+	DiagnosticUnderlineError = { fg = red, undercurl = true },
+	DiagnosticUnderlineWarn = { sp = light_yellow, undercurl = true },
+	DiagnosticUnderlineInfo = { sp = blue, undercurl = true },
+	DiagnosticUnderlineHint = { sp = teal, undercurl = true },
+	DiagnosticUnderlineOk = { sp = green, undercurl = true },
+
+	LspReferenceText = { bg = blue_dark_dark },
+	LspReferenceRead = { bg = blue_dark_dark },
+	LspReferenceWrite = { bg = blue_dark_dark },
+
+	Number = { fg = red },
+
+	SpellBad = { sp = red, undercurl = true },
+	SpellLocal = { sp = red, undercurl = true },
+	SpellRare = { sp = red, undercurl = true },
+	SpellCap = { sp = red, undercurl = true },
+
+	TelescopeMatching = { fg = ochre, bold = true },
+	TelescopeSelection = { link = "PmenuSel" },
+
+	BlinkCmpLabelMatch = { fg = ochre, bold = true },
+	BlinkCmpKind = { fg = blue },
+	BlinkCmpGhostText = { fg = comment },
+
+	BlinkCmpKindStruct = { fg = yellow },
+	BlinkCmpKindFunction = { fg = blue },
+	BlinkCmpKindText = { fg = cyan_lighter },
+	BlinkCmpKindClass = { fg = yellow },
+	BlinkCmpKindValue = { fg = orange },
+	BlinkCmpKindEnum = { fg = yellow },
+	BlinkCmpKindInterface = { fg = yellow },
+	BlinkCmpKindMethod = { fg = cyan },
+	BlinkCmpKindUnit = { fg = red },
+	BlinkCmpKindConstant = { fg = fg },
+	BlinkCmpKindField = { fg = violet },
+	BlinkCmpKindModule = { fg = orange },
+	BlinkCmpKindKeyword = { fg = violet, italic = true },
+	BlinkCmpKindEnumMember = { fg = fg },
+	BlinkCmpKindProperty = { fg = blue },
+	BlinkCmpKindOperator = { fg = orange },
+	BlinkCmpKindReference = { fg = fg },
+	BlinkCmpKindSnippet = { fg = fg },
+	BlinkCmpKindTypeParameter = { fg = yellow },
+	BlinkCmpKindVariable = { fg = fg },
+
+	TreesitterContext = { bg = border },
+	TreesitterContextLineNumber = { fg = blue, bg = border },
+
+	["@comment"] = { link = "Comment" },
+	["@comment.todo"] = { fg = bg, bg = teal, bold = true },
+	["@comment.documentation"] = { fg = teal },
+	Todo = { fg = bg, bg = teal, bold = true },
+
+	["@constant"] = { fg = orange },
+	["@boolean"] = { fg = orange },
+	["@string"] = { fg = green },
+
+	["@function"] = { fg = blue, bold = false },
+	["@function.method"] = { fg = teal },
+	["@function.call"] = { fg = blue, bold = false },
+	["@function.method.call"] = { fg = lighter(blue) },
+	["@function.builtin"] = { fg = blue, bold = false },
+	["@function.bracket"] = { fg = fg, bg = bg },
+	["@function.latex"] = { fg = blue },
+
+	["@keyword"] = { fg = violet },
+	["@keyword.conditional"] = { fg = red },
+	["@keyword.function"] = { fg = violet },
+	["@keyword.faded"] = { fg = comment },
+	["@keyword.repeat"] = { fg = red },
+	["@keyword.return"] = { fg = violet },
+	["@keyword.exception"] = { fg = blue },
+	["@keyword.operator"] = { fg = red_mod },
+	["@keyword.import"] = { fg = cyan },
+	["@keyword.import.latex"] = { fg = violet },
+	["@string.special.path.latex"] = { fg = green },
+
+	-- ["@attribute"] = { fg = violet },
+
+	["@type.builtin"] = { fg = violet },
+
+	["@module"] = { fg = fg },
+	["@module.builtin"] = { fg = blue },
+	["@module.latex"] = { fg = blue },
+
+	["@property"] = { fg = teal },
+
+	["@variable"] = { fg = fg },
+	["@variable.builtin"] = { fg = yellow, bg = bg },
+	-- ["@variable.member"] = { fg = blue },
+	["@variable.parameter"] = { fg = lighter(teal) },
+	["@variable.parameter.latex"] = { fg = tex_env },
+
+	["@constructor"] = {},
+
+	["@punctuation"] = { fg = white },
+	["@punctuation.bracket"] = { fg = white },
+	["@punctuation.special"] = { fg = violet },
+
+	["@variable.builtin.python"] = { fg = dark_yellow },
+	["@type.python"] = { fg = teal },
+
+	texEnvArgName = { fg = blue },
+	texCmd = { fg = tex_command },
+	texBeginEnd = { fg = tex_env },
+	texArg = { fg = tex_arg },
+	texMath = { fg = tex_math },
+	texRefZone = { fg = tex_label },
+	texComment = { fg = tex_comment, italic = true },
+	texDelim = { fg = tex_special },
+	texSection = { fg = tex_command, bold = true },
+	texStatement = { fg = tex_command },
+	texFileOpt = { fg = tex_special },
+	texEnvOpt = { fg = tex_math },
 }
 
-hi("Normal", { fg = c.fg, bg = c.bg })
-hi("TerminalNormal", { fg = c.NvimLightGrey3, bg = c.term_bg })
-hi("LineNr", { fg = c.fg_dark, bg = c.bg_dark })
-hi("CursorLine", { bg = c.bg_light })
-hi("CursorLineNr", { fg = c.fg, bg = c.bg_dark, style = "bold" })
-hi("Conceal", { fg = c.ochre, bg = c.bg })
-hi("Comment", { fg = c.comment, style = "italic" })
-hi("WinSeparator", { fg = c.NvimLightGrey3 })
-hi("MatchParen", { fg = c.yellow, bg = c.gray1, style = "bold" })
-hi("EndOfBuffer", { fg = c.bg, style = "none" })
-hi("ModeMsg", { fg = c.teal, style = "none" })
-hi("Bold", { fg = c.superwhite, style = "bold" })
-hi("Visual", { bg = c.blue_dark, style = "none" })
-hi("VisualNonText", { bg = c.blue_dark, fg = c.fg_dark, style = "none" })
-hi("Title", { fg = c.green, style = "bold" })
+for group, opts in pairs(highlights) do
+	nvim_set_hl(0, group, opts)
+end
 
-hi("Pmenu", { bg = c.gray1 })
-hi("PmenuSel", { bg = c.yellow, fg = c.bg })
-hi("PmenuThumb", { bg = c.comment_dark })
-hi("NormalFloat", { bg = c.bg_darker })
-hi("FloatBorder", { bg = c.bg_darker, fg = c.bg_darker })
-hi("FloatTitle", { bg = c.bg_darker, fg = c.green })
+vim.g.colors_name = "colourscheme"
 
-hi("Tabline", { fg = c.blue, bg = c.comment_dark })
-hi("TablineFill", { bg = c.fg_dark })
-hi("TablineSel", { fg = c.fg, bg = c.bg, style = "bold" })
-
-hi("Winbar", { fg = c.NvimLightGrey3, bg = c.bg, style = "none" })
-hi("WinbarNC", { fg = c.comment_dark, bg = c.bg, style = "none" })
-
-hi("StatusLine", { fg = c.border, bg = c.statusline_bg })
-hi("StatusLineNc", { fg = c.fg_dark, bg = c.gray1 })
-hi("StatusLineHeader", { fg = c.border, bg = c.statusline_bg, style = "none" })
-hi("StatusLineHeaderNC", { fg = c.comment, bg = c.bg, style = "none" })
-hi("StatusLineHeaderNorm", { fg = c.yellow, bg = c.bg, style = "bold" })
-hi("StatusLineHeaderCmd", { fg = c.orange, bg = c.bg, style = "bold" })
-hi("StatusLineHeaderTerm", { fg = c.superwhite, style = "bold" })
-hi("StatusLinePos", { fg = c.bg, bg = c.blue })
-hi("StatusLineLsp", { link = "StatusLinePos" })
-hi("StatusLineBufName", { fg = c.superwhite, style = "bold" })
-
-hi("DiagnosticUnderlineError", { fg = c.red, style = "undercurl" })
-hi("DiagnosticUnderlineWarn", { sp = c.yellow_light, style = "undercurl" })
-hi("DiagnosticUnderlineInfo", { sp = c.blue, style = "undercurl" })
-hi("DiagnosticUnderlineeHint", { sp = c.aqua, style = "undercurl" })
-hi("DiagnosticUnderlineeOk", { sp = c.green, style = "undercurl" })
-hi("DiagnosticUnnecessary", { style = "none" })
-
-hi("LspReferenceText", { bg = c.blue_dark_dark, style = "none" })
-hi("LspReferenceRead", { bg = c.blue_dark_dark, style = "none" })
-hi("LspReferenceWrite", { bg = c.blue_dark_dark, style = "none" })
-
-hi("SpellBad", { sp = c.red, style = "undercurl" })
-hi("SpellLocal", { sp = c.red, style = "undercurl" })
-hi("SpellRare", { sp = c.red, style = "undercurl" })
-hi("SpellCap", { sp = c.red, style = "undercurl" })
-
-hi("TelescopeMatching", { fg = c.orange, style = "bold" })
-hi("TelescopeSelection", { bg = c.yellow, fg = c.bg })
-hi("TelescopeSelectionCaret", { fg = c.bg, bg = c.yellow })
-
-hi("BlinkCmpLabelMatch", { fg = c.ochre, style = "bold" })
-hi("BlinkCmpKind", { fg = c.blue })
-hi("BlinkCmpMenuSelection", { fg = c.bg, bg = c.yellow, style = "none" })
-hi("BlinkCmpGhostText", { fg = c.comment })
-
-hi("TreesitterContext", { bg = c.border })
-hi("TreesitterContextLineNumber", { fg = c.blue, bg = c.border })
-
-hi("@comment", { link = "Comment" })
-hi("@comment.todo", { fg = c.bg, bg = c.blue, style = "bold" })
-hi("Todo", { fg = c.bg, bg = c.blue, style = "bold" })
-
-hi("@constant", { fg = c.orange, style = "none" })
-hi("@boolean", { fg = c.orange, style = "none" })
-hi("Number", { fg = c.red, style = "none" })
-hi("@string", { fg = c.green })
-
-hi("@function", { fg = c.yellow, style = "none" })
-hi("@function.method", { fg = c.yellow, style = "none" })
-hi("@function.call", { fg = c.blue, style = "none" })
-hi("@function.method.call", { fg = c.blue, style = "none" })
-hi("@function.bracket", { fg = c.fg, bg = c.bg })
-
-hi("@keyword", { fg = c.violet, style = "none" })
-hi("@keyword.conditional", { fg = c.ochre, style = "none" })
-hi("@keyword.function", { fg = c.violet, style = "none" })
-hi("@keyword.faded", { fg = c.comment, style = "none" })
-hi("@keyword.repeat", { fg = c.ochre, style = "none" })
-hi("@keyword.return", { fg = c.violet, style = "italic" })
-hi("@keyword.exception", { fg = c.blue, style = "none" })
-hi("@keyword.operator", { fg = c.lightred, style = "none" })
-hi("@keyword.import", { fg = c.cyan, style = "none" })
-hi("@keyword.import.latex", { fg = c.yellow, style = "none" })
-
-hi("@type.builtin", { fg = c.violet, style = "bold" })
-
-hi("@module", { fg = c.fg })
-hi("@module.builtin", { fg = c.blue, style = "bold" })
-hi("@module.latex", { fg = c.blue })
-
-hi("@property", { fg = c.blue })
-
-hi("@variable", { fg = c.superwhite })
-hi("@variable.builtin", { fg = c.violet, bg = c.bg })
-hi("@variable.member", { fg = c.blue })
-hi("@variable.parameter", { fg = c.pigeon })
-
-hi("@constructor", {})
-
-hi("@punctuation", { fg = c.white })
-hi("@punctuation.bracket", { fg = c.white })
-hi("@punctuation.special", { fg = c.violet })
-
-hi("@variable.builtin.python", { fg = c.red })
-hi("@type.python", { fg = c.yellow })
-
-hi("texEnvArgName", { fg = c.blue })
-hi("texCmd", { fg = c.tex_command })
-hi("texBeginEnd", { fg = c.tex_env })
-hi("texArg", { fg = c.tex_arg })
-hi("texMath", { fg = c.tex_math })
-hi("texRefZone", { fg = c.tex_label })
-hi("texComment", { fg = c.tex_comment, style = "italic" })
-hi("texDelim", { fg = c.tex_special })
-hi("texSection", { fg = c.tex_command, style = "bold" })
-hi("texStatement", { fg = c.tex_command })
-hi("texFileOpt", { fg = c.tex_special })
-hi("texEnvOpt", { fg = c.tex_math })
+-- vim.cmd [[source ~/tmp/config_backups/modes_2.lua]]

@@ -10,11 +10,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.wo.statuscolumn = ""
 		vim.wo.winfixwidth = true
 		vim.wo.winfixheight = true
+
 		-- if vim.opt.laststatus:get() == 3 then
 		-- 	vim.wo.winbar = "%="
 		-- else
 		-- 	vim.wo.winbar = ""
 		-- end
+
 		vim.bo.filetype = "terminal"
 
 		-- vim.cmd "set winhighlight=Normal:TerminalNormal"

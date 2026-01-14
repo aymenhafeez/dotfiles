@@ -14,8 +14,6 @@ local icons = require "nvim-nonicons"
 
 local options = {
 	defaults = {
-		prompt_prefix = " " .. icons.get "telescope" .. "  ",
-		selection_caret = "|>",
 		multi_icon = "<>",
 
 		path_display = {
@@ -52,6 +50,7 @@ local options = {
 		sorting_strategy = "descending",
 
 		winblend = 0,
+
 		dynamic_preview_title = true,
 		mappings = {
 			i = {

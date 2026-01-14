@@ -1,3 +1,5 @@
+-- use nvim_buf_del_extmark() to remove the virtual text
+
 local search_ns = vim.api.nvim_create_namespace "search:virttext"
 
 local function clear_search_virttext()
@@ -27,7 +29,7 @@ local function update_search_virttext()
 
 	vim.api.nvim_buf_set_extmark(0, search_ns, line, 0, {
 		virt_text = { { virt_text, "DiagnosticVirtualTextOk" } },
-		virt_text_pos = "eol_right_align",
+		virt_text_pos = "eol",
 	})
 end
 

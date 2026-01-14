@@ -2,11 +2,6 @@ return {
 	{ "NMAC427/guess-indent.nvim" },
 	{ "kylechui/nvim-surround", event = "InsertEnter", opts = {} },
 	{ "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
-	{ "tjdevries/colorbuddy.nvim", commit = "c678edd" },
-	{
-		"tjdevries/gruvbuddy.nvim",
-		commit = "52bdae8",
-	},
 	{
 		"moll/vim-bbye",
 		cmd = { "Bdelete", "Bwipeout" },

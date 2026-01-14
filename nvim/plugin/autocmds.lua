@@ -1,3 +1,12 @@
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client then
+			client.server_capabilities.semanticTokensProvider = nil
+		end
+	end,
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	pattern = "*",
 	callback = function()
@@ -28,7 +37,7 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 		if vim.bo.filetype == "help" then
 			vim.opt_local.signcolumn = "no"
 			vim.opt_local.statuscolumn = ""
-			if win_width > 120 then
+			if win_width > 160 then
 				vim.cmd "wincmd L"
 				vim.cmd "vertical resize -12"
 			else
@@ -38,7 +47,8 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 	end,
 })
 
--- -- vim.opt.laststatus = 3
+-- -- works but not sure I like it
+-- vim.opt.laststatus = 3
 -- vim.opt.cmdheight = 0
 -- if vim.opt.cmdheight:get() == 0 then
 -- 	vim.api.nvim_create_autocmd("ModeChanged", {

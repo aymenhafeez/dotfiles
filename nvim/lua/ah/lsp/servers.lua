@@ -12,25 +12,6 @@ if pcall(require, "blink.cmp") then
 	capabilities = require("blink.cmp").get_lsp_capabilities()
 end
 
-vim.lsp.config.ruff = {
-	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/ruff", "server" },
-	filetypes = { "python" },
-	root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
-	capabilities = capabilities,
-}
-
-vim.lsp.config.remark_ls = {
-	cmd = { "remark-language-server", "--stdio" },
-	filetypes = { "markdown" },
-	root_markers = { ".remarkrc", ".remarkrc.json", ".remarkrc.js", "package.json", ".git" },
-	capabilities = capabilities,
-	settings = {
-		remark = {
-			requireConfig = false,
-		},
-	},
-}
-
 vim.lsp.config.basedpyright = {
 	cmd = { "basedpyright-langserver", "--stdio" },
 	filetypes = { "python" },
@@ -39,16 +20,11 @@ vim.lsp.config.basedpyright = {
 	settings = {
 		basedpyright = {
 			analysis = {
-				typeCheckingMode = "standard", -- "off", "basic", "standard", or "strict"
-				diagnosticMode = "openFilesOnly", -- or "workspace" for full project analysis
-				useLibraryCodeForTypes = true, -- Infer types from library code
+				typeCheckingMode = "standard",
+				diagnosticMode = "openFilesOnly",
+				useLibraryCodeForTypes = true,
 				autoSearchPaths = true,
-				autoImportCompletions = true, -- Show auto-import suggestions
-				diagnosticSeverityOverrides = {
-					-- Customize diagnostic severity if needed
-					-- reportUnusedImport = "information",
-					-- reportUnusedVariable = "information",
-				},
+				autoImportCompletions = true,
 			},
 		},
 	},
@@ -79,20 +55,91 @@ vim.lsp.config.lua_ls = {
 	},
 }
 
+vim.lsp.config.remark_ls = {
+	cmd = { "remark-language-server", "--stdio" },
+	filetypes = { "markdown" },
+	root_markers = { ".remarkrc", ".remarkrc.json", ".remarkrc.js", "package.json", ".git" },
+	capabilities = capabilities,
+	settings = {
+		remark = {
+			requireConfig = false,
+		},
+	},
+}
+
 vim.lsp.config.texlab = {
 	bibtexFormatter = "texlab",
 	cmd = { "texlab" },
 	filetypes = { "tex", "plaintex", "bib" },
 }
 
-vim.lsp.enable { "basedpyright", "ruff", "remark_ls", "lua_ls", "texlab" }
+vim.lsp.config.vimls = {
+	cmd = { "vim-language-server", "--stdio" },
+	filetypes = { "vim" },
+	init_options = {
+		diagnostic = {
+			enable = true,
+		},
+		indexes = {
+			count = 3,
+			gap = 100,
+			projectRootPatterns = { "runtime", "nvim", ".git", "autoload", "plugin" },
+			runtimepath = true,
+		},
+		isNeovim = true,
+		iskeyword = "@,48-57,_,192-255,-#",
+		runtimepath = "",
+		suggest = {
+			fromRuntimepath = true,
+			fromVimruntime = true,
+		},
+		vimruntime = "",
+	},
+}
+
+vim.lsp.config.vtsls = {
+	cmd = { "vtsls", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+	init_options = {
+		hostInfo = "neovim",
+	},
+}
+
+vim.lsp.config.rust_analyzer = {
+	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/rust-analyzer" },
+	filetypes = { "rust" },
+	root_markers = { "Cargo.toml", "rust-project.json" },
+	capabilities = capabilities,
+	settings = {
+		["rust-analyzer"] = {
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			cargo = {
+				buildScripts = {
+					enable = true,
+				},
+			},
+			procMacro = {
+				enable = true,
+			},
+		},
+	},
+}
+
+vim.lsp.enable { "basedpyright", "lua_ls", "texlab", "vimls", "vtsls", "rust_analyzer" }
 
 local ensure_installed = {
+	"vtsls",
 	"basedpyright",
 	"ruff",
 	"lua-language-server",
 	"stylua",
-	-- "ty",
+	"vim-language-server",
+	"rust-analyzer",
 }
 
 require("mason-tool-installer").setup { ensure_installed = ensure_installed }

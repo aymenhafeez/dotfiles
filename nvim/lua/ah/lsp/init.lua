@@ -77,17 +77,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+local diagnostic_signs = {
+  -- stylua: ignore start
+  [vim.diagnostic.severity.ERROR] = " ",
+  [vim.diagnostic.severity.WARN] = " ",
+  [vim.diagnostic.severity.INFO] = " ",
+  [vim.diagnostic.severity.HINT] = " ",
+	-- stylua: ignore end
+}
+
 vim.diagnostic.config {
 	severity_sort = true,
 	signs = {
-		text = {
-      -- stylua: ignore start
-      [vim.diagnostic.severity.ERROR] = " ",
-      [vim.diagnostic.severity.WARN] = " ",
-      [vim.diagnostic.severity.INFO] = " ",
-      [vim.diagnostic.severity.HINT] = " ",
-			-- stylua: ignore end
-		},
+		text = diagnostic_signs,
+	},
+	status = {
+		text = diagnostic_signs,
 	},
 	virtual_text = true,
+	jump = {
+		-- on_jump = vim.diagnostic.open_float,
+		wrap = false,
+	},
 }

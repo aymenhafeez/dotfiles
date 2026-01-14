@@ -2,6 +2,7 @@ return {
 	{
 		"lervag/vimtex",
 		ft = "tex",
+		lazy = false,
 		keys = {
 			{ "<leader>ct", "<cmd>VimtexTocToggle<CR>", desc = "Toggle contents" },
 		},
@@ -19,17 +20,16 @@ return {
 		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
 
-	{
-		"OXY2DEV/markview.nvim",
-		enabled = false,
-		ft = { "markdown", "md" },
-		opts = {
-			preview = {
-				icon_provider = "internal", -- "mini" or "devicons"
-			},
-		},
-
-		-- Completion for `blink.cmp`
-		-- dependencies = { "saghen/blink.cmp" },
-	},
+	-- {
+	-- 	"OXY2DEV/markview.nvim",
+	-- 	ft = { "markdown", "md" },
+	-- 	opts = {
+	-- 		preview = {
+	-- 			icon_provider = "internal", -- "mini" or "devicons"
+	-- 		},
+	-- 	},
+	--
+	-- 	-- Completion for `blink.cmp`
+	-- 	-- dependencies = { "saghen/blink.cmp" },
+	-- },
 }

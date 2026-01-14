@@ -283,6 +283,8 @@ return {
 
 	s({ trig = "itbf", dscr = "bold, italic text", wordTrig = true }, fmta([[\textit{\textbf{<>}}<>]], { i(1), i(0) })),
 
+	s({ trig = "mbf", dscr = "bold text", wordTrig = true }, fmta([[\mathbf{<>}<>]], { i(1), i(0) })),
+
 	s({ trig = "ul", dscr = "underlined text", wordTrig = true }, fmta([[\underline{<>}<>]], { i(1), i(0) })),
 
 	s({ trig = "...", dscr = "ldots", wordTrig = false }, t "\\ldots"),
@@ -302,6 +304,30 @@ return {
 \begin{pmatrix}
 	<>
 \end{pmatrix} <>
+]],
+			{ i(1), i(0) }
+		)
+	),
+
+	s(
+		{ trig = "mat", dscr = "matrix", wordTrig = true },
+		fmta(
+			[[
+\begin{matrix}
+	<>
+\end{matrix} <>
+]],
+			{ i(1), i(0) }
+		)
+	),
+
+	s(
+		{ trig = "bmat", dscr = "bmatrix", wordTrig = true },
+		fmta(
+			[[
+\begin{bmatrix}
+	<>
+\end{bmatrix} <>
 ]],
 			{ i(1), i(0) }
 		)

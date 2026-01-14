@@ -27,6 +27,19 @@ map("n", "<leader>so", "<cmd>source %<CR>")
 map("n", "<leader>x", "<cmd>.lua<CR>", { desc = "execute current line" })
 map("v", "<leader>x", ":lua<CR>", { desc = "execute current line" })
 
+-- execute current file and send output to quickfix list
+map("n", "<leader><leader>x", function()
+	local result = vim.api.nvim_exec2("source %", { output = true })
+	local output = result.output
+	local split_lines = vim.split(output, "\n")
+	vim.fn.setqflist({}, " ", {
+		title = "Execute",
+		lines = split_lines,
+	})
+	vim.cmd "copen"
+	vim.cmd "normal G"
+end)
+
 -- break undo sequence on space, tab and enter
 map("i", "<Space>", "<Space><C-g>u")
 map("i", "<Tab>", "<Tab><C-g>u")
@@ -47,6 +60,9 @@ map("t", "<M-l>", "<C-\\><C-n><C-W>2>i")
 map("t", "<M-j>", "<C-\\><C-n><C-W>2-i")
 map("t", "<M-k>", "<C-\\><C-n><C-W>2+i")
 
+-- replace word under cursor
+map("n", "<C-w><C-r>", ":%s/<c-r><c-w>//g<left><left>")
+
 -- navigate the quickfix list if it's open otherwise move the current line up and down
 map({ "n", "t" }, "<M-C-j>", function()
 	local qflist_id = vim.fn.getqflist({ winid = 1 }).winid
@@ -64,19 +80,6 @@ map({ "n", "t" }, "<M-C-k>", function()
 	else
 		vim.cmd [[m .-2<CR>==]]
 	end
-end)
-
--- execute current file and send output to quickfix list
-map("n", "<leader><leader>x", function()
-	local result = vim.api.nvim_exec2("source %", { output = true })
-	local output = result.output
-	local split_lines = vim.split(output, "\n")
-	vim.fn.setqflist({}, " ", {
-		title = "Execute",
-		lines = split_lines,
-	})
-	vim.cmd "copen"
-	vim.cmd "normal G"
 end)
 
 map("n", "<C-p>", "<C-^>")
@@ -113,8 +116,8 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 
 -- my keyboard doesn't have a backslash key
-map({ "i", "c" }, "zx", "\\")
-map({ "i", "c" }, "zc", "|")
+map({ "i", "c", "t" }, "zx", "\\")
+map({ "i", "c", "t" }, "zc", "|")
 
 map("n", "<leader>ps", function()
 	local buf_nr = vim.api.nvim_get_current_buf()
@@ -136,7 +139,7 @@ vim.keymap.set("n", "<leader>pp", function()
 	require("ah.repl").send_repl_line()
 end)
 
-vim.keymap.set("n", "<leader>v", function()
+vim.keymap.set("n", "<leader>vv", function()
 	require("ah.repl").send_repl_selection()
 end)
 
@@ -155,9 +158,7 @@ map("t", "<C-l>", "<C-\\><C-n><C-w>l")
 -- get cwd in the cmdline
 map("c", "<C-d><C-w>", "<C-r>=getcwd()<CR><home>")
 -- get path of the current file in cmdline
-map("c", "<C-d><C-f>", "<C-r>=expand('%:~:h')<CR><home>")
--- set tab pwd to current file's dir
-map("c", "<C-d><C-h>", "tcd %:h")
+map("c", "<C-d><C-f>", "tcd <C-r>=expand('%:~:h')<CR>")
 
 vim.keymap.set("n", "g??", function()
 	vim.ui.open(("https://google.com/search?q=%s"):format(vim.fn.expand "<cword>"))

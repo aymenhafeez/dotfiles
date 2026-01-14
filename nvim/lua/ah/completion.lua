@@ -14,8 +14,8 @@ local options = {
 		["<Down>"] = { "select_next", "fallback" },
 		["<CR>"] = { "accept", "fallback" },
 		["<C-y>"] = { "accept", "fallback" },
-		["<C-k>"] = { "show", "show_documentation", "hide_documentation", "fallback" },
-		["<C-j>"] = { "hide", "show_signature", "hide_signature", "fallback" },
+		["<C-h>"] = { "show", "show_documentation", "hide_documentation", "fallback" },
+		["<M-h>"] = { "show_signature", "hide_signature", "fallback" },
 		["<C-e>"] = { "cancel", "fallback" },
 		["<C-u>"] = { "scroll_signature_up", "fallback" },
 		["<C-d>"] = { "scroll_signature_down", "fallback" },
@@ -104,7 +104,7 @@ local options = {
 					},
 					source_name = {
 						text = function(ctx)
-							return "(" .. ctx.source_name .. ")"
+							return "[" .. ctx.source_name .. "]"
 						end,
 						width = { fill = true },
 					},

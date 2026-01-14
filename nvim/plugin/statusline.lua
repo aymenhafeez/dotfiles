@@ -16,7 +16,7 @@ local modes = {
 	["i"] = "Insert",
 	["ic"] = "I·Comp",
 	["ix"] = "I·Comp",
-	["R"] = "Rplace",
+	["R"] = "Replace",
 	["Rv"] = "V·Rep",
 	["c"] = "Cmmand",
 	["cv"] = "V·Ex",
@@ -26,42 +26,43 @@ local modes = {
 	["r?"] = "Confirm",
 	["!"] = "Shell",
 	["t"] = "Term  ",
-	["ntT"] = "nTerm ",
+	["ntT"] = "nTerminal",
 }
 
 function statusline.mode()
 	local mode = modes[vim.fn.mode()] or " "
+	local mode_format = string.format(" %s ", mode)
 	if mode == "Normal" then
-		return hl("StatusLineHeaderNorm", string.format(" %s ", mode))
+		return hl("StatusLineHeaderNorm", mode_format)
 	elseif mode == "Cmmand" then
-		return hl("StatusLineHeaderCmd", string.format(" %s ", mode))
+		return hl("StatusLineHeaderCmd", mode_format)
 	elseif mode == "Term  " then
-		return hl("StatusLineHeaderTerm", string.format(" %s ", mode))
+		return hl("StatusLineHeaderTerm", mode_format)
 	else
-		return hl("StatusLineHeader", string.format(" %s ", mode))
+		return hl("StatusLineHeader", mode_format)
 	end
 end
 
 function statusline.mode_nc()
 	local mode = modes[vim.fn.mode()] or " "
-	return hl("StatusLineNC", string.format(" %s ", mode))
+	local mode_format = string.format(" %s ", mode)
+	return hl("StatusLineNC", mode_format)
 end
 
 function statusline.position()
 	local line = vim.fn.getpos(".")[2]
 	local col = vim.fn.getpos(".")[3]
 	if vim.bo.buftype == "terminal" then
-		return hl("StatusLineTerm", string.format("[%3d:%3d]", line, col))
+		return hl("StatusLineTerm", string.format("[%3d:%3d ", line, col) .. "%P]")
 	else
-		return hl("StatusLinePos", string.format("[%3d:%3d]", line, col))
+		return hl("StatusLinePos", string.format("[%3d:%3d ", line, col) .. "%P]")
 	end
 end
 
 function statusline.position_nc()
 	local line = vim.fn.getpos(".")[2]
 	local col = vim.fn.getpos(".")[3]
-	return string.format("[%3d:%3d]", line, col)
-	-- return hl("StatusLineNC", string.format("[%3d:%3d]", line, col))
+	return string.format("[%3d:%3d ", line, col) .. "%P]"
 end
 
 function statusline.git_branch()
@@ -92,6 +93,11 @@ function statusline.git_info()
 	local removed = gitsigns.removed or 0
 
 	local signs = {}
+
+	-- if gitsigns and gitsigns.head and gitsigns.head ~= "" then
+	-- 	local branch_info = " " .. gitsigns.head
+	-- 	table.insert(signs, branch_info)
+	-- end
 
 	if added > 0 then
 		table.insert(signs, "+" .. added)
@@ -131,12 +137,12 @@ end
 function statusline.info()
 	local info = {}
 
-	local mode = modes[vim.fn.mode()] or " "
-	if mode == "Normal" then
-		table.insert(info, " >> ")
-	else
-		table.insert(info, hl("Number", " >> "))
-	end
+	-- local mode = modes[vim.fn.mode()] or " "
+	-- if mode == "Normal" then
+	-- 	table.insert(info, " >> ")
+	-- else
+	-- 	table.insert(info, hl("Number", " >> "))
+	-- end
 
 	local buf = vim.api.nvim_get_current_buf()
 	local readonly = vim.api.nvim_get_option_value("readonly", { buf = buf })
@@ -144,12 +150,12 @@ function statusline.info()
 		table.insert(info, "%r")
 	end
 
-	-- local git = statusline.git_info()
-	-- if git ~= "" then
-	-- 	table.insert(info, git)
-	-- end
+	local branch = statusline.git_branch()
+	if branch ~= "" then
+		table.insert(info, branch)
+	end
 
-	local git = statusline.git_branch()
+	local git = statusline.git_info()
 	if git ~= "" then
 		table.insert(info, git)
 	end
@@ -164,14 +170,41 @@ function statusline.info()
 	return #info > 0 and " " .. table.concat(info, " ") or " "
 end
 
+local function get_buffer_icon(buf, filetype)
+	local present, devicons = pcall(require, "nvim-web-devicons")
+	if not present then
+		return ""
+	end
+
+	local icon = devicons.get_icon(buf, filetype, { default = true }) or ""
+	return icon ~= "" and icon .. " " or ""
+end
+
 function statusline.diag()
 	local diag = vim.diagnostic.get(0)
 	if next(diag) == nil then
 		return " "
 	else
 		return " " .. vim.diagnostic.status(0) .. " "
-		-- return hl("Number", "")
 	end
+end
+
+local function supports_method(method)
+	local clients = vim.lsp.get_clients { bufnr = 0 }
+
+	for _, client in pairs(clients) do
+		if client.server_capabilities[method] then
+			return true
+		end
+	end
+	return false
+end
+
+function statusline.lsp_action()
+	if supports_method "codeActionProvider" then
+		return "󰮗"
+	end
+	return ""
 end
 
 function statusline.filetype()
@@ -183,8 +216,8 @@ function statusline.lsp_status()
 	local filetype = vim.bo.filetype:gsub("^%l", string.upper)
 
 	local clients = vim.lsp.get_clients { bufnr = 0 }
-	if #clients == 0 then
-		return "[" .. filetype .. "]"
+	if next(clients) == nil then
+		return hl("StatusLineLsp", "[" .. filetype .. "]")
 	end
 
 	local client_names = {}
@@ -201,8 +234,8 @@ function statusline.lsp_status_nc()
 	local filetype = vim.bo.filetype:gsub("^%l", string.upper)
 
 	local clients = vim.lsp.get_clients { bufnr = 0 }
-	if #clients == 0 then
-		return "[" .. filetype .. "]"
+	if next(clients) == nil then
+		return hl("StatusLineNC", "[" .. filetype .. "]")
 	end
 
 	local client_names = {}
@@ -217,27 +250,27 @@ end
 
 local spinner_idx = 0
 local icons = {
-	spinner = {
-		"🌑 ",
-		"🌒 ",
-		"🌓 ",
-		"🌔 ",
-		"🌕 ",
-		"🌖 ",
-		"🌗 ",
-		"🌘 ",
-	},
 	-- spinner = {
-	-- 	"⣾",
-	-- 	"⣽",
-	-- 	"⣻",
-	-- 	"⢿",
-	-- 	"⡿",
-	-- 	"⣟",
-	-- 	"⣯",
-	-- 	"⣷",
+	-- 	"🌑 ",
+	-- 	"🌒 ",
+	-- 	"🌓 ",
+	-- 	"🌔 ",
+	-- 	"🌕 ",
+	-- 	"🌖 ",
+	-- 	"🌗 ",
+	-- 	"🌘 ",
 	-- },
-	done = " ",
+	spinner = {
+		"⣾",
+		"⣽",
+		"⣻",
+		"⢿",
+		"⡿",
+		"⣟",
+		"⣯",
+		"⣷",
+	},
+	done = " ",
 }
 local progress_active = false
 
@@ -249,7 +282,7 @@ function statusline.lsp_progress()
 		return icons.spinner[spinner_idx] .. " " .. status
 	elseif progress_active then
 		progress_active = false
-		return icons.done .. " DONE"
+		return "DONE " .. icons.done
 	else
 		return ""
 	end
@@ -257,10 +290,12 @@ end
 
 function statusline.treesitter()
 	local current_node
-	local win_width = vim.api.nvim_list_uis()[1].width
-	if win_width > 115 and vim.opt.laststatus:get() == 3 then
+	local win_width = vim.api.nvim_win_get_width(0)
+	if win_width > 150 then
 		if vim.bo.filetype == "tex" then
-			current_node = require("nvim-treesitter").statusline { type_patterns = { "generic_environment", "begin" } }
+			current_node = require("nvim-treesitter").statusline {
+				type_patterns = { "generic_environment", "begin", "display_equation" },
+			}
 			if current_node ~= "" then
 				current_node = current_node:gsub("\\begin{(.-)}", "%1")
 			end
@@ -269,20 +304,9 @@ function statusline.treesitter()
 				type_patterns = { "class", "function", "method", "for_statement" },
 			}
 		end
-		return current_node
-	else
-		return ""
-	end
-end
-
-local function get_buffer_icon(buf, filetype)
-	local present, devicons = pcall(require, "nvim-web-devicons")
-	if not present then
-		return ""
 	end
 
-	local icon = devicons.get_icon(buf, filetype, { default = true }) or ""
-	return icon ~= "" and icon .. " " or ""
+	return current_node or ""
 end
 
 function statusline.centered_buffer()
@@ -308,15 +332,15 @@ function statusline.centered_buffer()
 	local buffer_len = vim.fn.strdisplaywidth(buffer_text_plain)
 
 	local mode = modes[vim.fn.mode()] or " "
-	local mode_len = vim.fn.strdisplaywidth(string.format(" %s ", mode))
+	local mode_format = string.format(" %s ", mode)
+	local mode_len = vim.fn.strdisplaywidth(mode_format)
 
-	local search = statusline.search_count()
-	local search_len = vim.fn.strdisplaywidth(search)
+	-- local search = statusline.search_count()
+	-- local search_len = vim.fn.strdisplaywidth(search)
 
 	local info_plain = ""
 
-	info_plain = info_plain .. " >>  "
-	-- info_plain = info_plain
+	-- info_plain = info_plain .. " >>  "
 
 	local buf_current = vim.api.nvim_get_current_buf()
 	local readonly = vim.api.nvim_get_option_value("readonly", { buf = buf_current })
@@ -331,14 +355,16 @@ function statusline.centered_buffer()
 		end
 	end
 
-	-- local git = statusline.git_info()
-	local git = statusline.git_branch()
-	if git ~= "" then
-		info_plain = info_plain .. " " .. git
+	local git = statusline.git_info()
+	info_plain = info_plain .. " " .. git
+
+	local branch = statusline.git_branch()
+	if branch ~= nil then
+		info_plain = info_plain .. " " .. branch
 	end
 
 	local info_len = vim.fn.strdisplaywidth(info_plain)
-	local left_len = mode_len + info_len + search_len
+	local left_len = mode_len + info_len
 
 	local win_width
 	if vim.opt.laststatus:get() == 3 then
@@ -350,7 +376,11 @@ function statusline.centered_buffer()
 	local padding = math.max(0, math.floor((win_width - buffer_len) / 2) - left_len)
 
 	local buffer_text
-	buffer_text = icon .. bufdir .. "/" .. hl("StatusLineBufName", bufname) .. modified
+	if vim.bo.buftype == "terminal" then
+		buffer_text = icon .. bufdir .. "/" .. hl("StatusLineBufNameTerm", bufname) .. modified
+	else
+		buffer_text = icon .. bufdir .. "/" .. hl("StatusLineBufName", bufname) .. modified
+	end
 
 	return string.rep(" ", padding) .. buffer_text
 end
@@ -358,14 +388,59 @@ end
 -- normal buffer name display in any align container
 function statusline.buffer()
 	local buf = vim.api.nvim_buf_get_name(0)
+	if buf == "" then
+		return "  " .. get_buffer_icon(buf, "") .. "[No name]"
+	end
+
 	local bufdir = vim.fn.fnamemodify(buf, ":~:.:h")
+	local parts = vim.split(buf, "/")
+
+	local bufdir_short
+	if #parts > 3 then
+		bufdir_short = vim.fn.pathshorten(bufdir)
+	else
+		bufdir_short = bufdir
+	end
+
 	local bufname = vim.fn.fnamemodify(buf, ":t")
 	local modified = vim.bo.modified and "[+]" or ""
+
+	local filetype = vim.fn.fnamemodify(buf, ":e")
+	local icon = get_buffer_icon(buf, filetype)
+
 	if vim.bo.buftype == "terminal" then
-		return hl("StatusLineTerm", bufdir .. "/") .. hl("StatusLineTerm", bufname) .. modified
+		return hl("StatusLineBufDir", " " .. get_buffer_icon(buf, "terminal") .. bufdir_short .. "/")
+			.. hl("StatusLineBufName", bufname)
+			.. modified
 	else
-		return hl("StatusLineBufDir", bufdir .. "/") .. hl("StatusLineBufName", bufname) .. modified
+		return hl("StatusLineBufDir", " " .. icon .. bufdir_short .. "/")
+			.. hl("StatusLineBufName", bufname)
+			.. modified
 	end
+end
+
+function statusline.buffer_nc()
+	local buf = vim.api.nvim_buf_get_name(0)
+	local bufdir = vim.fn.fnamemodify(buf, ":~:.:h")
+	local parts = vim.split(buf, "/")
+
+	local bufdir_short
+	if #parts > 3 then
+		bufdir_short = vim.fn.pathshorten(bufdir)
+	else
+		bufdir_short = bufdir
+	end
+
+	local bufname = vim.fn.fnamemodify(buf, ":t")
+	local modified = vim.bo.modified and "[+]" or ""
+
+	local filetype = vim.fn.fnamemodify(buf, ":e")
+	local icon = get_buffer_icon(buf, filetype)
+
+	if vim.bo.buftype == "terminal" then
+		return "  " .. get_buffer_icon(buf, "terminal") .. bufdir_short .. "/" .. bufname .. modified
+	end
+	return "  " .. icon .. bufdir_short .. "/" .. bufname .. modified
 end
 
 -- useful for cmdheight=0, shows in ruler with cmdheight=1
@@ -403,48 +478,57 @@ local components = {
 	version = "%{%v:lua.statusline.version()%}",
 	lsp_progress = "%{%v:lua.statusline.lsp_progress()%}",
 	treesitter = "%{%v:lua.statusline.treesitter()%}",
+	git_branch = "%{%v:lua.statusline.git_branch()%}",
 	git_info = "%{%v:lua.statusline.git_info()%}",
 	filetype = "%{%v:lua.statusline.filetype()%}",
+	lsp_action = "%{%v:lua.statusline.lsp_action()%}",
 
 	mode_nc = "%{%v:lua.statusline.mode_nc()%}",
+	buffer_nc = "%{%v:lua.statusline.buffer_nc()%}",
 	position_nc = "%{%v:lua.statusline.position_nc()%}",
 	lsp_status_nc = "%{%v:lua.statusline.lsp_status_nc()%}",
 }
 
 local status = table.concat {
 	components.mode,
+	-- components.buffer,
+	-- " ",
 	components.info,
-	components.search_count,
+	-- components.search_count,
 	components.centered_buffer,
 	"    ",
 	components.align,
+	components.truncate,
 	components.treesitter,
-	"  ",
+	"   ",
+	-- components.lsp_action,
+	" ",
 	components.lsp_progress,
 	" ",
 	components.diag,
-	components.truncate,
-	components.git_info,
-	components.position,
 	components.lsp_status,
+	components.position,
 }
 
 local status_nc = table.concat {
 	components.mode_nc,
+	-- components.buffer_nc,
+	-- " ",
 	components.info,
-	components.search_count,
+	-- components.search_count,
 	components.centered_buffer,
 	"    ",
 	components.align,
-	components.treesitter,
-	"  ",
-	components.lsp_progress,
+	components.truncate,
+	-- components.treesitter,
+	"   ",
+	-- components.lsp_action,
+	" ",
+	-- components.lsp_progress,
 	" ",
 	components.diag,
-	components.truncate,
-	components.git_info,
-	components.position_nc,
 	components.lsp_status_nc,
+	components.position_nc,
 }
 
 function statusline.get()
@@ -459,3 +543,5 @@ vim.api.nvim_create_autocmd("LspProgress", {
 		vim.cmd "redrawstatus"
 	end,
 })
+
+vim.opt.showmode = true

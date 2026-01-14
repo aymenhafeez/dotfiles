@@ -1,5 +1,3 @@
-local builtin = require "telescope.builtin"
-local themes = require "telescope.themes"
 local tele = require "ah.telescope"
 
 vim.keymap.set("n", "<leader>gs", tele.git_status)
@@ -22,6 +20,7 @@ vim.keymap.set("n", "<leader>gn", tele.grep_notes)
 vim.keymap.set("n", "<leader>sg", tele.live_grep)
 vim.keymap.set("n", "<leader>gl", tele.grep_plugins)
 vim.keymap.set("n", "<leader>g.", tele.grep_config)
+vim.keymap.set("n", "<leader>gp", tele.grep_projects)
 
 vim.keymap.set("n", "<leader>s.", tele.search_config)
 vim.keymap.set("n", "<leader>sl", tele.search_plugins)
@@ -32,4 +31,13 @@ vim.keymap.set("n", "<leader>fn", tele.browse_notes)
 
 vim.keymap.set("n", "<leader>tq", tele.search_quickfix)
 
-vim.keymap.set("c", "<c-r><c-r>", tele.command_history)
+vim.keymap.set("n", "<leader>:", tele.command_history)
+vim.keymap.set(
+	"c",
+	"<C-r><C-r>",
+	"<C-\\>e \"lua require('telescope.builtin').command_history "
+		.. '{ default_text = [=[" . escape(getcmdline(), \'"\') . "]=] }"<CR><CR>'
+)
+
+vim.keymap.set("n", "<leader>lh", tele.latex_headings)
+vim.keymap.set("n", "<leader>st", tele.todo_comments)
