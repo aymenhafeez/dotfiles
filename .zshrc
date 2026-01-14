@@ -49,29 +49,27 @@ bindkey '^n' autosuggest-accept
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
-# preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='nvim'
-else
-    export EDITOR='gvim'
-fi
+EDITOR="nvim"
 
-# cd() {
-#     if ! z "$@"; then
-#         builtin cd "$@" || return
-#     fi
-#     echo -e "\n $(pwd)\n"
-#     ls -alh
-# }
+cd() {
+    if ! z "$@"; then
+        builtin cd "$@" || return
+    fi
+    echo -e "\n $(pwd)\n"
+    ls -alh
+}
 
-# ls_func() { ls -alh; }
-# chpwd_functions+=(ls_func)
+ls_func() { ls -alh; }
+chpwd_functions+=(ls_func)
 
 # alias python=python3
 alias python='QT_QPA_PLATFORM=wayland python3'
 alias pip=pip3
 alias jqt='QT_QPA_PLATFORM=wayland jupyter qtconsole'
 alias ltmk='latexmk -interaction=nonstopmode -halt-on-error -pdf -output-directory=build'
+alias ls="exa"
+alias ll="ls -alh"
+alias pypy="$HOME/tmp/pypy/pypy3.11-v7.3.20-linux64/bin/pypy"
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
@@ -102,7 +100,14 @@ node() { lazy_load_nvm; node "$@"; }
 npm() { lazy_load_nvm; npm "$@"; }
 npx() { lazy_load_nvm; npx "$@"; }
 
+export ZED_ALLOW_EMULATED_GPU=0
+export MESA_VK_DEVICE_SELECT=8086:46a6
+
 eval "$(starship init zsh)"
 starship preset nerd-font-symbols -o ~/.config/starship.toml
+# starship preset pure-preset -o ~/.config/starship.toml
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/tmp/ghostty/zig/zig-x86_64-linux-0.15.2:$PATH"
+# export PATH="$HOME/tmp/pypy/pypy3.11-v7.3.20-linux64/bin/:$PATH"
