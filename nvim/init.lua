@@ -5,13 +5,6 @@
 --          \ \  \ \  \ \  \ \  \    https://aymenhafeez.github.io
 --           \|__|\|__|\|__|\|__|
 
-if vim.g.neovide then
-	vim.g.neovide_cursor_trail_legnth = 0
-	vim.g.neovide_cursor_animation_length = 0
-	vim.g.neovide_floating_corner_radius = 0.2
-	vim.o.guifont = "Jetbrains Mono,nonicons:h10"
-end
-
 -- needs to go before loading lazy.nvim
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

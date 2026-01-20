@@ -31,7 +31,7 @@ local function on_line(_, winid, bufnr, row)
 		if start <= row and row < end_ then
 			vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
 				ephemeral = true,
-				virt_text = { { "▐", "Comment" } },
+				virt_text = { { "▐", "NonText" } },
 				virt_text_pos = "right_align",
 				virt_text_repeat_linebreak = true,
 			})

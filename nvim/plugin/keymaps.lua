@@ -96,13 +96,35 @@ map("n", "<leader><leader>c", "<cmd>copen<CR>")
 map("n", "<leader><leader>q", "<cmd>cclose<CR>")
 
 -- :h cmdline-editing
-map({ "i", "c" }, "<C-n>", "<Down>")
-map({ "i", "c" }, "<C-p>", "<Up>")
+
 map({ "i", "c" }, "<C-b>", "<left>")
 map({ "i", "c" }, "<C-f>", "<right>")
 map({ "i", "c" }, "<C-a>", "<home>")
 map("c", "<M-b>", "<S-left>")
 map("c", "<M-f>", "<S-right>")
+
+vim.keymap.set({ "i", "c" }, "<C-n>", "<Down>")
+vim.keymap.set({ "i", "c" }, "<C-p>", "<Up>")
+
+vim.keymap.set({ "t" }, "<C-n>", function()
+	if vim.bo.filetype == "fzf" then
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Up>", true, false, true), "t", false)
+		return ""
+	else
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Down>", true, false, true), "t", false)
+		return ""
+	end
+end)
+
+vim.keymap.set({ "t" }, "<C-p>", function()
+	if vim.bo.filetype == "fzf" then
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Down>", true, false, true), "t", false)
+		return ""
+	else
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Up>", true, false, true), "t", false)
+		return ""
+	end
+end)
 
 map("n", "<leader>nt", "<cmd>tabnew<CR>")
 map({ "n", "t" }, "<leader>]", "<cmd>tabn<CR>")
@@ -114,6 +136,14 @@ map("v", "J", ":m '>+1<CR>gv=gv")
 
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+-- search within visual selection
+-- (https://www.reddit.com/r/neovim/comments/1kv7som/search_within_selection_in_neovim/)
+map("x", "/", "<C-\\><C-n>`</\\%V\\(\\)<Left><Left>")
+map("x", "?", "<C-\\><C-n>`>?\\%V\\(\\)<Left><Left>")
+
+-- delete selection in selection mode
+map("s", "<BS>", '<C-o>"_s')
 
 -- my keyboard doesn't have a backslash key
 map({ "i", "c", "t" }, "zx", "\\")
@@ -166,9 +196,7 @@ end)
 vim.keymap.set("x", "g??", function()
 	vim.ui.open(
 		("https://google.com/search?q=%s"):format(
-			vim.trim(
-				table.concat(vim.fn.getregion(vim.fn.getpos ".", vim.fn.getpos "v", { type = vim.fn.mode() }), " ")
-			)
+			vim.trim(table.concat(vim.fn.getregion(vim.fn.getpos ".", vim.fn.getpos "v", { type = vim.fn.mode() }), " "))
 		)
 	)
 	vim.api.nvim_input "<esc>"

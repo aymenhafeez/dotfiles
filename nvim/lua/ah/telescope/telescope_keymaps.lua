@@ -35,7 +35,7 @@ vim.keymap.set("n", "<leader>:", tele.command_history)
 vim.keymap.set(
 	"c",
 	"<C-r><C-r>",
-	"<C-\\>e \"lua require('telescope.builtin').command_history "
+	"<C-\\>e \"lua require('ah.telescope').command_history "
 		.. '{ default_text = [=[" . escape(getcmdline(), \'"\') . "]=] }"<CR><CR>'
 )
 

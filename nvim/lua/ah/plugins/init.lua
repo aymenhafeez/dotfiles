@@ -10,20 +10,6 @@ return {
 		end,
 	},
 	{
-		"mcauley-penney/visual-whitespace.nvim",
-		event = "ModeChanged *:[vV\22]", -- optionally, lazy load on entering visual mode
-		opts = {
-			list_chars = {
-				space = "·",
-				tab = "··",
-				nbsp = "␣",
-				lead = "‹",
-				trail = "›",
-			},
-		},
-	},
-
-	{
 		"luukvbaal/statuscol.nvim",
 		config = function()
 			require("statuscol").setup {
@@ -38,7 +24,7 @@ return {
 					{ text = { require("statuscol.builtin").lnumfunc }, click = "v:lua.ScLa" },
 					{ text = { "  " } },
 					{
-						sign = { namespace = { "gitsigns" }, maxwidth = 1, auto = true },
+						sign = { namespace = { "gitsigns" }, maxwidth = 1, auto = true, fillchar = " " },
 						click = "v:lua.ScSa",
 					},
 				},
@@ -62,19 +48,6 @@ return {
 		end,
 	},
 
-	{
-		"rmagatti/auto-session",
-		lazy = false,
-		---enables autocomplete for opts
-		---@module "auto-session"
-		---@type AutoSession.Config
-		opts = {
-			auto_save = false,
-			suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-			-- log_level = 'debug',
-		},
-	},
-
 	{ "kyazdani42/nvim-web-devicons" },
 	{
 		"yamatsum/nvim-web-nonicons",
@@ -82,4 +55,15 @@ return {
 			require("nvim-nonicons").setup {}
 		end,
 	},
+
+	-- {
+	-- 	"sonph/onehalf",
+	-- 	-- config = function()
+	-- 	-- 	vim.cmd [[
+	-- 	--     colorscheme darcula-solid
+	-- 	--     set winborder=rounded
+	-- 	--     hi StatusLine guibg=#5E74AA
+	-- 	--     ]]
+	-- 	-- end,
+	-- },
 }

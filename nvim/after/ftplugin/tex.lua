@@ -19,15 +19,15 @@ map({ "n", "i" }, "<C-c><C-k>", "<Esc>O\\item ", { noremap = true, silent = true
 
 local file_name = vim.fn.expand "%:t:r"
 map(
-  "n",
-  "<leader>cm",
-  "<cmd>lua require('ah.terminal').toggle_terminal({cmd='latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build "
-    .. file_name
-    .. "'})<CR>"
+	"n",
+	"<leader>cm",
+	"<cmd>lua require('ah.terminal').toggle_terminal({cmd='latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build "
+		.. file_name
+		.. "'})<CR>"
 )
 
 map("n", "<leader>pv", function()
-  vim.cmd(":!open build/" .. vim.fn.expand "%:t:r" .. ".pdf")
+	vim.cmd(":!xdg-open build/" .. vim.fn.expand "%:t:r" .. ".pdf")
 end)
 
 -- my keyboard doesn't have a backslash

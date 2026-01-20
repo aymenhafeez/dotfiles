@@ -1,0 +1,14 @@
+-- _G.statuscolumn = function()
+-- 	return table.concat {
+-- 		-- Your line numbers
+-- 		vim.v.relnum ~= 0 and vim.v.relnum or vim.v.lnum,
+-- 		-- Spacing
+-- 		" ",
+-- 		-- Gitsigns
+-- 		vim.F.npcall(function()
+-- 			return require("gitsigns").statuscolumn()
+-- 		end) or "",
+-- 	}
+-- end
+--
+-- vim.opt.statuscolumn = "%s%=%{%v:lua.statuscolumn()%}"

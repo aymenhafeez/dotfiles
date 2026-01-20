@@ -4,27 +4,63 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 	callback = function(event)
 		local map = vim.keymap.set
-		local telescope = require "telescope.builtin"
-		local themes = require "telescope.themes"
 
 		map("n", "<leader>rn", vim.lsp.buf.rename)
 		map({ "n", "x" }, "gra", vim.lsp.buf.code_action)
-		map("n", "grr", function()
-			telescope.lsp_references(themes.get_ivy {})
-		end)
-		map("n", "gi", telescope.lsp_implementations, { desc = "Go to implementation" })
-		map("n", "gd", telescope.lsp_definitions, { desc = "Go to definition (first declaration)" })
-		map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration (all declarations)" })
-		map("n", "gO", telescope.lsp_document_symbols)
-		map("n", "gW", telescope.lsp_dynamic_workspace_symbols)
-		map("n", "td", telescope.lsp_type_definitions, { desc = "Go to type definition" })
-		map("n", "K", vim.lsp.buf.hover)
+		map("n", "grr", vim.lsp.buf.references)
+		map("n", "gi", vim.lsp.buf.implementation)
+		map("n", "gd", vim.lsp.buf.definition)
+		map("n", "gD", vim.lsp.buf.declaration)
+		map("n", "gO", vim.lsp.buf.document_symbol)
+		map("n", "gW", vim.lsp.buf.workspace_symbol)
+		map("n", "td", vim.lsp.buf.type_definition)
+		-- map("n", "K", vim.lsp.buf.hover)
 		map("n", "]d", function()
 			vim.diagnostic.jump { count = 1, float = true }
 		end)
 		map("n", "[d", function()
 			vim.diagnostic.jump { count = -1, float = true }
 		end)
+
+		-- local telescope = require "telescope.builtin"
+		-- local themes = require "telescope.themes"
+
+		-- map("n", "<leader>rn", vim.lsp.buf.rename)
+		-- map({ "n", "x" }, "gra", vim.lsp.buf.code_action)
+		-- map("n", "grr", function()
+		-- 	telescope.lsp_references(themes.get_ivy {})
+		-- end)
+		-- map("n", "gi", telescope.lsp_implementations, { desc = "Go to implementation" })
+		-- map("n", "gd", telescope.lsp_definitions, { desc = "Go to definition (first declaration)" })
+		-- map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration (all declarations)" })
+		-- map("n", "gO", telescope.lsp_document_symbols)
+		-- map("n", "gW", telescope.lsp_dynamic_workspace_symbols)
+		-- map("n", "td", telescope.lsp_type_definitions, { desc = "Go to type definition" })
+		-- map("n", "K", vim.lsp.buf.hover)
+		-- map("n", "]d", function()
+		-- 	vim.diagnostic.jump { count = 1, float = true }
+		-- end)
+		-- map("n", "[d", function()
+		-- 	vim.diagnostic.jump { count = -1, float = true }
+		-- end)
+
+		-- map("n", "<leader>rn", vim.lsp.buf.rename)
+		-- map({ "n", "x" }, "gra", "<cmd>FzfLua lsp_code_actions<CR>")
+		-- map("n", "grr", "<cmd>FzfLua lsp_references<CR>")
+		-- map("n", "gi", "<cmd>FzfLua lsp_implementations<CR>")
+		-- map("n", "gd", "<cmd>FzfLua lsp_definitions<CR>")
+		-- map("n", "gD", "<cmd>FzfLua lsp_declarations<CR>")
+		-- map("n", "gO", "<cmd>FzfLua lsp_document_symbols<CR>")
+		-- map("n", "gW", "<cmd>FzfLua lsp_workspace_symbols<CR>")
+		-- map("n", "<leader>sl", "<cmd>FzfLua lsp_find<CR>")
+		-- map("n", "td", "<cmd>FzfLua lsp_typedefs<CR>")
+		-- map("n", "K", vim.lsp.buf.hover)
+		-- map("n", "]d", function()
+		-- 	vim.diagnostic.jump { count = 1, float = true }
+		-- end)
+		-- map("n", "[d", function()
+		-- 	vim.diagnostic.jump { count = -1, float = true }
+		-- end)
 
 		---@param client vim.lsp.Client
 		---@param method vim.lsp.protocol.Method
@@ -42,8 +78,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		local client = vim.lsp.get_client_by_id(event.data.client_id)
 		if
-			client
-			and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
+			client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
 		then
 			local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
 			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -73,7 +108,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			end, { desc = "Toggle Inlay Hints" })
 		end
 
-		vim.opt.updatetime = 150
+		vim.opt.updatetime = 300
 	end,
 })
 
@@ -88,9 +123,10 @@ local diagnostic_signs = {
 
 vim.diagnostic.config {
 	severity_sort = true,
-	signs = {
-		text = diagnostic_signs,
-	},
+	-- signs = {
+	-- 	text = diagnostic_signs,
+	-- },
+	signs = false,
 	status = {
 		text = diagnostic_signs,
 	},

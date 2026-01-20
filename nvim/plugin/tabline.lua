@@ -13,7 +13,7 @@ function _G.tabline()
 
 		s = s .. "%" .. tab_num .. "T"
 		s = s .. (is_current and "%#TabLineSel#" or "%#TabLine#")
-		s = s .. " " .. tab_num .. ": "
+		s = s .. " " .. tab_num .. ":"
 
 		local win = vim.api.nvim_tabpage_get_win(tab)
 		local buf = vim.api.nvim_win_get_buf(win)
@@ -26,7 +26,7 @@ function _G.tabline()
 			filename = vim.fn.pathshorten(vim.fn.fnamemodify(bufname, ":~:."))
 		end
 
-		s = s .. "[" .. filename .. "] "
+		s = s .. " " .. filename .. " "
 
 		if vim.api.nvim_get_option_value("modified", { buf = buf }) then
 			s = s .. "[+]"

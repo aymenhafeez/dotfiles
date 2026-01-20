@@ -51,9 +51,7 @@ local options = {
 			show_on_backspace_in_keyword = true,
 		},
 		ghost_text = {
-			enabled = function()
-				return not require("supermaven-nvim.api").is_running()
-			end,
+			enabled = true,
 		},
 		menu = {
 			winblend = 10,
@@ -122,10 +120,16 @@ local options = {
 		},
 	},
 	sources = {
-		default = { "lsp", "lazydev", "path", "snippets", "buffer" },
+		-- default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+		default = { "lsp", "path", "snippets", "buffer" },
 		providers = {
 			lsp = { fallbacks = {} },
-			lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
+			-- lazydev = {
+			-- 	name = "LazyDev",
+			-- 	module = "lazydev.integrations.blink",
+			-- 	-- make lazydev completions top priority (see `:h blink.cmp`)
+			-- 	score_offset = 100,
+			-- },
 		},
 	},
 	snippets = { preset = "luasnip" },

@@ -12,6 +12,15 @@ local action_state = require "telescope.actions.state"
 
 local icons = require "nvim-nonicons"
 
+local function width()
+	local win_width = vim.api.nvim_list_uis()[1].width
+	if win_width < 120 then
+		return 0.75
+	else
+		return 0.5
+	end
+end
+
 local options = {
 	defaults = {
 		multi_icon = "<>",
@@ -69,11 +78,25 @@ local options = {
 			},
 		},
 	},
-	-- pickers = {
-	-- 	lsp_references = {
-	-- 		theme = "ivy",
-	-- 	},
-	-- },
+	pickers = {
+		find_files = {
+			-- theme = "ivy",
+			layout_strategy = "bottom_pane",
+			sorting_strategy = "descending",
+			layout_config = {
+				-- anchor = "SW",
+				-- anchor_padding = 0,
+				prompt_position = "bottom",
+				height = 0.6,
+				width = width(),
+			},
+			attach_mappings = function(_, map)
+				map("i", "<C-p>", action.move_selection_next)
+				map("i", "<C-n>", action.move_selection_previous)
+				return true
+			end,
+		},
+	},
 	extensions = {
 		file_browser = {
 			layout_strategy = "bottom_pane",
@@ -109,5 +132,5 @@ pcall(require("telescope").load_extension, "fzf")
 pcall(require("telescope").load_extension, "ui-select")
 pcall(require("telescope").load_extension, "file_browser")
 pcall(require("telescope").load_extension, "notify")
-pcall(require("telescope").load_extension, "tab_buffers")
+-- pcall(require("telescope").load_extension, "tab_buffers")
 pcall(require("telescope").load_extension, "pydoc")

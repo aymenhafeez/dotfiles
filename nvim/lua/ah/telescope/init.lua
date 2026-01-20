@@ -10,8 +10,19 @@ local make_entry = require "telescope.make_entry"
 
 local M = {}
 
+local function width()
+	-- local win_width = vim.api.nvim_win_get_width(0)
+	local win_width = vim.api.nvim_list_uis()[1].width
+	if win_width < 120 then
+		return 0.75
+	else
+		return 0.5
+	end
+end
+
 local ignore_patterns = {
 	"%.ipynb",
+	"%.pyx",
 	"%.gif",
 	"%.GIF",
 	"%.log",
@@ -77,7 +88,7 @@ function M.latex_headings(opts)
 			layout_config = {
 				prompt_position = "top",
 				height = 0.75,
-				width = 0.75,
+				width = width(),
 			},
 			finder = finders.new_table {
 				results = headers,
@@ -144,7 +155,7 @@ function M.todo_comments(opts)
 			layout_config = {
 				prompt_position = "top",
 				height = 0.75,
-				width = 0.75,
+				width = width(),
 			},
 			finder = finders.new_table {
 				results = todo,
@@ -214,7 +225,7 @@ end
 
 function M.search_projects()
 	local opts = {
-		cwd = "~/Documents/projects/",
+		cwd = "~/projects/",
 		file_ignore_patterns = ignore_patterns,
 		prompt_title = "Projects",
 	}
@@ -224,19 +235,23 @@ end
 
 function M.help_tags()
 	local opts = {
-		sorting_strategy = "ascending",
+		sorting_strategy = "descending",
+		layout_strategy = "bottom_pane",
 		winblend = 10,
 		layout_config = {
-			prompt_position = "top",
+			-- anchor = "S",
+			-- anchor_padding = 0,
+			prompt_position = "bottom",
+			height = 0.65,
 		},
 		attach_mappings = function(_, map)
-			map("i", "<C-n>", action.move_selection_next)
-			map("i", "<C-p>", action.move_selection_previous)
+			map("i", "<C-p>", action.move_selection_next)
+			map("i", "<C-n>", action.move_selection_previous)
 			return true
 		end,
 	}
 
-	require("telescope.builtin").help_tags(opts)
+	require("telescope.builtin").help_tags(themes.get_dropdown(opts))
 end
 
 function M.file_browser()
@@ -254,24 +269,21 @@ end
 
 function M.cur_buffer_search()
 	local opts = {
+		layout_strategy = "bottom_pane",
+		sorting_strategy = "descending",
 		winblend = 10,
-		border = true,
-		shorten_path = false,
-		sorting_strategy = "ascending",
 		previewer = false,
 		layout_config = {
-			prompt_position = "top",
-			anchor = "SW",
-			anchor_padding = 0,
-			height = 0.4,
-			width = 0.75 * vim.api.nvim_win_get_width(0),
+			prompt_position = "bottom",
+			height = 0.6,
 		},
 		attach_mappings = function(_, map)
-			map("i", "<C-n>", action.move_selection_next)
-			map("i", "<C-p>", action.move_selection_previous)
+			map("i", "<C-p>", action.move_selection_next)
+			map("i", "<C-n>", action.move_selection_previous)
 			return true
 		end,
 	}
+
 	require("telescope.builtin").current_buffer_fuzzy_find(opts)
 end
 
@@ -332,7 +344,7 @@ end
 
 function M.grep_projects(opts)
 	opts = opts or {}
-	opts.cwd = "~/Documents/projects/"
+	opts.cwd = "~/projects/"
 	opts.prompt_title = "Projects"
 	opts.file_ignore_patterns = ignore_patterns
 
@@ -402,11 +414,13 @@ end
 function M.command_history(opts)
 	opts = opts or {}
 	opts.previewer = false
+	opts.sorting_strategy = "descending"
 	opts.layout_config = {
 		prompt_position = "bottom",
 		width = math.floor(0.75 * vim.o.columns),
 		height = 0.5,
 		anchor = "SW",
+		anchor_padding = 0,
 	}
 	opts.attach_mappings = function(_, map)
 		map("i", "<C-n>", action.move_selection_next)

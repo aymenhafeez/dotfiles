@@ -1,80 +1,68 @@
 local M = {}
 
 function M.setup()
-	local present, treesitter = pcall(require, "nvim-treesitter.configs")
-	if not present then
-		return
-	end
-
-	---@diagnostic disable-next-line: missing-fields
-	treesitter.setup {
-		highlight = {
-			enable = true,
-			additional_vim_regex_highlighting = { "latex" },
+	-- Setup textobjects configuration
+	require("nvim-treesitter-textobjects").setup {
+		select = {
+			lookahead = true,
+			selection_modes = {
+				["@parameter.outer"] = "v", -- charwise
+				["@function.outer"] = "V", -- linewise
+				["@class.outer"] = "<c-v>", -- blockwise
+			},
+			include_surrounding_whitespace = false,
 		},
-		indent = { enable = true },
-		incremental_selection = {
-			enable = true,
-			keymaps = {
-				init_selection = "<c-m-space>",
-				node_incremental = "<c-m space>",
-			},
-		},
-		textobjects = {
-			select = {
-				enable = true,
-				lookahead = true,
-				keymaps = {
-					["af"] = "@function.outer",
-					["if"] = "@function.inner",
-					["ac"] = "@class.outer",
-					["ic"] = "@class.inner",
-				},
-				selection_modes = {
-					["@parameter.outer"] = "v",
-					["@function.outer"] = "V",
-					["@class.outer"] = "<c-v>",
-				},
-			},
-			lsp_interop = {
-				enable = true,
-				border = "rounded",
-				peek_definition_code = {
-					["<leader>df"] = "@function.outer",
-					["<leader>dF"] = "@class.outer",
-				},
-			},
-			move = {
-				enable = true,
-				set_jumps = true,
-				goto_next_start = {
-					["]f"] = "@function.outer",
-					["]]"] = "@class.outer",
-				},
-				goto_next_end = {
-					["]F"] = "@function.outer",
-					["]["] = "@class.outer",
-				},
-				goto_previous_start = {
-					["[f"] = "@function.outer",
-					["[["] = "@class.outer",
-				},
-				goto_previous_end = {
-					["[F"] = "@function.outer",
-					["[]"] = "@class.outer",
-				},
-			},
-			swap = {
-				enable = true,
-				swap_next = {
-					["<leader>a"] = "@parameter.inner",
-				},
-				swap_previous = {
-					["<leader>A"] = "@parameter.inner",
-				},
-			},
+		move = {
+			set_jumps = true, -- Set jumps in the jumplist
 		},
 	}
+	local map = vim.keymap.set
+	-- Select textobjects
+	map({ "x", "o" }, "af", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+	end, { desc = "Select outer function" })
+	map({ "x", "o" }, "if", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+	end, { desc = "Select inner function" })
+	map({ "x", "o" }, "ac", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+	end, { desc = "Select outer class" })
+	map({ "x", "o" }, "ic", function()
+		require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+	end, { desc = "Select inner class" })
+	-- Move to next/previous function/class start
+	map({ "n", "x", "o" }, "]f", function()
+		require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+	end, { desc = "Next function start" })
+	map({ "n", "x", "o" }, "]]", function()
+		require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+	end, { desc = "Next class start" })
+	map({ "n", "x", "o" }, "[f", function()
+		require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
+	end, { desc = "Previous function start" })
+	map({ "n", "x", "o" }, "[[", function()
+		require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
+	end, { desc = "Previous class start" })
+	-- Move to next/previous function/class end
+	map({ "n", "x", "o" }, "]F", function()
+		require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
+	end, { desc = "Next function end" })
+	map({ "n", "x", "o" }, "][", function()
+		require("nvim-treesitter-textobjects.move").goto_next_end("@class.outer", "textobjects")
+	end, { desc = "Next class end" })
+	map({ "n", "x", "o" }, "[F", function()
+		require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
+	end, { desc = "Previous function end" })
+	map({ "n", "x", "o" }, "[]", function()
+		require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
+	end, { desc = "Previous class end" })
+	-- Swap parameters
+	map("n", "<leader>a", function()
+		require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
+	end, { desc = "Swap with next parameter" })
+	map("n", "<leader>A", function()
+		require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.inner"
+	end, { desc = "Swap with previous parameter" })
 end
 
 return M

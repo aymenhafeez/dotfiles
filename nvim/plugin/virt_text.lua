@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch
 -- use nvim_buf_del_extmark() to remove the virtual text
 
 local search_ns = vim.api.nvim_create_namespace "search:virttext"
@@ -34,17 +35,22 @@ local function update_search_virttext()
 end
 
 vim.keymap.set("n", "n", function()
-	vim.cmd "normal! n"
+	pcall(vim.cmd, "normal! n")
 	update_search_virttext()
 end)
 
 vim.keymap.set("n", "N", function()
-	vim.cmd "normal! N"
+	pcall(vim.cmd, "normal! N")
 	update_search_virttext()
 end)
 
 vim.keymap.set("n", "*", function()
-	vim.cmd "normal! *"
+	pcall(vim.cmd, "normal! *")
+	update_search_virttext()
+end)
+
+vim.keymap.set("n", "#", function()
+	pcall(vim.cmd, "normal! #")
 	update_search_virttext()
 end)
 

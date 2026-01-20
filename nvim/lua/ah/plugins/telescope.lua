@@ -1,6 +1,7 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
+		enabled = false,
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"nvim-lua/plenary.nvim",
@@ -38,30 +39,30 @@ return {
 				end,
 			},
 
-			-- {
-			-- 	dir = "~/Documents/projects/telescope-pydoc.nvim/",
-			-- 	dependencies = {
-			-- 		"nvim-telescope/telescope.nvim",
-			-- 		"nvim-lua/plenary.nvim",
-			-- 		{
-			-- 			dir = "~/Documents/projects/pydoc.nvim/",
-			-- 			opts = {},
-			-- 		},
-			-- 	},
-			-- },
-
 			{
-				dir = "~/Documents/projects/telescope-tab-buffers.nvim/",
-				keys = {
+				dir = "~/projects/pydoc.nvim/",
+				dependencies = {
+					"nvim-telescope/telescope.nvim",
+					"nvim-lua/plenary.nvim",
 					{
-						"<leader>ab",
-						function()
-							require("telescope").extensions.tab_buffers.tab_buffers()
-						end,
-						desc = "Tab Buffers",
+						dir = "~/Documents/projects/pydoc.nvim/",
+						opts = {},
 					},
 				},
 			},
+
+			-- {
+			-- 	dir = "~/Documents/projects/telescope-tab-buffers.nvim/",
+			-- 	keys = {
+			-- 		{
+			-- 			"<leader>ab",
+			-- 			function()
+			-- 				require("telescope").extensions.tab_buffers.tab_buffers()
+			-- 			end,
+			-- 			desc = "Tab Buffers",
+			-- 		},
+			-- 	},
+			-- },
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
 				build = "make",

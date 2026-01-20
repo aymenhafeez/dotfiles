@@ -19,17 +19,4 @@ return {
 		ft = { "markdown", "md" },
 		dependencies = { "nvim-telescope/telescope.nvim" },
 	},
-
-	-- {
-	-- 	"OXY2DEV/markview.nvim",
-	-- 	ft = { "markdown", "md" },
-	-- 	opts = {
-	-- 		preview = {
-	-- 			icon_provider = "internal", -- "mini" or "devicons"
-	-- 		},
-	-- 	},
-	--
-	-- 	-- Completion for `blink.cmp`
-	-- 	-- dependencies = { "saghen/blink.cmp" },
-	-- },
 }

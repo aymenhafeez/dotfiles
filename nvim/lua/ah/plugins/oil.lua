@@ -1,6 +1,7 @@
 return {
 	{
 		"stevearc/oil.nvim",
+		enabled = false,
 		---@module 'oil'
 		---@type oil.SetupOpts
 		config = function()
@@ -32,6 +33,8 @@ return {
 				},
 				use_default_keymaps = false,
 				float = {
+					max_height = 0.6,
+					max_width = 0.6,
 					win_options = {
 						number = false,
 						relativenumber = false,

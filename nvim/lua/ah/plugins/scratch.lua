@@ -1,5 +1,5 @@
 return {
-	dir = "~/Documents/projects/scratch.nvim/",
+	dir = "~/projects/scratch.nvim/",
 	config = function()
 		require("scratch").setup {
 			win_options = {

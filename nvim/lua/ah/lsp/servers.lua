@@ -33,23 +33,57 @@ vim.lsp.config.basedpyright = {
 vim.lsp.config.lua_ls = {
 	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/lua-language-server" },
 	filetypes = { "lua" },
-	root_markers = {
-		".luarc.json",
-		".luarc.jsonc",
-		".luacheckrc",
-		".stylua.toml",
-		"stylua.toml",
-		"selene.toml",
-		".git",
-	},
+	root_markers = { ".luarc.json" },
 	capabilities = capabilities,
 	settings = {
 		Lua = {
-			hint = {
-				enable = true,
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = { "vim", "describe", "it", "before_each", "after_each", "equals" },
+				disable = {
+					"missing-fields", -- Too strict for optional table fields
+					"undefined-doc-name", -- Can be noisy with dynamic APIs
+				},
 			},
 			completion = {
 				callSnippet = "Replace",
+				keywordSnippet = "Replace",
+				showWord = "Fallback", -- Don't show simple word completions (use LSP only)
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME,
+					"${3rd}/luv/library",
+					"${3rd}/busted/library",
+					"${3rd}/luassert/library", -- Useful for testing plugins
+				},
+				-- Performance optimizations inspired by lazydev
+				maxPreload = 5000, -- Limit preloaded files for better performance
+				preloadFileSize = 10000, -- Skip large files (in KB)
+				ignoreDir = {
+					".git",
+					".github",
+					"node_modules",
+					".vscode",
+					".idea",
+				},
+			},
+			hint = {
+				enable = true,
+				setType = true,
+				paramName = "Disable", -- Can be noisy, enable if you prefer
+				paramType = true,
+			},
+			-- Semantic token support for better highlighting
+			semantic = {
+				enable = false,
+			},
+			-- Disable telemetry
+			telemetry = {
+				enable = false,
 			},
 		},
 	},
@@ -69,7 +103,7 @@ vim.lsp.config.remark_ls = {
 
 vim.lsp.config.texlab = {
 	bibtexFormatter = "texlab",
-	cmd = { "texlab" },
+	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/texlab" },
 	filetypes = { "tex", "plaintex", "bib" },
 }
 
@@ -130,7 +164,22 @@ vim.lsp.config.rust_analyzer = {
 	},
 }
 
-vim.lsp.enable { "basedpyright", "lua_ls", "texlab", "vimls", "vtsls", "rust_analyzer" }
+vim.lsp.config.clangd = {
+	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/clangd" },
+	filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+	root_markers = {
+		".clangd",
+		".clang-tidy",
+		".clang-format",
+		"compile_commands.json",
+		"compile_flags.txt",
+		"configure.ac",
+		".git",
+	},
+	capabilities = capabilities,
+}
+
+vim.lsp.enable { "basedpyright", "lua_ls", "texlab", "vimls", "vtsls", "rust_analyzer", "clangd" }
 
 local ensure_installed = {
 	"vtsls",
@@ -140,6 +189,8 @@ local ensure_installed = {
 	"stylua",
 	"vim-language-server",
 	"rust-analyzer",
+	"texlab",
+	"clangd",
 }
 
 require("mason-tool-installer").setup { ensure_installed = ensure_installed }

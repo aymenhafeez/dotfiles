@@ -1,6 +1,14 @@
 return {
 	{
 		"mason-org/mason.nvim",
+		dependencies = {
+			{
+				"j-hui/fidget.nvim",
+				opts = {
+					-- options
+				},
+			},
+		},
 		lazy = false,
 		priority = 1000,
 		opts = {},

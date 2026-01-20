@@ -14,7 +14,7 @@ M.create_repl = function()
 	local width = math.floor(vim.o.columns * 0.45)
 	local win_width = vim.api.nvim_win_get_width(0)
 	if not M.job_id then
-		if win_width < 120 then
+		if win_width < 180 then
 			vim.cmd "new"
 		else
 			vim.cmd(width .. "vnew")
