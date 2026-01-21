@@ -1,0 +1,34 @@
+font-family = JetBrains Mono
+# font-family = nonicons
+font-size = 10.5
+adjust-cell-height = -2.5%
+adjust-cell-width = -5%
+
+theme = Nord
+unfocused-split-opacity = 1
+
+gtk-titlebar-style = tabs
+window-padding-x = 0
+window-padding-y = 0
+window-padding-balance = false
+
+mouse-hide-while-typing = true
+
+keybind = ctrl+shift+]=next_tab
+keybind = ctrl+shift+[=previous_tab
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+keybind = ctrl+shift+j=goto_split:down
+keybind = ctrl+shift+k=goto_split:up
+keybind = ctrl+shift+alt+d=toggle_tab_overview
+keybind = ctrl+shift+alt+]=move_tab:1
+keybind = ctrl+shift+alt+[=move_tab:-1
+keybind = ctrl+1=goto_tab:1
+keybind = ctrl+2=goto_tab:2
+keybind = ctrl+3=goto_tab:3
+keybind = ctrl+4=goto_tab:4
+keybind = ctrl+5=goto_tab:5
+keybind = ctrl+6=goto_tab:6
+keybind = ctrl+7=goto_tab:7
+keybind = ctrl+8=goto_tab:8
+keybind = ctrl+shift+alt+f=write_screen_file:copy,plain
