@@ -96,15 +96,13 @@ map("n", "<leader><leader>c", "<cmd>copen<CR>")
 map("n", "<leader><leader>q", "<cmd>cclose<CR>")
 
 -- :h cmdline-editing
-
+map({ "i", "c" }, "<C-n>", "<Down>")
 map({ "i", "c" }, "<C-b>", "<left>")
 map({ "i", "c" }, "<C-f>", "<right>")
 map({ "i", "c" }, "<C-a>", "<home>")
 map("c", "<M-b>", "<S-left>")
 map("c", "<M-f>", "<S-right>")
-
-vim.keymap.set({ "i", "c" }, "<C-n>", "<Down>")
-vim.keymap.set({ "i", "c" }, "<C-p>", "<Up>")
+map({ "i", "c" }, "<C-p>", "<Up>")
 
 vim.keymap.set({ "t" }, "<C-n>", function()
 	if vim.bo.filetype == "fzf" then
@@ -193,6 +191,7 @@ map("c", "<C-d><C-f>", "tcd <C-r>=expand('%:~:h')<CR>")
 vim.keymap.set("n", "g??", function()
 	vim.ui.open(("https://google.com/search?q=%s"):format(vim.fn.expand "<cword>"))
 end)
+
 vim.keymap.set("x", "g??", function()
 	vim.ui.open(
 		("https://google.com/search?q=%s"):format(

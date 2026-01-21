@@ -23,7 +23,7 @@ end
 
 opt.smartindent = true
 opt.breakindent = true
-opt.expandtab = true
+-- opt.expandtab = true
 opt.shiftwidth = 4
 opt.tabstop = 4
 
@@ -45,7 +45,6 @@ if vim.opt.cursorline:get() == true then
 
 	set_cursorline("WinLeave", false)
 	set_cursorline("WinEnter", true)
-	set_cursorline("FileType", false, "TelescopePrompt")
 end
 
 opt.number = true
@@ -73,12 +72,13 @@ opt.spelllang = "en_gb"
 opt.splitright = true
 opt.splitbelow = true
 opt.termguicolors = true
-opt.winblend = 10
 opt.confirm = true
 opt.autochdir = false
 opt.mouse = "nvc"
 opt.cedit = "^C"
 opt.winborder = "rounded"
+opt.pumborder = "rounded"
+opt.pumheight = 15
 
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
@@ -130,3 +130,29 @@ vim.go.statusline = "%{%v:lua.require'ah.statusline'.statusline()%}"
 -- end
 
 vim.cmd "colorscheme nord"
+
+-- local function fix_colorscheme()
+-- 	vim.cmd [[
+-- 		highlight SpellBad gui=undercurl
+-- 		highlight CursorLine ctermbg=235
+-- 		highlight Comment ctermfg=gray cterm=italic gui=italic
+-- 		highlight MsgSeparator guibg=bg guifg=fg
+-- 		highlight Pmenu guibg=bg
+-- 		highlight PmenuThumb guibg=NvimLightGrey1
+-- 		highlight NormalFloat guibg=bg
+-- 		highlight QuickFixLine guifg=None guibg=NvimDarkCyan
+--
+-- 		highlight User1 guifg=NvimLightRed guibg=NvimDarkGrey4 gui=bold
+-- 		highlight User2 guifg=NvimLightBlue guibg=NvimDarkGrey4 gui=bold
+-- 		highlight User3 guifg=fg guibg=NvimDarkGrey4 gui=bold
+-- 		highlight User4 guifg=NvimDarkGrey4 guibg=NvimLightYellow
+-- 		highlight User8 guifg=bg guibg=NvimLightGrey4
+-- 		highlight User9 guifg=fg guibg=NvimDarkGrey4
+-- 	]]
+-- end
+--
+-- vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+-- 	group = vim.api.nvim_create_augroup("colorscheme_group", { clear = true }),
+-- 	callback = fix_colorscheme
+-- })
+-- fix_colorscheme()

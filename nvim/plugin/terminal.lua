@@ -1,3 +1,24 @@
+local function term_winbar()
+	local buflist = vim.api.nvim_list_bufs()
+	local curwin = vim.api.nvim_get_current_win()
+	local items = {}
+
+	for _, buf in pairs(buflist) do
+		if vim.api.nvim_get_option_value("filetype", { buf = buf }) == "terminal" then
+			local bufname = vim.api.nvim_buf_get_name(buf)
+			local bufname_short = vim.fn.pathshorten(bufname)
+
+			table.insert(items, bufname_short)
+		end
+	end
+
+	if next(items) == nil then
+		return ""
+	else
+		return table.concat(items, " ")
+	end
+end
+
 local group = vim.api.nvim_create_augroup("TerminalSettings", { clear = true })
 vim.api.nvim_create_autocmd("TermOpen", {
 	group = group,
@@ -11,16 +32,16 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.wo.winfixwidth = true
 		vim.wo.winfixheight = true
 
-		-- if vim.opt.laststatus:get() == 3 then
-		-- 	vim.wo.winbar = "%="
-		-- else
-		-- 	vim.wo.winbar = ""
-		-- end
-
 		vim.bo.filetype = "terminal"
 
 		-- vim.cmd "set winhighlight=Normal:TerminalNormal"
 	end,
+})
+
+vim.api.nvim_create_autocmd("TermEnter", {
+	callback = function()
+		vim.wo.winbar = term_winbar()
+	end
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {

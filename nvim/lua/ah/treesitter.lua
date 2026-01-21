@@ -1,7 +1,31 @@
 local M = {}
-
 function M.setup()
-	-- Setup textobjects configuration
+	-- ========================================================================
+	-- Core Treesitter Configuration (NEW MAIN BRANCH API)
+	-- ========================================================================
+
+	-- -- Enable treesitter highlighting for supported filetypes
+	-- -- This is the new API - no more require('nvim-treesitter.configs').setup()
+	-- vim.api.nvim_create_autocmd("FileType", {
+	-- 	pattern = "*",
+	-- 	callback = function(args)
+	-- 		local buf = args.buf
+	-- 		-- Start treesitter for this buffer if parser is available
+	-- 		pcall(vim.treesitter.start, buf)
+	-- 	end,
+	-- })
+
+	-- Alternatively, you can enable for specific languages:
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "python", "lua", "rust", "c" },
+		callback = function(args)
+			vim.treesitter.start(args.buf)
+		end,
+	})
+
+	-- ========================================================================
+	-- Treesitter Textobjects Configuration
+	-- ========================================================================
 	require("nvim-treesitter-textobjects").setup {
 		select = {
 			lookahead = true,
@@ -16,7 +40,11 @@ function M.setup()
 			set_jumps = true, -- Set jumps in the jumplist
 		},
 	}
+	-- ========================================================================
+	-- Textobject Keymaps
+	-- ========================================================================
 	local map = vim.keymap.set
+
 	-- Select textobjects
 	map({ "x", "o" }, "af", function()
 		require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
@@ -30,6 +58,7 @@ function M.setup()
 	map({ "x", "o" }, "ic", function()
 		require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
 	end, { desc = "Select inner class" })
+
 	-- Move to next/previous function/class start
 	map({ "n", "x", "o" }, "]f", function()
 		require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
@@ -43,6 +72,7 @@ function M.setup()
 	map({ "n", "x", "o" }, "[[", function()
 		require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
 	end, { desc = "Previous class start" })
+
 	-- Move to next/previous function/class end
 	map({ "n", "x", "o" }, "]F", function()
 		require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
@@ -56,6 +86,7 @@ function M.setup()
 	map({ "n", "x", "o" }, "[]", function()
 		require("nvim-treesitter-textobjects.move").goto_previous_end("@class.outer", "textobjects")
 	end, { desc = "Previous class end" })
+
 	-- Swap parameters
 	map("n", "<leader>a", function()
 		require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"

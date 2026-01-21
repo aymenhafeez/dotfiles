@@ -13,11 +13,11 @@ local function diagnostics()
 	if num_errors == 0 and num_warnings == 0 then
 		return " "
 	elseif num_errors > 0 and num_warnings == 0 then
-		return string.format("E: %d ", num_errors)
+		return string.format(" : %d ", num_errors)
 	elseif num_errors == 0 and num_warnings > 0 then
-		return string.format("W: %d ", num_warnings)
+		return string.format(" : %d ", num_warnings)
 	else
-		return string.format("E: %d W: %d ", num_errors, num_warnings)
+		return string.format(" : %d  : %d ", num_errors, num_warnings)
 	end
 end
 
@@ -54,19 +54,6 @@ local function filename(buf, fancy)
 	end
 
 	return string.format("%s %%<%s%s%s %%*", parent_hl, parent or "", tail_hl, tail)
-end
-
-local function get_file_icons(buf)
-	local ok, devicons = pcall(require, "nvim-web-devicons")
-	if not ok then
-		return ""
-	end
-
-	local extension = vim.fn.fnamemodify(buf, ":e")
-
-	local icon = devicons.get_icon(buf, extension, { default = true })
-
-	return icon ~= " " and " " .. icon or " "
 end
 
 local function git_info()

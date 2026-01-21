@@ -37,20 +37,29 @@ vim.lsp.config.lua_ls = {
 	capabilities = capabilities,
 	settings = {
 		Lua = {
+			format = {
+				enable = true,
+				defaultConfig = {
+					indent_style = "tab",
+					indent_size = "2",
+					tab_width = "2",
+					quote_style = "double",
+				},
+			},
 			runtime = {
 				version = "LuaJIT",
 			},
 			diagnostics = {
 				globals = { "vim", "describe", "it", "before_each", "after_each", "equals" },
 				disable = {
-					"missing-fields", -- Too strict for optional table fields
-					"undefined-doc-name", -- Can be noisy with dynamic APIs
+					"missing-fields",
+					"undefined-doc-name",
 				},
 			},
 			completion = {
 				callSnippet = "Replace",
 				keywordSnippet = "Replace",
-				showWord = "Fallback", -- Don't show simple word completions (use LSP only)
+				showWord = "Fallback",
 			},
 			workspace = {
 				checkThirdParty = false,
@@ -58,11 +67,10 @@ vim.lsp.config.lua_ls = {
 					vim.env.VIMRUNTIME,
 					"${3rd}/luv/library",
 					"${3rd}/busted/library",
-					"${3rd}/luassert/library", -- Useful for testing plugins
+					"${3rd}/luassert/library",
 				},
-				-- Performance optimizations inspired by lazydev
-				maxPreload = 5000, -- Limit preloaded files for better performance
-				preloadFileSize = 10000, -- Skip large files (in KB)
+				maxPreload = 5000,
+				preloadFileSize = 10000,
 				ignoreDir = {
 					".git",
 					".github",
@@ -179,7 +187,17 @@ vim.lsp.config.clangd = {
 	capabilities = capabilities,
 }
 
-vim.lsp.enable { "basedpyright", "lua_ls", "texlab", "vimls", "vtsls", "rust_analyzer", "clangd" }
+-- Use ruff just for formatting
+vim.lsp.config.ruff = {
+	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/ruff", "server" },
+	filetypes = { "python" },
+
+	on_attach = function(client)
+		client.server_capabilities.diagnosticProvider = nil
+	end,
+}
+
+vim.lsp.enable { "basedpyright", "lua_ls", "texlab", "vimls", "vtsls", "rust_analyzer", "clangd", "ruff" }
 
 local ensure_installed = {
 	"vtsls",

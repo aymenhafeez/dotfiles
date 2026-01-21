@@ -136,6 +136,7 @@ local highlights = {
 	FloatShadow = { bg = black, blend = 80 },
 	FloatShadowThrough = { bg = black, blend = 100 },
 	Pmenu = { link = "Normal" },
+	PmenuBorder = { link = "FloatBorder" },
 	PmenuSbar = { link = "Pmenu" },
 	PmenuSel = { fg = cyan, bg = lightblack },
 	PmenuThumb = { bg = black },
@@ -603,6 +604,7 @@ local highlights = {
 
 	-- mini.nvim
 	MiniIndentscopeSymbol = { fg = brightblack },
+	MiniPickMatchCurrent = { bg = brightblack },
 
 	-- nvim-dap
 	DapStoppedLine = { bg = brighterblack, underline = true },
@@ -619,11 +621,6 @@ local highlights = {
 	BlinkCmpMenuBorder = { link = "FloatBorder" },
 	BlinkCmpDocBorder = { link = "FloatBorder" },
 	BlinkCmpSignatureHelpBorder = { link = "FloatBorder" },
-
-	TelescopeNormal = { fg = darkwhite, background = background },
-	TelescopeBorder = { link = "FloatBorder" },
-	TelescopeSelection = { link = "PmenuSel" },
-	TelescopeMatching = { fg = foreground, bold = true },
 
 	FzfLuaBorder = { link = "FloatBorder" },
 	FzfLuaFzfMatch = { fg = yellow, bold = true },

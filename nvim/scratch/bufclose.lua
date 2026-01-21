@@ -33,4 +33,4 @@ local function buf_delete()
 	end
 end
 
-buf_delete()
+vim.api.nvim_create_user_command("Bd", buf_delete(), {})
