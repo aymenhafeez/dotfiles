@@ -28,25 +28,23 @@ local function on_win(_, winid, bufnr, topline, botline)
 		local span = math.floor(0.5 + (botline - topline) * cells_per_line)
 		local start = math.floor(topline + topline * cells_per_line)
 		local end_ = math.min(lines, start + span + 1)
-		-- Map diagnostics to buffer lines where they should be displayed
+
+		-- map diagnostics to buffer lines where they should be displayed
 		local diagnostics = vim.diagnostic.get(bufnr)
 		local buffer_line_to_diag = {}
 
 		for _, diag in ipairs(diagnostics) do
 			local diag_line = diag.lnum -- 0-indexed buffer line
 
-			-- Calculate which window row this diagnostic should appear at (0 to height-1)
+			-- calculate which window row this diagnostic should appear at (0 to height-1)
 			local window_row = math.floor(diag_line * cells_per_line)
 
-			-- Calculate which buffer line should display this diagnostic
+			-- calculate which buffer line should display this diagnostic
 			local display_buffer_line = topline + window_row
 
-			-- Only store if the display line is within the buffer bounds
 			if display_buffer_line >= 0 and display_buffer_line < lines then
-				-- If multiple diagnostics map to same buffer line, keep highest severity
-				if
-					not buffer_line_to_diag[display_buffer_line]
-					or diag.severity < buffer_line_to_diag[display_buffer_line].severity
+				if not buffer_line_to_diag[display_buffer_line]
+						or diag.severity < buffer_line_to_diag[display_buffer_line].severity
 				then
 					buffer_line_to_diag[display_buffer_line] = {
 						severity = diag.severity,
@@ -56,8 +54,8 @@ local function on_win(_, winid, bufnr, topline, botline)
 			end
 		end
 
-		-- Calculate cursor position marker
-		local cursor_line = vim.api.nvim_win_get_cursor(winid)[1] - 1 -- Convert to 0-indexed
+		-- calculate cursor position marker
+		local cursor_line = vim.api.nvim_win_get_cursor(winid)[1] - 1
 		local cursor_window_row = math.floor(cursor_line * cells_per_line)
 		local cursor_display_line = topline + cursor_window_row
 		state[winid] = {

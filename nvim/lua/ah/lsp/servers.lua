@@ -82,14 +82,12 @@ vim.lsp.config.lua_ls = {
 			hint = {
 				enable = true,
 				setType = true,
-				paramName = "Disable", -- Can be noisy, enable if you prefer
+				paramName = "Disable",
 				paramType = true,
 			},
-			-- Semantic token support for better highlighting
 			semantic = {
 				enable = false,
 			},
-			-- Disable telemetry
 			telemetry = {
 				enable = false,
 			},
@@ -187,7 +185,7 @@ vim.lsp.config.clangd = {
 	capabilities = capabilities,
 }
 
--- Use ruff just for formatting
+-- use ruff just for formatting
 vim.lsp.config.ruff = {
 	cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/ruff", "server" },
 	filetypes = { "python" },
