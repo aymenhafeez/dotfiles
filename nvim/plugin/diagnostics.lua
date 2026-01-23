@@ -24,21 +24,19 @@ local function on_jump(diagnostic, bufnr)
 	})
 end
 
-vim.diagnostic.config({ jump = { on_jump = on_jump } })
+vim.diagnostic.config {
+	severity_sort = true,
+	-- signs = false,
+	virtual_text = true,
+	jump = {
+		on_jump = on_jump,
+		wrap = false,
+	},
+	float = {
+		source = true
+	}
+}
 
--- vim.diagnostic.config {
--- 	severity_sort = true,
--- 	-- signs = false,
--- 	virtual_text = true,
--- 	jump = {
--- 		on_jump = on_jump,
--- 		wrap = false,
--- 	},
--- 	float = {
--- 		source = true
--- 	}
--- }
---
 -- :h diagnostic-toggle-virtual-lines-example
 vim.keymap.set("n", "gK", function()
 	local new_config = not vim.diagnostic.config().virtual_lines
