@@ -53,10 +53,10 @@ opt.signcolumn = "yes:1"
 opt.wrap = false
 opt.showmatch = true
 opt.equalalways = false
-opt.foldmethod = "expr"
 vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldmethod = "marker"
-opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menu", "menuone", "popup", "noinsert", "fuzzy" }
+vim.o.complete = ".,o" -- use buffer and omnifunc
 opt.scrolloff = 8
 opt.sidescroll = 0
 
@@ -77,8 +77,10 @@ opt.autochdir = false
 opt.mouse = "nvc"
 opt.cedit = "^C"
 opt.winborder = "rounded"
+opt.winborder = "rounded"
 opt.pumborder = "rounded"
 opt.pumheight = 15
+opt.cmdheight = 1
 
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
@@ -106,21 +108,7 @@ vim.keymap.set("n", "<leader>cl", function()
 	cyclelist_chars()
 end)
 
--- lua file navigation
-opt.include = [[\v<((do|load)file|require)[^''"]*[''"]\zs[^''"]+]]
-opt.includeexpr = "substitute(v:fname,'\\.','/','g')"
-for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
-	opt.path:append(path .. "/lua")
-end
-opt.suffixesadd:prepend ".lua"
-
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-
-local fences = { "lua", "vim", "json", "shell=sh", "python", "sh", "console=sh" }
-vim.g.markdown_fenced_languages = fences
-
-vim.go.statusline = "%{%v:lua.require'ah.statusline'.statusline()%}"
--- vim.go.tabline = "%{%v:lua.require'ah.statusline'.tabline()%}"
 
 -- -- only show winbar if laststatus = 3
 -- if opt.laststatus:get() == 3 then
@@ -129,30 +117,4 @@ vim.go.statusline = "%{%v:lua.require'ah.statusline'.statusline()%}"
 -- 	opt.winbar = ""
 -- end
 
-vim.cmd "colorscheme nord"
-
--- local function fix_colorscheme()
--- 	vim.cmd [[
--- 		highlight SpellBad gui=undercurl
--- 		highlight CursorLine ctermbg=235
--- 		highlight Comment ctermfg=gray cterm=italic gui=italic
--- 		highlight MsgSeparator guibg=bg guifg=fg
--- 		highlight Pmenu guibg=bg
--- 		highlight PmenuThumb guibg=NvimLightGrey1
--- 		highlight NormalFloat guibg=bg
--- 		highlight QuickFixLine guifg=None guibg=NvimDarkCyan
---
--- 		highlight User1 guifg=NvimLightRed guibg=NvimDarkGrey4 gui=bold
--- 		highlight User2 guifg=NvimLightBlue guibg=NvimDarkGrey4 gui=bold
--- 		highlight User3 guifg=fg guibg=NvimDarkGrey4 gui=bold
--- 		highlight User4 guifg=NvimDarkGrey4 guibg=NvimLightYellow
--- 		highlight User8 guifg=bg guibg=NvimLightGrey4
--- 		highlight User9 guifg=fg guibg=NvimDarkGrey4
--- 	]]
--- end
---
--- vim.api.nvim_create_autocmd({ "ColorScheme" }, {
--- 	group = vim.api.nvim_create_augroup("colorscheme_group", { clear = true }),
--- 	callback = fix_colorscheme
--- })
--- fix_colorscheme()
+vim.cmd "colorscheme colourscheme"

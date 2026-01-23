@@ -52,6 +52,7 @@ vim.lsp.config.lua_ls = {
           vim.env.VIMRUNTIME,
           "${3rd}/luv/library",
           "${3rd}/busted/library",
+          -- "${3rd}/Lua/library"
         },
       },
     },
@@ -224,11 +225,19 @@ inoremap <expr> <CR> pumvisible() ? '<C-Y>' : '<CR>'
 "inoremap <Tab> <C-R>=CleverTab()<CR>
 ]]
 
-vim.keymap.set({ 'i', 's' }, '<Tab>', function()
+vim.keymap.set({ 'i', 's' }, '<C-j>', function()
   if vim.snippet.active({ direction = 1 }) then
     return '<Cmd>lua vim.snippet.jump(1)<CR>'
   else
     return '<Tab>'
+  end
+end, { desc = '...', expr = true, silent = true })
+
+vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+  if vim.snippet.active({ direction = -1 }) then
+    return '<Cmd>lua vim.snippet.jump(-1)<CR>'
+  else
+    return '<C-k>'
   end
 end, { desc = '...', expr = true, silent = true })
 

@@ -14,6 +14,12 @@ opt_local.complete:append { "kspell" }
 g.tex_conceal = "abdmgs"
 g.tex_flavor = "latex"
 
+-- break undo sequence on space, tab and enter
+map("i", "<Space>", "<Space><C-g>u")
+map("i", "<Tab>", "<Tab><C-g>u")
+map("i", "<CR>", "<CR><C-g>u")
+
+
 map({ "n", "i" }, "<C-c><C-j>", "<Esc>o\\item ", { noremap = true, silent = true, desc = "New item below" })
 map({ "n", "i" }, "<C-c><C-k>", "<Esc>O\\item ", { noremap = true, silent = true, desc = "New item above" })
 
@@ -21,9 +27,9 @@ local file_name = vim.fn.expand "%:t:r"
 map(
 	"n",
 	"<leader>cm",
-	"<cmd>lua require('ah.terminal').toggle_terminal({cmd='latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build "
-		.. file_name
-		.. "'})<CR>"
+	"<cmd>lua require('terminal').toggle_terminal({cmd='latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build "
+	.. file_name
+	.. "'})<CR>"
 )
 
 map("n", "<leader>pv", function()
@@ -35,3 +41,10 @@ map("i", "zx", "\\")
 
 map("n", "<C-s>", "mm[s1z=`m", { desc = "Correct previous spelling error" })
 map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { desc = "Correct previous spelling error" })
+
+vim.g.vimtex_imaps_enabled = false
+vim.g.vimtex_mappings_enabled = false
+vim.g.vimtex_view_enabled = true
+vim.g.vimtex_view_general_viewer = "okular"
+vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
+vim.keymap.set("n", "<leader>ct", "<cmd>VimtexTocToggle<CR>", { desc = "Toggle contents" })

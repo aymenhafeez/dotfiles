@@ -1,11 +1,9 @@
-local opts = { noremap = true, silent = true }
-local nopts = { noremap = true, silent = false }
 local map = vim.keymap.set
 
-vim.opt.autoindent = true
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
+vim.opt_local.autoindent = true
+vim.opt_local.expandtab = false
+vim.opt_local.shiftwidth = 4
+vim.opt_local.tabstop = 4
 
 vim.cmd [[
 function! GetFilePath()

@@ -14,3 +14,4 @@ local function buf_delete()
 end
 
 vim.api.nvim_create_user_command("Bdelete", buf_delete, {})
+vim.keymap.set("c", "bd", "Bdelete")

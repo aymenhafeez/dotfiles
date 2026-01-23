@@ -26,29 +26,13 @@
       "rev": "5f517e80c1ca734a2bd6ace2115b36c51464f7e9",
       "src": "https://github.com/brianhuster/live-preview.nvim"
     },
-    "lspkind.nvim": {
-      "rev": "53374a2dbcb959f1d0d5d3cf6c47c4b029151c6e",
-      "src": "https://github.com/onsails/lspkind.nvim"
-    },
-    "mason-tool-installer.nvim": {
-      "rev": "517ef5994ef9d6b738322664d5fdd948f0fdeb46",
-      "src": "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
-    },
-    "mason.nvim": {
-      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
-      "src": "https://github.com/mason-org/mason.nvim"
-    },
     "mini.nvim": {
       "rev": "c163117900c17d4abf30bc09452a261c8536060c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
-    "nvim-autopairs": {
-      "rev": "c2a0dd0d931d0fb07665e1fedb1ea688da3b80b4",
-      "src": "https://github.com/windwp/nvim-autopairs"
-    },
-    "nvim-surround": {
-      "rev": "1098d7b3c34adcfa7feb3289ee434529abd4afd1",
-      "src": "https://github.com/kylechui/nvim-surround"
+    "molokai.nvim": {
+      "rev": "720bacc534fa3b1566d75612986737088a4fb132",
+      "src": "https://github.com/UtkarshVerma/molokai.nvim"
     },
     "nvim-treesitter": {
       "rev": "ec034813775d7e2974c7551c8c34499a828963f8",
@@ -63,14 +47,6 @@
       "rev": "4d55f63252e04c5212daed958e4e940915ff16ce",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
-    },
-    "nvim-web-devicons": {
-      "rev": "803353450c374192393f5387b6a0176d0972b848",
-      "src": "https://github.com/kyazdani42/nvim-web-devicons"
-    },
-    "nvim-web-nonicons": {
-      "rev": "ceda07dc7339f35444b5f4c4016f76a9eb42ac16",
-      "src": "https://github.com/yamatsum/nvim-web-nonicons"
     },
     "statuscol.nvim": {
       "rev": "c46172d0911aa5d49ba5f39f4351d1bb7aa289cc",

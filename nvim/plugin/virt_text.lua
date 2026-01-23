@@ -1,6 +1,4 @@
 ---@diagnostic disable: param-type-mismatch
--- use nvim_buf_del_extmark() to remove the virtual text
-
 local search_ns = vim.api.nvim_create_namespace "search:virttext"
 
 local function clear_search_virttext()

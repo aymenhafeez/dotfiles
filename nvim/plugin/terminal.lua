@@ -1,6 +1,39 @@
+local term = require "terminal"
+
+vim.keymap.set("t", "<C-[><C-[>", "<C-\\><C-n>")
+
+vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h")
+vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j")
+vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k")
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l")
+
+vim.keymap.set("t", "<M-h>", "<C-\\><C-n><C-W>2<i")
+vim.keymap.set("t", "<M-l>", "<C-\\><C-n><C-W>2>i")
+vim.keymap.set("t", "<M-j>", "<C-\\><C-n><C-W>2-i")
+vim.keymap.set("t", "<M-k>", "<C-\\><C-n><C-W>2+i")
+
+
+vim.keymap.set({ "n", "t" }, "<leader>tt", function()
+	term.toggle_terminal {}
+end)
+
+vim.keymap.set({ "n", "t" }, "<leader>vt", function()
+	term.toggle_terminal { direction = "right" }
+end)
+
+vim.keymap.set({ "n", "t" }, "<leader><leader>t", function()
+	vim.cmd "tabnew"
+	vim.cmd "term"
+	vim.cmd "startinsert"
+end)
+
+vim.keymap.set({ "n", "t" }, "<leader>ft", function()
+	term.toggle_terminal { floating = true }
+end)
+
+-- WIP
 local function term_winbar()
 	local buflist = vim.api.nvim_list_bufs()
-	local curwin = vim.api.nvim_get_current_win()
 	local items = {}
 
 	for _, buf in pairs(buflist) do

@@ -1,6 +1,4 @@
-local M = {}
-
-M.job_id = nil
+local job_id = nil
 
 local get_selection = function()
 	local start_pos = vim.api.nvim_buf_get_mark(0, "<")
@@ -10,16 +8,16 @@ local get_selection = function()
 	return table.concat(text, "\n")
 end
 
-M.create_repl = function()
+local create_repl = function()
 	local width = math.floor(vim.o.columns * 0.45)
 	local win_width = vim.api.nvim_win_get_width(0)
-	if not M.job_id then
+	if not job_id then
 		if win_width < 180 then
 			vim.cmd "new"
 		else
 			vim.cmd(width .. "vnew")
 		end
-		M.job_id = vim.fn.jobstart({ "python3" }, { term = true })
+		job_id = vim.fn.jobstart({ "python3" }, { term = true })
 
 		vim.wait(100, function()
 			return false
@@ -27,17 +25,24 @@ M.create_repl = function()
 	end
 end
 
-M.send_repl_line = function()
-	M.create_repl()
+local send_repl_line = function()
+	create_repl()
 
-	vim.fn.chansend(M.job_id, vim.fn.getline "." .. "\n")
+	vim.fn.chansend(job_id, vim.fn.getline "." .. "\n")
 end
 
-function M.send_repl_selection()
-	M.create_repl()
+local function send_repl_selection()
+	create_repl()
 
 	local selection = get_selection()
-	vim.fn.chansend(M.job_id, selection)
+	vim.fn.chansend(job_id, selection)
 end
 
-return M
+vim.keymap.set("n", "<leader>pp", function() send_repl_line() end)
+
+vim.keymap.set("n", "<leader>vv", function() send_repl_selection() end)
+
+vim.keymap.set("n", "<leader>vp", function()
+	vim.cmd 'exe "normal vip \\<Esc>"'
+	send_repl_selection()
+end)

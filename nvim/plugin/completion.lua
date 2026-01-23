@@ -1,8 +1,3 @@
-local present, blink = pcall(require, "blink.cmp")
-if not present then
-	return
-end
-
 --- @module 'blink.cmp'
 --- @type blink.cmp.Config
 local options = {
@@ -127,4 +122,15 @@ local options = {
 	},
 }
 
-blink.setup(options)
+vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
+	group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
+	once = true,
+	callback = function()
+		local ok, blink = pcall(require, "blink.cmp")
+		if ok then
+			blink.setup(options)
+		else
+			vim.notify("Failed to load blink.cmp: " .. tostring(blink), vim.log.levels.ERROR)
+		end
+	end
+})

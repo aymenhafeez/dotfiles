@@ -1,4 +1,23 @@
-require "ah.lsp.servers"
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
+	callback = function(args)
+		require("fidget").setup({ notification = { window = { align = "top" } } })
+
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client then
+			client.server_capabilities.semanticTokensProvider = nil
+		end
+	end
+})
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+---@diagnostic disable-next-line: duplicate-set-field
+function vim.lsp.util.open_floating_preview(contents, syntax, util_opts, ...)
+	util_opts = util_opts or {}
+	util_opts.max_width = 75
+	util_opts.max_height = 20
+	return orig_util_open_floating_preview(contents, syntax, util_opts, ...)
+end
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
@@ -14,12 +33,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "gO", vim.lsp.buf.document_symbol)
 		map("n", "gW", vim.lsp.buf.workspace_symbol)
 		map("n", "td", vim.lsp.buf.type_definition)
-		map("n", "]d", function()
-			vim.diagnostic.jump { count = 1, float = true }
-		end)
-		map("n", "[d", function()
-			vim.diagnostic.jump { count = -1, float = true }
-		end)
+		-- map("n", "]d", function()
+		-- 	vim.diagnostic.jump { count = 1, float = true }
+		-- end)
+		-- map("n", "[d", function()
+		-- 	vim.diagnostic.jump { count = -1, float = true }
+		-- end)
 
 		---@param client vim.lsp.Client
 		---@param method vim.lsp.protocol.Method
@@ -82,86 +101,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			end, { desc = "Toggle Inlay Hints" })
 		end
 
-		-- if client and client:supports_method("textDocument/completion") then
-		-- 	-- if client.name == "lua-language-server" then
-		-- 	-- client.server_capabilities.completionProvider.triggerCharacters = { ".", ":" }
-		-- 	-- end
-		-- 	client.server_capabilities.completionProvider.triggerCharacters = { ".", ":" }
-		-- 	vim.lsp.completion.enable(true, args.data.client_id, args.buf, {
-		-- 		autotrigger = true,
-		-- 		convert = function(item)
-		-- 			return { abbr = item.label:gsub("%b()", "") }
-		-- 		end,
-		-- 	})
-		--
-		-- 	vim.api.nvim_create_autocmd("CompleteDone", {
-		-- 		group = vim.api.nvim_create_augroup("lsp-signature-on-complete", { clear = false }),
-		-- 		buffer = args.buf,
-		-- 		callback = function()
-		-- 			-- Check if a completion item was selected
-		-- 			local completed_item = vim.v.completed_item
-		-- 			if completed_item and next(completed_item) ~= nil then
-		-- 				-- Small delay to let the completion settle
-		-- 				vim.defer_fn(function()
-		-- 					if client and client:supports_method("textDocument/signatureHelp") then
-		-- 						-- Temporarily suppress "No signature help" notifications
-		-- 						local original_notify = vim.notify
-		-- 						vim.notify = function(msg, level, opts)
-		-- 							if not (type(msg) == "string" and msg:match("No signature help")) then
-		-- 								original_notify(msg, level, opts)
-		-- 							end
-		-- 						end
-		--
-		-- 						vim.lsp.buf.signature_help()
-		--
-		-- 						-- Restore after a short delay
-		-- 						vim.defer_fn(function()
-		-- 							vim.notify = original_notify
-		-- 						end, 200)
-		-- 					end
-		-- 				end, 50) -- 50ms delay
-		-- 			end
-		-- 		end,
-		-- 	})
-		-- end
-
-		-- vim.keymap.set({ "i", "s" }, "<C-j>", function()
-		-- 	if vim.snippet.active { direction = 1 } then
-		-- 		return "<Cmd>lua vim.snippet.jump(1)<CR>"
-		-- 	else
-		-- 		return "<C-j>"
-		-- 	end
-		-- end, { desc = "...", expr = true, silent = true })
-		--
-		-- vim.keymap.set({ "i", "s" }, "<C-k>", function()
-		-- 	if vim.snippet.active { direction = -1 } then
-		-- 		return "<Cmd>lua vim.snippet.jump(-1)<CR>"
-		-- 	else
-		-- 		return "<C-k>"
-		-- 	end
-		-- end, { desc = "...", expr = true, silent = true })
-		--
-		-- if client and client:supports_method "textDocument/signatureHelp" then
-		-- 	vim.keymap.set("i", "<C-s>", function()
-		-- 		vim.lsp.buf.signature_help {
-		-- 			max_width = 65,
-		-- 			max_height = 20,
-		-- 			focusable = true,
-		-- 			focus = true,
-		-- 			close_events = { "InsertLeave" }
-		-- 		}
-		-- 	end, { buffer = args.buf })
-		-- end
-
 		vim.opt.updatetime = 300
 	end,
 })
 
-vim.diagnostic.config {
-	severity_sort = true,
-	signs = false,
-	virtual_text = true,
-	jump = {
-		wrap = false,
-	},
+local servers = {
+	"basedpyright",
+	"lua_ls",
+	"texlab",
+	"vimls",
+	"vtsls",
+	"rust_analyzer",
+	"clangd",
+	"ruff"
 }
+
+vim.lsp.enable(servers, vim.g.lsp_autostart or true)

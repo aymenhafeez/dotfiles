@@ -1,12 +1,3 @@
--- ------------------------------------------------------------------------
---         ________  ___  ___
---        |\   __  \|\  \|\  \
---        \ \  \|\  \ \  \\\  \      Aymen Hafeez
---         \ \   __  \ \   __  \     https://github.com/aymenhafeez
---          \ \  \ \  \ \  \ \  \    https://aymenhafeez.github.io
---           \|__|\|__|\|__|\|__|
--- ------------------------------------------------------------------------
-
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -43,90 +34,29 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 vim.pack.add({
-	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter",
-		version = "main",
-	},
-	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-		version = "main",
-	},
-	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter-context",
-	},
-	{
-		src = "https://github.com/mason-org/mason.nvim",
-	},
-	{
-		src = "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
-	},
-	{
-		src = "https://github.com/j-hui/fidget.nvim",
-	},
-	{
-		src = "https://github.com/onsails/lspkind.nvim",
-	},
-	{
-		src = "https://github.com/nvim-mini/mini.nvim",
-	},
-	{
-		src = "https://github.com/lewis6991/gitsigns.nvim",
-	},
-	{
-		src = "https://github.com/NMAC427/guess-indent.nvim",
-	},
-	{
-		src = "https://github.com/luukvbaal/statuscol.nvim",
-	},
-	{
-		src = "https://github.com/lervag/vimtex",
-	},
-	{
-		src = "https://github.com/brianhuster/live-preview.nvim",
-	},
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter",             version = "main" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
+	"https://github.com/nvim-treesitter/nvim-treesitter-context",
+	"https://github.com/j-hui/fidget.nvim",
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.0") },
+	"https://github.com/nvim-mini/mini.nvim",
+	"https://github.com/lewis6991/gitsigns.nvim",
+	"https://github.com/NMAC427/guess-indent.nvim",
+	"https://github.com/luukvbaal/statuscol.nvim",
+	"https://github.com/lervag/vimtex",
+	"https://github.com/brianhuster/live-preview.nvim",
+	"https://github.com/UtkarshVerma/molokai.nvim",
 }, {
 	load = false,
-	confirm = true,
 })
 
-require("ah.treesitter").setup()
-require("ah.lsp")
-
-vim.api.nvim_create_autocmd({ "InsertEnter", "CmdLineEnter" }, {
-	group = vim.api.nvim_create_augroup("LazyLoad", {}),
-	callback = function()
-		vim.cmd.packadd("blink.cmp")
-		vim.cmd.packadd("LuaSnip")
-
-		require("ah.completion")
-		require("ah.luasnip").setup()
-	end
-})
-
-require("ah.mini").setup()
-require("gitsigns").setup()
-require("guess-indent").setup()
-
-require("statuscol").setup {
-	relculright = true,
-	segments = {
-		{ text = { require("statuscol.builtin").foldfunc }, click = "v:lua.ScFa" },
-		{
-			sign = { namespace = { "diagnostic" }, maxwidth = 1, colwidth = 1, auto = true },
-			click = "v:lua.ScSa",
-		},
-		{ text = { require("statuscol.builtin").lnumfunc }, click = "v:lua.ScLa" },
-		{ text = { "  " } },
-		{
-			sign = { namespace = { "gitsigns" }, maxwidth = 1, auto = true, fillchar = " " },
-			click = "v:lua.ScSa",
-		},
-	},
-}
-
-vim.g.vimtex_imaps_enabled = false
-vim.g.vimtex_mappings_enabled = false
-vim.g.vimtex_view_enabled = true
-vim.g.vimtex_view_general_viewer = "okular"
-vim.g.vimtex_view_general_options = "--unique file:@pdf#src:@line@tex"
-vim.keymap.set("n", "<leader>ct", "<cmd>VimtexTocToggle<CR>", { desc = "Toggle contents" })
+-- -- experimental, :h vim._extui
+-- require("vim._extui").enable({
+-- 	enable = true, -- Whether to enable or disable the UI.
+-- 	msg = {       -- Options related to the message module.
+-- 		---@type 'cmd'|'msg' Where to place regular messages, either in the
+-- 		---cmdline or in a separate ephemeral message window.
+-- 		target = "msg",
+-- 		timeout = 4000, -- Time a message is visible in the message window.
+-- 	},
+-- })
