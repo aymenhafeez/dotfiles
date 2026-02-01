@@ -1,46 +1,32 @@
-local virt_lines_ns = vim.api.nvim_create_namespace "on_diagnostic_jump"
-local group = vim.api.nvim_create_augroup("VirtLines", { clear = true })
-
---- @param diagnostic? vim.Diagnostic
---- @param bufnr integer
-local function on_jump(diagnostic, bufnr)
-	if not diagnostic then return end
-
-	vim.diagnostic.show(
-		virt_lines_ns,
-		bufnr,
-		{ diagnostic },
-		{ virtual_lines = { current_line = true }, virtual_text = false }
-	)
-
-	-- Clear virtual_lines on CursorMoved event
-	vim.api.nvim_create_autocmd("CursorMoved", {
-		group = group,
-		buffer = bufnr,
-		once = true,
-		callback = function()
-			vim.diagnostic.hide(virt_lines_ns, bufnr)
-		end
-	})
-end
-
-vim.diagnostic.config {
-	severity_sort = true,
-	-- signs = false,
-	virtual_text = true,
-	jump = {
-		on_jump = on_jump,
-		wrap = false,
-	},
-	float = {
-		source = true
-	}
-}
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
+  once = true,
+  callback = function()
+    vim.diagnostic.config {
+      severity_sort = true,
+      signs = false,
+      virtual_text = true,
+      jump = {
+        float = true,
+        wrap = false,
+      },
+      float = {
+        source = true
+      }
+    }
+  end
+})
 
 -- :h diagnostic-toggle-virtual-lines-example
-vim.keymap.set("n", "gK", function()
-	local new_config = not vim.diagnostic.config().virtual_lines
-	vim.diagnostic.config({ virtual_lines = new_config })
+vim.keymap.set("n", "gL", function()
+  local virtlines_config = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = virtlines_config })
+end)
+
+-- toggle virtual_text
+vim.keymap.set("n", "gV", function()
+  local virttext_config = not vim.diagnostic.config().virtual_text
+  vim.diagnostic.config({ virtual_text = virttext_config })
 end)
 
 -- local diagnostic_float = nil
