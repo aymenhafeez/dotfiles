@@ -104,27 +104,22 @@ local function filename(buf, hl)
     bufdir = fname
   end
 
-  local parent = bufdir:match "^(.*/)"
-  local tail = vim.fn.fnamemodify(name, ":t")
+  local dir = bufdir:match "^(.*/)"
+  local file = vim.fn.fnamemodify(name, ":t")
 
-  local parent_hl, tail_hl
+  local dir_hl, file_hl
   if vim.bo.modified then
-    parent_hl = "%1*"
-    tail_hl = "%1*"
+    dir_hl = "%1*"
+    file_hl = "%1*"
   elseif hl then
-    if vim.fn.mode() == "n" then
-      parent_hl = "%2*"
-      tail_hl = "%3*"
-    else
-      parent_hl = "%2*"
-      tail_hl = "%3*"
-    end
+    dir_hl = "%2*"
+    file_hl = "%3*"
   else
-    parent_hl = ""
-    tail_hl = ""
+    dir_hl = ""
+    file_hl = ""
   end
 
-  return string.format("%s %%<%s%s%s %%*", parent_hl, parent or "", tail_hl, tail)
+  return string.format("%s %%<%s%s%s %%*", dir_hl, dir or "", file_hl, file)
 end
 
 local function git_info()
