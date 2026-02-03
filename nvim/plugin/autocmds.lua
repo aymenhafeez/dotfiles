@@ -20,20 +20,19 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
-vim.api.nvim_create_autocmd("BufWinEnter", {
+vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("HelpWindow", { clear = true }),
-  pattern = "*",
+  pattern = "help",
   callback = function()
+    vim.opt_local.signcolumn = "no"
+    vim.opt_local.statuscolumn = ""
+
     local win_width = vim.api.nvim_win_get_width(0)
-    if vim.bo.filetype == "help" then
-      vim.opt_local.signcolumn = "no"
-      vim.opt_local.statuscolumn = ""
-      if win_width > 160 then
-        vim.cmd "wincmd L"
-        vim.cmd "vertical resize -12"
-      else
-        vim.cmd "resize +8"
-      end
+    if win_width > 160 then
+      vim.cmd "wincmd L"
+      vim.cmd "vertical resize -12"
+    else
+      vim.cmd "resize +8"
     end
-  end,
+  end
 })
