@@ -1,3 +1,5 @@
+vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { load = false })
+
 local group = vim.api.nvim_create_augroup("LazyLoad", { clear = false })
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = group,
@@ -24,15 +26,15 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         end,
       },
     }
-
-    require("mini.files").setup()
   end
 })
 
-vim.keymap.set("n", "<leader>-", require("mini.files").open)
+vim.keymap.set("n", "<leader>tn", function()
+  require("mini.notify").show_history()
+end)
 
 -- :h MiniSurround-vim-surround-config
-vim.api.nvim_create_autocmd("InsertEnter", {
+vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter", "TermOpen" }, {
   group = group,
   once = true,
   callback = function()
@@ -53,14 +55,17 @@ vim.api.nvim_create_autocmd("InsertEnter", {
 
     vim.keymap.del("x", "ys")
     vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+
     require("mini.pairs").setup()
   end
 })
 
-vim.keymap.set("n", "<leader>tn", function()
-  require("mini.notify").show_history()
-end)
+require("mini.files").setup()
 
+vim.keymap.set("n", "<leader>-",
+  function() require("mini.files").open(nil, true, { windows = { preview = true, width_preview = 75 } }) end)
+
+-- snippets from :h mini.files
 local map_split = function(buf_id, lhs, direction)
   local rhs = function()
     -- Make new window and set it as target
@@ -87,6 +92,3 @@ vim.api.nvim_create_autocmd("User", {
     map_split(buf_id, "<C-t>", "tab")
   end,
 })
-
-require("mini.extra").setup()
-require("mini.icons").setup()

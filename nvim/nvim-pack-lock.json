@@ -1,26 +1,25 @@
 {
   "plugins": {
     "LuaSnip": {
-      "rev": "0b4950a237ce441a6a3a947d501622453f6860ea",
-      "src": "https://github.com/L3MON4D3/LuaSnip",
-      "version": "2.0.0 - 2.1.0"
+      "rev": "dae4f5aaa3574bd0c2b9dd20fb9542a02c10471c",
+      "src": "https://github.com/L3MON4D3/LuaSnip"
     },
     "blink.cmp": {
-      "rev": "49f211fe5d729df53df4c042d7c3464cf47d199e",
+      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
       "src": "https://github.com/saghen/blink.cmp",
-      "version": "1.0.0 - 1.1.0"
+      "version": "'v1.8.0'"
     },
     "fidget.nvim": {
       "rev": "7fa433a83118a70fe24c1ce88d5f0bd3453c0970",
       "src": "https://github.com/j-hui/fidget.nvim"
     },
-    "gitsigns.nvim": {
-      "rev": "42d6aed4e94e0f0bbced16bbdcc42f57673bd75e",
-      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    "fzf-lua": {
+      "rev": "d59f857c76eb474ec00debcf043f14fd001805cc",
+      "src": "https://github.com/ibhagwan/fzf-lua"
     },
-    "guess-indent.nvim": {
-      "rev": "84a4987ff36798c2fc1169cbaff67960aed9776f",
-      "src": "https://github.com/NMAC427/guess-indent.nvim"
+    "gitsigns.nvim": {
+      "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "live-preview.nvim": {
       "rev": "5f517e80c1ca734a2bd6ace2115b36c51464f7e9",
@@ -30,9 +29,9 @@
       "rev": "c163117900c17d4abf30bc09452a261c8536060c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
-    "molokai.nvim": {
-      "rev": "720bacc534fa3b1566d75612986737088a4fb132",
-      "src": "https://github.com/UtkarshVerma/molokai.nvim"
+    "nvim-nonicons": {
+      "rev": "ceda07dc7339f35444b5f4c4016f76a9eb42ac16",
+      "src": "https://github.com/ya2s/nvim-nonicons"
     },
     "nvim-treesitter": {
       "rev": "ec034813775d7e2974c7551c8c34499a828963f8",
@@ -48,9 +47,13 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
-    "statuscol.nvim": {
-      "rev": "c46172d0911aa5d49ba5f39f4351d1bb7aa289cc",
-      "src": "https://github.com/luukvbaal/statuscol.nvim"
+    "nvim-web-devicons": {
+      "rev": "803353450c374192393f5387b6a0176d0972b848",
+      "src": "https://github.com/kyazdani42/nvim-web-devicons"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "src": "https://www.github.com/nvim-lua/plenary.nvim"
     },
     "vimtex": {
       "rev": "f707368022cdb851716be0d2970b90599c84a6a6",

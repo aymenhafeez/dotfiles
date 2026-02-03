@@ -165,16 +165,6 @@ map("s", "<BS>", '<C-o>"_s')
 map({ "i", "c", "t" }, "zx", "\\")
 map({ "i", "c", "t" }, "zc", "|")
 
-map("n", "<leader>ps", function()
-  local buf_nr = vim.api.nvim_get_current_buf()
-  local lines = vim.api.nvim_buf_get_lines(buf_nr, 0, -1, false)
-
-  require("scratch").toggle { window_type = "float" }
-  vim.api.nvim_buf_set_lines(0, 0, -1, true, lines)
-end)
-
--- get cwd in the cmdline
-map("c", "<C-d><C-w>", "<C-r>=getcwd()<CR><home>")
 -- get path of the current file in cmdline
 map("c", "<C-d><C-f>", "tcd <C-r>=expand('%:~:h')<CR>")
 

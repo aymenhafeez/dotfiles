@@ -4,6 +4,8 @@ require("fzf-lua").setup {
   winopts = {
     backdrop = 100,
     preview  = { hidden = "hidden" },
+    height   = 0.65,
+    width    = 0.75
   },
   fzf_opts = {
     ["--layout"] = "default",
@@ -75,6 +77,8 @@ vim.keymap.set("n", "<leader>gn", function()
   require("fzf-lua").live_grep {
     winopts = {
       preview = { hidden = false },
+      height = 0.85,
+      width = 0.8
     },
     cwd = "~/Documents/DataSci/",
   }
@@ -84,6 +88,8 @@ vim.keymap.set("n", "<leader>gp", function()
   require("fzf-lua").live_grep {
     winopts = {
       preview = { hidden = false },
+      height = 0.85,
+      width = 0.8
     },
     cwd = "~/projects/",
   }
@@ -93,6 +99,8 @@ vim.keymap.set("n", "<leader>g.", function()
   require("fzf-lua").live_grep {
     winopts = {
       preview = { hidden = false },
+      height = 0.85,
+      width = 0.8
     },
     cwd = vim.fn.stdpath "config",
   }
@@ -102,6 +110,8 @@ vim.keymap.set("n", "<leader>gl", function()
   require("fzf-lua").live_grep {
     winopts = {
       preview = { hidden = false },
+      height = 0.85,
+      width = 0.8
     },
     cwd = vim.fs.joinpath(vim.fn.stdpath "data", "lazy"),
   }
