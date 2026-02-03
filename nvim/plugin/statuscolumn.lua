@@ -20,5 +20,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     require("gitsigns").setup { current_line_blame = true }
     vim.keymap.set("n", "<leader>gh", "<cmd>Gitsigns preview_hunk<CR>")
     vim.keymap.set("n", "<leader>gl", "<cmd>Gitsigns preview_hunk_inline<CR>")
+    vim.keymap.set("n", "]h", "<cmd>Gitsigns next_hunk<CR>")
+    vim.keymap.set("n", "[h", "<cmd>Gitsigns prev_hunk<CR>")
   end
 })
