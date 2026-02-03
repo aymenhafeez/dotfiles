@@ -112,7 +112,7 @@ end)
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 vim.go.statusline = "%{%v:lua.require'statusline'.statusline()%}"
-vim.go.tabline = "%{%v:lua.require'statusline'.tabline()%}"
+vim.go.tabline = "%{%v:lua.require'tabline'.tabline()%}"
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

@@ -44,17 +44,17 @@ local function show_mode(hl)
   end
 end
 
-local function get_icon(buf, filetype)
-  local present, devicons = pcall(require, "nvim-web-devicons")
+local function get_icon(buf)
+  local present, MiniIcons = pcall(require, "mini.icons")
   if not present then
+    return ""
+  end
+
+  if buf == "" then
     return " "
   end
 
-  if filetype == "" then
-    return " "
-  end
-
-  local icon = devicons.get_icon(buf, filetype, { default = true }) or ""
+  local icon, hl, is_default = MiniIcons.get("extension", buf)
   return icon ~= "" and " " .. icon or ""
 end
 
@@ -198,7 +198,7 @@ local function statusline()
   local ft = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":e")
   local win = vim.api.nvim_get_current_win()
   local term = vim.bo[buf].buftype == "terminal"
-  local icon = buf ~= "" and get_icon(ft, vim.bo.filetype)
+  local icon = buf ~= "" and get_icon(ft)
   local curwin = tonumber(vim.g.actual_curwin) == win
   local hl = curwin
 
@@ -206,7 +206,6 @@ local function statusline()
 
   table.insert(components, show_mode(hl))
 
-  -- table.insert(components, get_icon(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":e"), vim.bo.filetype))
   table.insert(components, filename(buf, hl))
 
   if vim.bo.readonly then

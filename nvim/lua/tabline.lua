@@ -1,19 +1,15 @@
--- will get back to this
-
-_G.tabline = {}
-
-function _G.tabline()
-  local s = ""
-  local tabs = vim.api.nvim_list_tabpages()
+local function tabline()
+  local t = ""
+  local tabpages = vim.api.nvim_list_tabpages()
   local current_tab = vim.api.nvim_get_current_tabpage()
 
-  for i, tab in ipairs(tabs) do
+  for _, tab in ipairs(tabpages) do
     local tab_num = vim.api.nvim_tabpage_get_number(tab)
     local is_current = (tab == current_tab)
 
-    s = s .. "%" .. tab_num .. "T"
-    s = s .. (is_current and "%#TabLineSel#" or "%#TabLine#")
-    s = s .. " " .. tab_num .. " "
+    t = t .. "%" .. tab_num .. "T"
+    t = t .. (is_current and "%#TabLineSel#" or "%#TabLine#")
+    t = t .. " "
 
     local win = vim.api.nvim_tabpage_get_win(tab)
     local buf = vim.api.nvim_win_get_buf(win)
@@ -25,19 +21,18 @@ function _G.tabline()
     end
 
     if vim.api.nvim_get_option_value("modified", { buf = buf }) then
-      s = s .. "[+]"
+      t = t .. "[+]"
     end
 
-    s = s .. filename .. " "
-    s = s .. "%" .. tab_num .. "X✕%X "
+    t = t .. filename .. " "
+    t = t .. "%" .. tab_num .. "X✕%X "
   end
 
-  s = s .. "%#TabLineFill#%T"
+  t = t .. "%#TabLineFill#%T"
 
-  s = s .. "%="
-  s = s .. "%#%abLine# [" .. #tabs .. "tabs]"
-
-  return s
+  return t
 end
 
-vim.go.tabline = "%!v:lua.tabline()"
+return {
+  tabline = tabline
+}

@@ -92,3 +92,5 @@ vim.api.nvim_create_autocmd("User", {
     map_split(buf_id, "<C-t>", "tab")
   end,
 })
+
+require("mini.icons").setup()

@@ -1,10 +1,3 @@
-vim.pack.add({
-  "https://github.com/ya2s/nvim-nonicons",
-  "https://github.com/kyazdani42/nvim-web-devicons",
-}, { load = false })
-
-require("nvim-nonicons").setup()
-
 --- @module 'blink.cmp'
 --- @type blink.cmp.Config
 local options = {
