@@ -1,9 +1,0 @@
-set textwidth=79
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set spell
-set nocindent
-set autoindent
-set tw=80
-set fo+=t

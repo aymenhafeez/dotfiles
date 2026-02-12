@@ -1,1 +1,0 @@
-amsmath.vba: call delete('/Users/aymen/.vim/after/syntax/tex/amsmath.vim')
