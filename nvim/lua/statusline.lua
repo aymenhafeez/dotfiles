@@ -23,7 +23,6 @@ local modes = {
   ["ntT"] = "nTER",
 }
 
-
 local function show_mode(hl)
   local mode = modes[vim.fn.mode()] or " "
   local mode_hl
@@ -31,7 +30,7 @@ local function show_mode(hl)
     if vim.fn.mode() == "n" then
       mode_hl = "%6*"
     else
-      mode_hl = "%7*"
+      mode_hl = "%5*"
     end
   else
     mode_hl = ""
@@ -51,33 +50,18 @@ local function get_icon(buf)
   end
 
   if buf == "" then
-    return " "
+    return ""
   end
 
-  local icon, hl, is_default = MiniIcons.get("extension", buf)
+  local icon = MiniIcons.get("extension", buf)
   return icon ~= "" and " " .. icon or ""
 end
 
 local function diagnostics()
-  local diags = vim.diagnostic.get(0, { severity = { min = vim.diagnostic.severity.WARN } })
-
-  local num_errors = 0
-  for _, v in ipairs(diags) do
-    if v.severity == vim.diagnostic.severity.ERROR then
-      num_errors = num_errors + 1
-    end
-  end
-
-  local num_warnings = #diags - num_errors
-
-  if num_errors == 0 and num_warnings == 0 then
-    return ""
-  elseif num_errors > 0 and num_warnings == 0 then
-    return string.format(" : %d ", num_errors)
-  elseif num_errors == 0 and num_warnings > 0 then
-    return string.format(" : %d ", num_warnings)
+  if next(vim.diagnostic.get(0)) == nil then
+    return " "
   else
-    return string.format(" : %d  : %d ", num_errors, num_warnings)
+    return " " .. vim.diagnostic.status(0) .. " "
   end
 end
 
@@ -96,15 +80,12 @@ local function filename(buf, hl)
     fname = vim.fn.fnamemodify(name, ":~:.")
   end
 
-  local bufdir
-  local parts = vim.split(fname, "/")
-  if #parts > 4 then
-    bufdir = vim.fn.pathshorten(fname, 1)
-  else
-    bufdir = fname
+  local max_len = 25
+  if #fname > max_len then
+    fname = "…" .. fname:sub(#fname - max_len, #fname)
   end
 
-  local dir = bufdir:match "^(.*/)"
+  local dir = fname:match "^(.*/)"
   local file = vim.fn.fnamemodify(name, ":t")
 
   local dir_hl, file_hl
@@ -119,7 +100,7 @@ local function filename(buf, hl)
     file_hl = ""
   end
 
-  return string.format("%s %%<%s%s%s %%*", dir_hl, dir or "", file_hl, file)
+  return string.format("%s %s%s%s %%*", dir_hl, dir or "", file_hl, file)
 end
 
 local function git_info()
@@ -160,9 +141,11 @@ local function word_count()
   if wc.words == 0 then
     return ""
   end
+
   if wc.visual_words and wc.visual_words > 0 then
     return "(Word count: " .. wc.visual_words .. "/" .. wc.words .. ") "
   end
+
   return "(Word count: " .. wc.words .. ") "
 end
 
@@ -188,12 +171,41 @@ local function lsp_status()
   end
 end
 
+local function recording_macro()
+  if vim.fn.reg_recording() ~= "" then
+    return " recoding @" .. vim.fn.reg_recording() .. " "
+  else
+    return ""
+  end
+end
+
+local function get_last_cmd()
+  if vim.g.last_cmdline == "" then
+    return ""
+  end
+
+  -- optional: truncate so it doesn’t explode your bar
+  local max_len = 20
+  local cmd = vim.g.last_cmdline
+  if #cmd > max_len then
+    cmd = cmd:sub(1, max_len - 1) .. "…"
+  end
+
+  return " >" .. cmd .. " "
+end
+
 local function statusline()
   local buf = vim.api.nvim_get_current_buf()
-  local ft = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":e")
+  local ft = vim.api.nvim_buf_get_name(buf)
   local win = vim.api.nvim_get_current_win()
   local term = vim.bo[buf].buftype == "terminal"
-  local icon = buf ~= "" and get_icon(ft)
+
+  local icon
+  if term then
+    icon = " 󰅭"
+  else
+    icon = buf ~= "" and get_icon(ft)
+  end
   local curwin = tonumber(vim.g.actual_curwin) == win
   local hl = curwin
 
@@ -215,17 +227,31 @@ local function statusline()
     table.insert(components, "")
   end
 
+  table.insert(components, "%<")
+
   table.insert(components, " " .. git_info() .. "  ")
 
   local writing_ft = { tex = true, markdown = true, text = true }
   if writing_ft[vim.bo.filetype] then
     local wc = word_count()
     if wc ~= "" then
-      table.insert(components, wc)
+      table.insert(components, wc .. "  ")
     end
   end
 
+  if hl then
+    table.insert(components, "%9*")
+    table.insert(components, get_last_cmd())
+    table.insert(components, recording_macro())
+    table.insert(components, "%*")
+  else
+    table.insert(components, get_last_cmd())
+    table.insert(components, recording_macro())
+  end
+
   table.insert(components, "%=")
+
+  table.insert(components, " %S ")
 
   table.insert(components, diagnostics())
 
@@ -240,18 +266,12 @@ local function statusline()
   if hl then
     table.insert(components, "%8*")
     table.insert(components, icon)
+    table.insert(components, lsp_status())
+    table.insert(components, "%*")
   else
     table.insert(components, "")
     table.insert(components, icon)
-  end
-
-  table.insert(components, lsp_status())
-
-  -- Highlight
-  if hl then
-    table.insert(components, "%9*")
-  else
-    table.insert(components, "")
+    table.insert(components, lsp_status())
   end
 
   -- Position info

@@ -1,6 +1,3 @@
-vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist)
-vim.keymap.set("n", "<leader>Dq", vim.diagnostic.setqflist)
-
 -- toggle quickfix / location list
 local function toggle_list(kind)
   local list, open_cmd, close_cmd
@@ -57,8 +54,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.opt.switchbuf = "useopen,uselast"
-
 -- send output of command to quickfix window
 vim.api.nvim_create_user_command("OP", function(opts)
   local args = opts.fargs
@@ -73,6 +68,7 @@ vim.api.nvim_create_user_command("OP", function(opts)
 end, { nargs = "*" })
 
 -- view messages in quickfix window
+-- not needed with vim._extui
 vim.api.nvim_create_user_command("Mess", function()
   local output = vim.fn.execute "messages"
   local split_lines = vim.split(output, "\n")
