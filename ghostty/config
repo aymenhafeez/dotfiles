@@ -1,18 +1,21 @@
 font-family = JetBrains Mono
-# font-family = nonicons
-font-size = 10.5
-adjust-cell-height = -2.5%
-adjust-cell-width = -5%
+font-size = 10
 
 theme = Nord
+window-theme = ghostty
+
 unfocused-split-opacity = 1
 
 gtk-titlebar-style = tabs
+gtk-toolbar-style = flat
+
 window-padding-x = 0
 window-padding-y = 0
-window-padding-balance = false
+window-padding-balance = true
 
 mouse-hide-while-typing = true
+
+shell-integration = fish
 
 keybind = ctrl+shift+]=next_tab
 keybind = ctrl+shift+[=previous_tab
@@ -20,7 +23,6 @@ keybind = ctrl+shift+h=goto_split:left
 keybind = ctrl+shift+l=goto_split:right
 keybind = ctrl+shift+j=goto_split:down
 keybind = ctrl+shift+k=goto_split:up
-keybind = ctrl+shift+alt+d=toggle_tab_overview
 keybind = ctrl+shift+alt+]=move_tab:1
 keybind = ctrl+shift+alt+[=move_tab:-1
 keybind = ctrl+1=goto_tab:1
