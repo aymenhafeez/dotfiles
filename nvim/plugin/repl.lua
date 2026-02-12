@@ -17,7 +17,12 @@ local create_repl = function()
     else
       vim.cmd(width .. "vnew")
     end
-    job_id = vim.fn.jobstart({ "python3" }, { term = true })
+    job_id = vim.fn.jobstart({ "ipython" }, {
+      term = true,
+      on_exit = function()
+        job_id = nil
+      end,
+    })
 
     vim.wait(100, function()
       return false
@@ -31,11 +36,47 @@ local send_repl_line = function()
   vim.fn.chansend(job_id, vim.fn.getline "." .. "\n")
 end
 
+local function dedent_text(text)
+  local lines = vim.split(text, "\n", { plain = true })
+  local min_indent = math.huge
+
+  for _, line in ipairs(lines) do
+    if line:match("%S") then
+      local indent = line:match("^(%s*)"):len()
+      min_indent = math.min(min_indent, indent)
+    end
+  end
+
+  if min_indent == math.huge then
+    return text
+  end
+
+  local result = {}
+  for _, line in ipairs(lines) do
+    table.insert(result, line:sub(min_indent + 1))
+  end
+
+  return table.concat(result, "\n") .. "\n"
+end
+
 local function send_repl_selection()
   create_repl()
 
   local selection = get_selection()
-  vim.fn.chansend(job_id, selection)
+  local dedented = dedent_text(selection)
+
+  dedented = dedented:gsub("\n$", "")
+
+  -- use bracketed paste mode to prevent REPL auto-indentation
+  local bracketed_paste_start = "\027[200~"
+  local bracketed_paste_end = "\027[201~"
+
+  vim.fn.chansend(job_id, bracketed_paste_start .. dedented .. bracketed_paste_end)
+
+  -- Small delay to let bracketed paste finish before sending execute command
+  vim.wait(50, function() return false end)
+
+  vim.fn.chansend(job_id, "\n")
 end
 
 vim.keymap.set("n", "<leader>pp", function() send_repl_line() end)
@@ -43,6 +84,6 @@ vim.keymap.set("n", "<leader>pp", function() send_repl_line() end)
 vim.keymap.set("n", "<leader>vv", function() send_repl_selection() end)
 
 vim.keymap.set("n", "<leader>vp", function()
-  vim.cmd 'exe "normal vip \\<Esc>"'
+  vim.cmd 'exe "normal vipj\\<Esc>"'
   send_repl_selection()
 end)
