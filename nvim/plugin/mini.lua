@@ -1,12 +1,19 @@
 vim.pack.add({ "https://github.com/nvim-mini/mini.nvim" }, { load = false })
 
+local function setup(module, opts)
+  local present, mod = pcall(require, module)
+  if present then
+    require(module).setup(opts or {})
+  end
+end
+
 local group = vim.api.nvim_create_augroup("LazyLoad", { clear = false })
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = group,
   once = true,
   callback = function()
-    require("mini.notify").setup {
-      lsp_progress = { enable = false },
+    setup("mini.notify", {
+      lsp_progress = { enable = true },
       content = {
         sort = function(notif_arr)
           local filtered = vim.tbl_filter(function(notif)
@@ -25,7 +32,17 @@ vim.api.nvim_create_autocmd("BufReadPost", {
           return { anchor = "SE", col = vim.o.columns, row = vim.o.lines - pad }
         end,
       },
-    }
+    })
+
+    setup("mini.indentscope", { draw = { delat = 50 }, symbol = "│" })
+    setup("mini.tabline", { show_icons = false })
+  end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "help", "markdown" },
+  callback = function()
+    vim.b.miniindentscope_disable = true
   end
 })
 
@@ -38,7 +55,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter", "TermOpen" }, {
   group = group,
   once = true,
   callback = function()
-    require("mini.surround").setup {
+    setup("mini.surround", {
       mappings = {
         add = "ys",
         delete = "ds",
@@ -51,19 +68,40 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter", "TermOpen" }, {
         suffix_next = "",
       },
       search_method = "cover_or_next",
-    }
+    })
 
     vim.keymap.del("x", "ys")
     vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
 
-    require("mini.pairs").setup()
+    setup("mini.pairs")
   end
 })
 
-require("mini.files").setup()
+setup("mini.files", {
+  mappings = {
+    go_in = "l",
+    go_in_plus = "<CR>"
+  },
+  content = {
+    prefix = function() end
+  },
+  windows = {
+    preview = true,
+    width_nofocus = 50,
+    width_preview = 75,
+  }
+})
 
-vim.keymap.set("n", "<leader>-",
-  function() require("mini.files").open(nil, true, { windows = { preview = true, width_preview = 75 } }) end)
+vim.keymap.set("n", "<leader>-", function() require("mini.files").open(vim.api.nvim_buf_get_name(0), false) end)
+
+vim.keymap.set("n", "<leader>d-", function()
+  local prompt = vim.fn.input("Enter directory> ")
+  if prompt == "" then
+    return ""
+  end
+
+  require("mini.files").open(prompt, false)
+end)
 
 -- snippets from :h mini.files
 local map_split = function(buf_id, lhs, direction)
@@ -93,4 +131,4 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
-require("mini.icons").setup()
+-- setup("mini.icons")
