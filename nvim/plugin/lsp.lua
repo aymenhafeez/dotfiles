@@ -1,9 +1,6 @@
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
   callback = function(args)
-    vim.pack.add({ "https://github.com/j-hui/fidget.nvim" }, { load = false })
-    require("fidget").setup({ notification = { window = { align = "top" } } })
-
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client then
       client.server_capabilities.semanticTokensProvider = nil
@@ -25,13 +22,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local map = vim.keymap.set
 
-    map("n", "<leader>rn", vim.lsp.buf.rename)
-    map({ "n", "x" }, "gra", vim.lsp.buf.code_action)
-    map("n", "grr", vim.lsp.buf.references)
-    map("n", "gi", vim.lsp.buf.implementation)
     map("n", "gd", vim.lsp.buf.definition)
     map("n", "gD", vim.lsp.buf.declaration)
-    map("n", "gO", vim.lsp.buf.document_symbol)
     map("n", "gW", vim.lsp.buf.workspace_symbol)
     map("n", "td", vim.lsp.buf.type_definition)
 
@@ -92,7 +84,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local servers = {
   "basedpyright",
   "lua_ls",
-  "texlab",
   "vimls",
   "vtsls",
   "rust_analyzer",
