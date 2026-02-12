@@ -1,20 +1,15 @@
 font-family = JetBrains Mono
-font-size = 10
+font-size = 10.25
 
-theme = Nord
+theme = dark: modus_vivendi,light: modus_operandi
 window-theme = ghostty
-
-unfocused-split-opacity = 1
-
 gtk-titlebar-style = tabs
 gtk-toolbar-style = flat
-
+unfocused-split-opacity = 1
 window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
-
 mouse-hide-while-typing = true
-
 shell-integration = fish
 
 keybind = ctrl+shift+]=next_tab
