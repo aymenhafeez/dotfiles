@@ -23,14 +23,20 @@ map("i", "<CR>", "<CR><C-g>u")
 map({ "n", "i" }, "<C-c><C-j>", "<Esc>o\\item ", { noremap = true, silent = true, desc = "New item below" })
 map({ "n", "i" }, "<C-c><C-k>", "<Esc>O\\item ", { noremap = true, silent = true, desc = "New item above" })
 
+local function get_dynamic_width()
+  return vim.o.columns > 150 and 'right' or 'below'
+end
+
 local file_name = vim.fn.expand "%:t:r"
-map(
-  "n",
-  "<leader>cm",
-  "<cmd>lua require('terminal').toggle_terminal({name = 'latex compile', cmd='latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build "
-  .. file_name
-  .. "'})<CR>"
-)
+
+map("n", "<leader>cm", function()
+  require("terminal").toggle_terminal({
+    name = "latex compile",
+    direction = get_dynamic_width(),
+    cmd =
+        "latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build " .. file_name
+  })
+end)
 
 map("n", "<leader>pv", function()
   vim.cmd(":!xdg-open build/" .. vim.fn.expand "%:t:r" .. ".pdf")
@@ -39,8 +45,8 @@ end)
 -- my keyboard doesn't have a backslash
 map("i", "zx", "\\")
 
-map("n", "<C-s>", "mm[s1z=`m", { desc = "Correct previous spelling error" })
-map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { desc = "Correct previous spelling error" })
+map("n", "<C-s>", "mm[s1z=`m")
+map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u")
 
 vim.g.vimtex_imaps_enabled = false
 vim.g.vimtex_mappings_enabled = false
