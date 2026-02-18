@@ -43,20 +43,6 @@ local function show_mode(hl)
   end
 end
 
-local function get_icon(buf)
-  local present, MiniIcons = pcall(require, "mini.icons")
-  if not present then
-    return ""
-  end
-
-  if buf == "" then
-    return ""
-  end
-
-  local icon = MiniIcons.get("extension", buf)
-  return icon ~= "" and " " .. icon or ""
-end
-
 local function diagnostics()
   if next(vim.diagnostic.get(0)) == nil then
     return " "
@@ -80,7 +66,7 @@ local function filename(buf, hl)
     fname = vim.fn.fnamemodify(name, ":~:.")
   end
 
-  local max_len = 25
+  local max_len = 35
   if #fname > max_len then
     fname = "…" .. fname:sub(#fname - max_len, #fname)
   end
@@ -179,33 +165,10 @@ local function recording_macro()
   end
 end
 
-local function get_last_cmd()
-  if vim.g.last_cmdline == "" then
-    return ""
-  end
-
-  -- optional: truncate so it doesn’t explode your bar
-  local max_len = 20
-  local cmd = vim.g.last_cmdline
-  if #cmd > max_len then
-    cmd = cmd:sub(1, max_len - 1) .. "…"
-  end
-
-  return " >" .. cmd .. " "
-end
-
 local function statusline()
   local buf = vim.api.nvim_get_current_buf()
-  local ft = vim.api.nvim_buf_get_name(buf)
   local win = vim.api.nvim_get_current_win()
-  local term = vim.bo[buf].buftype == "terminal"
 
-  local icon
-  if term then
-    icon = " 󰅭"
-  else
-    icon = buf ~= "" and get_icon(ft)
-  end
   local curwin = tonumber(vim.g.actual_curwin) == win
   local hl = curwin
 
@@ -240,12 +203,10 @@ local function statusline()
   end
 
   if hl then
-    table.insert(components, "%9*")
-    table.insert(components, get_last_cmd())
+    table.insert(components, "%3*")
     table.insert(components, recording_macro())
     table.insert(components, "%*")
   else
-    table.insert(components, get_last_cmd())
     table.insert(components, recording_macro())
   end
 
@@ -255,26 +216,21 @@ local function statusline()
 
   table.insert(components, diagnostics())
 
-  -- highlight
   if hl then
     table.insert(components, "%4*")
   else
     table.insert(components, "")
   end
 
-  -- Highlight
   if hl then
     table.insert(components, "%8*")
-    table.insert(components, icon)
     table.insert(components, lsp_status())
     table.insert(components, "%*")
   else
     table.insert(components, "")
-    table.insert(components, icon)
     table.insert(components, lsp_status())
   end
 
-  -- Position info
   local line = vim.fn.getpos(".")[2]
   local col = vim.fn.getpos(".")[3]
   table.insert(components, string.format(" %3d:%3d ", line, col) .. " %P ")
