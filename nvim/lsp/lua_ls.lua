@@ -1,30 +1,20 @@
-local capabilities = nil
-if pcall(require, "blink.cmp") then
-  capabilities = require("blink.cmp").get_lsp_capabilities()
-end
-
 return {
   cmd = { vim.fn.expand("~/.local/share/lua-ls/bin/lua-language-server") },
   filetypes = { "lua" },
   root_markers = { ".emmyrc.json", ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
-  capabilities = capabilities,
   settings = {
     Lua = {
       format = {
         enable = true,
-        defaultConfig = {
-          quote_style = "double",
-        },
+        -- defaultConfig = {
+        --   quote_style = "double",
+        -- },
       },
       runtime = {
         version = "LuaJIT",
       },
       diagnostics = {
         globals = { "vim", "describe", "it", "before_each", "after_each", "equals" },
-        disable = {
-          "missing-fields",
-          "undefined-doc-name",
-        },
       },
       completion = {
         callSnippet = "Replace",
