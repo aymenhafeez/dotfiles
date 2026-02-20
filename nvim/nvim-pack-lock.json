@@ -1,20 +1,15 @@
 {
   "plugins": {
-    "LuaSnip": {
-      "rev": "dae4f5aaa3574bd0c2b9dd20fb9542a02c10471c",
-      "src": "https://github.com/L3MON4D3/LuaSnip"
+    "artio.nvim": {
+      "rev": "6a8d0fe545d9a0dc21042cc2cc249d0265253e22",
+      "src": "https://codeberg.org/comfysage/artio.nvim"
     },
-    "blink.cmp": {
-      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
-      "src": "https://github.com/saghen/blink.cmp",
-      "version": "'v1.8.0'"
-    },
-    "fidget.nvim": {
-      "rev": "7fa433a83118a70fe24c1ce88d5f0bd3453c0970",
-      "src": "https://github.com/j-hui/fidget.nvim"
+    "firenvim": {
+      "rev": "a18ef908ac06b52ad9333b70e3e630b0a56ecb3d",
+      "src": "https://github.com/glacambre/firenvim"
     },
     "fzf-lua": {
-      "rev": "d59f857c76eb474ec00debcf043f14fd001805cc",
+      "rev": "9de53c3fce885512f982420ee6082d75613ee891",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
@@ -29,9 +24,13 @@
       "rev": "c163117900c17d4abf30bc09452a261c8536060c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
-    "nvim-nonicons": {
-      "rev": "ceda07dc7339f35444b5f4c4016f76a9eb42ac16",
-      "src": "https://github.com/ya2s/nvim-nonicons"
+    "nui.nvim": {
+      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
+    },
+    "nvim-dbee": {
+      "rev": "dda517694889a5d238d7aa407403984da9f80cc0",
+      "src": "https://github.com/kndndrj/nvim-dbee"
     },
     "nvim-treesitter": {
       "rev": "ec034813775d7e2974c7551c8c34499a828963f8",
@@ -43,21 +42,21 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "4d55f63252e04c5212daed958e4e940915ff16ce",
+      "rev": "a0e182ae21fda68c59d1f36c9ed45600aef50311",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
-    "nvim-web-devicons": {
-      "rev": "803353450c374192393f5387b6a0176d0972b848",
-      "src": "https://github.com/kyazdani42/nvim-web-devicons"
-    },
-    "plenary.nvim": {
-      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
-      "src": "https://www.github.com/nvim-lua/plenary.nvim"
+    "oil.nvim": {
+      "rev": "f55b25e493a7df76371cfadd0ded5004cb9cd48a",
+      "src": "https://github.com/stevearc/oil.nvim"
     },
     "vimtex": {
       "rev": "f707368022cdb851716be0d2970b90599c84a6a6",
       "src": "https://github.com/lervag/vimtex"
+    },
+    "zen-mode.nvim": {
+      "rev": "8564ce6d29ec7554eb9df578efa882d33b3c23a7",
+      "src": "https://github.com/folke/zen-mode.nvim"
     }
   }
 }
