@@ -33,6 +33,31 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+    vim.api.nvim_create_autocmd("LspProgress", {
+      buffer = args.buf,
+      callback = function(ev)
+        local value = ev.data.params.value or {}
+        local msg = value.message or "done"
+
+        -- rust analyszer in particular has really long lsp messages so truncate them
+        if #msg > 40 then
+          msg = msg:sub(1, 37) .. "..."
+        end
+
+        -- :h LspProgress
+        vim.api.nvim_echo({ { msg } }, false, {
+          id = "lsp",
+          kind = "progress",
+          title = value.title,
+          status = value.kind ~= "end" and "running" or "success",
+          percent = value.percentage,
+        })
+      end,
+    })
+
+
+
     if
         client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, args.buf)
     then
