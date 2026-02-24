@@ -2,7 +2,6 @@
 local function pack_hooks(ev)
   local name = ev.data.spec.name
   local kind = ev.data.kind
-  local path = ev.data.path
 
   -- run :TSUpdate after install/update
   if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
@@ -22,12 +21,11 @@ vim.api.nvim_create_autocmd("PackChanged", { callback = pack_hooks })
 
 vim.pack.add({
   "https://github.com/lervag/vimtex",
-  "https://github.com/alexghergh/nvim-tmux-navigation"
 }, { load = false })
 
 vim.cmd [[
-colorscheme dark
-set shortmess+=Sq
+colorscheme default-custom
+set shortmess+=S
 ]]
 
 vim.g.mapleader = " "
@@ -60,9 +58,9 @@ opt.showtabline = 2
 opt.equalalways = false
 vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.foldmethod = "marker"
-opt.completeopt = { "menu", "menuone", "popup", "noinsert", "fuzzy" }
+opt.completeopt = { "menu", "menuone", "popup", "noselect", "fuzzy" }
 opt.wildmode = { "longest:full", "full" }
-opt.complete = ".,o"
+opt.complete = ".,o,w"
 opt.scrolloff = 8
 opt.sidescroll = 0
 opt.updatetime = 300
