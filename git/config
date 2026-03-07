@@ -1,0 +1,8 @@
+[user]
+	name = aymenhafeez
+	email = hafeezaymen2357@gmail.com
+[difftool "nvim_difftool"]
+    cmd = nvim -c \"packadd nvim.difftool\" -c \"DiffTool $LOCAL $REMOTE\"
+[diff]
+    tool = nvim_difftool
+
