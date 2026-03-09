@@ -30,20 +30,6 @@ vim.keymap.set("n", "<leader>l", function()
   toggle_list("loc")
 end, { desc = "Toggle location list" })
 
-vim.api.nvim_create_autocmd("DiagnosticChanged", {
-  callback = function()
-    local qf = vim.fn.getqflist({ winid = 1 })
-    if qf.winid ~= 0 then
-      vim.diagnostic.setqflist({ open = true })
-    end
-
-    local loc = vim.fn.getloclist(0, { winid = 1 })
-    if loc.winid ~= 0 then
-      vim.diagnostic.setloclist({ open = true, bufnr = 0 })
-    end
-  end,
-})
-
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "qf",
   callback = function()
@@ -51,39 +37,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.relativenumber = false
     vim.opt_local.signcolumn = "no"
     vim.opt_local.wrap = false
-  end,
-})
-
--- send output of command to quickfix window
-vim.api.nvim_create_user_command("OP", function(opts)
-  local args = opts.fargs
-  local output = vim.fn.execute(vim.fn.join(args, " "))
-  local split_lines = vim.split(output, "\n")
-  vim.fn.setqflist({}, "a", {
-    title = "Output",
-    lines = split_lines,
-  })
-  vim.cmd "copen"
-  vim.cmd "normal G"
-end, { nargs = "*" })
-
--- view messages in quickfix window
--- not needed with vim._extui
-vim.api.nvim_create_user_command("Mess", function()
-  local output = vim.fn.execute "messages"
-  local split_lines = vim.split(output, "\n")
-  vim.fn.setqflist({}, "r", {
-    title = "Messages",
-    lines = split_lines,
-  })
-  vim.cmd "copen"
-  vim.cmd "normal G"
-end, {})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qf",
-  callback = function()
-    vim.opt_local.buflisted = false
+    vim.opt_local.statuscolumn = ""
   end,
 })
 
@@ -99,7 +53,7 @@ vim.keymap.set({ "n", "t" }, "<M-C-j>", function()
   else
     vim.cmd [[m .+1<CR>==]]
   end
-end)
+end, { desc = "Next quickfix/loclist item or move line down" })
 
 vim.keymap.set({ "n", "t" }, "<M-C-k>", function()
   local qflist_id = vim.fn.getqflist({ winid = 1 }).winid
@@ -111,17 +65,4 @@ vim.keymap.set({ "n", "t" }, "<M-C-k>", function()
   else
     vim.cmd [[m .-2<CR>==]]
   end
-end)
-
--- execute current file and send output to quickfix list
-vim.keymap.set("n", "<leader><leader>x", function()
-  local result = vim.api.nvim_exec2("source %", { output = true })
-  local output = result.output
-  local split_lines = vim.split(output, "\n")
-  vim.fn.setqflist({}, " ", {
-    title = "Execute",
-    lines = split_lines,
-  })
-  vim.cmd "copen"
-  vim.cmd "normal G"
-end)
+end, { desc = "Previous quickfix/loclist item or move line up" })

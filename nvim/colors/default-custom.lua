@@ -1,152 +1,192 @@
-local mod = require("utils").modify_colour
+local mod      = require("utils").modify_colour
 
-local function apply_colourscheme()
+local is_light = vim.o.background == "light"
+
+local function mod_custom(hex, pcnt)
+  return is_light and mod(hex, pcnt) or mod(hex, -pcnt)
+end
+
+local function apply()
   if vim.g.colors_name then
     vim.cmd("hi clear")
   end
 
-  vim.o.termguicolors = true
-  vim.g.colors_name = "default-custom"
+  vim.o.termguicolors     = true
+  vim.g.colors_name       = "default-custom"
 
-  local is_light = vim.o.background == "light"
+  local dark_bg           = "#14161b"
+  local dark_fg           = "#dddddd"
+  local dark_subtle_fg    = "#a9aaac"
+  local dark_accent       = "#1c1f26"
+  local dark_subtle       = mod(dark_bg, 90)
+  -- local dark_blue         = "#A6DBFF" -- NvimLightBlue
+  local dark_blue         = "#71ade7"
+  local dark_magenta      = "#c3c3d5"
+  local dark_green        = "#96C186"
+  local dark_yellow       = "#dfdf8e"
+  local dark_red          = "#FFC0B9" -- NvimLightRed
+  local dark_pale_blue    = mod(dark_blue, 30)
+  local dark_rust         = "#CF8E6D"
 
-  local dark_bg = "#14161b"
-  local dark_fg = "NvimLightGrey2"
-  local dark_slbg = "#4f5258"
-  local dark_class_color = "#c2d2e3"
-  local dark_func = "#88c0d0"
-  local dark_cyan = "#82b0ec"
-  -- local dark_magenta = "#b6a0ff"
-  local dark_magenta = "#B189F5"
-  local dark_string = "NvimLightGreen"
-  local dark_rust = "#CF8E6D"
+  local light_bg          = "#ffffff"
+  local light_fg          = "#14161B"
+  local light_subtle_fg   = mod(light_fg, 50)
+  local light_accent      = mod(light_bg, -20)
+  local light_subtle      = mod(light_bg, -40)
+  local light_blue        = "#0000FF" -- blue
+  local light_magenta     = "NvimDarkMagenta"
+  local light_green       = "#005523"
+  local light_yellow      = "#6B5300"
+  local light_red         = "#590008" -- NvimDarkRed
+  local light_pale_blue   = mod(light_blue, -30)
+  local light_rust        = "#8a290f"
 
-  local light_bg = "#ffffff"
-  local light_fg = "NvimDarkGrey2"
-  local light_slbg = "NvimLightGrey4"
-  local light_class_color = "NvimDarkBlue"
-  local light_func = "NvimDarkCyan"
-  local light_cyan = "NvimDarkCyan"
-  local light_magenta = "NvimDarkMagenta"
-  local light_string = "#7f0000"
-  local light_rust = "#8a290f"
+  local bg                = is_light and light_bg or dark_bg
+  local fg                = is_light and light_fg or dark_fg
+  local accent            = is_light and light_accent or dark_accent
+  local subtle            = is_light and light_subtle or dark_subtle
+  local subtle_fg         = is_light and light_subtle_fg or dark_subtle_fg
+  local muted             = mod_custom(subtle_fg, 20)
+  local yellow            = is_light and light_yellow or dark_yellow
+  local magenta           = is_light and light_magenta or dark_magenta
+  local red               = is_light and light_red or dark_red
+  local blue              = is_light and light_blue or dark_blue
+  local altbg             = is_light and "White" or "Black"
+  local altfg             = is_light and "Black" or "White"
+  local green             = is_light and light_green or dark_green
+  local pale_blue         = is_light and light_pale_blue or dark_pale_blue
+  local rust              = is_light and light_rust or dark_rust
 
-  local bg = is_light and light_bg or dark_bg
-  local fg = is_light and light_fg or dark_fg
-  local cline = is_light and "#f2f2f4" or mod(bg, 20)
-  local class_color = is_light and light_class_color or dark_class_color
-  local yellow = is_light and "NvimDarkYellow" or "NvimLightYellow"
-  local func = is_light and light_func or dark_func
-  local rust = is_light and light_magenta or dark_magenta
-  local cyan = is_light and light_cyan or dark_cyan
-  local string_fg = is_light and light_string or dark_string
-  local border = is_light and "NvimLightGrey3" or "NvimDarkGrey3"
-  local comment = is_light and "NvimDarkGrey4" or "NvimLightGrey4"
-  local selection = is_light and "NvimLightGrey4" or "NvimDarkGrey4"
-  local red = is_light and "NvimDarkRed" or "NvimLightRed"
-  local blue = is_light and "Blue" or "NvimLightBlue"
-  local line = is_light and "NvimLightGrey3" or "NvimDarkGrey4"
-  local altbg = is_light and "White" or "Black"
-  local altfg = is_light and "Black" or "White"
-  local green = is_light and "NvimDarkGreen" or "NvimLightGreen"
-  local keyword = is_light and light_rust or dark_rust
+  vim.g.terminal_color_0  = bg
+  vim.g.terminal_color_1  = green
+  vim.g.terminal_color_2  = green
+  vim.g.terminal_color_3  = yellow
+  vim.g.terminal_color_4  = blue
+  vim.g.terminal_color_5  = fg
+  vim.g.terminal_color_6  = green
+  vim.g.terminal_color_7  = fg
+  vim.g.terminal_color_8  = subtle_fg
+  vim.g.terminal_color_9  = green
+  vim.g.terminal_color_10 = green
+  vim.g.terminal_color_11 = yellow
+  vim.g.terminal_color_12 = blue
+  vim.g.terminal_color_13 = fg
+  vim.g.terminal_color_14 = blue
+  vim.g.terminal_color_15 = blue
 
-  vim.g.terminal_color_5 = is_light and "#000000" or "#ffffff"
-  vim.g.terminal_color_13 = is_light and "#000000" or "#ffffff"
+  local highlights        = {
+    Normal                          = { fg = fg, bg = bg },
+    Pmenu                           = { bg = accent },
+    -- Pmenu                           = { bg = bg },
+    PmenuSel                        = { fg = bg, bg = fg },
+    PmenuMatch                      = { fg = yellow, bg = accent, bold = true },
+    PmenuMatchSel                   = { fg = bg, bg = fg, bold = true, underline = true },
+    -- PmenuBorder                     = { link = "FloatBorder" },
+    -- NormalFloat                     = { bg = bg },
+    FloatBorder                     = { fg = mod_custom(subtle_fg, 20), bg = bg },
+    WinSeparator                    = { fg = subtle },
+    Special                         = { fg = yellow },
+    Comment                         = { fg = muted, italic = true },
+    Identifier                      = {},
+    Todo                            = { fg = altbg, bg = altfg, bold = true },
+    PmenuThumb                      = is_light and { bg = "NvimLightGrey4" } or { bg = "NvimLightGrey1" },
+    QuickFixLine                    = { link = "PmenuSel" },
+    Statusline                      = { fg = fg, bg = subtle },
+    StatuslineNC                    = { fg = muted, bg = subtle },
+    TablineSel                      = { fg = fg, bold = true },
+    Number                          = { fg = magenta, bold = true },
+    Boolean                         = { fg = magenta, bold = true },
+    FzfLuaBorder                    = { link = "FloatBorder" },
+    FzfLuaBackDrop                  = { bg = is_light and "White" or "Black" },
+    FzfLuaLivePrompt                = { fg = fg },
+    Function                        = { fg = blue },
+    String                          = { fg = green },
+    Statement                       = { link = "Keyword" },
+    Keyword                         = { fg = subtle_fg },
+    Include                         = is_light and { fg = light_magenta } or { fg = dark_magenta },
+    TreesitterContext               = { bg = bg, underline = true, sp = subtle },
+    TreesitterContextLineNumber     = { fg = fg, bg = bg, bold = true, underline = true, sp = subtle },
+    ModeMsg                         = { link = "Normal" },
+    Constant                        = { fg = magenta, bold = true },
+    Conceal                         = { link = "Keyword" },
+    MiniPickMatchCurrent            = { link = "PmenuSel" },
+    Variable                        = { fg = fg },
+    Directory                       = { fg = blue },
+    SpellBad                        = { undercurl = true, sp = red },
+    SpellCap                        = { undercurl = true, sp = yellow },
+    SpellLocal                      = { undercurl = true, sp = yellow },
+    SpellRare                       = { undercurl = true, sp = yellow },
 
-  local highlights = {
-    Normal                      = { bg = bg, fg = fg },
-    CursorLine                  = { bg = cline },
-    NormalFloat                 = { bg = bg },
-    FloatBorder                 = { fg = selection },
-    Pmenu                       = { bg = bg },
-    PmenuMatch                  = { fg = yellow, bold = true },
-    PmenuBorder                 = { link = "FloatBorder" },
-    BlinkCmpMenuBorder          = { link = "PmenuBorder" },
-    BlinkCmpDocBorder           = { link = "PmenuBorder" },
-    WinSeparator                = { fg = border },
-    SpellBad                    = { undercurl = true },
-    Comment                     = { fg = comment, italic = true },
-    PmenuThumb                  = is_light and { bg = "NvimLightGrey4" } or { bg = "NvimLightGrey1" },
-    QuickFixLine                = { fg = "None", bg = "NvimDarkCyan" },
-    Statusline                  = { bg = line, fg = fg },
-    TablineSel                  = { bg = fg, fg = bg },
-    Number                      = { fg = altfg, bold = true },
-    Boolean                     = { fg = rust },
-    FzfLuaBorder                = { link = "FloatBorder" },
-    FzfLuaBackdrop              = { bg = bg },
-    Function                    = { fg = blue },
-    String                      = { fg = string_fg },
-    Statement                   = { fg = blue },
-    Include                     = is_light and { fg = light_magenta } or { fg = dark_magenta },
-    TreesitterContext           = { bg = bg, blend = 0 },
-    TreesitterContextLineNumber = { fg = fg },
-    TreesitterContextSeparator  = { link = "WinSeparator" },
-    AltBg                       = { bg = altbg },
-    ModeMsg                     = { fg = fg },
-    Constant                    = { fg = yellow },
+    DiagnosticUnderlineOk           = { sp = green, undercurl = true },
+    DiagnosticUnderlineWarn         = { sp = yellow, undercurl = true },
+    DiagnosticUnderlineError        = { sp = red, undercurl = true },
+    DiagnosticUnderlineInfo         = { sp = blue, undercurl = true },
+    DiagnosticUnderlineHint         = { sp = blue, undercurl = true },
+    DiagnosticDeprecated            = { sp = red, strikethrough = true },
+    Scrollbar                       = { fg = accent, bg = accent },
+    ScrollbarThumb                  = { fg = subtle, bg = subtle },
 
-    DiagnosticUnderlineOk       = { sp = green, undercurl = true },
-    DiagnosticUnderlineWarn     = { sp = yellow, undercurl = true },
-    DiagnosticUnderlineError    = { sp = red, undercurl = true },
-    DiagnosticUnderlineInfo     = { sp = blue, undercurl = true },
-    DiagnosticUnderlineHint     = { sp = blue, undercurl = true },
-    DiagnosticDeprecated        = { sp = red, strikethrough = true },
-    Scrollbar                   = { fg = border },
-    ScrollbarThumb              = { fg = selection },
+    ["@keyword.return"]             = { fg = yellow, bold = false },
+    ["@variable"]                   = { link = "Variable" },
+    ["@constructor"]                = { fg = magenta },
+    ["@constructor.python"]         = { fg = blue },
+    ["@variable.builtin.python"]    = { fg = subtle_fg },
 
-    ["@variable.member"]        = { fg = class_color },
-    ["@variable.member.python"] = { fg = blue },
-    ["@variable.parameter"]     = { fg = altfg, bold = true },
-    ["@keyword"]                = { fg = keyword },
-    -- ["@keyword.function"]       = { fg = blue, bold = true },
-    -- ["@keyword.return"]         = { fg = blue, bold = true },
-    -- ["@module.builtin"]         = { bold = true },
-    -- ["@function.builtin"]       = { bold = true },
+    ["@markup.link"]                = { fg = blue, underline = true },
+    ["@markup.heading.1"]           = { fg = blue, bold = true },
+    ["@markup.heading.2"]           = { fg = blue, bold = true },
+    ["@markup.heading.3"]           = { fg = blue, bold = true },
+    ["@markup.heading.4"]           = { fg = blue, bold = true },
+    ["@markup.heading.5"]           = { fg = blue, bold = true },
+    ["@markup.heading.6"]           = { fg = blue, bold = true },
+    ["@markup.raw.markdown_inline"] = is_light and { bg = "NvimLightGrey2" } or { bg = "NvimDarkGrey3" },
 
-    ["@markup.link"]            = { fg = blue, underline = true },
-    ["@markup.heading.1"]       = { fg = blue, bold = true },
-    ["@markup.heading.2"]       = { fg = blue, bold = true },
-    ["@markup.heading.3"]       = { fg = blue, bold = true },
-    ["@markup.heading.4"]       = { fg = blue, bold = true },
-    ["@markup.heading.5"]       = { fg = blue, bold = true },
-    ["@markup.heading.6"]       = { fg = blue, bold = true },
+    Bold                            = { bold = true },
+    Italic                          = { italic = true },
+    Underlined                      = { underline = true },
 
-    User1                       = { fg = red, bold = true },
-    User2                       = { fg = blue, bold = true },
-    User3                       = is_light and { fg = "NvimDarkGrey2", bold = true } or { fg = "White", bold = true },
-    User5                       = { fg = altfg, bold = true },
-    User6                       = { fg = fg, bg = altbg },
-    User7                       = { fg = class_color, bold = true },
-    -- User8                       = is_light and { fg = fg, bg = "NvimLightGrey4" } or
-    --     { fg = fg, bg = mod(dark_slbg, 40) },
-    User9                       = is_light and { fg = "NvimDarkGrey2" } or { fg = "NvimLightGrey2" },
+    DiffAdd                         = { fg = green, bg = mod_custom(green, 50) },
+    DiffDelete                      = { fg = red, bg = mod_custom(red, 50) },
+    DiffChange                      = { fg = subtle_fg, bg = mod_custom(fg, 70) },
+    DiffText                        = { fg = blue, bg = mod_custom(blue, 50) },
+    DiffTextAdd                     = { link = "DiffText" },
+    Added                           = { fg = green },
+    Changed                         = { fg = blue },
+    Removed                         = { fg = red },
 
-    TabPages                    = { bg = line },
 
-    Bold                        = { bold = true },
-    Italic                      = { italic = true },
-    Underlined                  = { underline = true },
-
-    ArtioNormal                 = { bg = bg },
-    ArtioSel                    = { link = "PmenuSel" },
-    ArtioPrompt                 = { bg = bg },
-    ArtioPointer                = { bg = fg },
+    texCmdEnv                      = { fg = blue },
+    texcmdPackage                  = { fg = magenta },
+    texCmdPart                     = { link = "Keyword" },
+    texPartArgTitle                = { fg = yellow },
+    texTCBZone                     = { fg = green },
+    texFileOpt                     = { fg = magenta },
+    texMathGroup                   = { fg = pale_blue },
+    texMathArg                     = { fg = pale_blue },
+    texMathZoneLD                  = { fg = pale_blue },
+    texMathZoneLI                  = { fg = pale_blue },
+    texMathSuper                   = { fg = pale_blue },
+    texMathSub                     = { fg = pale_blue },
+    texDocZone                     = { fg = fg },
+    -- texSectionZone  = { fg = subtle_fg }
+    texBeginEndName                = { fg = fg },
+    ["@module.latex"]              = { fg = subtle_fg },
+    ["@label.latex"]               = { fg = fg },
+    ["@punctuation.special.latex"] = { fg = magenta }
   }
-
 
   for hl_group, opts in pairs(highlights) do
     vim.api.nvim_set_hl(0, hl_group, opts)
   end
 end
 
-apply_colourscheme()
+apply()
 
 vim.api.nvim_create_autocmd("OptionSet", {
   pattern = "background",
   callback = function()
     if vim.g.colors_name == "default-custom" then
-      apply_colourscheme()
+      apply()
     end
   end,
 })

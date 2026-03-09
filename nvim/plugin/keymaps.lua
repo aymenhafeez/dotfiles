@@ -12,84 +12,61 @@ cnoremap <M-f> <S-Right>
 command! -nargs=1 Ngrep vimgrep "<args>" **/*
 nnoremap <Leader>[ :Ngrep
 
-autocmd CmdlineChanged [:\/\?] call wildtrigger()
-set wildmode=noselect:lastused,full
-set wildoptions=pum,tagfile,fuzzy
-
-" :h fuzzy-file-picker
-set findfunc=Find
-func Find(arg, _)
-  if empty(s:filescache)
-    let s:filescache = globpath('.', '**', 1, 1)
-    call filter(s:filescache, '!isdirectory(v:val)')
-    call map(s:filescache, "fnamemodify(v:val, ':.')")
-  endif
-  return a:arg == '' ? s:filescache : matchfuzzy(s:filescache, a:arg)
-endfunc
-let s:filescache = []
-autocmd CmdlineEnter : let s:filescache = []
-
-nnoremap <leader>f :find<space>
+" search in visual selection
+cnoremap <expr> / (getcmdtype() =~ '[/?]' && getcmdline() == '') ? "\<C-C>\<Esc>/\\%V" : '/'
 ]]
 
 local map = vim.keymap.set
 
-map("n", "<leader>hh", function()
+map("n", "<leader>h", ":help <C-z>")
+map("n", "<leader><leader>h", function()
   vim.cmd("help " .. vim.fn.expand "<cword>")
-end)
+end, { desc = "Open help for word under cursor" })
 
-map("n", "<leader>sb", ":b <C-z>")
+map("n", "<leader>b", ":b <C-z>", { desc = "Switch to buffer" })
+map("n", "<leader>r", "<cmd>browse oldfiles<CR>", { desc = "Recent files" })
 
-map("n", "<leader>so", "<cmd>source %<CR>")
-map("n", "<leader>x", "<cmd>.lua<CR>")
-map("v", "<leader>x", ":lua<CR>")
+map("n", "<leader>so", "<cmd>source %<CR>", { desc = "Source current file" })
+map("n", "<leader>x", "<cmd>.lua<CR>", { desc = "Execute current line" })
+map("v", "<leader>x", ":lua<CR>", { desc = "Execute selection" })
 
--- map({ "n", "t" }, "<C-h>", "<C-\\><C-n><C-w><C-h>")
--- map({ "n", "t" }, "<C-j>", "<C-\\><C-n><C-w><C-j>")
--- map({ "n", "t" }, "<C-k>", "<C-\\><C-n><C-w><C-k>")
--- map({ "n", "t" }, "<C-l>", "<C-\\><C-n><C-w><C-l>")
+map("n", "L", "<cmd>bnext<CR>", { desc = "Next buffer" })
+map("n", "H", "<cmd>bprev<CR>", { desc = "Previous buffer" })
+map({ "n", "t" }, "<M-]>", "<cmd>tabn<CR>", { desc = "Next tab" })
+map({ "n", "t" }, "<M-[>", "<cmd>tabp<CR>", { desc = "Previous tab" })
+map("n", "<M-t>", "<cmd>tab split<CR>", { desc = "Open buffer in new tab" })
 
-vim.keymap.set({ "n", "t" }, "<C-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
-vim.keymap.set({ "n", "t" }, "<C-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
-vim.keymap.set({ "n", "t" }, "<C-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
-vim.keymap.set({ "n", "t" }, "<C-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
-vim.keymap.set({ "n", "t" }, "<C-\\>", require("nvim-tmux-navigation").NvimTmuxNavigateLastActive)
-vim.keymap.set({ "n", "t" }, "<C-Space>", require("nvim-tmux-navigation").NvimTmuxNavigateNext)
+map({ "n", "t" }, "<M-h>", "<C-\\><C-n><C-W>2<", { desc = "Decrease window width" })
+map({ "n", "t" }, "<M-l>", "<C-\\><C-n><C-W>2>", { desc = "Increase window width" })
+map({ "n", "t" }, "<M-j>", "<C-\\><C-n><C-W>2-", { desc = "Decrease window height" })
+map({ "n", "t" }, "<M-k>", "<C-\\><C-n><C-W>2+", { desc = "Increase window height" })
 
-map("n", "L", "<cmd>bnext<CR>")
-map("n", "H", "<cmd>bprev<CR>")
-map({ "n", "t" }, "<M-]>", "<cmd>tabn<CR>")
-map({ "n", "t" }, "<M-[>", "<cmd>tabp<CR>")
-map("n", "<M-t>", "<cmd>tab split<CR>")
+map({ "n", "t" }, "<M-S-l>", "2zl", { desc = "Scroll horizontally right" })
+map({ "n", "t" }, "<M-S-h>", "2zh", { desc = "Scroll horizontally left" })
 
-map("n", "<M-h>", "<C-W>2<")
-map("n", "<M-l>", "<C-W>2>")
-map("n", "<M-j>", "<C-W>2-")
-map("n", "<M-k>", "<C-W>2+")
+map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate buffer" })
 
-map("n", "<Tab>", "<C-^>")
+map({ "i", "c", "t" }, "<C-Backspace>", "<C-w>", { desc = "Delete word backwards" })
+map({ "i", "c", "t" }, "<C-w>", "", { desc = "Disable default Ctrl-w" })
 
-map({ "i", "c", "t" }, "<C-Backspace>", "<C-w>")
-map({ "i", "c", "t" }, "<C-w>", "")
-
-map("n", ";nt", "<cmd>tabnew<CR>")
+map("n", ";nt", "<cmd>tabnew<CR>", { desc = "Create new tab" })
 
 -- move visual selection up and down
-map("v", "K", ":m '<-2<CR>gv=gv")
-map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
 
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+map("v", "<", "<gv", { desc = "Indent left and reselect" })
+map("v", ">", ">gv", { desc = "Indent right and reselect" })
 
 -- delete selection in selection mode
-map("s", "<BS>", '<C-o>"_s')
+map("s", "<BS>", '<C-o>"_s', { desc = "Delete selection" })
 
 -- my keyboard doesn't have a backslash key
-map({ "i", "c", "t" }, "zx", "\\")
-map({ "i", "c", "t" }, "zc", "|")
+map({ "i", "c", "t" }, "zx", "\\", { desc = "Insert backslash" })
+map({ "i", "c", "t" }, "zc", "|", { desc = "Insert pipe" })
 
--- get path of the current file in cmdline
-map("c", "<C-d><C-f>", "tcd <C-r>=expand('%:~:h')<CR>")
+map("n", "cdl", "<cmd>lcd %:h<bar>pwd<CR>", { desc = "Change local dir to current file" })
+map("n", "cdt", "<cmd>tcd %:h<bar>pwd<CR>", { desc = "Change tab dir to current file" })
 
 map("c", "<C-p>", function()
   if vim.fn.wildmenumode() ~= 0 then
@@ -97,7 +74,7 @@ map("c", "<C-p>", function()
   else
     return "<Up>"
   end
-end, { expr = true })
+end, { expr = true, desc = "Previous in wildmenu or history" })
 
 map("c", "<C-n>", function()
   if vim.fn.wildmenumode() ~= 0 then
@@ -105,28 +82,61 @@ map("c", "<C-n>", function()
   else
     return "<Down>"
   end
-end, { expr = true })
+end, { expr = true, desc = "Next in wildmenu or history" })
 
-map("c", "<C-j>", function()
-  if vim.fn.pumvisible() ~= 0 then
-    return "<Down><Tab>"
-  else
-    return "<C-j>"
+vim.keymap.set("i", "<CR>", function()
+  local key = vim.keycode('<CR>')
+  if vim.fn.pumvisible() == 1 then
+    key = vim.keycode("<C-y>")
   end
-end, { expr = true })
+  vim.api.nvim_feedkeys(key, 'n', false)
+end)
 
-map("c", "<C-k>", function()
-  if vim.fn.pumvisible() ~= 0 then
-    return "<Up><Tab>"
+map("i", "<C-e>", function()
+  if vim.fn.pumvisible() == 0 then
+    return "<End>"
   else
-    return "<C-k>"
+    return "<C-e>"
   end
-end, { expr = true })
+end, { expr = true, desc = "Accept completion or insert newline" })
 
-map("i", "<CR>", function()
-  if vim.fn.pumvisible() ~= 0 then
-    return "<C-y>"
-  else
-    return "<CR>"
+-- toggle window zoom
+vim.keymap.set('n', '+', function()
+  if vim.fn.winnr('$') == 1 then return end
+
+  local prev = vim.fn.winrestcmd()
+  vim.api.nvim_win_set_width(0, 9999)
+  vim.api.nvim_win_set_height(0, 9999)
+
+  if vim.t.zoom_restore then
+    vim.cmd(vim.t.zoom_restore)
+    vim.t.zoom_restore = nil
+  elseif vim.fn.winrestcmd() ~= prev then
+    vim.t.zoom_restore = prev
   end
-end, { expr = true })
+end, { desc = "Toggle window zoom" })
+
+vim.api.nvim_create_user_command("Bdelete", function() require("bufclose").buf_delete() end, {})
+vim.keymap.set("c", "bd", "Bdelete", { desc = "Smart buffer delete" })
+
+vim.keymap.set("n", "<leader>a", function()
+  vim.cmd "argadd %"
+  vim.cmd "argdedupe"
+end, { desc = "Add buffer args list" })
+
+vim.keymap.set("n", "<leader>e", function()
+  vim.cmd.args()
+end, { desc = "Show args list" })
+
+vim.keymap.set("n", "<leader>1", function()
+  vim.cmd("1argument")
+end, { desc = "Go to arg 1" })
+vim.keymap.set("n", "<leader>2", function()
+  vim.cmd("2argument")
+end, { desc = "Go to arg 2" })
+vim.keymap.set("n", "<leader>3", function()
+  vim.cmd("3argument")
+end, { desc = "Go to arg 3" })
+vim.keymap.set("n", "<leader>4", function()
+  vim.cmd("4argument")
+end, { desc = "Go to arg 4" })
