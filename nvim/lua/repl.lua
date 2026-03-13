@@ -1,4 +1,6 @@
-local job_id = nil
+local M = {}
+
+M.job_id = nil
 
 local get_selection = function()
   local start_pos = vim.api.nvim_buf_get_mark(0, "<")
@@ -8,19 +10,19 @@ local get_selection = function()
   return table.concat(text, "\n")
 end
 
-local create_repl = function()
+M.create_repl = function()
   local width = math.floor(vim.o.columns * 0.45)
   local win_width = vim.api.nvim_win_get_width(0)
-  if not job_id then
+  if not M.job_id then
     if win_width < 180 then
-      vim.cmd(35 .. "new")
+      vim.cmd("botright 15new")
     else
       vim.cmd(width .. "vnew")
     end
-    job_id = vim.fn.jobstart({ "ipython" }, {
+    M.job_id = vim.fn.jobstart({ "ipython" }, {
       term = true,
       on_exit = function()
-        job_id = nil
+        M.job_id = nil
       end,
     })
 
@@ -30,10 +32,10 @@ local create_repl = function()
   end
 end
 
-local send_repl_line = function()
-  create_repl()
+M.send_repl_line = function()
+  M.create_repl()
 
-  vim.fn.chansend(job_id, vim.fn.getline "." .. "\n")
+  vim.fn.chansend(M.job_id, vim.fn.getline "." .. "\n")
 end
 
 local function dedent_text(text)
@@ -59,8 +61,8 @@ local function dedent_text(text)
   return table.concat(result, "\n") .. "\n"
 end
 
-local function send_repl_selection()
-  create_repl()
+M.send_repl_selection = function()
+  M.create_repl()
 
   local selection = get_selection()
   local dedented = dedent_text(selection)
@@ -71,19 +73,21 @@ local function send_repl_selection()
   local bracketed_paste_start = "\027[200~"
   local bracketed_paste_end = "\027[201~"
 
-  vim.fn.chansend(job_id, bracketed_paste_start .. dedented .. bracketed_paste_end)
+  vim.fn.chansend(M.job_id, bracketed_paste_start .. dedented .. bracketed_paste_end)
 
-  -- Small delay to let bracketed paste finish before sending execute command
+  -- small delay to let bracketed paste finish before sending execute command
   vim.wait(50, function() return false end)
 
-  vim.fn.chansend(job_id, "\n")
+  vim.fn.chansend(M.job_id, "\n")
 end
 
-vim.keymap.set("n", "<leader>pp", function() send_repl_line() end)
+vim.keymap.set("n", "<leader>pp", function() M.send_repl_line() end, { desc = "Send line to REPL" })
 
-vim.keymap.set("n", "<leader>vv", function() send_repl_selection() end)
+vim.keymap.set("n", "<leader>vv", function() M.send_repl_selection() end, { desc = "Send selection to REPL" })
 
 vim.keymap.set("n", "<leader>vp", function()
   vim.cmd 'exe "normal vipj\\<Esc>"'
-  send_repl_selection()
-end)
+  M.send_repl_selection()
+end, { desc = "Send paragraph to REPL" })
+
+return M

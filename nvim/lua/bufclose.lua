@@ -1,4 +1,6 @@
-local function buf_delete()
+local M = {}
+
+M.buf_delete = function()
   local alternate_buf = vim.fn.bufnr "#"
 
   if vim.bo.modified then
@@ -15,5 +17,4 @@ local function buf_delete()
   end
 end
 
-vim.api.nvim_create_user_command("Bdelete", buf_delete, {})
-vim.keymap.set("c", "bd", "Bdelete")
+return M
