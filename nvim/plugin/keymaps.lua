@@ -9,21 +9,18 @@ cnoremap <C-B> <Left>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
-command! -nargs=1 Ngrep vimgrep "<args>" **/*
-nnoremap <Leader>[ :Ngrep
-
 " search in visual selection
 cnoremap <expr> / (getcmdtype() =~ '[/?]' && getcmdline() == '') ? "\<C-C>\<Esc>/\\%V" : '/'
 ]]
 
 local map = vim.keymap.set
 
-map("n", "<leader>h", ":help <C-z>")
+map("n", "<leader>h", ":help <C-z>", { desc = "Help" })
 map("n", "<leader><leader>h", function()
   vim.cmd("help " .. vim.fn.expand "<cword>")
 end, { desc = "Open help for word under cursor" })
 
-map("n", "<leader>b", ":b <C-z>", { desc = "Switch to buffer" })
+map("n", "<leader>b", ":b <C-z>", { desc = "Buffers" })
 map("n", "<leader>r", "<cmd>browse oldfiles<CR>", { desc = "Recent files" })
 
 map("n", "<leader>so", "<cmd>source %<CR>", { desc = "Source current file" })
@@ -46,7 +43,7 @@ map({ "n", "t" }, "<M-S-h>", "2zh", { desc = "Scroll horizontally left" })
 
 map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate buffer" })
 
-map({ "i", "c", "t" }, "<C-Backspace>", "<C-w>", { desc = "Delete word backwards" })
+map({ "i", "c", "t" }, "<C-Backspace>", "<C-w>", { desc = "Delete previous word" })
 map({ "i", "c", "t" }, "<C-w>", "", { desc = "Disable default Ctrl-w" })
 
 map("n", ";nt", "<cmd>tabnew<CR>", { desc = "Create new tab" })
@@ -122,21 +119,21 @@ vim.keymap.set("c", "bd", "Bdelete", { desc = "Smart buffer delete" })
 vim.keymap.set("n", "<leader>a", function()
   vim.cmd "argadd %"
   vim.cmd "argdedupe"
-end, { desc = "Add buffer args list" })
+end, { desc = "Add to args list" })
 
 vim.keymap.set("n", "<leader>e", function()
   vim.cmd.args()
 end, { desc = "Show args list" })
 
 vim.keymap.set("n", "<leader>1", function()
-  vim.cmd("1argument")
+  pcall(vim.cmd, "1argument")
 end, { desc = "Go to arg 1" })
 vim.keymap.set("n", "<leader>2", function()
-  vim.cmd("2argument")
+  pcall(vim.cmd, "2argument")
 end, { desc = "Go to arg 2" })
 vim.keymap.set("n", "<leader>3", function()
-  vim.cmd("3argument")
+  pcall(vim.cmd, "3argument")
 end, { desc = "Go to arg 3" })
 vim.keymap.set("n", "<leader>4", function()
-  vim.cmd("4argument")
+  pcall(vim.cmd, "4argument")
 end, { desc = "Go to arg 4" })

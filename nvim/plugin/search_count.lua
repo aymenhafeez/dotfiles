@@ -27,7 +27,7 @@ local function update_search_virttext()
   local line = vim.fn.line "." - 1
 
   vim.api.nvim_buf_set_extmark(0, search_ns, line, 0, {
-    virt_text = { { virt_text, "String" } },
+    virt_text = { { virt_text, "CurSearch" } },
     virt_text_pos = "eol",
   })
 end
@@ -35,22 +35,22 @@ end
 vim.keymap.set("n", "n", function()
   pcall(vim.cmd, "normal! n")
   update_search_virttext()
-end)
+end, { desc = "Next search result" })
 
 vim.keymap.set("n", "N", function()
   pcall(vim.cmd, "normal! N")
   update_search_virttext()
-end)
+end, { desc = "Previous search result" })
 
 vim.keymap.set("n", "*", function()
   pcall(vim.cmd, "normal! *")
   update_search_virttext()
-end)
+end, { desc = "Search word under cursor forward" })
 
 vim.keymap.set("n", "#", function()
   pcall(vim.cmd, "normal! #")
   update_search_virttext()
-end)
+end, { desc = "Search word under cursor backward" })
 
 vim.keymap.set("n", "<CR>", function()
   if vim.v.hlsearch == 1 then
@@ -59,4 +59,4 @@ vim.keymap.set("n", "<CR>", function()
   else
     vim.cmd "+"
   end
-end)
+end, { desc = "Clear search highlight or move down" })

@@ -1,3 +1,12 @@
+_G._new_tab = function(tab)
+  if type(tab) == "string" then
+    tab = tonumber(tab)
+  end
+  if tab and vim.api.nvim_tabpage_is_valid(tab) then
+    vim.cmd("tabnew")
+  end
+end
+
 local modes = {
   ["n"] = "NOR",
   ["no"] = "N·OP",
@@ -23,35 +32,23 @@ local modes = {
   ["ntT"] = "nTER",
 }
 
-local function show_mode(hl)
+local function show_mode()
   local mode = modes[vim.fn.mode()] or " "
   local mode_hl
-  if hl then
-    if vim.fn.mode() == "n" then
-      mode_hl = "%6*"
-    else
-      mode_hl = "%5*"
-    end
+  if vim.fn.mode() == "n" then
+    mode_hl = "%6*"
   else
-    mode_hl = ""
+    mode_hl = "%5*"
   end
 
   if vim.opt.showmode:get() == false then
-    return string.format("%s %s ", mode_hl, mode)
+    return string.format("%s %s   ", mode_hl, mode)
   else
-    return ""
-  end
-end
-
-local function diagnostics()
-  if next(vim.diagnostic.get(0)) == nil then
     return " "
-  else
-    return " " .. vim.diagnostic.status(0) .. " "
   end
 end
 
-local function filename(buf, hl)
+local function filename(buf)
   local name = vim.api.nvim_buf_get_name(buf)
   if name == "" then
     name = "[No name]"
@@ -71,49 +68,33 @@ local function filename(buf, hl)
     fname = "…" .. fname:sub(#fname - max_len, #fname)
   end
 
-  local dir = fname:match "^(.*/)"
-  local file = vim.fn.fnamemodify(name, ":t")
-
-  local dir_hl, file_hl
-  if vim.bo.modified then
-    dir_hl = "%1*"
-    file_hl = "%1*"
-  elseif hl then
-    dir_hl = "%2*"
-    file_hl = "%3*"
-  else
-    dir_hl = ""
-    file_hl = ""
-  end
-
-  return string.format("%s %s%s%s %%*", dir_hl, dir or "", file_hl, file)
+  return fname .. " "
 end
 
 local function git_info()
-  local gitsigns = vim.b.gitsigns_status_dict
-  if not gitsigns then
-    return ""
-  end
-
-  local added = gitsigns.added or 0
-  local changed = gitsigns.changed or 0
-  local removed = gitsigns.removed or 0
-
   local signs = {}
 
-  if gitsigns and gitsigns.head and gitsigns.head ~= "" then
-    local branch_info = "#" .. gitsigns.head
+  local head = vim.b.minigit_summary_string
+  if head and head ~= "" then
+    local branch_info = " " .. head
     table.insert(signs, branch_info)
   end
 
-  if added > 0 then
-    table.insert(signs, "+" .. added)
-  end
-  if changed > 0 then
-    table.insert(signs, "~" .. changed)
-  end
-  if removed > 0 then
-    table.insert(signs, "-" .. removed)
+  local summary = vim.b.minidiff_summary
+  if summary then
+    local added = summary.add or 0
+    local changed = summary.change or 0
+    local removed = summary.delete or 0
+
+    if added > 0 then
+      table.insert(signs, "+" .. added)
+    end
+    if changed > 0 then
+      table.insert(signs, "~" .. changed)
+    end
+    if removed > 0 then
+      table.insert(signs, "-" .. removed)
+    end
   end
 
   if #signs > 0 then
@@ -136,7 +117,7 @@ local function word_count()
 end
 
 local function lsp_status()
-  local ft = vim.bo.filetype
+  local ft = vim.bo.filetype:gsub("^%l", string.upper)
   if ft == "" then
     return ""
   else
@@ -157,87 +138,94 @@ local function lsp_status()
   end
 end
 
-local function recording_macro()
-  if vim.fn.reg_recording() ~= "" then
-    return " recoding @" .. vim.fn.reg_recording() .. " "
-  else
+local function diagnostics()
+  if next(vim.diagnostic.get(0)) == nil then
     return ""
+  else
+    return vim.diagnostic.status() .. " "
   end
+end
+
+local function tabline()
+  local tabpagenr = vim.fn.tabpagenr()
+  local tabs = vim.api.nvim_list_tabpages()
+  local current_tab = vim.api.nvim_get_current_tabpage()
+  local items = {}
+
+  for i, tab in ipairs(tabs) do
+    local hi = (i == tabpagenr) and "TabLineSel" or "TabLine"
+    local win = vim.api.nvim_tabpage_get_win(tab)
+    local buf = vim.api.nvim_win_get_buf(win)
+    local bufname = vim.api.nvim_buf_get_name(buf)
+
+    local cwd = vim.fn.pathshorten(vim.fn.fnamemodify(bufname, ":~:."))
+    table.insert(items, string.format("%%#%s#%%T %s ", hi, cwd))
+  end
+  table.insert(items, "%#TabLineFill#%T")
+
+  table.insert(items, "%=")
+  if #tabs > 1 then
+    for _, tab in ipairs(tabs) do
+      local tab_num = vim.api.nvim_tabpage_get_number(tab)
+      local is_current = (tab == current_tab)
+      table.insert(items, is_current and "%#TabLineSel#" or "%#TabLine#")
+      table.insert(items, "%" .. tab .. "@v:lua._tabline_goto_tab@ " .. tab_num .. " ")
+    end
+  end
+  table.insert(items, "%#StatusLine#%@v:lua._new_tab@ + ")
+
+  return table.concat(items)
 end
 
 local function statusline()
   local buf = vim.api.nvim_get_current_buf()
   local win = vim.api.nvim_get_current_win()
-
   local curwin = tonumber(vim.g.actual_curwin) == win
-  local hl = curwin
 
   local components = {}
 
-  table.insert(components, show_mode(hl))
+  table.insert(components, show_mode())
 
-  table.insert(components, filename(buf, hl))
-
-  if vim.bo.readonly then
-    table.insert(components, "%r ")
-  else
-    table.insert(components, "")
+  if curwin then
+    table.insert(components, "%#Bold#")
   end
 
-  if vim.wo.previewwindow then
-    table.insert(components, "%w ")
-  else
-    table.insert(components, "")
-  end
+  table.insert(components, filename(buf))
+  table.insert(components, "%*")
+
+  table.insert(components, "%h%w%m%r  ")
+
+  table.insert(components, git_info() .. "   ")
 
   table.insert(components, "%<")
-
-  table.insert(components, " " .. git_info() .. "  ")
 
   local writing_ft = { tex = true, markdown = true, text = true }
   if writing_ft[vim.bo.filetype] then
     local wc = word_count()
     if wc ~= "" then
-      table.insert(components, wc .. "  ")
+      table.insert(components, wc)
     end
-  end
-
-  if hl then
-    table.insert(components, "%3*")
-    table.insert(components, recording_macro())
-    table.insert(components, "%*")
-  else
-    table.insert(components, recording_macro())
   end
 
   table.insert(components, "%=")
 
-  table.insert(components, " %S ")
+  if curwin then
+    table.insert(components, "%8*")
+  end
+
+  table.insert(components, lsp_status())
+  table.insert(components, "%*")
+
+  table.insert(components, "  ")
 
   table.insert(components, diagnostics())
 
-  if hl then
-    table.insert(components, "%4*")
-  else
-    table.insert(components, "")
-  end
-
-  if hl then
-    table.insert(components, "%8*")
-    table.insert(components, lsp_status())
-    table.insert(components, "%*")
-  else
-    table.insert(components, "")
-    table.insert(components, lsp_status())
-  end
-
-  local line = vim.fn.getpos(".")[2]
-  local col = vim.fn.getpos(".")[3]
-  table.insert(components, string.format(" %3d:%3d ", line, col) .. " %P ")
+  table.insert(components, "%-14.(%l,%c%V%) %P ")
 
   return table.concat(components)
 end
 
 return {
   statusline = statusline,
+  tabline = tabline
 }
