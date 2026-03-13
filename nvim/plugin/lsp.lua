@@ -22,13 +22,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local map = vim.keymap.set
 
-    map("n", "gd", vim.lsp.buf.definition)
-    map("n", "gD", vim.lsp.buf.declaration)
-    map("n", "gW", vim.lsp.buf.workspace_symbol)
-    map("n", "td", vim.lsp.buf.type_definition)
+    map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+    map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+    map("n", "gW", vim.lsp.buf.workspace_symbol, { desc = "Search workspace symbols" })
+    map("n", "td", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
 
     local function client_supports_method(client, method, bufnr)
-      ---@diagnostic disable-next-line: param-type-mismatch
       return client:supports_method(method, bufnr)
     end
 
@@ -55,8 +54,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         })
       end,
     })
-
-
 
     if
         client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, args.buf)
@@ -101,93 +98,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, args.buf) then
       map("n", "<leader>th", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = args.buf })
-      end)
-    end
-
-    if client and client:supports_method("textDocument/completion") then
-      local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-      for i = #chars, 1, -1 do
-        if chars[i] == "{" or chars[i] == "}" then
-          table.remove(chars, i)
-        end
-      end
-      client.server_capabilities.completionProvider.triggerCharacters = chars
-
-      vim.lsp.completion.enable(true, args.data.client_id, args.buf, {
-        autotrigger = true,
-        documentation = {
-          border = "rounded"
-        },
-      })
-
-      vim.keymap.set("i", "<C-c>", function()
-        if vim.fn.pumvisible() ~= 0 then
-          return "<C-e>"
-        else
-          return "<C-c>"
-        end
-      end, { expr = true })
-
-      vim.keymap.set("i", "<C-n>", function()
-        if vim.fn.pumvisible() == 0 then
-          return "<C-x><C-o>"
-        else
-          return "<Down>"
-        end
-      end, { expr = true })
-
-      vim.keymap.set("i", "<C-p>", function()
-        if vim.fn.pumvisible() == 0 then
-          return "<C-x><C-p>"
-        else
-          return "<Up>"
-        end
-      end, { expr = true })
-    end
-
-    if client and client:supports_method "textDocument/signatureHelp" then
-      vim.keymap.set("i", "<C-s>", function()
-        vim.lsp.buf.signature_help {
-          max_width = 65,
-          max_height = 20,
-          focusable = false,
-          focus = false
-        }
-      end, { buffer = args.buf })
-
-      local function should_show_sighelp()
-        -- avoid overlap with completion popup
-        if vim.fn.pumvisible() ~= 0 then
-          return false
-        end
-        -- only in insert mode
-        if vim.api.nvim_get_mode().mode ~= "i" then
-          return false
-        end
-        return true
-      end
-
-      local sig_triggers = { ["("] = true, [","] = true, ["."] = true }
-
-      vim.api.nvim_create_autocmd({ "TextChangedI", "TextChangedP" }, {
-        buffer = args.buf,
-        callback = function()
-          if not should_show_sighelp() then
-            return
-          end
-          local line = vim.api.nvim_get_current_line()
-          local col = vim.api.nvim_win_get_cursor(0)[2]
-          local last_char = line:sub(col, col)
-          if sig_triggers[last_char] then
-            vim.lsp.buf.signature_help {
-              max_width = 65,
-              max_height = 20,
-              focusable = false,
-              focus = false,
-            }
-          end
-        end,
-      })
+      end, { desc = "Toggle inlay hints" })
     end
 
     vim.keymap.set({ "i", "s" }, "<C-j>", function()
@@ -196,7 +107,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       else
         return "<C-j>"
       end
-    end, { desc = "...", expr = true, silent = true })
+    end, { desc = "Jump to next snippet placeholder", expr = true, silent = true })
 
     vim.keymap.set({ "i", "s" }, "<C-k>", function()
       if vim.snippet.active({ direction = -1 }) then
@@ -204,7 +115,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
       else
         return "<C-k>"
       end
-    end, { desc = "...", expr = true, silent = true })
+    end, { desc = "Jump to previous snippet placeholder", expr = true, silent = true })
   end,
 })
 
@@ -219,4 +130,6 @@ local servers = {
   "texlab"
 }
 
-vim.lsp.enable(servers)
+require("pack_lazy").on("BufReadPre", function()
+  vim.lsp.enable(servers)
+end)

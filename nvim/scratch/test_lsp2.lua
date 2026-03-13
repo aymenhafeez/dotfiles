@@ -23,7 +23,6 @@ vim.opt.smartindent = true
 vim.opt.tabstop = 2
 vim.opt.undofile = true
 vim.opt.wildignorecase = true
-vim.opt.wildmode = "longest:full,full"
 vim.opt.winborder = "rounded"
 vim.opt.wrap = false
 

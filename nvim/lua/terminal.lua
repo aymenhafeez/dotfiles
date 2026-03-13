@@ -7,7 +7,7 @@ local create_window = function(opts)
   local direction = opts.split or "below"
   local is_vertical = direction == "left" or direction == "right"
   local size_key = is_vertical and "width" or "height"
-  local size = is_vertical and math.floor(vim.o.columns * 0.45) or math.floor(vim.o.lines * 0.35)
+  local size = is_vertical and math.floor(vim.o.columns * 0.44) or math.floor(vim.o.lines * 0.35)
   local relative = "editor" or ""
   local width = math.floor(vim.o.columns * 0.8)
   local height = math.floor(vim.o.lines * 0.8)
