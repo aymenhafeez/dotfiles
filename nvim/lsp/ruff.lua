@@ -1,8 +1,8 @@
 return {
-	cmd = { "ruff", "server" },
-	filetypes = { "python" },
+  cmd = { "ruff", "server" },
+  filetypes = { "python" },
 
-	on_attach = function(client)
-		client.server_capabilities.diagnosticProvider = nil
-	end,
+  on_attach = function(client)
+    client.server_capabilities.diagnosticProvider = nil
+  end,
 }

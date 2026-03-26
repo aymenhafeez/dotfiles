@@ -91,10 +91,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       })
     end
 
-    if client and client:supports_method("textDocument/documentColor") then
-      vim.lsp.document_color.enable(true, args.buf, { style = "virtual" })
-    end
-
     if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, args.buf) then
       map("n", "<leader>th", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = args.buf })
@@ -120,16 +116,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 local servers = {
-  "basedpyright",
   "lua_ls",
   "vimls",
   "vtsls",
   "rust_analyzer",
   "clangd",
   "ruff",
-  "texlab"
+  "ty",
+  "sqls",
 }
 
-require("pack_lazy").on("BufReadPre", function()
+vim.schedule(function()
   vim.lsp.enable(servers)
 end)
