@@ -81,13 +81,4 @@ M.send_repl_selection = function()
   vim.fn.chansend(M.job_id, "\n")
 end
 
-vim.keymap.set("n", "<leader>pp", function() M.send_repl_line() end, { desc = "Send line to REPL" })
-
-vim.keymap.set("n", "<leader>vv", function() M.send_repl_selection() end, { desc = "Send selection to REPL" })
-
-vim.keymap.set("n", "<leader>vp", function()
-  vim.cmd 'exe "normal vipj\\<Esc>"'
-  M.send_repl_selection()
-end, { desc = "Send paragraph to REPL" })
-
 return M
