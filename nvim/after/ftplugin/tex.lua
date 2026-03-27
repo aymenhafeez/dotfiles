@@ -14,11 +14,11 @@ opt_local.complete:append { "kspell", "f" }
 g.tex_conceal = "abdmgs"
 g.tex_flavor = "latex"
 
-map("i", "<Space>", "<Space><C-g>u", { desc = "Break undo sequence on space" })
-map("i", "<Tab>", "<Tab><C-g>u", { desc = "Break undo sequence on tab" })
+map("i", "<Space>", "<Space><C-g>u", { buf = true, desc = "Break undo sequence on space" })
+map("i", "<Tab>", "<Tab><C-g>u", { buf = true, desc = "Break undo sequence on tab" })
 
-map({ "n", "i" }, "<C-c><C-j>", "<Esc>o\\item ", { buffer = true, desc = "New item below" })
-map({ "n", "i" }, "<C-c><C-k>", "<Esc>O\\item ", { buffer = true, desc = "New item above" })
+map({ "n", "i" }, "<C-c><C-j>", "<Esc>o\\item ", { buf = true, desc = "New item below" })
+map({ "n", "i" }, "<C-c><C-k>", "<Esc>O\\item ", { buf = true, desc = "New item above" })
 
 local function get_dynamic_width()
   return vim.o.columns > 150 and 'right' or 'below'
@@ -33,23 +33,28 @@ map("n", "<leader>cm", function()
     cmd =
         "latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=build " .. file_name
   })
-end, { desc = "Compile LaTeX" })
+end, { buf = true, desc = "Compile LaTeX" })
 
 map("n", "<leader>pv", function()
   vim.cmd(":!xdg-open build/" .. vim.fn.expand "%:t:r" .. ".pdf")
-end, { desc = "Preview PDF" })
+end, { buf = true, desc = "Preview PDF" })
 
-map("n", "<C-s>", "mm[s1z=`m", { desc = "Fix previous spelling error" })
-map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { desc = "Fix previous spelling error" })
+map("n", "<C-s>", "mm[s1z=`m", { buf = true, desc = "Fix previous spelling error" })
+map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { buf = true, desc = "Fix previous spelling error" })
 
-require("mini.snippets").setup {
-  snippets = {
-    require('mini.snippets').gen_loader.from_lang(),
-  },
-  mappings = {
-    expand = '<C-j>',
-    jump_next = '<C-j>',
-    jump_prev = '<C-k>',
-    stop = '<C-c>',
-  },
-}
+vim.api.nvim_create_autocmd("InsertEnter", {
+  once = true,
+  callback = function()
+    require("mini.snippets").setup {
+      snippets = {
+        require('mini.snippets').gen_loader.from_lang(),
+      },
+      mappings = {
+        expand = '<C-j>',
+        jump_next = '<C-j>',
+        jump_prev = '<C-k>',
+        stop = '<C-c>',
+      },
+    }
+  end
+})

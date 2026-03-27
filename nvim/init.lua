@@ -2,34 +2,29 @@
 local function pack_hooks(ev)
   local name = ev.data.spec.name
   local kind = ev.data.kind
-  local path = ev.data.path
 
   -- run :TSUpdate after install/update
   if name == "nvim-treesitter" and (kind == "install" or kind == "update") then
     if not ev.data.active then
       vim.cmd.packadd("nvim-treesitter")
+      vim.cmd "TSUpdate"
     end
-    vim.schedule(function()
-      local ok, err = pcall(vim.cmd, "TSUpdate")
-      if not ok then
-        vim.notify("TSUpdate failed: " .. tostring(err), vim.log.levels.WARN)
-      end
-    end)
   end
 end
 
 vim.api.nvim_create_autocmd("PackChanged", { callback = pack_hooks })
 
-vim.pack.add({
-  "https://github.com/tpope/vim-dadbod",
-  "https://github.com/kristijanhusak/vim-dadbod-ui",
-}, { load = false })
+vim.schedule(function()
+  vim.pack.add({
+    "https://github.com/tpope/vim-dadbod",
+    "https://github.com/kristijanhusak/vim-dadbod-ui",
+  })
+end)
 
 vim.cmd [[
 packadd nvim.undotree
 packadd nvim.difftool
-colorscheme nord
-"hi link User1 DiagnosticError
+colorscheme default-custom
 set shortmess+=ScC
 set sessionoptions-=blank
 
@@ -54,19 +49,15 @@ vim.g.difftool_replace_diff_mode = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.api.nvim_create_autocmd("BufReadPre", {
-  group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
-  once = true,
-  callback = function()
-    vim.go.statusline = "%{%v:lua.require'statusline'.statusline()%}"
-    vim.go.tabline = "%{%v:lua.require'statusline'.tabline()%}"
-  end
-})
+vim.schedule(function()
+  vim.go.statusline = "%{%v:lua.require'_statusline'.statusline()%}"
+  vim.go.tabline = "%{%v:lua.require'statusline'.tabline()%}"
+end)
 
 require("vim._core.ui2").enable({
   enable = true,
   msg = {
-    target = "msg",
+    targets = "msg",
   }
 })
 
@@ -77,8 +68,6 @@ opt.clipboard = "unnamedplus"
 opt.completeopt = { "menu", "menuone", "popup", "noinsert", "fuzzy" }
 opt.confirm = true
 opt.conceallevel = 2
-opt.cursorline = true
-opt.cursorlineopt = "number"
 vim.opt.cpoptions:remove { "_" }
 opt.equalalways = false
 opt.expandtab = true
@@ -100,6 +89,7 @@ opt.signcolumn = "yes:1"
 opt.smartcase = true
 opt.smartindent = true
 opt.spelllang = "en_gb"
+opt.splitbelow = true
 opt.splitright = true
 opt.swapfile = false
 opt.tabstop = 4

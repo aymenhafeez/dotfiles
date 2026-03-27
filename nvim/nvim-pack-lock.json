@@ -1,20 +1,15 @@
 {
   "plugins": {
-    "doric-themes.nvim": {
-      "rev": "1ebf6f7fd613904dd52d6ec2e424ca3ec5e624d4",
-      "src": "https://github.com/aymenhafeez/doric-themes.nvim",
-      "version": "'main'"
-    },
-    "firenvim": {
-      "rev": "a18ef908ac06b52ad9333b70e3e630b0a56ecb3d",
-      "src": "https://github.com/glacambre/firenvim"
+    "gitsigns.nvim": {
+      "rev": "7c4faa3540d0781a28588cafbd4dd187a28ac6e3",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "mini.nvim": {
       "rev": "c163117900c17d4abf30bc09452a261c8536060c",
       "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-treesitter": {
-      "rev": "ec034813775d7e2974c7551c8c34499a828963f8",
+      "rev": "493890b87a81dfe6a7e577dbc364ae33fa482da9",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },

@@ -16,9 +16,7 @@ cnoremap <expr> / (getcmdtype() =~ '[/?]' && getcmdline() == '') ? "\<C-C>\<Esc>
 local map = vim.keymap.set
 
 map("n", "<leader>h", ":help <C-z>", { desc = "Help" })
-map("n", "<leader><leader>h", function()
-  vim.cmd("help " .. vim.fn.expand "<cword>")
-end, { desc = "Open help for word under cursor" })
+map("n", "<leader><leader>h", "<cmd>help!<CR>", { desc = "Open help for word under cursor" })
 
 map("n", "<leader>b", ":b <C-z>", { desc = "Buffers" })
 map("n", "<leader>r", "<cmd>browse oldfiles<CR>", { desc = "Recent files" })
@@ -114,7 +112,7 @@ vim.keymap.set('n', '+', function()
 end, { desc = "Toggle window zoom" })
 
 vim.api.nvim_create_user_command("Bdelete", function() require("bufclose").buf_delete() end, {})
-vim.keymap.set("c", "bd", "Bdelete", { desc = "Smart buffer delete" })
+vim.keymap.set("c", "bd", "Bdelete", { desc = "Buffer delete" })
 
 vim.keymap.set("n", "<leader>a", function()
   vim.cmd "argadd %"

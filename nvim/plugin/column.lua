@@ -1,3 +1,29 @@
+_G.statuscolumn = function()
+  return table.concat {
+    vim.v.lnum,
+    " ",
+    vim.F.npcall(function()
+      return require("gitsigns").statuscolumn()
+    end) or "",
+  }
+end
+
+vim.schedule(function()
+  vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
+  require("gitsigns").setup {
+    current_line_blame = true,
+    -- current_line_blame_formatter = '   <author>, <author_time:%R> - <summary>',
+  }
+  vim.opt.statuscolumn = "%s%=%{%v:lua.statuscolumn()%}"
+end)
+
+vim.keymap.set("n", "gH", "<cmd>Gitsigns preview_hunk<CR>")
+vim.keymap.set("n", "gI", "<cmd>Gitsigns preview_hunk_inline<CR>")
+vim.keymap.set("n", "]h", "<cmd>Gitsigns next_hunk<CR>")
+vim.keymap.set("n", "[h", "<cmd>Gitsigns prev_hunk<CR>")
+vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>")
+
+
 local ns = vim.api.nvim_create_namespace("colorcolumn")
 local column = 100
 
