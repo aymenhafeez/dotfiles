@@ -38,47 +38,15 @@ M.send_repl_line = function()
   vim.fn.chansend(M.job_id, vim.fn.getline "." .. "\n")
 end
 
-local function dedent_text(text)
-  local lines = vim.split(text, "\n", { plain = true })
-  local min_indent = math.huge
-
-  for _, line in ipairs(lines) do
-    if line:match("%S") then
-      local indent = line:match("^(%s*)"):len()
-      min_indent = math.min(min_indent, indent)
-    end
-  end
-
-  if min_indent == math.huge then
-    return text
-  end
-
-  local result = {}
-  for _, line in ipairs(lines) do
-    table.insert(result, line:sub(min_indent + 1))
-  end
-
-  return table.concat(result, "\n") .. "\n"
-end
-
 M.send_repl_selection = function()
   M.create_repl()
 
   local selection = get_selection()
-  local dedented = dedent_text(selection)
+  local bracketed_paste_start = "\x1b[200~"
+  local bracketed_paste_end = "\x1b[201~"
 
-  dedented = dedented:gsub("\n$", "")
-
-  -- use bracketed paste mode to prevent REPL auto-indentation
-  local bracketed_paste_start = "\027[200~"
-  local bracketed_paste_end = "\027[201~"
-
-  vim.fn.chansend(M.job_id, bracketed_paste_start .. dedented .. bracketed_paste_end)
-
-  -- small delay to let bracketed paste finish before sending execute command
+  vim.fn.chansend(M.job_id, bracketed_paste_start .. selection .. bracketed_paste_end .. "\n")
   vim.wait(50, function() return false end)
-
-  vim.fn.chansend(M.job_id, "\n")
 end
 
 return M
