@@ -1,7 +1,7 @@
-vim.treesitter.language.register("latex", "tex")
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "python", "lua", "rust", "c", "vim", "markdown", "tex" },
+  pattern = { "python", "lua", "rust", "c", "vim", "markdown", "tex", "diff", "cpp", "css" },
   callback = function(args)
+    vim.treesitter.language.register("latex", "tex")
     vim.treesitter.start(args.buf)
 
     -- re-enable syntax for tex files to keep native conceals
@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-require("pack_lazy").on("BufReadPost",
+require("utils").lazy_load("BufReadPre",
   function()
     vim.pack.add({
       { src = "https://github.com/nvim-treesitter/nvim-treesitter",             version = "main" },
@@ -23,8 +23,15 @@ require("pack_lazy").on("BufReadPost",
     local is_writing = writing_ft[vim.bo.filetype]
     require("treesitter-context").setup {
       enable = true,
-      max_lines = is_writing and 0 or 1,
-      trim_scope = is_writing and "outer" or "inner",
+      separator = "─",
+      multiwindow = true,
+      max_lines = is_writing and 0 or 0,
+      trim_scope = is_writing and "outer" or "outer",
+      disable_all_ft = { "help", "lua" },
+      on_attach = function(bufnr)
+        local ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+        return ft ~= 'help'
+      end,
     }
 
     require("nvim-treesitter-textobjects").setup {

@@ -35,22 +35,22 @@ end
 vim.keymap.set("n", "n", function()
   pcall(vim.cmd, "normal! n")
   update_search_virttext()
-end, { desc = "Next search result" })
+end)
 
 vim.keymap.set("n", "N", function()
   pcall(vim.cmd, "normal! N")
   update_search_virttext()
-end, { desc = "Previous search result" })
+end)
 
 vim.keymap.set("n", "*", function()
   pcall(vim.cmd, "normal! *")
   update_search_virttext()
-end, { desc = "Search word under cursor forward" })
+end)
 
 vim.keymap.set("n", "#", function()
   pcall(vim.cmd, "normal! #")
   update_search_virttext()
-end, { desc = "Search word under cursor backward" })
+end)
 
 vim.keymap.set("n", "<CR>", function()
   if vim.v.hlsearch == 1 then
@@ -59,4 +59,4 @@ vim.keymap.set("n", "<CR>", function()
   else
     vim.cmd "+"
   end
-end, { desc = "Clear search highlight or move down" })
+end)

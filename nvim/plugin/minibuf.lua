@@ -1,0 +1,19 @@
+-- vim.pack.add({
+--   {
+--     src = "https://github.com/simifalaye/minibuffer.nvim",
+--   },
+-- })
+--
+-- local minibuffer = require("minibuffer")
+--
+-- vim.ui.select = require("minibuffer.builtin.ui_select")
+-- vim.ui.input = require("minibuffer.builtin.ui_input")
+--
+-- vim.keymap.set("n", ":", require("minibuffer.builtin.cmdline"))
+-- vim.keymap.set("n", "<M-.>", function()
+--   minibuffer.resume(true)
+-- end)
+--
+-- vim.keymap.set("n", "<leader>.", require("minibuffer.examples.files"))
+-- vim.keymap.set("n", "<leader>,", require("minibuffer.examples.buffers"))
+-- vim.keymap.set("n", "<leader>O", require("minibuffer.examples.oldfiles"))

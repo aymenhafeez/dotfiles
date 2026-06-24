@@ -1,9 +1,26 @@
 font-family = JetBrains Mono
-font-size = 10.25
+font-size = 9.75
+# adjust-cell-height = -2.5%
+# adjust-cell-width= -2.5%
 
-theme = dark: JetBrains Darcula,light: Aizen Light
+# theme = dark: darktheme,light: Adwaita Dark
+# theme = dark: Adwaita Dark,light: Adwaita
+# theme = JetBrains Darcula
+theme = darktheme
+# theme = sora
+# gtk-toolbar-style = flat
+# background = #131517
+background = #141618
+# background = #0e0f13
+# background = #242428
+# background = #242428
+# background = #232627
+
+# command = zellij -l welcome
 
 window-theme = ghostty
+# window-show-tab-bar = auto
+gtk-titlebar = false
 gtk-titlebar-style = tabs
 gtk-titlebar-hide-when-maximized = true
 unfocused-split-opacity = 1
@@ -12,7 +29,10 @@ window-padding-y = 0
 window-padding-balance = true
 mouse-hide-while-typing = true
 
-shell-integration-features = no-cursor
+# window-height = 51
+# window-width = 192
+# window-height = 38
+# window-width = 121
 
 keybind = ctrl+shift+]=next_tab
 keybind = ctrl+shift+[=previous_tab
@@ -30,54 +50,5 @@ keybind = ctrl+5=goto_tab:5
 keybind = ctrl+6=goto_tab:6
 keybind = ctrl+7=goto_tab:7
 keybind = ctrl+8=goto_tab:8
-keybind = ctrl+shift+alt+f=write_screen_file:copy,plain
 keybind = ctrl+shift+alt+o=toggle_tab_overview
 bell-features = system,border
-
-# Vim-mode keybindings for Ghostty.
-#
-# Note: We're missing a number of actions to produce a better vim experience.
-# This is what is possible today! But we plan on adding more actions to make
-# this even better in the future.
-
-# Entry point
-keybind = alt+v=activate_key_table:vim
-
-# Key table definition
-keybind = vim/
-
-# Line movement
-keybind = vim/j=scroll_page_lines:1
-keybind = vim/k=scroll_page_lines:-1
-
-# Page movement
-keybind = vim/ctrl+d=scroll_page_down
-keybind = vim/ctrl+u=scroll_page_up
-keybind = vim/ctrl+f=scroll_page_down
-keybind = vim/ctrl+b=scroll_page_up
-keybind = vim/shift+j=scroll_page_down
-keybind = vim/shift+k=scroll_page_up
-
-# Jump to top/bottom
-keybind = vim/g>g=scroll_to_top
-keybind = vim/shift+g=scroll_to_bottom
-
-# Search (if you want vim-style search entry)
-keybind = vim/slash=start_search
-keybind = vim/n=navigate_search:next
-
-# Copy mode / selection
-# Note we're missing a lot of actions here to make this more full featured.
-keybind = vim/v=copy_to_clipboard
-keybind = vim/y=copy_to_clipboard
-
-# Command Palette
-keybind = vim/shift+semicolon=toggle_command_palette
-
-# Exit
-keybind = vim/escape=deactivate_key_table
-keybind = vim/q=deactivate_key_table
-keybind = vim/i=deactivate_key_table
-
-# Catch unbound keys
-keybind = vim/catch_all=ignore

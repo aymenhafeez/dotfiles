@@ -51,9 +51,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
           title = value.title,
           status = value.kind ~= "end" and "running" or "success",
           percent = value.percentage,
+          source = "lsp"
         })
       end,
     })
+
+    if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlineCompletion, args.buf) then
+      vim.lsp.inline_completion.enable()
+      vim.keymap.set("i", "<C-l>", function()
+        if not vim.lsp.inline_completion.get() then
+          return "<C-l>"
+        end
+      end, { expr = true })
+    end
+
+    if client and client:supports_method("textDocument/documentColor") then
+      vim.lsp.document_color.enable(true, { args.buf }, { style = "virtual" })
+    end
 
     if
         client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, args.buf)
@@ -97,35 +111,31 @@ vim.api.nvim_create_autocmd("LspAttach", {
       end, { desc = "Toggle inlay hints" })
     end
 
-    vim.keymap.set({ "i", "s" }, "<C-j>", function()
-      if vim.snippet.active({ direction = 1 }) then
-        return "<Cmd>lua vim.snippet.jump(1)<CR>"
-      else
-        return "<C-j>"
-      end
-    end, { desc = "Jump to next snippet placeholder", expr = true, silent = true })
-
-    vim.keymap.set({ "i", "s" }, "<C-k>", function()
-      if vim.snippet.active({ direction = -1 }) then
-        return "<Cmd>lua vim.snippet.jump(-1)<CR>"
-      else
-        return "<C-k>"
-      end
-    end, { desc = "Jump to previous snippet placeholder", expr = true, silent = true })
+    -- vim.keymap.set({ "i", "s" }, "<C-j>", function()
+    --   if vim.snippet.active({ direction = 1 }) then
+    --     return "<Cmd>lua vim.snippet.jump(1)<CR>"
+    --   else
+    --     return "<C-j>"
+    --   end
+    -- end, { desc = "Jump to next snippet placeholder", expr = true, silent = true })
+    --
+    -- vim.keymap.set({ "i", "s" }, "<C-k>", function()
+    --   if vim.snippet.active({ direction = -1 }) then
+    --     return "<Cmd>lua vim.snippet.jump(-1)<CR>"
+    --   else
+    --     return "<C-k>"
+    --   end
+    -- end, { desc = "Jump to previous snippet placeholder", expr = true, silent = true })
   end,
 })
 
-local servers = {
-  "lua_ls",
-  "vimls",
-  "vtsls",
-  "rust_analyzer",
-  "clangd",
-  "ruff",
-  "ty",
-  "sqls",
-}
+local servers = {}
+
+for _, v in ipairs(vim.api.nvim_get_runtime_file("lsp/*", true)) do
+  local name = vim.fn.fnamemodify(v, ":t:r")
+  servers[name] = true
+end
 
 vim.schedule(function()
-  vim.lsp.enable(servers)
+  vim.lsp.enable(vim.tbl_keys(servers))
 end)

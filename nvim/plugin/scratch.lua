@@ -1,4 +1,4 @@
-require("pack_lazy").on("BufReadPre", function()
+require("utils").lazy_load("BufReadPre", function()
   require("scratch").setup()
 end)
 

@@ -38,6 +38,8 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.signcolumn = "no"
     vim.opt_local.wrap = false
     vim.opt_local.statuscolumn = ""
+    vim.opt_local.scrolloff = 0
+    vim.wo.cursorline = false
   end,
 })
 

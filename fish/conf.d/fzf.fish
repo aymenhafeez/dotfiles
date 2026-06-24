@@ -13,7 +13,34 @@ else if command -sq ag
 end
 
 set -gx FZF_DEFAULT_COMMAND "$FZF_CTRL_T_COMMAND"
-set -gx FZF_DEFAULT_OPTS '--layout=reverse --scrollbar "▐" --border=none --tiebreak=length,end --color=fg:-1,bg:-1,fg+:-1:reverse,bg+:-1,hl:3,hl+:3:reverse,pointer:-1,marker:4,info:-1,prompt:-1,gutter:-1'
+set -gx FZF_DEFAULT_OPTS '--layout=reverse --scrollbar "▐" --border=none --tiebreak=length,end --color=fg:-1,bg:-1,fg+:-1,bg+:-1:dim,hl:3,hl+:3,pointer:-1,marker:4,info:-1,prompt:-1,gutter:0,border:0'
+
+# Sora theme for fzf
+# https://github.com/aejkatappaja/sora.nvim
+#
+# Source this file or add to your shell rc:
+#   source /path/to/sora.sh
+
+# set -gx FZF_DEFAULT_OPTS "
+#   --layout=reverse
+#   --color=bg+:#1e2430
+#   --color=bg:#0e1018
+#   --color=border:#222838
+#   --color=fg:#c8d0e0
+#   --color=fg+:#dce4f0
+#   --color=gutter:#0e1018
+#   --color=header:#80c8e0
+#   --color=hl:#80c8e0
+#   --color=hl+:#98d8f0
+#   --color=info:#586478
+#   --color=marker:#90c8a0
+#   --color=pointer:#80c8e0
+#   --color=prompt:#b0a0d8
+#   --color=query:#c8d0e0
+#   --color=scrollbar:#222838
+#   --color=separator:#222838
+#   --color=spinner:#80c8e0
+# "
 
 if command -sq bat
     set -gx FZF_CTRL_T_OPTS "--ansi --preview 'bat -f -p --theme ansi --line-range :300 {}'"

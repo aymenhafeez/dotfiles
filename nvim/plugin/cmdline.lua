@@ -1,14 +1,14 @@
-vim.opt.wildmode = "noselect:lastused,full"
-vim.opt.wildoptions = "pum,fuzzy,tagfile"
-
-vim.api.nvim_create_autocmd("CmdlineChanged", {
-  callback = function()
-    local t = vim.fn.getcmdtype()
-    if t == ":" or t == "/" or t == "?" then
-      vim.fn.wildtrigger()
-    end
-  end,
-})
+-- vim.opt.wildmode = "noselect:lastused,full"
+-- vim.opt.wildoptions = "pum,fuzzy,tagfile"
+--
+-- vim.api.nvim_create_autocmd("CmdlineChanged", {
+--   callback = function()
+--     local t = vim.fn.getcmdtype()
+--     if t == ":" or t == "/" or t == "?" then
+--       vim.fn.wildtrigger()
+--     end
+--   end,
+-- })
 
 local filescache = {}
 local cache_cwd = nil
@@ -59,4 +59,4 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
   end,
 })
 
-vim.keymap.set("n", "<leader>f", ":find ")
+vim.keymap.set("n", "<leader>sf", ":find ", { desc = "Files" })

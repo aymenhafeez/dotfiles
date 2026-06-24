@@ -9,30 +9,88 @@ local function setup(module, opts)
   end
 end
 
-require("pack_lazy").on("BufReadPost",
-  function()
-    setup("mini.completion", {
-      delay = { completion = 25, info = 25, signature = 50 },
-      window = {
-        info = { height = 20 },
-        signature = { height = 20 },
-      },
-    })
 
-    setup("mini.git")
-    setup("mini.diff", {
-      view = { style = "sign", signs = { add = "┃", change = "┃", delete = "▁" } }
-    })
+require("utils").lazy_load("BufReadPre", function()
+  -- setup("mini.completion", {
+  --   delay = { completion = 25, info = 25, signature = 50 },
+  --   window = {
+  --     info = { height = 20, border = vim.o.winborder == "rounded" and "rounded" or "none" },
+  --     signature = { height = 20, border = vim.o.winborder == "rounded" and "rounded" or "none" },
+  --   },
+  --   mappings = {
+  --     scroll_down = "<C-d>",
+  --     scroll_up = "<C-u>"
+  --   }
+  -- })
 
-    vim.keymap.set("n", "gH", function()
-      require("mini.diff").toggle_overlay()
-    end)
-  end)
+  setup("mini.indentscope", { draw = { delay = 50 }, symbol = '│', })
+end)
+
+vim.schedule(function()
+  setup("mini.clue", {
+    triggers = {
+      -- Leader triggers
+      { mode = { 'n', 'x' }, keys = '<Leader>' },
+
+      -- `[` and `]` keys
+      { mode = 'n',          keys = '[' },
+      { mode = 'n',          keys = ']' },
+
+      -- Built-in completion
+      { mode = 'i',          keys = '<C-x>' },
+
+      -- `g` key
+      { mode = { 'n', 'x' }, keys = 'g' },
+
+      { mode = { 'n' },      keys = 'y' },
+
+      -- Marks
+      { mode = { 'n', 'x' }, keys = "'" },
+      { mode = { 'n', 'x' }, keys = '`' },
+
+      -- Registers
+      { mode = { 'n', 'x' }, keys = '"' },
+      { mode = { 'i', 'c' }, keys = '<C-r>' },
+
+      -- Window commands
+      { mode = { 'n', 't' }, keys = '<C-w>' },
+
+      -- `z` key
+      { mode = { 'n', 'x' }, keys = 'z' },
+
+      { mode = { 'n' },      keys = ';' },
+    },
+    window = {
+      delay = 300,
+      config = {
+        -- anchor = "NE",
+        -- row = 0,
+        border = vim.o.winborder == "rounded" and "rounded" or "none",
+      }
+    },
+    clues = {
+      -- Enhance this by adding descriptions for <Leader> mapping groups
+      { mode = 'n', keys = '<Leader>s', desc = '+Search' },
+      { mode = 'n', keys = '<Leader>g', desc = '+Grep' },
+      require("mini.clue").gen_clues.square_brackets(),
+      require("mini.clue").gen_clues.builtin_completion(),
+      require("mini.clue").gen_clues.g(),
+      require("mini.clue").gen_clues.marks(),
+      require("mini.clue").gen_clues.registers(),
+      require("mini.clue").gen_clues.windows(),
+      require("mini.clue").gen_clues.z(),
+    },
+
+  })
+
+  require("mini.icons").setup()
+  -- require("mini.icons").tweak_lsp_kind()
+end)
 
 vim.g.omni_sql_default_compl_type = 'syntax'
 
 -- :h MiniSurround-vim-surround-config
-require("pack_lazy").on({ "InsertEnter", "CmdlineEnter" },
+require("utils").lazy_load({ "InsertEnter", "CmdlineEnter" },
   function()
     setup("mini.surround", {
       mappings = {
@@ -59,14 +117,17 @@ setup("mini.files", {
   content = { prefix = function() end },
   mappings = {
     go_in_plus = "<CR>"
+  },
+  options = {
+    use_as_default_explorer = false,
   }
 })
 
-vim.keymap.set("n", "<leader>-", function()
+vim.keymap.set("n", ";m", function()
   require("mini.files").open(nil, true)
 end, { desc = "Files" })
 
-vim.keymap.set("n", "<leader>d-", function()
+vim.keymap.set("n", ";dm", function()
   local prompt = vim.fn.input("Directory> ")
   require("mini.files").open("~/" .. prompt)
 end, { desc = "Files choose directory" })
@@ -98,72 +159,3 @@ vim.api.nvim_create_autocmd("User", {
     map_split(buf_id, "<C-t>", "tab")
   end,
 })
-
-setup("mini.pick", {
-  mappings = {
-    move_down   = "<C-p>",
-    move_up     = "<C-n>",
-    delete_word = "<C-Backspace>",
-  },
-  options = {
-    content_from_bottom = true,
-  },
-  source = { show = require("mini.pick").default_show }
-})
-
--- Helper functions for custom pickers
-local function pick_files_in_cwd(cwd, prompt_title)
-  return function()
-    require("mini.pick").builtin.files({
-      tool = "rg",
-    }, {
-      source = {
-        cwd = vim.fn.expand(cwd),
-        name = prompt_title or cwd,
-      },
-    })
-  end
-end
-
-local function pick_grep_in_cwd(cwd, prompt_title)
-  return function()
-    require("mini.pick").builtin.grep_live({ tool = "rg" }, {
-      window = {
-        config = { width = math.floor(0.75 * vim.o.columns) }
-      },
-      source = {
-        cwd = vim.fn.expand(cwd),
-        name = prompt_title or cwd,
-      },
-    })
-  end
-end
-
-vim.keymap.set("n", "<leader>sf", require("mini.pick").builtin.files, { desc = "Files" })
-vim.keymap.set("n", "<leader>sr", require("mini.extra").pickers.oldfiles, { desc = "Oldfiles" })
-vim.keymap.set("n", "<leader>sh", require("mini.pick").builtin.help, { desc = "Help" })
-vim.keymap.set("n", "<leader>:", require("mini.extra").pickers.history, { desc = "Command history" })
-
-vim.keymap.set("n", "<leader>/", function()
-  require("mini.extra").pickers.buf_lines { scope = "current" }
-end, { desc = "Buffer search" })
-
-vim.keymap.set("n", "<leader>sg", require("mini.pick").builtin.grep_live, { desc = "Grep" })
-
-vim.keymap.set(
-  "n",
-  "<leader>s.",
-  pick_files_in_cwd(vim.fn.stdpath "config", "Config")
-  , { desc = "Config" })
-vim.keymap.set(
-  "n",
-  "<leader>sl",
-  pick_files_in_cwd(vim.fs.joinpath(vim.fn.stdpath("data"), "/site/pack"))
-  , { desc = "Plugins" })
-
-vim.keymap.set("n", "<leader>sn", pick_files_in_cwd("~/Documents/DataSci/", "Notes"), { desc = "Notes" })
-vim.keymap.set("n", "<leader>sp", pick_files_in_cwd("~/projects/", "Projects"), { desc = "Projects" })
-
-vim.keymap.set("n", "<leader>g.", pick_grep_in_cwd(vim.fn.stdpath "config", "Config"), { desc = "Grep config" })
-vim.keymap.set("n", "<leader>gn", pick_grep_in_cwd("~/Documents/DataSci/", "Notes"), { desc = "Grep notes" })
-vim.keymap.set("n", "<leader>gp", pick_grep_in_cwd("~/projects/", "Projects"), { desc = "Grep projects" })

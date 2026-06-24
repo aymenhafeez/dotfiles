@@ -11,10 +11,8 @@ vim.opt.jumpoptions = "view"
 vim.opt.linebreak = true
 vim.opt.list = true
 vim.opt.listchars:append("precedes:<,extends:>")
-vim.opt.number = true
 vim.opt.pumborder = "rounded"
 vim.opt.pumheight = 15
-vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
 vim.opt.shiftwidth = 2
 vim.opt.showmatch = true
@@ -31,7 +29,7 @@ vim.schedule(function()
 end)
 
 vim.lsp.config.lua_ls = {
-  cmd = { vim.fn.expand "~/.local/share/nvim/mason/bin/lua-language-server" },
+  cmd = { vim.fn.expand("~/.local/share/lua-ls/bin/lua-language-server") },
   root_markers = { ".luarc.json" },
   filetypes = { "lua" },
   settings = {
@@ -64,24 +62,13 @@ vim.lsp.config.texlab = {
   filetypes = { "tex", "plaintex", "bib" },
 }
 
-vim.lsp.config.basedpyright = {
-  cmd = { "basedpyright-langserver", "--stdio" },
+vim.lsp.config.ty = {
+  cmd = { "ty", "server" },
   filetypes = { "python" },
-  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
-  settings = {
-    basedpyright = {
-      analysis = {
-        typeCheckingMode = "standard",
-        diagnosticMode = "openFilesOnly",
-        useLibraryCodeForTypes = true,
-        autoSearchPaths = true,
-        autoImportCompletions = true,
-      },
-    },
-  },
+  root_markers = { "pyproject.toml", ".git" },
 }
 
-vim.lsp.enable { "lua_ls", "texlab", "basedpyright" }
+vim.lsp.enable { "lua_ls", "texlab", "ty" }
 
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("LspGroup", {}),
@@ -186,13 +173,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
       -- })
     end
 
-    if not client:supports_method('textDocument/willSaveWaitUntil')
-        and client:supports_method('textDocument/formatting') then
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        group = vim.api.nvim_create_augroup('LspGroup', { clear = false }),
+    if client and not client:supports_method "textDocument/willSaveWaitUntil"
+        and client:supports_method "textDocument/formatting" then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("LspGroup", { clear = false }),
         buffer = args.buf,
         callback = function()
-          vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+          vim.lsp.buf.format { bufnr = args.buf, id = client.id, timeout_ms = 500 }
         end,
       })
     end
@@ -203,6 +190,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.diagnostic.config {
   virtual_text = true,
+  jump = {
+    on_jump = function()
+      vim.diagnostic.open_float()
+    end,
+  },
 }
 
 vim.cmd [[
@@ -239,8 +231,6 @@ vim.keymap.set({ 'i', 's' }, '<C-k>', function()
     return '<C-k>'
   end
 end, { desc = '...', expr = true, silent = true })
-
-vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
 
 vim.keymap.set("v", "<space>x", ":.lua<cr>")
 

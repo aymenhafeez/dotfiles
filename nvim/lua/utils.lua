@@ -10,14 +10,13 @@ end
 
 
 local function alter(col, percent)
-  return math.floor(col * (100 + percent) / 100)
+  return math.max(0, math.min(255, math.floor(col * (100 + percent) / 100)))
 end
 
 function M.modify_colour(colour, percent)
   local r, g, b = hex_to_rgb(colour)
 
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
-  r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
 
   return ("#%02x%02x%02x"):format(r, g, b)
 end
@@ -27,7 +26,6 @@ function M.lighter(colour)
   local percent = 15
 
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
-  r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
 
   return ("#%02x%02x%02x"):format(r, g, b)
 end
@@ -37,9 +35,19 @@ function M.darker(colour)
   local percent = -15
 
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
-  r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
 
   return ("#%02x%02x%02x"):format(r, g, b)
+end
+
+local group = vim.api.nvim_create_augroup("lazy-load", { clear = false })
+
+function M.lazy_load(event, fn, pattern)
+  vim.api.nvim_create_autocmd(event, {
+    group = group,
+    once = true,
+    pattern = pattern,
+    callback = fn
+  })
 end
 
 return M

@@ -8,14 +8,15 @@ local function tabline()
   local current_buf = vim.api.nvim_get_current_buf()
 
   for _, buf in ipairs(buffers) do
-    if vim.api.nvim_get_option_value("buflisted", { buf = buf }) then
+    local is_listed = vim.api.nvim_get_option_value("buflisted", { buf = buf })
+    local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
+
+    if is_listed and buftype ~= "terminal" then
       local is_current = (buf == current_buf)
       local is_modified = vim.api.nvim_get_option_value("modified", { buf = buf })
 
       if is_current then
         s = s .. "%#TabLineSel#"
-      elseif is_modified then
-        s = s .. "%#DiagnosticError#"
       else
         s = s .. "%#TabLine#"
       end
@@ -45,7 +46,13 @@ local function tabline()
       s = s .. " " .. fname .. " "
       s = s .. "%X"
 
-      s = s .. "%" .. buf .. "@v:lua._tabline_close_buffer@✕%X "
+      if is_modified then
+        s = s .. "%" .. buf .. "@v:lua._tabline_close_buffer@"
+        -- s = s .. "●%X "
+        s = s .. "[+]%X "
+      else
+        s = s .. "%" .. buf .. "@v:lua._tabline_close_buffer@✕%X "
+      end
       -- s = s .. "%" .. buf .. "@v:lua._new_window@"
       -- s = s .. " + "
     end
@@ -63,7 +70,7 @@ local function tabline()
     end
   end
 
-  s = s .. "%#TabLineSel#"
+  s = s .. "%#TabLine#"
   s = s .. "%@v:lua._new_tab@"
   s = s .. " + "
 

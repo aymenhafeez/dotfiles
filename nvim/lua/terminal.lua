@@ -7,7 +7,7 @@ local create_window = function(opts)
   local direction = opts.split or "below"
   local is_vertical = direction == "left" or direction == "right"
   local size_key = is_vertical and "width" or "height"
-  local size = is_vertical and math.floor(vim.o.columns * 0.44) or math.floor(vim.o.lines * 0.35)
+  local size = is_vertical and math.floor(vim.api.nvim_win_get_width(0) * 0.43) or math.floor(vim.o.lines * 0.3)
   local relative = "editor" or ""
   local width = math.floor(vim.o.columns * 0.8)
   local height = math.floor(vim.o.lines * 0.8)
@@ -39,6 +39,7 @@ local create_window = function(opts)
   end
 
   local win = vim.api.nvim_open_win(buf, true, win_config)
+  -- if direction == "below" then vim.cmd("wincmd J") end
 
   return { buf = buf, win = win }
 end
@@ -64,6 +65,7 @@ M.toggle_terminal = function(opts)
 
     if vim.bo[state.buf].buftype ~= "terminal" then
       vim.cmd("terminal " .. cmd)
+      vim.bo.buflisted = false
       vim.cmd "startinsert"
     end
   else

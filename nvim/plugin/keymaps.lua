@@ -16,9 +16,9 @@ cnoremap <expr> / (getcmdtype() =~ '[/?]' && getcmdline() == '') ? "\<C-C>\<Esc>
 local map = vim.keymap.set
 
 map("n", "<leader>h", ":help <C-z>", { desc = "Help" })
-map("n", "<leader><leader>h", "<cmd>help!<CR>", { desc = "Open help for word under cursor" })
+map("n", "gK", "<cmd>help!<CR>", { desc = "Open help for word under cursor" })
 
-map("n", "<leader>b", ":b <C-z>", { desc = "Buffers" })
+map("n", "<leader>sb", ":b <C-z>", { desc = "Buffers" })
 map("n", "<leader>r", "<cmd>browse oldfiles<CR>", { desc = "Recent files" })
 
 map("n", "<leader>so", "<cmd>source %<CR>", { desc = "Source current file" })
@@ -31,17 +31,19 @@ map({ "n", "t" }, "<M-]>", "<cmd>tabn<CR>", { desc = "Next tab" })
 map({ "n", "t" }, "<M-[>", "<cmd>tabp<CR>", { desc = "Previous tab" })
 map("n", "<M-t>", "<cmd>tab split<CR>", { desc = "Open buffer in new tab" })
 
-map({ "n", "t" }, "<M-h>", "<C-\\><C-n><C-W>2<", { desc = "Decrease window width" })
-map({ "n", "t" }, "<M-l>", "<C-\\><C-n><C-W>2>", { desc = "Increase window width" })
-map({ "n", "t" }, "<M-j>", "<C-\\><C-n><C-W>2-", { desc = "Decrease window height" })
-map({ "n", "t" }, "<M-k>", "<C-\\><C-n><C-W>2+", { desc = "Increase window height" })
+map({ "n", "t" }, "<S-left>", "<C-\\><C-n><C-W>2<", { desc = "Decrease window width" })
+map({ "n", "t" }, "<S-right>", "<C-\\><C-n><C-W>2>", { desc = "Increase window width" })
+map({ "n", "t" }, "<S-down>", "<C-\\><C-n><C-W>2-", { desc = "Decrease window height" })
+map({ "n", "t" }, "<S-up>", "<C-\\><C-n><C-W>2+", { desc = "Increase window height" })
 
 map({ "n", "t" }, "<M-S-l>", "2zl", { desc = "Scroll horizontally right" })
 map({ "n", "t" }, "<M-S-h>", "2zh", { desc = "Scroll horizontally left" })
 
-map("n", "<Tab>", "<C-^>", { desc = "Switch to alternate buffer" })
+map("n", "<S-Tab>", "<C-^>", { desc = "Switch to alternate buffer" })
 
 map({ "i", "c", "t" }, "<C-Backspace>", "<C-w>", { desc = "Delete previous word" })
+-- konsole sends ^backspace as ^H
+map({ "i", "c" }, "<C-h>", "<C-w>", { desc = "Delete previous word" })
 map({ "i", "c", "t" }, "<C-w>", "", { desc = "Disable default Ctrl-w" })
 
 map("n", ";nt", "<cmd>tabnew<CR>", { desc = "Create new tab" })
@@ -79,21 +81,40 @@ map("c", "<C-n>", function()
   end
 end, { expr = true, desc = "Next in wildmenu or history" })
 
-vim.keymap.set("i", "<CR>", function()
-  local key = vim.keycode('<CR>')
-  if vim.fn.pumvisible() == 1 then
-    key = vim.keycode("<C-y>")
-  end
-  vim.api.nvim_feedkeys(key, 'n', false)
-end)
+-- vim.keymap.set("i", "<CR>", function()
+--   local key = vim.keycode('<CR>')
+--   if vim.fn.pumvisible() == 1 then
+--     key = vim.keycode("<C-y>")
+--   end
+--   vim.api.nvim_feedkeys(key, 'n', false)
+-- end)
+--
+-- map("i", "<C-n>", function()
+--   if vim.fn.pumvisible() == 0 then
+--     return "<Down>"
+--   else
+--     return "<C-n>"
+--   end
+-- end, { expr = true, desc = "Accept completion or insert newline" })
+--
+-- map("i", "<C-p>", function()
+--   if vim.fn.pumvisible() == 0 then
+--     return "<Up>"
+--   else
+--     return "<C-p>"
+--   end
+-- end, { expr = true, desc = "Accept completion or insert newline" })
+--
+-- map("i", "<C-e>", function()
+--   if vim.fn.pumvisible() == 0 then
+--     return "<End>"
+--   else
+--     return "<C-e>"
+--   end
+-- end, { expr = true, desc = "Accept completion or insert newline" })
 
-map("i", "<C-e>", function()
-  if vim.fn.pumvisible() == 0 then
-    return "<End>"
-  else
-    return "<C-e>"
-  end
-end, { expr = true, desc = "Accept completion or insert newline" })
+map("i", "<M-f>", "<C-Right>")
+map("i", "<M-b>", "<C-Left>")
 
 -- toggle window zoom
 vim.keymap.set('n', '+', function()
@@ -113,25 +134,3 @@ end, { desc = "Toggle window zoom" })
 
 vim.api.nvim_create_user_command("Bdelete", function() require("bufclose").buf_delete() end, {})
 vim.keymap.set("c", "bd", "Bdelete", { desc = "Buffer delete" })
-
-vim.keymap.set("n", "<leader>a", function()
-  vim.cmd "argadd %"
-  vim.cmd "argdedupe"
-end, { desc = "Add to args list" })
-
-vim.keymap.set("n", "<leader>e", function()
-  vim.cmd.args()
-end, { desc = "Show args list" })
-
-vim.keymap.set("n", "<leader>1", function()
-  pcall(vim.cmd, "1argument")
-end, { desc = "Go to arg 1" })
-vim.keymap.set("n", "<leader>2", function()
-  pcall(vim.cmd, "2argument")
-end, { desc = "Go to arg 2" })
-vim.keymap.set("n", "<leader>3", function()
-  pcall(vim.cmd, "3argument")
-end, { desc = "Go to arg 3" })
-vim.keymap.set("n", "<leader>4", function()
-  pcall(vim.cmd, "4argument")
-end, { desc = "Go to arg 4" })

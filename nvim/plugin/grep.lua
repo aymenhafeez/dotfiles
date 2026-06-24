@@ -14,17 +14,15 @@ local function grep_to_qf(opts)
       "--vimgrep",
       "--smart-case",
       "--hidden",
-      "--glob", "!.git",
+      "--glob",
+      "!.git",
       "--color=never",
+      "--no-config",
       input,
     }, {
       text = true,
     }):wait()
 
-    -- rg exit codes:
-    -- 0 = matches found
-    -- 1 = no matches
-    -- >1 = actual error
     if result.code > 1 then
       vim.notify(
         ("rg failed: %s"):format((result.stderr or ""):gsub("%s+$", "")),

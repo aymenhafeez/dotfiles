@@ -9,6 +9,8 @@ zplug "zsh-users/zsh-completions"
 zplug "plugins/git",   from:oh-my-zsh
 # zplug "vi-mode", from:oh-my-zsh
 
+zplug romkatv/powerlevel10k, as:theme, depth:1
+
 zplug "junegunn/fzf"
 zplug "joshskidmore/zsh-fzf-history-search"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
@@ -23,6 +25,14 @@ if ! zplug check --verbose; then
 fi
 
 zplug load
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 
 autoload -U compinit; compinit
 
@@ -52,7 +62,6 @@ bindkey '^n' autosuggest-accept
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=6'
 
-EDITOR="nvim"
 
 cd() {
     if ! z "$@"; then
@@ -74,8 +83,7 @@ alias ll="ls -alh"
 alias pypy="$HOME/tmp/pypy/pypy3.11-v7.3.20-linux64/bin/pypy"
 alias open="xdg-open"
 
-export VISUAL=vim
-export EDITOR="$VISUAL"
+export EDITOR="nvim"
 export NVM_DIR="/home/aymen/.nvm"
 export PATH="$PATH:/home/aymen/.local/bin/"
 export PATH="$PATH:/Users/aymen/Library/Python/3.8/bin"
@@ -106,7 +114,7 @@ npx() { lazy_load_nvm; npx "$@"; }
 export ZED_ALLOW_EMULATED_GPU=0
 export MESA_VK_DEVICE_SELECT=8086:46a6
 
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 # starship preset nerd-font-symbols -o ~/.config/starship.toml
 # starship preset pure-preset -o ~/.config/starship.toml
 
@@ -126,6 +134,12 @@ export FZF_CTRL_T_OPTS="
 source ~/git-repos/fzf-tab/fzf-tab.plugin.zsh
 
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:$PATH
 export PATH="$HOME/tmp/zig/zig-x86_64-linux-0.15.2:$PATH"
 export PATH="$HOME/.local/share/nvim-install/nvim-linux-x86_64/bin/:$PATH"
 export PATH="/usr/local/texlive/2025/bin/x86_64-linux/:$PATH"
+export PATH="$HOME/.local/share/lua-ls/bin:$PATH"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+. "/home/aymen/.deno/env"

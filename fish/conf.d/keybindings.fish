@@ -14,3 +14,6 @@ bind -M default \cn history-search-forward
 
 bind -M insert \c] accept-autosuggestion
 bind -M default \c] accept-autosuggestion
+
+bind -M insert  \c_ 'ts; commandline -f repaint'
+bind -M default \c_ 'ts; commandline -f repaint'

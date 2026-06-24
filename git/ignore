@@ -1,7 +1,6 @@
 __pycache__/
 *.pyc
 .mypy_cache/
-*.ipynb*
 .ipynb_checkpoints
 .python-version
 .*.swp
@@ -12,10 +11,10 @@ __pycache__/
 *.egg
 .eggs/
 .eggs/
-build/
+/build/
 dist/
 
-.venv
+.venv/
 env/
 venv/
 

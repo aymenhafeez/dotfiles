@@ -80,33 +80,38 @@ local function on_line(_, winid, bufnr, row)
     local diag = win_state.buffer_line_to_diag[row]
     vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
       ephemeral = true,
-      virt_text = { { "┃", diag.hl_group } },
+      virt_text = { { "", "WinSeparator" }, { "░", diag.hl_group } },
       virt_text_pos = "right_align",
       virt_text_repeat_linebreak = true,
     })
   elseif row == win_state.cursor_display_line then
     vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
       ephemeral = true,
-      virt_text = { { "┃", "Comment" } },
+      virt_text = { { "", "WinSeparator" }, { "░", "ScrollbarThumb" } },
       virt_text_pos = "right_align",
       virt_text_repeat_linebreak = true,
-      priority = 100,
+      priority = 1000,
     })
-    -- elseif win_state.start <= row and row < win_state["end"] then
-    --   vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
-    --     ephemeral = true,
-    --     virt_text = { { "▒", "NonText" } },
-    --     virt_text_pos = "right_align",
-    --     virt_text_repeat_linebreak = true,
-    --     priority = 200,
-    --   })
+  elseif win_state.start <= row and row < win_state["end"] then
+    vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
+      ephemeral = true,
+      virt_text = { { "", "WinSeparator" }, { "░", "Scrollbar" } },
+      virt_text_pos = "right_align",
+      virt_text_repeat_linebreak = true,
+      priority = 2000,
+    })
+  else
+    vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
+      ephemeral = true,
+      virt_text = { { "", "WinSeparator" }, { " ", "ScrollbarBorder" } },
+      virt_text_pos = "right_align",
+      virt_text_repeat_linebreak = true,
+    })
   end
 end
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
-  once = true,
-  callback = function()
+require("utils").lazy_load("BufReadPre", function()
+  if vim.bo.buftype ~= "nofile" then
     vim.api.nvim_set_decoration_provider(ns, { on_win = on_win, on_line = on_line })
   end
-})
+end)

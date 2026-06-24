@@ -1,0 +1,68 @@
+-- vim.pack.add({ "https://github.com/comfysage/artio.nvim" })
+--
+-- require("artio").setup({
+--   opts = {
+--     preselect = true, -- whether to preselect the first match
+--     bottom = false, -- whether to draw the prompt at the bottom
+--     shrink = false, -- whether the window should shrink to fit the matches
+--     promptprefix = ">", -- prefix for the prompt
+--     prompt_title = true, -- whether to draw the prompt title
+--     pointer = "▌", -- pointer for the selected match
+--     marker = "│", -- prefix for marked items
+--     infolist = { "list" }, -- index: [1] list: (4/5)
+--     use_icons = false, -- requires mini.icons
+--   },
+--   win = {
+--     height = 12,
+--     hidestatusline = false, -- works best with laststatus=3
+--   },
+--   -- NOTE: if you override the mappings, make sure to provide keys for all actions
+--   mappings = {
+--     ["<c-n>"] = "down",
+--     ["<c-p>"] = "up",
+--     ["<cr>"] = "accept",
+--     ["<c-c>"] = "cancel",
+--     ["<tab>"] = "mark",
+--     ["<c-g>"] = "togglelive",
+--     ["<c-l>"] = "togglepreview",
+--     ["<c-q>"] = "setqflist",
+--     ["<m-q>"] = "setqflistmark",
+--   },
+-- })
+--
+-- -- override built-in ui select with artio
+-- vim.ui.select = require("artio").select
+--
+-- vim.keymap.set("n", "<leader>f", "<Plug>(artio-files)", { desc = "Files" })
+-- vim.keymap.set("n", "<leader>sg", "<Plug>(artio-grep)", { desc = "Grep" })
+--
+-- -- general built-in pickers
+-- vim.keymap.set("n", "<leader>sh", "<Plug>(artio-helptags)", { desc = "Help" })
+-- vim.keymap.set("n", "<leader>sb", "<Plug>(artio-buffers)", { desc = "Buffers" })
+-- vim.keymap.set("n", "<leader>/", "<Plug>(artio-buffergrep)", { desc = "Grep buffer" })
+-- vim.keymap.set("n", "<leader>sr", "<Plug>(artio-oldfiles)", { desc = "Old files" })
+-- vim.keymap.set("n", "<C-Space>", function() require("artio.builtins").builtins() end)
+--
+-- vim.api.nvim_create_autocmd("User", {
+--   pattern = "ArtioEnter",
+--   callback = function()
+--     local ok, ui2 = pcall(require, "vim._core.ui2")
+--     if not ok or not ui2.bufs or not ui2.bufs.cmd then
+--       return
+--     end
+--
+--     vim.b[ui2.bufs.cmd].minicompletion_disable = true
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd("User", {
+--   pattern = "ArtioLeave",
+--   callback = function()
+--     local ok, ui2 = pcall(require, "vim._core.ui2")
+--     if not ok or not ui2.bufs or not ui2.bufs.cmd then
+--       return
+--     end
+--
+--     vim.b[ui2.bufs.cmd].minicompletion_disable = nil
+--   end,
+-- })

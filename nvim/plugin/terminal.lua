@@ -20,6 +20,13 @@ vim.keymap.set({ "n", "t" }, ";;t", function()
   vim.cmd "startinsert"
 end, { desc = "Open terminal in new tab" })
 
+vim.keymap.set("n", ";st", function()
+  vim.cmd "15new"
+  vim.cmd "term"
+  vim.cmd "wincmd J"
+  vim.cmd "startinsert"
+end, { desc = "New split terminal" })
+
 vim.keymap.set({ "n", "t" }, ";ft", function()
   require("terminal").toggle_terminal { name = "floating", floating = true }
 end, { desc = "Toggle floating terminal" })
@@ -30,10 +37,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   callback = function()
     vim.opt_local.scrolloff = 0
-    vim.wo.statuscolumn = ""
-    vim.wo.winfixwidth = true
-    vim.wo.winfixheight = true
+    -- vim.wo.winfixwidth = true
+    -- vim.wo.winfixheight = true
     vim.bo.filetype = "terminal"
+    vim.wo.cursorline = false
+    vim.wo.cursorlineopt = "number"
+    -- vim.opt_local.winhighlight = "Normal:TerminalNormal"
+    vim.wo.statuscolumn = ""
   end,
 })
 
@@ -43,6 +53,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
     if vim.bo.buftype == "terminal" then
       vim.cmd "startinsert"
+      vim.wo.spell = false
     end
   end,
 })

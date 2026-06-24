@@ -1,0 +1,77 @@
+-- vim.pack.add({
+--   "https://github.com/akinsho/bufferline.nvim",
+-- })
+--
+-- require("bufferline").setup {
+--   options = {
+--     indicator = {
+--       -- icon = "▎",
+--       style = "none"
+--     },
+--     offsets = {
+--       {
+--         filetype = "snacks_layout_box",
+--         text = "󰙅  Explorer",
+--         separator = true,
+--         padding = 0,
+--         highlight = "BufferLineOffsetExplorer",
+--       },
+--       {
+--         filetype = "DiffviewFiles",
+--         text = "  Diffview",
+--         separator = true,
+--         padding = 0,
+--         highlight = "BufferLineOffsetExplorer",
+--       },
+--       {
+--         filetype = "DiffviewFileHistory",
+--         text = "  Diffview",
+--         separator = true,
+--         padding = 0,
+--         highlight = "BufferLineOffsetExplorer",
+--       },
+--       {
+--         filetype = "dbui",
+--         text = "󰆼  DBUI",
+--         separator = true,
+--         padding = 0,
+--         highlight = "BufferLineOffset",
+--       },
+--       {
+--         filetype = "terminal",
+--         separator = true,
+--         highlight = "BufferLineOffset"
+--       },
+--       -- {
+--       --   filetype = "help",
+--       --   separator = true,
+--       --   highlight = "BufferLineOffsetHelp"
+--       -- },
+--       -- {
+--       --   filetype = "man",
+--       --   separator = true,
+--       --   highlight = "BufferLineOffsetHelp"
+--       -- }
+--     },
+--     custom_filter = function(bufnr)
+--       local ignore_ft = { terminal = true, man = true }
+--       if ignore_ft[vim.bo[bufnr].filetype] then
+--         return false
+--       else
+--         return true
+--       end
+--     end
+--   }
+-- }
+--
+-- vim.keymap.set("n", "<M-C-l>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move buffer next" })
+-- vim.keymap.set("n", "<M-C-h>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move buffer previous" })
+-- vim.keymap.set("n", "L", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer" })
+-- vim.keymap.set("n", "H", "<cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
+-- vim.keymap.set("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", { desc = "Go to buffer 1" })
+-- vim.keymap.set("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", { desc = "Go to buffer 2" })
+-- vim.keymap.set("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", { desc = "Go to buffer 3" })
+-- vim.keymap.set("n", "<leader>4", "<cmd>BufferLineGoToBuffer 4<CR>", { desc = "Go to buffer 4" })
+-- vim.keymap.set("n", "<leader>5", "<cmd>BufferLineGoToBuffer 5<CR>", { desc = "Go to buffer 5" })
+-- vim.keymap.set("n", "<leader>6", "<cmd>BufferLineGoToBuffer 6<CR>", { desc = "Go to buffer 6" })
+-- vim.keymap.set("n", "<leader>7", "<cmd>BufferLineGoToBuffer 7<CR>", { desc = "Go to buffer 7" })
