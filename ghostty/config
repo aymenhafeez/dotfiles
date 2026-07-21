@@ -1,38 +1,15 @@
 font-family = JetBrains Mono
 font-size = 9.75
-# adjust-cell-height = -2.5%
-# adjust-cell-width= -2.5%
+adjust-cell-height = 2.5%
 
-# theme = dark: darktheme,light: Adwaita Dark
-# theme = dark: Adwaita Dark,light: Adwaita
-# theme = JetBrains Darcula
-theme = darktheme
-# theme = sora
-# gtk-toolbar-style = flat
-# background = #131517
-background = #141618
-# background = #0e0f13
-# background = #242428
-# background = #242428
-# background = #232627
-
-# command = zellij -l welcome
+theme = dark: Atom One Dark,light: GitLab Light
 
 window-theme = ghostty
-# window-show-tab-bar = auto
-gtk-titlebar = false
-gtk-titlebar-style = tabs
-gtk-titlebar-hide-when-maximized = true
 unfocused-split-opacity = 1
 window-padding-x = 0
 window-padding-y = 0
 window-padding-balance = true
 mouse-hide-while-typing = true
-
-# window-height = 51
-# window-width = 192
-# window-height = 38
-# window-width = 121
 
 keybind = ctrl+shift+]=next_tab
 keybind = ctrl+shift+[=previous_tab
