@@ -1,2 +1,5 @@
 **/_tide*
 **/tide/
+**/fish/completions/*
+**/fish/fish_variables
+**/fish/fish_variables*
