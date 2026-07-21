@@ -8,12 +8,7 @@ local function apply()
   vim.o.termguicolors     = true
   vim.g.colors_name       = "vim_default"
 
-  -- local bg                = "#14161b"
-  -- local bg                = mod("#131517", 0)
-  -- local bg                = "#1D1D20"
-  -- local bg                = "#0e0f13"
-  -- local bg                = mod("#1c1e1f", -30)
-  local bg                = "#141618"
+  local bg                = "#202326"
   local bg_dark           = mod(bg, -20)
   local fg                = "#bbbbbb"
   local fg_light          = "#eeeeee"
@@ -69,7 +64,7 @@ local function apply()
   local highlights        = {
     Normal                         = { fg = fg, bg = bg },
     -- TerminalNormal                 = { bg = bg_dark },
-    -- Pmenu                          = pmenu,
+    Pmenu                          = pmenu,
     -- Pmenu                       = { bg = bg },
     PmenuSel                       = { fg = bg, bg = fg },
     PmenuMatch                     = { fg = fg_light, bold = true },
@@ -95,22 +90,15 @@ local function apply()
     EndOfBuffer                    = { fg = bg },
     Comment                        = { fg = muted_fg, italic = true },
     Todo                           = { fg = "Cyan", bg = bg_blue_subtle, bold = true },
-    -- Statusline                     = { fg = fg, bg = mod(bg, 150) },
-    -- StatuslineNC                   = { fg = fg, bg = mod(bg, 70) },
-    -- Statusline                     = { fg = fg, bg = mod(subtle, 20) },
-    -- StatuslineNC                   = { fg = subtle_fg, bg = mod(subtle, 20) },
-    -- Statusline                     = { fg = subtle_fg, bg = bg_dark },
-    -- StatuslineNC                   = { fg = mod(subtle_fg, -30), bg = bg_dark },
-    -- StatuslineNC                   = { fg = mod(fg, -10), bg = "NvimDarkGrey4" },
-    -- Statusline                     = { fg = bg, bg = mod(muted, 30) },
-    -- StatuslineNC                   = { fg = mod(bg, 50), bg = mod(muted, 30) },
+    Statusline                     = { fg = mod(fg, 20), bg = mod(bg, 150) },
+    StatuslineNC                   = { fg = fg, bg = mod(bg, 70) },
     -- SignColumn                     = { bg = accent },
     Folded                         = { bg = mod(subtle, 0) },
     ColorColumn                    = { bg = accent },
-    TablineFill                    = { bg = mod(bg, 30) },
-    -- TablineFill                    = { bg = bg },
-    TablineSel                     = { fg = fg, bold = true, italic = false },
-    Tabline                        = { fg = muted_fg, bg = mod(bg, 30) },
+    -- TablineFill                    = { bg = mod(bg, 30) },
+    TablineFill                    = { bg = bg },
+    TablineSel                     = { fg = "White", bold = true, italic = true },
+    Tabline                        = { fg = muted_fg, bg = bg },
     -- Number                         = { fg = "LightSeaGreen" },
     Number                         = { fg = orange },
     -- Number                         = { fg = green },
@@ -161,6 +149,7 @@ local function apply()
     FzfLuaFzfSeparator             = { fg = bg },
     FzfLuaFzfMatch                 = { fg = fg_light, bold = true },
     FzfLuaBufLineNr                = { bg = bg },
+    FzfLuaBackdrop                 = { bg = bg },
 
     SnacksPicker                   = { bg = bg_dark },
     -- SnacksWinSeparator          = { fg = "NvimDarkGrey1", bg = mod(bg,-40)},
@@ -224,7 +213,7 @@ local function apply()
 
     DiffAdd                        = { bg = diff_add_bg },
     DiffChange                     = { bg = diff_change_bg },
-    DiffDelete                     = { fg = diff_delete_bg, bg = diff_delete_bg },
+    DiffDelete                     = { fg = red, bg = diff_delete_bg },
     DiffText                       = { bg = diff_text_bg },
 
     NeogitActiveItem               = { bg = diff_add_bg },

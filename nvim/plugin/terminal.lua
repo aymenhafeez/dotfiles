@@ -42,8 +42,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.bo.filetype = "terminal"
     vim.wo.cursorline = false
     vim.wo.cursorlineopt = "number"
-    -- vim.opt_local.winhighlight = "Normal:TerminalNormal"
+    vim.opt_local.winhighlight = "Normal:TerminalNormal"
     vim.wo.statuscolumn = ""
+    vim.b.miniindentscope_disable = true
   end,
 })
 

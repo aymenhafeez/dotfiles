@@ -80,14 +80,14 @@ local function on_line(_, winid, bufnr, row)
     local diag = win_state.buffer_line_to_diag[row]
     vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
       ephemeral = true,
-      virt_text = { { "", "WinSeparator" }, { "░", diag.hl_group } },
+      virt_text = { { "░", diag.hl_group } },
       virt_text_pos = "right_align",
       virt_text_repeat_linebreak = true,
     })
   elseif row == win_state.cursor_display_line then
     vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
       ephemeral = true,
-      virt_text = { { "", "WinSeparator" }, { "░", "ScrollbarThumb" } },
+      virt_text = { { "░", "ScrollbarThumb" } },
       virt_text_pos = "right_align",
       virt_text_repeat_linebreak = true,
       priority = 1000,
@@ -95,7 +95,7 @@ local function on_line(_, winid, bufnr, row)
   elseif win_state.start <= row and row < win_state["end"] then
     vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
       ephemeral = true,
-      virt_text = { { "", "WinSeparator" }, { "░", "Scrollbar" } },
+      virt_text = { { "░", "Scrollbar" } },
       virt_text_pos = "right_align",
       virt_text_repeat_linebreak = true,
       priority = 2000,
@@ -103,7 +103,7 @@ local function on_line(_, winid, bufnr, row)
   else
     vim.api.nvim_buf_set_extmark(bufnr, ns, row, 0, {
       ephemeral = true,
-      virt_text = { { "", "WinSeparator" }, { " ", "ScrollbarBorder" } },
+      virt_text = { { " ", "ScrollbarBorder" } },
       virt_text_pos = "right_align",
       virt_text_repeat_linebreak = true,
     })

@@ -136,6 +136,4 @@ for _, v in ipairs(vim.api.nvim_get_runtime_file("lsp/*", true)) do
   servers[name] = true
 end
 
-vim.schedule(function()
-  vim.lsp.enable(vim.tbl_keys(servers))
-end)
+vim.lsp.enable(vim.tbl_keys(servers))

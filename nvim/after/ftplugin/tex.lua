@@ -33,16 +33,16 @@ end
 
 local file_name = vim.fn.expand "%:t:r"
 local compile_args = {
-  "latexmk",
-  "-pdf",
+  "pdflatex",
   "-interaction=nonstopmode",
   "-halt-on-error",
   "-output-directory=build",
-  file_name,
+  file_name .. ".tex",
 }
 local compile_cmd = table.concat(compile_args, " ")
 
 map("n", "<leader>cm", function()
+  vim.fn.mkdir("build", "p")
   if in_zellij() then
     local dir = get_split_direction() == 'right' and 'right' or 'down'
     vim.fn.system {
@@ -66,20 +66,3 @@ end, { buf = 0, desc = "Preview PDF" })
 
 map("n", "<C-s>", "mm[s1z=`m", { buf = 0, desc = "Fix previous spelling error" })
 map("i", "<C-s>", "<C-g>u<Esc>[s1z=`]a<C-g>u", { buf = 0, desc = "Fix previous spelling error" })
-
--- vim.api.nvim_create_autocmd("InsertEnter", {
---   once = true,
---   callback = function()
---     require("mini.snippets").setup {
---       snippets = {
---         require('mini.snippets').gen_loader.from_lang(),
---       },
---       mappings = {
---         expand = '<C-j>',
---         jump_next = '<C-j>',
---         jump_prev = '<C-k>',
---         stop = '<C-c>',
---       },
---     }
---   end
--- })

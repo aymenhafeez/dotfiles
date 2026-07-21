@@ -23,7 +23,7 @@ require("utils").lazy_load("BufReadPre",
     local is_writing = writing_ft[vim.bo.filetype]
     require("treesitter-context").setup {
       enable = true,
-      separator = "─",
+      -- separator = "─",
       multiwindow = true,
       max_lines = is_writing and 0 or 0,
       trim_scope = is_writing and "outer" or "outer",

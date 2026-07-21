@@ -1,23 +1,3 @@
-local function get_mini_icon(ctx)
-  if ctx.source_name == "Path" then
-    local is_unknown_type = vim.tbl_contains(
-      { "link", "socket", "fifo", "char", "block", "unknown" },
-      ctx.item.data.type
-    )
-    local mini_icon, mini_hl, _ = require("mini.icons").get(
-      is_unknown_type and "os" or ctx.item.data.type,
-      is_unknown_type and "" or ctx.label
-    )
-    if mini_icon then
-      return mini_icon, mini_hl
-    end
-  end
-  local mini_icon, mini_hl, _ = require("mini.icons").get("lsp", ctx.kind)
-  mini_icon = " " .. mini_icon
-  return mini_icon, mini_hl
-end
-
-
 --- @module 'blink.cmp'
 --- @type blink.cmp.Config
 local options = {
@@ -72,35 +52,15 @@ local options = {
         align_to = "label",
         padding = { 0, 1 },
         columns = {
-          { "kind_icon",   gap = 1 },
-          { "label",       "label_description", gap = 1 },
-          { "source_name", gap = 1 },
+          { "label", "label_description", gap = 1 },
+          { "kind" }
         },
-        -- components = {
-        --   kind_icon = {
-        --     text = function(ctx) return " " .. ctx.kind_icon .. ctx.icon_gap end
-        --   }
-        -- },
         components = {
-          kind_icon = {
-            text = function(ctx)
-              local kind_icon, kind_hl = get_mini_icon(ctx)
-              return kind_icon
-            end,
-            -- (optional) use highlights from mini.icons
-            highlight = function(ctx)
-              local _, hl = get_mini_icon(ctx)
-              return hl
-            end,
-          },
-          kind = {
-            -- (optional) use highlights from mini.icons
-            highlight = function(ctx)
-              local _, hl = get_mini_icon(ctx)
-              return hl
-            end,
+          label = {
+            width = { fill = true, max = 60 },
+            text = function(ctx) return " " .. ctx.label .. ctx.label_detail end,
           }
-        }
+        },
       }
     },
     documentation = {
@@ -154,9 +114,5 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
     else
       vim.notify("Failed to load blink.cmp: " .. tostring(blink), vim.log.levels.ERROR)
     end
-
-    -- vim.g.msgarea_max_height = 12
-    -- require("msgarea.blink_integration").enable()
-    -- vim.keymap.set("n", "<M-n>", function() require("msgarea").close_all() end)
   end
 })

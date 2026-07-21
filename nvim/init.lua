@@ -40,8 +40,7 @@ end)
 
 vim.cmd.packadd "nvim.undotree"
 vim.cmd.packadd "nvim.difftool"
--- vim.cmd.colorscheme "vim_default"
-vim.cmd.colorscheme(vim.o.background == "dark" and "vim_default" or "adwaita")
+vim.cmd.colorscheme("vim_default")
 
 vim.g.difftool_replace_diff_mode = true
 
@@ -70,7 +69,7 @@ vim.opt.fillchars = {
   foldclose = "",
   foldinner = " ",
   foldsep = " ",
-  eob = "*",
+  eob = " ",
 }
 opt.foldlevelstart = 99
 opt.foldmethod = "expr"
