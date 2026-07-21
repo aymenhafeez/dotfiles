@@ -1,7 +1,3 @@
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
-
 set -g fish_history main
 set -g fish_save_history 100000
 
@@ -19,9 +15,5 @@ end
 
 zoxide init fish | source
 
-if status is-interactive; and not set -q TMUX
-    source ~/.config/fish/functions/ts.fish
-    ts
-    # If ts exits (like hitting ESC in fzf), close the window cleanly:
-    exit
-end
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
