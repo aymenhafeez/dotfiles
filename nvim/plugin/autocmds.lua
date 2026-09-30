@@ -23,14 +23,13 @@ if vim.opt.cursorline:get() == true then
       group = group,
       pattern = pattern,
       callback = function()
-        vim.opt_local.cursorlineopt = value
+        vim.wo.cursorline = value
       end,
     })
   end
 
-  set_cursorline({ "InsertEnter", "BufLeave" }, "number")
-  set_cursorline({ "InsertLeave", "BufEnter" }, "both")
-  set_cursorline("FileType", "number", { "help" })
+  set_cursorline({ "InsertEnter", "WinLeave" }, false)
+  set_cursorline({ "InsertLeave", "WinEnter" }, true)
 end
 
 
