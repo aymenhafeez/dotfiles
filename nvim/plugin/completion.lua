@@ -16,7 +16,7 @@ local options = {
     ["<C-f>"] = { "scroll_documentation_down", "fallback" },
   },
   cmdline = {
-    enabled = true,
+    enabled = false,
     keymap = {
       preset = "cmdline",
       ["<CR>"] = { "accept_and_enter", "fallback" },
@@ -42,11 +42,10 @@ local options = {
       show_on_blocked_trigger_characters = {},
     },
     ghost_text = {
-      enabled = true,
+      enabled = false,
     },
     menu = {
       auto_show = true,
-      winblend = 0,
       max_height = 15,
       draw = {
         align_to = "label",
@@ -67,7 +66,6 @@ local options = {
       auto_show = true,
       auto_show_delay_ms = 50,
       window = {
-        winblend = 0,
         max_width = 75,
         max_height = 20,
       },
@@ -91,7 +89,6 @@ local options = {
     },
     window = {
       show_documentation = false,
-      winblend = 0,
       max_width = 75,
       max_height = 20,
       scrollbar = false,
@@ -105,7 +102,6 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   callback = function()
     vim.pack.add({
       { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("^1") },
-      -- "https://github.com/edisj/msgarea.nvim"
     }, { load = false })
 
     local ok, blink = pcall(require, "blink.cmp")

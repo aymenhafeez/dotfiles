@@ -1,15 +1,6 @@
 vim.schedule(function()
   vim.pack.add({ "https://github.com/stevearc/oil.nvim" }, { load = true })
   require("oil").setup {
-    columns = {
-      -- "permissions",
-      "size",
-      "mtime",
-    },
-    win_options = {
-      statuscolumn = "",
-      number = false,
-    },
     view_options = { show_hidden = true },
     delete_to_trash = true,
     skip_confirm_for_simple_edits = true,
@@ -22,7 +13,7 @@ end)
 
 vim.keymap.set("n", "<leader>-", function()
   require("oil").open()
-end, { desc = "Open oil" })
+end)
 
 vim.keymap.set("n", "<M-.>", function() require("oil").toggle_hidden() end)
 
@@ -36,4 +27,4 @@ vim.keymap.set("n", "<leader>d-", function()
   else
     require("oil").open()
   end
-end, { desc = "Directory search and open in split" })
+end)

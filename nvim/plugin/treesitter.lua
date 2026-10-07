@@ -52,37 +52,37 @@ require("utils").lazy_load("BufReadPre",
 
 vim.keymap.set({ "x", "o" }, "af", function()
   require "nvim-treesitter-textobjects.select".select_textobject("@function.outer", "textobjects")
-end, { desc = "Select outer function" })
+end)
 
 vim.keymap.set({ "x", "o" }, "if", function()
   require "nvim-treesitter-textobjects.select".select_textobject("@function.inner", "textobjects")
-end, { desc = "Select inner function" })
+end)
 
 vim.keymap.set({ "x", "o" }, "ac", function()
   require "nvim-treesitter-textobjects.select".select_textobject("@class.outer", "textobjects")
-end, { desc = "Select outer class" })
+end)
 
 vim.keymap.set({ "x", "o" }, "ic", function()
   require "nvim-treesitter-textobjects.select".select_textobject("@class.inner", "textobjects")
-end, { desc = "Select inner class" })
+end)
 
 -- You can also use captures from other query groups like `locals.scm`
 vim.keymap.set({ "x", "o" }, "as", function()
   require "nvim-treesitter-textobjects.select".select_textobject("@local.scope", "locals")
-end, { desc = "Select scope" })
+end)
 
 vim.keymap.set({ "n", "x", "o" }, "]f", function()
   require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
-end, { desc = "Next function start" })
+end)
 
 vim.keymap.set({ "n", "x", "o" }, "[f", function()
   require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
-end, { desc = "Previous function start" })
+end)
 
 vim.keymap.set({ "n", "x", "o" }, "]F", function()
   require("nvim-treesitter-textobjects.move").goto_next_end("@function.outer", "textobjects")
-end, { desc = "Next function end" })
+end)
 
 vim.keymap.set({ "n", "x", "o" }, "[F", function()
   require("nvim-treesitter-textobjects.move").goto_previous_end("@function.outer", "textobjects")
-end, { desc = "Previous function end" })
+end)

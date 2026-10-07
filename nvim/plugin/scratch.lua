@@ -3,7 +3,7 @@ require("utils").lazy_load("BufReadPre", function()
 end)
 
 
-vim.keymap.set("n", "<leader>ss", function() require("scratch").toggle() end, { desc = "Toggle scratch buffer" })
+vim.keymap.set("n", "<leader>ss", function() require("scratch").toggle() end)
 vim.keymap.set("n", "<leader>s;", function() require("scratch").toggle { window_type = "float" } end,
   { desc = "Toggle floating scratch buffer" })
 
@@ -13,4 +13,4 @@ vim.keymap.set("n", "<leader>ps", function()
 
   require("scratch").toggle { window_type = "float" }
   vim.api.nvim_buf_set_lines(0, 0, -1, true, lines)
-end, { desc = "Paste buffer to scratch" })
+end)

@@ -2,7 +2,6 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   once = true,
   group = vim.api.nvim_create_augroup("LazyLoad", { clear = false }),
   callback = function()
-    -- vim.cmd.packadd("LuaSnip")
     vim.pack.add({ "https://github.com/L3MON4D3/LuaSnip" }, { load = false })
     local ok, ls = pcall(require, "luasnip")
     if not ok then
@@ -50,6 +49,6 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
     vim.api.nvim_create_user_command("LuaSnipReload", function()
       require("luasnip.loaders.from_lua").load { paths = { "~/.config/nvim/snippets" } }
       vim.notify("LuaSnip snippets reloaded!", vim.log.levels.INFO)
-    end, { desc = "Reload LuaSnip snippets" })
+    end, {})
   end
 })

@@ -9,84 +9,6 @@ local function setup(module, opts)
   end
 end
 
-
-require("utils").lazy_load("BufReadPre", function()
-  -- setup("mini.completion", {
-  --   delay = { completion = 25, info = 25, signature = 50 },
-  --   window = {
-  --     info = { height = 20, border = vim.o.winborder == "rounded" and "rounded" or "none" },
-  --     signature = { height = 20, border = vim.o.winborder == "rounded" and "rounded" or "none" },
-  --   },
-  --   mappings = {
-  --     scroll_down = "<C-d>",
-  --     scroll_up = "<C-u>"
-  --   }
-  -- })
-
-  setup("mini.indentscope", { draw = { delay = 50 }, symbol = '│', })
-end)
-
-vim.schedule(function()
-  setup("mini.clue", {
-    triggers = {
-      -- Leader triggers
-      { mode = { 'n', 'x' }, keys = '<Leader>' },
-
-      -- `[` and `]` keys
-      { mode = 'n',          keys = '[' },
-      { mode = 'n',          keys = ']' },
-
-      -- Built-in completion
-      { mode = 'i',          keys = '<C-x>' },
-
-      -- `g` key
-      { mode = { 'n', 'x' }, keys = 'g' },
-
-      { mode = { 'n' },      keys = 'y' },
-
-      -- Marks
-      { mode = { 'n', 'x' }, keys = "'" },
-      { mode = { 'n', 'x' }, keys = '`' },
-
-      -- Registers
-      { mode = { 'n', 'x' }, keys = '"' },
-      { mode = { 'i', 'c' }, keys = '<C-r>' },
-
-      -- Window commands
-      { mode = { 'n', 't' }, keys = '<C-w>' },
-
-      -- `z` key
-      { mode = { 'n', 'x' }, keys = 'z' },
-
-      { mode = { 'n' },      keys = ';' },
-    },
-    window = {
-      delay = 300,
-      config = {
-        -- anchor = "NE",
-        -- row = 0,
-        border = vim.o.winborder == "rounded" and "rounded" or "none",
-      }
-    },
-    clues = {
-      -- Enhance this by adding descriptions for <Leader> mapping groups
-      { mode = 'n', keys = '<Leader>s', desc = '+Search' },
-      { mode = 'n', keys = '<Leader>g', desc = '+Grep' },
-      require("mini.clue").gen_clues.square_brackets(),
-      require("mini.clue").gen_clues.builtin_completion(),
-      require("mini.clue").gen_clues.g(),
-      require("mini.clue").gen_clues.marks(),
-      require("mini.clue").gen_clues.registers(),
-      require("mini.clue").gen_clues.windows(),
-      require("mini.clue").gen_clues.z(),
-    },
-
-  })
-
-  require("mini.icons").setup()
-  -- require("mini.icons").tweak_lsp_kind()
-end)
-
 vim.g.omni_sql_default_compl_type = 'syntax'
 
 -- :h MiniSurround-vim-surround-config
@@ -116,6 +38,7 @@ require("utils").lazy_load({ "InsertEnter", "CmdlineEnter" },
 setup("mini.files", {
   content = { prefix = function() end },
   mappings = {
+    close = "<C-c>",
     go_in_plus = "<CR>"
   },
   options = {
@@ -125,12 +48,12 @@ setup("mini.files", {
 
 vim.keymap.set("n", ";m", function()
   require("mini.files").open(nil, true)
-end, { desc = "Files" })
+end)
 
 vim.keymap.set("n", ";dm", function()
   local prompt = vim.fn.input("Directory> ")
   require("mini.files").open("~/" .. prompt)
-end, { desc = "Files choose directory" })
+end)
 
 -- snippets from :h mini.files
 local map_split = function(buf_id, lhs, direction)

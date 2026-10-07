@@ -2,16 +2,15 @@ vim.schedule(function()
   vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
   require("gitsigns").setup {
     current_line_blame = true,
-    current_line_blame_formatter = '     <author>, <author_time:%R> - <summary>',
+    current_line_blame_formatter = '     <author>, <author_time:%R> - <summary>',
   }
-  vim.opt.statuscolumn = "%s%l%C "
 end)
 
-vim.keymap.set("n", "gH", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Hunk preview" })
-vim.keymap.set("n", "gI", "<cmd>Gitsigns preview_hunk_inline<CR>", { desc = "Inline hunk preview" })
-vim.keymap.set("n", "]h", "<cmd>Gitsigns next_hunk<CR>", { desc = "Next hunk" })
-vim.keymap.set("n", "[h", "<cmd>Gitsigns prev_hunk<CR>", { desc = "Previous hunk" })
-vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>", { desc = "Diff buffer" })
+vim.keymap.set("n", "gH", "<cmd>Gitsigns preview_hunk<CR>")
+vim.keymap.set("n", "gI", "<cmd>Gitsigns preview_hunk_inline<CR>")
+vim.keymap.set("n", "]h", "<cmd>Gitsigns next_hunk<CR>")
+vim.keymap.set("n", "[h", "<cmd>Gitsigns prev_hunk<CR>")
+vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>")
 
 local ns = vim.api.nvim_create_namespace("colorcolumn")
 local column = 89

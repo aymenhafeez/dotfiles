@@ -54,7 +54,7 @@ end
 
 vim.keymap.set("n", "<leader>gg", function()
   grep_to_qf()
-end, { desc = "Ripgrep to quickfix" })
+end)
 
 vim.api.nvim_create_user_command("RG", function(opts)
   grep_to_qf({ default = opts.args })

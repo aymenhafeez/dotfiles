@@ -13,9 +13,9 @@ local function toggle_list(kind)
   local winid = list.winid
   local items = list.items or {}
 
-  if winid == 0 and #items == 0 then
-    return
-  elseif winid == 0 then
+  -- if winid == 0 and #items == 0 then
+  --   return
+  if winid == 0 then
     vim.cmd(open_cmd)
   else
     vim.cmd(close_cmd)
@@ -24,47 +24,8 @@ end
 
 vim.keymap.set("n", "<leader>q", function()
   toggle_list("qf")
-end, { desc = "Toggle quickfix" })
+end)
 
 vim.keymap.set("n", "<leader>l", function()
-  toggle_list("loc")
-end, { desc = "Toggle location list" })
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qf",
-  callback = function()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-    vim.opt_local.signcolumn = "no"
-    vim.opt_local.wrap = false
-    vim.opt_local.statuscolumn = ""
-    vim.opt_local.scrolloff = 0
-    vim.wo.cursorline = false
-  end,
-})
-
--- navigate the quickfix list if it's open otherwise move the current line up and down
----@diagnostic disable: param-type-mismatch
-vim.keymap.set({ "n", "t" }, "<M-C-j>", function()
-  local qflist_id = vim.fn.getqflist({ winid = 1 }).winid
-  local loclist_id = vim.fn.getloclist(0, { winid = 1 }).winid
-  if qflist_id > 0 then
-    pcall(vim.cmd, "cnext")
-  elseif loclist_id > 0 then
-    pcall(vim.cmd, "lnext")
-  else
-    vim.cmd [[m .+1<CR>==]]
-  end
-end, { desc = "Next quickfix/loclist item or move line down" })
-
-vim.keymap.set({ "n", "t" }, "<M-C-k>", function()
-  local qflist_id = vim.fn.getqflist({ winid = 1 }).winid
-  local loclist_id = vim.fn.getloclist(0, { winid = 1 }).winid
-  if qflist_id > 0 then
-    pcall(vim.cmd, "cprev")
-  elseif loclist_id > 0 then
-    pcall(vim.cmd, "lprev")
-  else
-    vim.cmd [[m .-2<CR>==]]
-  end
-end, { desc = "Previous quickfix/loclist item or move line up" })
+  pcall(toggle_list, "loc")
+end)

@@ -26,3 +26,9 @@ vim.keymap.set("n", "<leader>pb", function()
   require("repl").send_repl_selection()
   vim.cmd "delmarks m"
 end, { buf = 0, desc = "Send buffer to REPL" })
+
+vim.keymap.set("n", "<leader>cs", "<cmd>PlotReplStart<CR>")
+vim.keymap.set("n", "<leader>cl", "<cmd>PlotReplSendLine<CR>")
+vim.keymap.set("n", "<leader>cb", "<cmd>PlotReplSendBuffer<CR>")
+vim.keymap.set("x", "<leader>cc", "<cmd>PlotReplSendSelection<CR>")
+vim.keymap.set("v", "<leader>cc", "<cmd>PlotReplSendSelection<CR>")

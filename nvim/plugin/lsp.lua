@@ -22,10 +22,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local map = vim.keymap.set
 
-    map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-    map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-    map("n", "gW", vim.lsp.buf.workspace_symbol, { desc = "Search workspace symbols" })
-    map("n", "td", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
+    map("n", "gd", vim.lsp.buf.definition)
+    map("n", "gD", vim.lsp.buf.declaration)
+    map("n", "gW", vim.lsp.buf.workspace_symbol)
+    map("n", "td", vim.lsp.buf.type_definition)
 
     local function client_supports_method(client, method, bufnr)
       return client:supports_method(method, bufnr)
@@ -62,7 +62,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if not vim.lsp.inline_completion.get() then
           return "<C-l>"
         end
-      end, { expr = true })
+      end, { expr = true, buffer = args.buf, desc = "Accept inline suggestion" })
     end
 
     if client and client:supports_method("textDocument/documentColor") then
@@ -94,21 +94,33 @@ vim.api.nvim_create_autocmd("LspAttach", {
       })
     end
 
+    local format_group = vim.api.nvim_create_augroup("LspGroup", { clear = false })
+    local enabled = true
     if client and not client:supports_method "textDocument/willSaveWaitUntil"
         and client:supports_method "textDocument/formatting" then
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = vim.api.nvim_create_augroup("LspGroup", { clear = false }),
-        buffer = args.buf,
-        callback = function()
-          vim.lsp.buf.format { bufnr = args.buf, id = client.id, timeout_ms = 500 }
-        end,
-      })
+      vim.keymap.set("n", "<leader>tf", function()
+        if enabled then
+          vim.api.nvim_clear_autocmds({ group = format_group })
+          enabled = false
+          vim.notify("Format on save: OFF", vim.log.levels.INFO)
+        else
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = args.buf,
+            group = format_group,
+            callback = function()
+              vim.lsp.buf.format { bufnr = args.buf, id = client.id, timeout_ms = 500 }
+            end,
+          })
+          enabled = true
+          vim.notify("Format on save: ON", vim.log.levels.INFO)
+        end
+      end)
     end
 
     if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, args.buf) then
       map("n", "<leader>th", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = args.buf })
-      end, { desc = "Toggle inlay hints" })
+      end)
     end
 
     -- vim.keymap.set({ "i", "s" }, "<C-j>", function()
@@ -133,7 +145,9 @@ local servers = {}
 
 for _, v in ipairs(vim.api.nvim_get_runtime_file("lsp/*", true)) do
   local name = vim.fn.fnamemodify(v, ":t:r")
-  servers[name] = true
+  if name ~= "copilot_ls" then
+    servers[name] = true
+  end
 end
 
 vim.lsp.enable(vim.tbl_keys(servers))
