@@ -11,7 +11,7 @@ local function tabline()
     local is_listed = vim.api.nvim_get_option_value("buflisted", { buf = buf })
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
 
-    if is_listed and buftype ~= "terminal" then
+    if is_listed then
       local is_current = (buf == current_buf)
       local is_modified = vim.api.nvim_get_option_value("modified", { buf = buf })
 

@@ -10,10 +10,6 @@ vim.keymap.set({ "n", "t" }, ";tt", function()
   require("terminal").toggle_terminal {}
 end)
 
-vim.keymap.set({ "n", "t" }, "<C-Space>", function()
-  require("terminal").toggle_terminal {}
-end)
-
 vim.keymap.set({ "n", "t" }, ";vt", function()
   require("terminal").toggle_terminal { direction = "right" }
 end)

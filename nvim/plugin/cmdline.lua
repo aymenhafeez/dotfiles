@@ -1,6 +1,3 @@
-vim.opt.wildmode = "noselect:lastused,full"
-vim.opt.wildoptions = "fuzzy,tagfile"
-
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   callback = function()
     local t = vim.fn.getcmdtype()

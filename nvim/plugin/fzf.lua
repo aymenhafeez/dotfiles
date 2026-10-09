@@ -1,21 +1,13 @@
 local opts = {
+  { "fzf-vim" },
   hidden     = true,
-  winopts    = {
-    backdrop = 100,
-    height   = 0.7,
-    preview  = { hidden = "hidden" },
-  },
-  fzf_opts   = {
-    ["--layout"] = "default",
-    ["--cycle"] = true,
-  },
   keymap     = {
     builtin = {
-      ["<M-p>"]      = "toggle-preview",
-      ["<S-down>"]   = "preview-page-down",
-      ["<S-up>"]     = "preview-page-up",
-      ["<M-S-j>"] = "preview-down",
-      ["<M-S-k>"]   = "preview-up",
+      ["<M-p>"]    = "toggle-preview",
+      ["<S-down>"] = "preview-page-down",
+      ["<S-up>"]   = "preview-page-up",
+      ["<M-S-j>"]  = "preview-down",
+      ["<M-S-k>"]  = "preview-up",
     },
     fzf = {
       ["ctrl-q"] = "select-all+accept",
@@ -25,7 +17,6 @@ local opts = {
   },
   fzf_colors = {
     true,
-    ["bg"] = { "bg", "FzfLuaNormal" }
   }
 }
 
@@ -36,7 +27,7 @@ end)
 
 vim.keymap.set("n", "<leader>f", function() require("fzf-lua").files(opts) end)
 vim.keymap.set("n", "<C-p>", function() require("fzf-lua").files(opts) end)
-vim.keymap.set("n", "<leader><C-b>", function() require("fzf-lua").builtin(opts) end)
+vim.keymap.set("n", "<C-Space>", function() require("fzf-lua").builtin(opts) end)
 vim.keymap.set("n", "<leader>b", function() require("fzf-lua").buffers(opts) end)
 
 vim.keymap.set("n", "<leader>/", function() require("fzf-lua").blines(opts) end)
@@ -64,7 +55,7 @@ end)
 
 vim.keymap.set("n", "<leader>sn", function()
   require("fzf-lua").files(vim.tbl_extend("keep",
-    opts, { cwd = "~/Documents/DataSci/" }))
+    opts, { cwd = "~/Downloads/Backup/home/aymen/Documents/DataSci/" }))
 end)
 
 vim.keymap.set("n", "<leader>sp", function()
@@ -83,7 +74,7 @@ end)
 
 vim.keymap.set("n", "<leader>gn", function()
   require("fzf-lua").live_grep_native(vim.tbl_extend("keep",
-    opts, { cwd = "~/Documents/DataSci/" }))
+    opts, { cwd = "~/Downloads/Backup/home/aymen/Documents/DataSci/" }))
 end)
 
 vim.keymap.set("n", "<leader>gp", function()

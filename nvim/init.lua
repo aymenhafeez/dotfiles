@@ -32,7 +32,6 @@ vim.schedule(function()
   })
 
   vim.go.statusline = "%{%v:lua.require'statusline'.statusline()%}"
-  vim.go.tabline = "%{%v:lua.require'tabline'.tabline()%}"
   vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
   opt.clipboard = "unnamedplus"
 end)
@@ -88,7 +87,6 @@ opt.shiftwidth = 4
 opt.showcmdloc = "statusline"
 opt.shortmess:append("Ssc")
 opt.showmatch = true
-opt.showtabline = 2
 opt.smartcase = true
 opt.smartindent = true
 opt.spelllang = "en_gb"
@@ -99,3 +97,22 @@ opt.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
 opt.wrap = false
+opt.wildmode = "noselect:lastused,full"
+opt.wildoptions = "fuzzy,tagfile"
+
+vim.cmd [[
+" :h restore-cursor
+augroup RestoreCursor
+  autocmd!
+  autocmd BufReadPre * autocmd FileType <buffer> ++once
+    \ let s:line = line("'\"")
+    \ | if s:line >= 1 && s:line <= line("$") && &filetype !~# 'commit'
+    \      && index(['xxd', 'gitrebase'], &filetype) == -1
+    \      && !&diff
+    \ |   execute "normal! g`\""
+    \ | endif
+augroup END
+
+" :h vim.hl.on_yank()
+autocmd TextYankPost * silent! lua vim.hl.on_yank {higroup='Visual', timeout=150}
+]]

@@ -39,6 +39,9 @@ map({ "n", "t" }, "<S-up>", "<C-\\><C-n><C-W>2+")
 map({ "n", "t" }, "<M-S-l>", "2zl")
 map({ "n", "t" }, "<M-S-h>", "2zh")
 
+map("n", "<C-e>", "3<C-e>")
+map("n", "<C-y>", "3<C-y>")
+
 map("n", "<S-Tab>", "<C-^>")
 
 map({ "i", "c", "t" }, "<C-Backspace>", "<C-w>")

@@ -26,11 +26,6 @@ local function get_split_direction()
   return width > 180 and 'right' or 'below'
 end
 
-local function in_zellij()
-  local env = vim.fn.getenv("ZELLIJ")
-  return env ~= vim.NIL and env ~= ""
-end
-
 local file_name = vim.fn.expand "%:t:r"
 local compile_args = {
   "pdflatex",
@@ -43,21 +38,11 @@ local compile_cmd = table.concat(compile_args, " ")
 
 map("n", "<leader>cm", function()
   vim.fn.mkdir("build", "p")
-  if in_zellij() then
-    local dir = get_split_direction() == 'right' and 'right' or 'down'
-    vim.fn.system {
-      "zellij", "run",
-      "--direction", dir,
-      "--name", "latex compile",
-      "--", unpack(compile_args),
-    }
-  else
-    require("terminal").toggle_terminal({
-      name = "latex compile",
-      direction = get_split_direction(),
-      cmd = compile_cmd,
-    })
-  end
+  require("terminal").toggle_terminal({
+    name = "latex compile",
+    direction = get_split_direction(),
+    cmd = compile_cmd,
+  })
 end, { buf = 0, desc = "Compile LaTeX" })
 
 map("n", "<leader>pv", function()

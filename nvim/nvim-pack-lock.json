@@ -67,10 +67,6 @@
       "rev": "e56c2f92cef0bd306f84a66b0396b57e56b9d2b3",
       "src": "https://github.com/aymenhafeez/plotREPL"
     },
-    "snacks.nvim": {
-      "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
-      "src": "https://github.com/folke/snacks.nvim"
-    },
     "vim-dadbod": {
       "rev": "6d1d41da4873a445c5605f2005ad2c68c99d8770",
       "src": "https://github.com/tpope/vim-dadbod"

@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "python", "lua", "rust", "c", "vim", "markdown", "tex", "diff", "cpp", "css" },
+  pattern = { "python", "lua", "rust", "c", "markdown", "tex", "diff", "cpp", "css" },
   callback = function(args)
     vim.treesitter.language.register("latex", "tex")
     vim.treesitter.start(args.buf)

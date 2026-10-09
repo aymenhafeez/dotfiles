@@ -46,7 +46,7 @@ setup("mini.files", {
   }
 })
 
-vim.keymap.set("n", ";m", function()
+vim.keymap.set("n", ";-", function()
   require("mini.files").open(nil, true)
 end)
 
