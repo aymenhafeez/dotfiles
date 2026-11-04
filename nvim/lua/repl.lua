@@ -10,10 +10,13 @@ M.create_repl = function()
   if M.job_id then
     return
   end
+
   M.backend = vim.g.repl_opt or "ipython"
+
   local on_exit = function()
     M.job_id = nil
   end
+
   if M.backend == "qtconsole" then
     M.job_id = vim.fn.jobstart({ M.qtconsole_python, bridge }, { on_exit = on_exit })
   else
@@ -22,6 +25,7 @@ M.create_repl = function()
     else
       vim.cmd(math.floor(vim.o.columns * 0.45) .. "vnew")
     end
+
     M.job_id = vim.fn.jobstart({ "ipython" }, { term = true, on_exit = on_exit })
     vim.wait(100)
   end
@@ -29,6 +33,7 @@ end
 
 local function send(code)
   M.create_repl()
+
   if M.backend == "qtconsole" then
     vim.fn.chansend(M.job_id, vim.json.encode(code) .. "\n")
   else
