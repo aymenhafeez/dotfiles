@@ -1,10 +1,10 @@
+vim.treesitter.language.register("latex", "tex")
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "python", "lua", "rust", "c", "markdown", "tex", "diff", "cpp", "css" },
   callback = function(args)
     vim.treesitter.language.register("latex", "tex")
     vim.treesitter.start(args.buf)
 
-    -- re-enable syntax for tex files to keep native conceals
     if vim.bo[args.buf].filetype == 'tex' then
       vim.bo[args.buf].syntax = 'ON'
     end
@@ -19,15 +19,9 @@ require("utils").lazy_load("BufReadPre",
       "https://github.com/nvim-treesitter/nvim-treesitter-context",
     }, { load = true })
 
-    local writing_ft = { tex = true, markdown = true, text = true }
-    local is_writing = writing_ft[vim.bo.filetype]
     require("treesitter-context").setup {
       enable = true,
-      -- separator = "─",
       multiwindow = true,
-      max_lines = is_writing and 0 or 0,
-      trim_scope = is_writing and "outer" or "outer",
-      disable_all_ft = { "help", "lua" },
       on_attach = function(bufnr)
         local ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
         return ft ~= 'help'

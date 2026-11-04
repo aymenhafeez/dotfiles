@@ -26,5 +26,5 @@ vim.keymap.set("n", "gV", function()
   vim.diagnostic.config({ virtual_text = virttext_config })
 end)
 
-vim.keymap.set("n", "<leader>sd", vim.diagnostic.setloclist)
-vim.keymap.set("n", "<leader>sD", vim.diagnostic.setqflist)
+-- vim.keymap.set("n", "<leader>sd", vim.diagnostic.setloclist)
+-- vim.keymap.set("n", "<leader>sD", vim.diagnostic.setqflist)

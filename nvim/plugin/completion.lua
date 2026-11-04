@@ -15,10 +15,16 @@ local options = {
     ["<C-b>"] = { "scroll_documentation_up", "fallback" },
     ["<C-f>"] = { "scroll_documentation_down", "fallback" },
   },
+  cmdline = {
+    enabled = true
+  },
   completion = {
     -- trigger = {
     --   show_on_blocked_trigger_characters = {},
     -- },
+    ghost_text = {
+      enabled = true
+    },
     menu = {
       auto_show = true,
       max_height = 15,
