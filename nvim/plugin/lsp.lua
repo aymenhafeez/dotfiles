@@ -22,9 +22,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local map = vim.keymap.set
 
-    map("n", "gd", vim.lsp.buf.definition)
     map("n", "gD", vim.lsp.buf.declaration)
-    map("n", "gW", vim.lsp.buf.workspace_symbol)
     map("n", "td", vim.lsp.buf.type_definition)
 
     local function client_supports_method(client, method, bufnr)
