@@ -10,16 +10,13 @@ local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
 
--- helper function to check if in a math context
 local function in_mathzone()
-  -- check if vimtex is available
   if vim.fn.exists "*vimtex#syntax#in_mathzone" == 1 then
     return vim.fn["vimtex#syntax#in_mathzone"]() == 1
   end
   return false
 end
 
--- helper to create conditional snippets
 local function get_visual(_args, parent)
   if #parent.snippet.env.LS_SELECT_RAW > 0 then
     return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
@@ -57,7 +54,6 @@ return {
     )
   ),
 
-  -- gather
   s(
     { trig = "gat", dscr = "gather", wordTrig = true },
     fmta(
@@ -137,7 +133,6 @@ return {
     i(1),
     t "\\)",
     f(function(_args, snip)
-      -- Check if there's a next character and if it needs spacing
       local next_char = snip.env.POSTFIX or ""
       if next_char ~= "" and not next_char:match "^[,%.%?%- ]" then
         return " "
@@ -148,7 +143,6 @@ return {
     i(0),
   }),
 
-  -- display mathzone
   s(
     { trig = "mm", dscr = "math", wordTrig = true },
     fmta(
@@ -242,7 +236,6 @@ return {
 
   s({ trig = "ap", dscr = "approx", wordTrig = true }, t "$\\approx$"),
 
-  -- iff in mathenv
   s({ trig = "iff", dscr = "iff", wordTrig = true, condition = in_mathzone }, t "\\iff"),
 
   s(
@@ -353,42 +346,6 @@ return {
     )
   ),
 
-  --   s(
-  --     { trig = "sec", dscr = "section without number", wordTrig = true },
-  --     fmta(
-  --       [[
-  -- \section*{<>}
-  --
-  -- <>
-  -- ]],
-  --       { i(1), i(0) }
-  --     )
-  --   ),
-  --
-  --   s(
-  --     { trig = "ssec", dscr = "sub section without number", wordTrig = true },
-  --     fmta(
-  --       [[
-  -- \subsection*{<>}
-  --
-  -- <>
-  -- ]],
-  --       { i(1), i(0) }
-  --     )
-  --   ),
-  --
-  --   s(
-  --     { trig = "sssec", dscr = "sub sub section without number", wordTrig = true },
-  --     fmta(
-  --       [[
-  -- \subsubsection*{<>}
-  --
-  -- <>
-  -- ]],
-  --       { i(1), i(0) }
-  --     )
-  --   ),
-
   s(
     { trig = "sct", dscr = "numbered section", wordTrig = true },
     fmta(
@@ -436,7 +393,6 @@ return {
     )
   ),
 
-  -- figure
   s(
     { trig = "fig", dscr = "figure", wordTrig = true },
     fmta(
@@ -603,3 +559,4 @@ return {
     )
   ),
 }
+

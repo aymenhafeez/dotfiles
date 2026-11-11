@@ -1,12 +1,21 @@
 local ls = require "luasnip"
 local s = ls.snippet
+local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
+local d = ls.dynamic_node
 local fmta = require("luasnip.extras.fmt").fmta
 
+local function get_visual(_args, parent)
+  if #parent.snippet.env.LS_SELECT_RAW > 0 then
+    return sn(nil, i(1, parent.snippet.env.LS_SELECT_RAW))
+  else
+    return sn(nil, i(1))
+  end
+end
+
 return {
-  -- Section
   s({
     trig = "s",
     dscr = "Section",
@@ -19,7 +28,7 @@ return {
     i(0),
   }),
 
-  -- Sub Section
+
   s({
     trig = "ss",
     dscr = "Sub Section",
@@ -32,7 +41,7 @@ return {
     i(0),
   }),
 
-  -- SubSub Section
+
   s({
     trig = "sss",
     dscr = "SubSub Section",
@@ -45,7 +54,7 @@ return {
     i(0),
   }),
 
-  -- Paragraph
+
   s({
     trig = "par",
     dscr = "Paragraph",
@@ -58,7 +67,7 @@ return {
     i(0),
   }),
 
-  -- Sub Paragraph
+
   s({
     trig = "spar",
     dscr = "Sub Paragraph",
@@ -71,7 +80,36 @@ return {
     i(0),
   }),
 
-  -- Link
+  s(
+    { trig = "mm", dscr = "math", wordTrig = true },
+    fmta(
+      [[
+$$
+	<>
+$$<>
+]],
+      { d(1, get_visual), i(0) }
+    )
+  ),
+
+  s({ trig = "im", dscr = "inline mathzone", wordTrig = true }, {
+    t "$",
+    i(1),
+    t "$",
+    f(function(_args, snip)
+      local next_char = snip.env.POSTFIX or ""
+      if next_char ~= "" and not next_char:match "^[,%.%?%- ]" then
+        return " "
+      else
+        return ""
+      end
+    end),
+    i(0),
+  }),
+
+  s({ trig = "frac", dscr = "fraction", wordTrig = true }, fmta([[\frac{<>}{<>}<>]], { i(1), i(2), i(0) })),
+
+
   s({
     trig = "link",
     dscr = "Link to something",
@@ -85,7 +123,6 @@ return {
     i(0),
   }),
 
-  -- Image
   s({
     trig = "img",
     dscr = "Image",
