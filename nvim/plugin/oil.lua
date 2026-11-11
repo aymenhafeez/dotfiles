@@ -35,10 +35,7 @@ vim.keymap.set("n", "<leader>d-", function()
     previewer = require("telescope.previewers").vim_buffer_cat.new({ cwd = home }),
     find_command = {
       "fd", "--type", "d", "--hidden", "--color=never", "--max-depth", "8", "--one-file-system",
-      "--exclude", "node_modules", "--exclude", ".local", "--exclude", ".cargo",
-      "--exclude", ".rustup", "--exclude", ".var", "--exclude", ".codex", "--exclude", ".claude",
-      "--exclude", ".vscode", "--exclude", "go", "--exclude", ".zig", "--exclude", "__pycache__",
-      "--exclude", ".venv", "--exclude", "*Cache", "--exclude", "*cache", "--exclude", "Cache*"
+      "--exclude", ".local", "--exclude", ".cargo", "--exclude", ".codex", "--exclude", "*cache",
     },
     attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()
